@@ -1,6 +1,7 @@
 package form;
 
-public abstract class Question {
+public abstract class Question implements IVisitable
+{
 	
 	/**
 	 * The text that describes to an End User what the question that they
@@ -12,6 +13,13 @@ public abstract class Question {
 	 * The relative priority of a question's position in a form. 
 	 */
 	private int position;
+	
+	/**
+	 * A unique identifier for this question. It will function as the
+	 * input tag's name. This will allow for POST access to individual
+	 * question's responses.
+	 */
+	private String id;
 	
 	/**
 	 * Returns the text that the End User will respond to.
@@ -48,8 +56,19 @@ public abstract class Question {
 	}
 
 	/**
-	 * Returns an HTML structure that represents this object.
-	 * @return an HTML structure that represents this object.
+	 * Retrieves the unique ID of this question.
+	 * @return the unique ID of this question.
 	 */
-	public abstract String getHTML();
+	public final String getId() {
+		return id;
+	}
+
+	/**
+	 * Sets the unique ID of this function.
+	 * @param id The string to use as the unique ID. This should normally
+	 * either be automatically generated, or 
+	 */
+	public final void setId(String id) {
+		this.id = id;
+	}
 }

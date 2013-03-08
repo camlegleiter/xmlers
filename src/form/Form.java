@@ -1,6 +1,7 @@
 package form;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -15,6 +16,12 @@ public class Form {
 	public void add(Question q)
 	{
 		questions.add(q);
+	}
+	
+	public Iterator<Question> getQuestions()
+	{
+		//TODO
+		return null;
 	}
 	
 	private class QuestionPriority implements Comparator<Question>

@@ -3,9 +3,8 @@ package form;
 public class TextQuestion extends Question {
 
 	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
+	public void accept(IQuestionVisitor visitor) {
+		visitor.visit(this);
 	}
 
 }

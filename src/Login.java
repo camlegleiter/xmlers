@@ -38,25 +38,20 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ILibrary library = new SQLLibrary();
 		
+		// If the login is valid
 		if (library.checkLogin(request)) {
-			// Set all the session information with the user's information
-//			HttpSession session = request.getSession(false);
-//			if (session.isNew()) {
-//				response.getWriter().write("Setting new session information");
-//			} else {
-//				response.getWriter().write("Session already set.");
-//			}
-//			
-//			session.invalidate();
+			// Create a "remember me" cookie for logging in
 			if (request.getParameter("remember").equals("remember-me")) {
 				Cookie cookie = new Cookie("userid", request.getSession().getAttribute("userid").toString());
-				cookie.setMaxAge(60 * 24 * 30);
+				cookie.setMaxAge(1);
 				response.addCookie(cookie);
 			}
 			
+			// No errors, send back an empty string
 			response.getWriter().write("");
 			
 		} else {
+			// Bad credentials, try again
 			response.getWriter().write("Invalid username or password.");
 		}
 	}

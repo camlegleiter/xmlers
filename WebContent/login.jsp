@@ -1,6 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
-session.invalidate();
+	Cookie[] cookies = request.getCookies(); // request is an instance of type HttpServletRequest
+	boolean foundCookie = false;
+
+	for (int i = 0; i < cookies.length; i++) {
+		Cookie c = cookies[i];
+		if (c.getName().equals("userid")) {
+			String userId = c.getValue();
+			foundCookie = true;
+		}
+	}
+	
+	if (foundCookie) {
+%>
+	<jsp:forward page="index.jsp"></jsp:forward>	
+<%		
+	} else {
+		session.invalidate();
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -79,16 +96,14 @@ session.invalidate();
   </head>
 
   <body>
-
     <div class="container">
-
       <form class="form-signin" action="<%=request.getContextPath()%>/login" method="POST">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="text" class="input-block-level" placeholder="User name" name="username">
         <input type="password" class="input-block-level" placeholder="Password" name="password">
-        <!-- <label class="checkbox">
+        <label class="checkbox">
           <input type="checkbox" value="remember-me" name="remember"> Remember me
-        </label>-->
+        </label>
         <button class="btn btn-large btn-primary" type="submit">Sign in</button>
       </form>
 

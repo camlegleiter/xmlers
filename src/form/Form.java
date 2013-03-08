@@ -7,29 +7,25 @@ import java.util.Queue;
 
 public class Form {
 	private Queue<Question> questions;
-	
-	public Form()
-	{
+
+	public Form() {
 		questions = new PriorityQueue<Question>(1, new QuestionPriority());
 	}
-	
-	public void add(Question q)
-	{
+
+	public void add(Question q) {
 		questions.add(q);
 	}
-	
-	public Iterator<Question> getQuestions()
-	{
-		//TODO
+
+	public Iterator<Question> getQuestions() {
+		// TODO
 		return null;
 	}
-	
-	private class QuestionPriority implements Comparator<Question>
-	{
+
+	private class QuestionPriority implements Comparator<Question> {
 		@Override
 		public int compare(Question o1, Question o2) {
 			return o1.getPosition() - o2.getPosition();
 		}
 
-	}	
+	}
 }

@@ -1,10 +1,10 @@
 package form;
 
-public class SchemaVisitor implements IQuestionVisitor {
+public class HTMLVisitor implements IQuestionVisitor {
 
 	@Override
 	public String visit(TextQuestion tq) {
-		// TODO
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -19,4 +19,5 @@ public class SchemaVisitor implements IQuestionVisitor {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

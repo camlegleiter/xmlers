@@ -13,23 +13,41 @@ public class CreateDatabase {
 		Connection conn = null;
 		Statement statement = null;
 		try	{
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/task_manager", "root", "");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "");
 			statement = conn.createStatement();
 			
 			StringBuilder query = new StringBuilder();
 			
+			// Drop database (if it exists already)
+			query.append("DROP DATABASE IF EXISTS task_manager");
+			statement.execute(query.toString());
+			System.out.println("Database dropped successfully!");
+			
+			// Re-add the database
+			query = new StringBuilder();
+			query.append("CREATE DATABASE task_manager");
+			statement.execute(query.toString());
+			System.out.println("Database created successfully!");
+			
+			// Select the database for use
+			query = new StringBuilder();
+			query.append("USE task_manager");
+			statement.execute(query.toString());
+			System.out.println("Using task_manager");
+			
 			// Drop existing tables
+			query = new StringBuilder();
 			query.append("DROP TABLE IF EXISTS users");
 			statement.execute(query.toString());
 			System.out.println("Tables dropped successfully!");
 			
 			// Re-add tables
 			statement.execute(createUserTable());
-			System.out.println("Tables added successfully!");
+			System.out.println("Tables created successfully!");
 			
 			// Add test login
 			createTestUser(conn);
-			System.out.println("Test User added successfully!");
+			System.out.println("Test User inserted successfully!");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

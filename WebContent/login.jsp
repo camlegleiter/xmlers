@@ -13,8 +13,7 @@
 		}
 
 		if (foundCookie) {
-			response.sendRedirect(request.getContextPath()
-					+ "/index.jsp");
+			response.sendRedirect(request.getContextPath() + "/index.jsp");
 		} else {
 			session.invalidate();
 		}

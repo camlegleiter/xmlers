@@ -4,7 +4,6 @@
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>Login</servlet-class>
@@ -13,8 +12,7 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>Index</servlet-name>
     <servlet-class>Index</servlet-class>
   </servlet>

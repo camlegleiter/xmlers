@@ -9,4 +9,10 @@ public class XmlController implements IDBController {
 		return false;
 	}
 
+	@Override
+	public boolean registerNewUser(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

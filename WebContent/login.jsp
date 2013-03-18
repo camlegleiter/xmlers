@@ -48,14 +48,20 @@
 				-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 				box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 			}
-			.form-signin .form-signin-heading,.form-signin .checkbox {
+			.form-signin .form-signin-heading, .form-signin .checkbox {
 				margin-bottom: 10px;
 			}
-			.form-signin input[type="text"],.form-signin input[type="password"] {
+			.form-signin input[type="text"], .form-signin input[type="password"] {
 				font-size: 16px;
 				height: auto;
 				margin-bottom: 15px;
 				padding: 7px 9px;
+			}
+			.center {
+				float: none;
+				margin: 0 auto;
+				text-align: center;
+				max-width: 300px;
 			}
 		</style>
 		<link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -69,51 +75,98 @@
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 		<link rel="shortcut icon" href="../assets/ico/favicon.png">
-		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<noscript>
+				<div class="alert alert-error">
+					<p style="text-align: center; margin: 10px"><strong>This website works best when JavaScript is enabled.</strong></p>
+				</div>
+			</noscript>
+			
+			<div class="tabbable">
+				<ul class="nav nav-tabs" id="loginTabs">
+					<li><a class="active" data-toggle="tab" data-target="#login")>Login</a></li>
+					<li><a data-toggle="tab" data-target="#register">Register</a></li>
+				</ul>
+				<div class="tab-content">
+				
+					<div class="tab-pane active" id="login">
+						<form class="form-signin" action="<%=request.getContextPath()%>/login" method="POST">
+							<h2 class="form-signin-heading">Please sign in</h2>
+							<div class="control-group" id="signin-input-group">
+								<div class="controls">
+									<input type="text" class="input-block-level" placeholder="User name" name="username">
+									<input type="password" class="input-block-level" placeholder="Password" name="password">
+									<span class="help-inline" id="login-error"></span>
+								</div>
+							</div>
+							<label class="checkbox">
+							<input type="checkbox" value="remember-me" name="remember"> Remember me
+							</label>
+							<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+						</form>					
+					</div>
+					
+					<div class="tab-pane" id="register">
+						<form class="form-signin" action="<%=request.getContextPath()%>/register" method="POST">
+							<h2 class="form-signin-heading">Register</h2>
+							<div class="control-group" id="input-group">
+								<div class="controls">
+									<input type="text" required class="input-block-level" placeholder="First Name" name="first-name">
+									<input type="text" required class="input-block-level" placeholder="Last Name" name="last-name">
+									<input type="text" required class="input-block-level" placeholder="NetID" name="username">
+									<input type="text" required class="input-block-level" placeholder="Email" name="email">
+									<input type="password" required class="input-block-level" placeholder="Password" name="password">
+									<input type="password" required class="input-block-level" placeholder="Re-enter password" name="password-check">
+									<span class="help-inline" id="register-error"></span>
+								</div>
+							</div>
+							<button class="btn btn-large btn-primary" type="submit">Register</button>
+						</form>	
+					</div>
+					
+				</div>
+			</div>	
+		</div>
+		<!-- /container -->
+		<!-- Le javascript
+			================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap-tab.js"></script>
 		<script>
 			$(document).ready(function() {
 			    $('.form-signin').submit(function() {
+			    	
 			        $form = $(this);
 			        $.post($form.attr('action'), $form.serialize(), function(responseText) {
 			            if ("" != responseText) {
-			            	alert(responseText);
+			            	$('#signin-input-group').addClass("error");
+			            	$('#login-error').html(responseText).slideDown();
 			        	} else {
 			        		window.location.replace("index.jsp");
 			        	}
 			        });
 			        return false;
 			    });
+			    
+			    $('#error').hide();
+			    
+			    $(function() {
+			    	$('#loginTabs').tab();
+			    	$('#loginTabs').bind("show", function(e) {
+			    		var contentID = $(e.target).attr("data-target");
+			    		var contentURL = $(e.target).attr("href");
+			    		
+			    		if (typeof(contentURL) != 'undefined')
+			    			$(contentID).load(contentURL, function() { $('#loginTabs').tab(); });
+			    		else
+			    			$(contentID).tab('show');
+			    	});
+			    	$('#loginTabs a:first').tab('show');
+			    });
 			});
 		</script>
-	</head>
-	<body>
-		<div class="container">
-			<form class="form-signin" action="<%=request.getContextPath()%>/login" method="POST">
-				<h2 class="form-signin-heading">Please sign in</h2>
-				<input type="text" class="input-block-level" placeholder="User name" name="username">
-				<input type="password" class="input-block-level" placeholder="Password" name="password">
-				<label class="checkbox">
-				<input type="checkbox" value="remember-me" name="remember"> Remember me
-				</label>
-				<button class="btn btn-large btn-primary" type="submit">Sign in</button>
-			</form>
-		</div>
-		<!-- /container -->
-		<!-- Le javascript
-			================================================== -->
-		<!-- Placed at the end of the document so the pages load faster
-			<script src="js/jquery.js"></script>
-			<script src="js/bootstrap-transition.js"></script>
-			<script src="js/bootstrap-alert.js"></script>
-			<script src="js/bootstrap-modal.js"></script>
-			<script src="js/bootstrap-dropdown.js"></script>
-			<script src="js/bootstrap-scrollspy.js"></script>
-			<script src="js/bootstrap-tab.js"></script>
-			<script src="js/bootstrap-tooltip.js"></script>
-			<script src="js/bootstrap-popover.js"></script>
-			<script src="js/bootstrap-button.js"></script>
-			<script src="js/bootstrap-collapse.js"></script>
-			<script src="js/bootstrap-carousel.js"></script>
-			<script src="js/bootstrap-typeahead.js"></script> -->
 	</body>
 </html>

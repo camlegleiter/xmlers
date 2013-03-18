@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class SqlController implements IDBController {
+	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/task_manager";
+	
 	public SqlController() {
 		registerDriver();
 	}
@@ -21,7 +23,7 @@ public class SqlController implements IDBController {
 		ResultSet results = null;
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/task_manager", "root", "");
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "");
 			
 			// Build the search query to see if the login is good
 			StringBuilder query = new StringBuilder();
@@ -64,11 +66,53 @@ public class SqlController implements IDBController {
 		return false;
 	}
 	
+	/**
+	 * Initializes a new JDBC driver connection
+	 */
 	private void registerDriver() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean registerNewUser(HttpServletRequest request) {
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet results = null;
+		
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "");
+			
+			// Build the search query
+			StringBuilder query = new StringBuilder();
+			query.append("INSERT INTO users ");
+			query.append("(firstname, lastname, isu_id, net_id, email, password) ");
+			query.append("VALUES ");
+			query.append("(?, ?, ?, ?, ?, UNHEX(SHA1(?)))");
+			
+			preparedStatement = conn.prepareStatement(query.toString());
+			preparedStatement.setString(1, request.getParameter("first-name"));
+			preparedStatement.setString(2, request.getParameter("last-name"));
+			preparedStatement.setString(3, request.getParameter("isu_id"));
+			preparedStatement.setString(4, request.getParameter("net_id"));
+			preparedStatement.setString(5, request.getParameter("email"));
+			preparedStatement.setString(6, request.getParameter("password"));
+			return preparedStatement.execute();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (null != results) results.close();
+				if (null != preparedStatement) preparedStatement.close();
+				if (null != conn) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

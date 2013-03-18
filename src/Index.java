@@ -18,7 +18,6 @@ public class Index extends HttpServlet {
      */
     public Index() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -41,6 +40,13 @@ public class Index extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * Used to specifically remove the "Remember Me" cookie that may be created on user login.
+	 * 
+	 * Calling cookie.setMaxAge(0) will inform the client/server to destroy the cookie.
+	 * 
+	 * @param request
+	 */
 	private void deleteRememberMeCookie(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies(); // request is an instance of type HttpServletRequest
 

@@ -20,4 +20,10 @@ public class HTMLVisitor implements IQuestionVisitor {
 		return null;
 	}
 
+	@Override
+	public String visit(ComplexQuestion cq) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

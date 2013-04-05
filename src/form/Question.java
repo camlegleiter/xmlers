@@ -1,5 +1,10 @@
 package form;
 
+/**
+ * 
+ * @author Martin Strobel
+ *
+ */
 public abstract class Question implements IVisitable {
 
 	/**
@@ -8,6 +13,7 @@ public abstract class Question implements IVisitable {
 	 */
 	private String prompt;
 
+	
 	/**
 	 * The relative priority of a question's position in a form.
 	 */
@@ -39,6 +45,12 @@ public abstract class Question implements IVisitable {
 		this.prompt = s;
 	}
 
+	/**
+	 * Fetches a textual representation of how an end user responded.
+	 * @return
+	 */
+	public abstract String getAnswer();
+	
 	/**
 	 * Retrieves the relative priority of the question to others.
 	 * 

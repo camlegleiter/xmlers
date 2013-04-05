@@ -6,4 +6,6 @@ public interface IQuestionVisitor {
 	public String visit(RadioQuestion rq);
 
 	public String visit(SelectQuestion sq);
+	
+	public String visit(ComplexQuestion cq);
 }

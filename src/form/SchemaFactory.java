@@ -1,5 +1,7 @@
 package form;
 
+import com.saxonica.schema.sdoc.XSDSchema;
+
 public final class SchemaFactory {
 
 	public Form deconstructSchema(String data) {
@@ -8,8 +10,12 @@ public final class SchemaFactory {
 	}
 
 	public String constructSchema(Form data) {
-		// TODO
-		return null;
+		XSDSchema schema;
+		
+		schema = new XSDSchema();
+		
+		return schema.getStringValue();
 	}
 
+	
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dbconnect.IDBController;
 import dbconnect.SqlController;
+import dbconnect.dao.UserDAO;
 
 /**
  * Servlet implementation class Register
@@ -37,7 +38,15 @@ public class Register extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		IDBController library = new SqlController();
 		
+		UserDAO newUser = new UserDAO();
+		newUser.setFirstName((String) request.getAttribute("first-name"));
+		newUser.setFirstName((String) request.getAttribute("last-name"));
+		newUser.setFirstName((String) request.getAttribute("username"));
+		newUser.setFirstName((String) request.getAttribute("email"));
 		
+		if (library.registerNewUser(newUser, (String) request.getAttribute("password"))) {
+			
+		}
 	}
 
 	/**

@@ -64,14 +64,13 @@ public class CreateDatabase {
 	public static String createUserTable() {
 		StringBuilder query = new StringBuilder();
 		query.append("CREATE TABLE users (");
-		//query.append("id INT NOT NULL AUTO_INCREMENT, ");
-		query.append("id INT NOT NULL, ");
+		query.append("id INT NOT NULL AUTO_INCREMENT, ");
 		query.append("firstname VARCHAR(30) NOT NULL, ");
 		query.append("lastname VARCHAR(30) NOT NULL, ");
 		query.append("isu_id INT(9) NOT NULL, ");
-		query.append("username VARCHAR(30) NOT NULL, ");
-		query.append("password BINARY(20) NOT NULL, ");
+		query.append("net_id VARCHAR(30) NOT NULL, ");
 		query.append("email VARCHAR(30) NOT NULL, ");
+		query.append("password BINARY(20) NOT NULL, ");
 		query.append("PRIMARY KEY (id))");
 		
 		return query.toString();
@@ -80,18 +79,18 @@ public class CreateDatabase {
 	public static void createTestUser(Connection conn) throws SQLException {
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO users ");
-		query.append("(id, firstname, lastname, isu_id, username, password, email) ");
+		query.append("(firstname, lastname, isu_id, net_id, email, password) ");
 		query.append("VALUES ");
-		query.append("(?, ?, ?, ?, ?, UNHEX(SHA1(?)), ?)");
+		query.append("(?, ?, ?, ?, ?, UNHEX(SHA1(?)))");
 		
 		PreparedStatement preparedStatement = conn.prepareStatement(query.toString());
-		preparedStatement.setString(1, "1");
-		preparedStatement.setString(2, "Test");
-		preparedStatement.setString(3, "User");
-		preparedStatement.setString(4, "123456789");
-		preparedStatement.setString(5, "TestUser");
+		preparedStatement.setString(1, "Test");
+		preparedStatement.setString(2, "User");
+		preparedStatement.setString(3, "123456789");
+		preparedStatement.setString(4, "testuser");
+		preparedStatement.setString(5, "testuser@iastate.edu");
 		preparedStatement.setString(6, "password");
-		preparedStatement.setString(7, "testuser@iastate.edu");
+		
 		preparedStatement.execute();
 	}
 }

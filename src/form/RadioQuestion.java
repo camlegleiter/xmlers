@@ -6,4 +6,10 @@ public class RadioQuestion extends Question {
 	public void accept(IQuestionVisitor visitor) {
 		visitor.visit(this);
 	}
+
+	@Override
+	public String getAnswer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -13,4 +13,10 @@ public class ComplexQuestion extends Question implements IVisitable {
 		visitor.visit(this);
 	}
 
+	@Override
+	public String getAnswer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

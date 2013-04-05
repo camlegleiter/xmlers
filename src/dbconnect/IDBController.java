@@ -2,6 +2,8 @@ package dbconnect;
 
 import javax.servlet.http.HttpServletRequest;
 
+import dbconnect.dao.UserDAO;
+
 public interface IDBController {
 	/**
 	 * Checks the login to determine if the POSTed user data is valid.
@@ -21,5 +23,5 @@ public interface IDBController {
 	 * @return
 	 * 			<code>true</code> if the user was successfully added to the database.
 	 */
-	public boolean registerNewUser(HttpServletRequest request);
+	public boolean registerNewUser(UserDAO userDAO, String password);
 }

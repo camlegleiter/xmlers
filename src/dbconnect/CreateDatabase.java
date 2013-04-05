@@ -1,6 +1,8 @@
 package dbconnect;
 import java.sql.*;
 
+import dbconnect.dao.UserDAO;
+
 public class CreateDatabase {
 	public static void main(String[] args) {
 		
@@ -67,30 +69,23 @@ public class CreateDatabase {
 		query.append("id INT NOT NULL AUTO_INCREMENT, ");
 		query.append("firstname VARCHAR(30) NOT NULL, ");
 		query.append("lastname VARCHAR(30) NOT NULL, ");
-		query.append("isu_id INT(9) NOT NULL, ");
 		query.append("net_id VARCHAR(30) NOT NULL, ");
 		query.append("email VARCHAR(30) NOT NULL, ");
 		query.append("password BINARY(20) NOT NULL, ");
+		query.append("salt VARCHAR(128) NOT NULL, ");
 		query.append("PRIMARY KEY (id))");
 		
 		return query.toString();
 	}
 	
 	public static void createTestUser(Connection conn) throws SQLException {
-		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO users ");
-		query.append("(firstname, lastname, isu_id, net_id, email, password) ");
-		query.append("VALUES ");
-		query.append("(?, ?, ?, ?, ?, UNHEX(SHA1(?)))");
+		UserDAO user = new UserDAO();
+		user.setFirstName("Test");
+		user.setLastName("User");
+		user.setUserName("testuser");
+		user.setEmail("testuser@example.com");
 		
-		PreparedStatement preparedStatement = conn.prepareStatement(query.toString());
-		preparedStatement.setString(1, "Test");
-		preparedStatement.setString(2, "User");
-		preparedStatement.setString(3, "123456789");
-		preparedStatement.setString(4, "testuser");
-		preparedStatement.setString(5, "testuser@iastate.edu");
-		preparedStatement.setString(6, "password");
-		
-		preparedStatement.execute();
+		IDBController controller = new SqlController();
+		controller.registerNewUser(user, "password");
 	}
 }

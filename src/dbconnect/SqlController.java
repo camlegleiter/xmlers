@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class SqlController implements IDBController {
+import dbconnect.dao.UserDAO;
+
+public class SqlController extends AbstractDBController {
 	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/task_manager";
 	
 	public SqlController() {
@@ -28,8 +30,8 @@ public class SqlController implements IDBController {
 			// Build the search query to see if the login is good
 			StringBuilder query = new StringBuilder();
 			query.append("SELECT * FROM users WHERE ");
-			query.append("username = ? ");
-			query.append("AND password = UNHEX(SHA1(?))");
+			query.append("net_id = ? ");
+			query.append("AND password = UNHEX(SHA1(CONCAT(?, salt)))");
 			
 			// Run the query with the POSTed username and password
 			preparedStatement = conn.prepareStatement(query.toString());
@@ -42,7 +44,7 @@ public class SqlController implements IDBController {
 				HttpSession session = request.getSession(true);
 				if (session.isNew()) {
 					session.setAttribute("userid", results.getString("id"));
-					session.setAttribute("username", results.getString("username"));
+					session.setAttribute("net_id", results.getString("net_id"));
 					session.setAttribute("firstname", results.getString("firstname"));
 					session.setAttribute("lastname", results.getString("lastname"));
 					session.setAttribute("email", results.getString("email"));
@@ -78,7 +80,7 @@ public class SqlController implements IDBController {
 	}
 
 	@Override
-	public boolean registerNewUser(HttpServletRequest request) {
+	public boolean registerNewUser(UserDAO userDAO, String password) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet results = null;
@@ -89,17 +91,20 @@ public class SqlController implements IDBController {
 			// Build the search query
 			StringBuilder query = new StringBuilder();
 			query.append("INSERT INTO users ");
-			query.append("(firstname, lastname, isu_id, net_id, email, password) ");
+			query.append("(firstname, lastname, net_id, email, password, salt) ");
 			query.append("VALUES ");
-			query.append("(?, ?, ?, ?, ?, UNHEX(SHA1(?)))");
+			query.append("(?, ?, ?, ?, ?, UNHEX(SHA1(?)), ?)");
 			
 			preparedStatement = conn.prepareStatement(query.toString());
-			preparedStatement.setString(1, request.getParameter("first-name"));
-			preparedStatement.setString(2, request.getParameter("last-name"));
-			preparedStatement.setString(3, request.getParameter("isu_id"));
-			preparedStatement.setString(4, request.getParameter("net_id"));
-			preparedStatement.setString(5, request.getParameter("email"));
-			preparedStatement.setString(6, request.getParameter("password"));
+			preparedStatement.setString(1, userDAO.getFirstName());
+			preparedStatement.setString(2, userDAO.getLastName());
+			preparedStatement.setString(3, userDAO.getUserName());
+			preparedStatement.setString(4, userDAO.getEmail());
+			
+			String salt = generateUserSalt(128);
+			preparedStatement.setString(5, password + salt);
+			preparedStatement.setString(6, salt);
+			
 			return preparedStatement.execute();
 
 		} catch (Exception e) {

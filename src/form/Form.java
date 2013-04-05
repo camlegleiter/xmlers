@@ -5,9 +5,21 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class Form {
+public class Form implements Iterable<Question>{
 	private Queue<Question> questions;
 
+	/**
+	 * Finds an existing form in the file system, and loads it into
+	 * a new instance of the form. 
+	 * @param formID
+	 * @return
+	 */
+	public static Form fetchForm(String formID)
+	{
+		//TODO
+		return null;
+	}
+	
 	public Form() {
 		questions = new PriorityQueue<Question>(1, new QuestionPriority());
 	}
@@ -16,11 +28,11 @@ public class Form {
 		questions.add(q);
 	}
 
-	public Iterator<Question> getQuestions() {
-		// TODO
-		return null;
+	@Override
+	public Iterator<Question> iterator() {
+		return questions.iterator();
 	}
-
+	
 	private class QuestionPriority implements Comparator<Question> {
 		@Override
 		public int compare(Question o1, Question o2) {
@@ -28,4 +40,5 @@ public class Form {
 		}
 
 	}
+
 }

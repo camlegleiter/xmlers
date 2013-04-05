@@ -2,11 +2,12 @@ package form;
 
 public class ComplexQuestion extends Question implements IVisitable {
 
-	private int min;
-	public ComplexQuestion()
-	{
-		
+	public ComplexQuestion(String id, int weight, String prompt) {
+		super(id, weight, prompt);
+		// TODO Auto-generated constructor stub
 	}
+
+	private int min;
 	
 	@Override
 	public void accept(IQuestionVisitor visitor) {
@@ -14,9 +15,15 @@ public class ComplexQuestion extends Question implements IVisitable {
 	}
 
 	@Override
-	public String getAnswer() {
+	public String getResponse() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setResponse(String ans) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

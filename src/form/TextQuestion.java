@@ -2,26 +2,31 @@ package form;
 
 public class TextQuestion extends Question {
 
+
+
 	private String response;
 	
 	private int maxLength;
 	
-	public TextQuestion(int max)
-	{
-		this.maxLength = max;
-	}
 	
+	public TextQuestion(String id, int weight, String prompt, int max) {
+		super(id, weight, prompt);
+		this.maxLength = max;
+		response = null;
+
+	}
 	
 	@Override
 	public void accept(IQuestionVisitor visitor) {
 		visitor.visit(this);
 	}
 
+	@Override
 	public String getResponse() {
 		return response;
 	}
 
-
+	@Override
 	public void setResponse(String response) {
 		if(response.length() <= this.maxLength)
 		{
@@ -49,11 +54,4 @@ public class TextQuestion extends Question {
 			throw new IllegalArgumentException("The maximum length of a string must be greater than zero.");
 		}
 	}
-
-
-	@Override
-	public String getAnswer() {
-		return response;
-	}
-
 }

@@ -7,6 +7,13 @@ package form;
  */
 public abstract class Question implements IVisitable {
 
+	public Question(String id, int weight, String prompt)
+	{
+		this.id = id;
+		this.setPrompt(prompt);
+		this.setPosition(weight);
+	}
+	
 	/**
 	 * The text that describes to an End User what the question that they are
 	 * answering is.
@@ -49,7 +56,13 @@ public abstract class Question implements IVisitable {
 	 * Fetches a textual representation of how an end user responded.
 	 * @return
 	 */
-	public abstract String getAnswer();
+	public abstract String getResponse();
+	
+	/**
+	 * Updates the response from the end user.
+	 * @param ans
+	 */
+	public abstract void setResponse(String ans);
 	
 	/**
 	 * Retrieves the relative priority of the question to others.

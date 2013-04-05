@@ -2,7 +2,9 @@ package dbconnect;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class XmlController implements IDBController {
+import dbconnect.dao.UserDAO;
+
+public class XmlController extends AbstractDBController {
 	@Override
 	public boolean checkLogin(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -10,7 +12,7 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public boolean registerNewUser(HttpServletRequest request) {
+	public boolean registerNewUser(UserDAO userDAO, String password) {
 		// TODO Auto-generated method stub
 		return false;
 	}

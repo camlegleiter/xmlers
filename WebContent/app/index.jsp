@@ -18,7 +18,7 @@
 // 	response.sendRedirect(request.getContextPath() + "/login.jsp");
 // }
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -28,6 +28,7 @@
 		<meta name="author" content="">
 		<!-- Le styles -->
 		<link href="../css/bootstrap.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				padding-top: 60px;
@@ -38,7 +39,7 @@
 				padding: 10px 0px 0px 10px;
 			}
 		</style>
-		<link href="css/bootstrap-responsive.css" rel="stylesheet">
+		<link href="../css/bootstrap-responsive.css" rel="stylesheet">
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>
@@ -60,7 +61,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="brand" href="<%= request.getContextPath() %>/index.jsp">Task Manager</a>
+					<a class="brand" href="<%= request.getContextPath() %>/app/index.jsp">Task Manager</a>
 					<div class="nav-collapse collapse">
 						<form class="navbar-form pull-right" action="<%= request.getContextPath() %>/app/index" method="GET">
 							<input type="hidden" name="logout" value = "logout">
@@ -82,10 +83,8 @@
 					<h3>Form List</h3>	
 				</div>
 				<div class="span2">
-					<div class="btn-group pull-right" style="margin-top: 15px;">
-						<button type="button" class="btn" title="Add a New Form">+ Form</button>
-						<button type="button" class="btn" title="Delete an Existing Form">- Form</button>	
-					</div>			
+					<a href="<%= request.getContextPath() %>/app/create.jsp" class="tm-button" title="Create a New Form">+ Form</a>
+					<a href="#" class="tm-button" title="Delete an Existing Form">- Form</a>		
 				</div>
 				<div class="span8">
 					<h3>Content</h3>
@@ -106,8 +105,8 @@
 								<div class="accordion-inner">
 									<ul>
 										<li><a href="#" id="123456">Form 1</a></li>
-										<li><a href="#">Form 2</a></li>
-										<li><a href="#">Form 3</a></li>
+										<li><a href="#" id="951732">Form 2</a></li>
+										<li><a href="#" id="682457">Form 3</a></li>
 									</ul>
 								</div>
 							</div>
@@ -134,20 +133,12 @@
 				<div class="span8">
 					<div class="well">
 						<div id="form-info">
-							<h4>Name: Form 1</h4>
-							<h4>Description:</h4>
-							<p>
-								Bacon ipsum dolor sit amet cow pork belly deserunt excepteur. Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock. Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate. Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner. Aliquip beef ribs dolore shoulder ad consectetur pork belly minim. Flank duis consequat ut dolore doner ribeye turkey. Bacon fugiat in dolore, doner laborum tongue shankle.
-							</p>
-							<h4>Questions: </h4>
-							<p>
-								<ol>
-									<li><strong>Text: </strong>What is your name?</li>
-									<li><strong>Text: </strong>What is your quest?</li>
-									<li><strong>Multiple Choice: </strong>What is your favorite color?</li>
-								</ol>
-							</p>
-							<div>
+							<h4 id="form-name"></h4>
+							<p id="form-description"></p>
+							<h4 id="form-questions"></h4>
+							<ol id="form-questions-list">
+							</ol>
+							<div id="form-buttons">
 								<ul class="nav nav-pills">
 									<li>
 										<a href="#" title="See all of the records for this form">View Records</a>
@@ -180,22 +171,53 @@
 		<script src="../js/bootstrap-tooltip.js"></script>
 		<script src="../js/bootstrap-tab.js"></script>
 		<script>
-			/*$(document).ready(function() {
+			$(document).ready(function() {
+				var forms;
+				
 				$('li a').click(function() {
+					//clearFormInfo();
+					
 					var id = $(this).attr('id');
-					$.ajax({
-						url: "example_form1.json",
-						type: "POST",
-						dataType: "json",
-						data: id
-					}).done(function(json) {
-						$('div#form-info').html('');
-						$('div#form-info').
-					}).fail(function(jqXHR, textStatus) {
-						$('div#form-info').html('<h3><strong>Could not load the form data at this time :(</strong></h3>');
-					});
+					if (id) {
+						if (!forms) {
+							$.ajax({
+								url: "form_metadata.json",
+								type: "POST",
+								dataType: "json"
+							}).done(function(json) {
+								forms = json["forms"];
+							}).fail(function(jqXHR, textStatus) {
+								$('div#form-info').html('<h3><strong>Could not load the form data at this time :(</strong></h3>');
+							}).always(function() {
+								buildFormInfo(forms[id]);
+							});
+						} else {
+							buildFormInfo(forms[id]);
+						}
+					}
 				});
-			});*/
+					
+				function clearFormInfo() {
+					$('#form-name').html('');
+					$('#form-description >').html('');
+					$('#form-questions').html('');
+					$('#form-questions-list').html('');
+					//$('#form-buttons >').html('');
+				}
+				
+				function buildFormInfo(json) {
+					$('#form-name').html('Name: ' + json.name);
+					$('#form-description').html('<h4>Description:</h4>' + json.description);
+					
+					$('#form-questions').html('');
+					$('#form-questions').prepend('Questions:');
+					
+					$('#form-questions-list').html('');
+					for (var q in json.questions) {
+						$("#form-questions-list").append('<li><strong>' + json.questions[q].type + ': </strong>' + json.questions[q].description + '</li>');
+					}
+				}
+			});
 		</script>
 	</body>
 </html>

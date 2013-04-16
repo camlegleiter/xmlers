@@ -83,8 +83,10 @@
 					<h3>Form List</h3>	
 				</div>
 				<div class="span2">
-					<a href="<%= request.getContextPath() %>/app/create.jsp" class="tm-button" title="Create a New Form">+ Form</a>
-					<a href="#" class="tm-button" title="Delete an Existing Form">- Form</a>		
+					<div class="btn-group pull-right" style="margin-top: 16px">
+						<a class="btn" href="<%=request.getContextPath()%>/app/create.jsp" title="Create a New Form">+ Form</a>
+						<a class="btn" title="Delete an Existing Form">- Form</a>	
+					</div>	
 				</div>
 				<div class="span8">
 					<h3>Content</h3>

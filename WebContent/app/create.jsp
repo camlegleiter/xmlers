@@ -9,6 +9,7 @@
 		<meta name="author" content="">
 		<!-- Le styles -->
 		<link href="../css/bootstrap.css" rel="stylesheet">
+		<link href="../css/jquery-ui-1.10.2.custom.css" rel="stylesheet">
 		<link href="../css/style.css" rel="stylesheet">
 		<style type="text/css">
 			body {
@@ -21,6 +22,8 @@
 			}
 		</style>
 		<link href="../css/bootstrap-responsive.css" rel="stylesheet">
+		
+		<script src="../js/modernizr.js"></script>
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>
@@ -45,7 +48,7 @@
 					<a class="brand" href="<%= request.getContextPath() %>/app/index.jsp">Task Manager</a>
 					<div class="nav-collapse collapse">
 						<form class="navbar-form pull-right" action="<%= request.getContextPath() %>/app/index" method="GET">
-							<input type="hidden" name="logout" value = "logout">
+							<input type="hidden" name="logout" value="logout">
 							<button type="submit" class="btn">Sign Out</button>
 						</form>
 					</div>
@@ -70,22 +73,33 @@
 			</div>
 			<div class="row">
 				<div class="span3">
-					<div class="well">
+					<div class="well" style="padding: 10px;">
 						<ul class="columns">
-							<li class="ui-state-highlight">Test Entry Type1</li>
-							<li class="ui-state-highlight">Test Entry Type2</li>
-							<li class="ui-state-highlight">Test Entry Type3</li>
+							<li class="ui-state-highlight">Text Box</li>
+							<li class="ui-state-highlight">Multiple Choice</li>
+							<li class="ui-state-highlight">Checkbox</li>
 						</ul>
 					</div>
 				</div>
 				<div class="span9">
-					<div class="well">
-						<form action="<%=request.getContextPath()%>/create" method="POST">
-							<ol id="form-builder">
-								<li class="placeholder">Drag a column type here!</li>
-							</ol>
-						</form>
-					</div>
+					<form action="<%=request.getContextPath()%>/create" method="POST">
+						<fieldset>
+							<input type="text" class="inline-block-level" placeholder="Form Name" name="formName">
+							<div>
+								<ol id="form-builder">
+									<li class="placeholder">Drag a column type here!</li>
+								</ol>
+							</div>
+							<div class="form-actions">
+								<div style="margin-bottom: 10px">
+									<label class="checkbox"><input type="checkbox" name="participantsSeeAll">Participants can see the responses of others.</label>
+								</div>
+								
+								<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+								<a class="btn btn-large">Cancel</a>
+							</div>
+						</fieldset>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -112,8 +126,7 @@
 						$('<li></li>').text(ui.draggable.text()).appendTo(this);
 					}
 				}).sortable({
-					items: "li:not(.placeholder)",
-					placeholder: "ui-state-highlight",
+					placeholder: "ui-placeholder",
 					forcePlaceholderSize: true,
 					sort: function() {
 						$(this).removeClass("ui-state-default");

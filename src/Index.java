@@ -24,10 +24,17 @@ public class Index extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Check if the user clicked the "logout" button
 		String logout = request.getParameter("logout");
 		if (null != logout && logout.equals("logout")) {
 			request.getSession().invalidate();
 			deleteRememberMeCookie(request);
+			
+			// Doubly ensures that the headers prevent users from going back after logging out
+			// "Doubly" in the sense that the LoginFilter also sets the headers as well.
+			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+			response.setHeader("Pragma", "no-cache");
+			response.setDateHeader("Expires", 0);
 			
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 		}

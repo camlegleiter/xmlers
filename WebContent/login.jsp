@@ -1,23 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
-	Cookie[] cookies = request.getCookies(); // request is an instance of type HttpServletRequest
-	boolean foundCookie = false;
+// 	Cookie[] cookies = request.getCookies(); // request is an instance of type HttpServletRequest
+// 	boolean foundCookie = false;
 
-	if (null != cookies) {
-		for (int i = 0; i < cookies.length; i++) {
-			Cookie c = cookies[i];
-			if (c.getName().equals("userid")) {
-				String userId = c.getValue();
-				foundCookie = true;
-			}
-		}
+// 	if (null != cookies) {
+// 		for (int i = 0; i < cookies.length; i++) {
+// 			Cookie c = cookies[i];
+// 			if (c.getName().equals("userid")) {
+// 				String userId = c.getValue();
+// 				foundCookie = true;
+// 			}
+// 		}
 
-		if (foundCookie) {
-			response.sendRedirect(request.getContextPath() + "/index.jsp");
-		} else {
-			session.invalidate();
-		}
-	}
+// 		if (foundCookie) {
+// 			response.sendRedirect(request.getContextPath() + "/index.jsp");
+// 		} else {
+// 			session.invalidate();
+// 		}
+// 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -145,7 +145,7 @@
 			            	$('#signin-input-group').addClass("error");
 			            	$('#login-error').html(responseText).slideDown();
 			        	} else {
-			        		window.location.replace("index.jsp");
+			        		window.location.replace("app/index.jsp");
 			        	}
 			        });
 			        return false;

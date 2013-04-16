@@ -42,13 +42,11 @@ public class SqlController extends AbstractDBController {
 			if (results.next()) {
 				// Set all the session information with the user's information
 				HttpSession session = request.getSession(true);
-				if (session.isNew()) {
-					session.setAttribute("userid", results.getString("id"));
-					session.setAttribute("net_id", results.getString("net_id"));
-					session.setAttribute("firstname", results.getString("firstname"));
-					session.setAttribute("lastname", results.getString("lastname"));
-					session.setAttribute("email", results.getString("email"));
-				}
+				session.setAttribute("userid", results.getString("id"));
+				session.setAttribute("net_id", results.getString("net_id"));
+				session.setAttribute("firstname", results.getString("firstname"));
+				session.setAttribute("lastname", results.getString("lastname"));
+				session.setAttribute("email", results.getString("email"));
 				
 				return true;
 			}

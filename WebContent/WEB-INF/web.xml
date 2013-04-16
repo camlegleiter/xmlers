@@ -44,4 +44,12 @@
     <servlet-name>Edit</servlet-name>
     <url-pattern>/app/edit</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Create</servlet-name>
+    <servlet-class>Create</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Create</servlet-name>
+    <url-pattern>/app/create</url-pattern>
+  </servlet-mapping>
 </web-app>

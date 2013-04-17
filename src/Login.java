@@ -28,7 +28,6 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* If the user is responding to an email, there should be a URLEncoded URI here that we can redirect to after they log in */
 	}
 
 	/**
@@ -46,6 +45,9 @@ public class Login extends HttpServlet {
 				cookie.setMaxAge(15);
 				response.addCookie(cookie);
 			}
+			
+			/* If the user is responding to an email, there should be a URLEncoded URI here that we can redirect to after they log in */
+			// ...
 			
 			// No errors, send back an empty string
 			response.getWriter().write("");

@@ -9,6 +9,8 @@
 		<meta name="author" content="">
 		<!-- Le styles -->
 		<link href="../css/bootstrap.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
+		<link href="../css/themes/blue/style.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				padding-top: 60px;
@@ -58,6 +60,70 @@
 					<p style="text-align: center; margin: 10px"><strong>This website works best when JavaScript is enabled.</strong></p>
 				</div>
 			</noscript>	
+			
+			<div class="row">
+				<div class="span10 offset1">
+					<div class="row">
+						<div class="span8">
+							<h2>Form 1 Records</h2>
+						</div>
+						<div class="span2">
+							<div class="btn-group pull-right" style="margin-top: 16px">
+								<a class="btn" href="<%=request.getContextPath()%>/app/index.jsp" title="Go back to the index">Back</a>	
+							</div>
+						</div>
+					</div>
+				
+					<table id="viewTableRecords" class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th class="header">Participant</th>
+								<th class="header">1. What is your name?</thd>
+								<th class="header">2. What is your quest?</th>
+								<th class="header">3. What is your favorite color?</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Sir Lancelot the Brave</td>
+								<td>Sir Lancelot</td>
+								<td>To seek the Holy Grail</td>
+								<td>Blue</td>
+							</tr>
+							<tr>
+								<td>Sir Robin the Not-Quite-So-Brave-as-Sir Lancelot</td>
+								<td>Sir Robin</td>
+								<td>To seek the Holy Grail</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Sir Galahad the Pure</td>
+								<td>Sir Galahad</td>
+								<td>To seek the Holy Grail</td>
+								<td>Blue... No yel-</td>
+							</tr>
+							<tr>
+								<td>King Arthur</td>
+								<td>Arthur, King of the Britains</td>
+								<td>To seek the Holy Grail</td>
+								<td>What do you mean? An African or European swallow?</td>
+							</tr>							
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
+		
+		<!-- /container -->
+		<!-- Le javascript
+			================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../js/jquery.js"></script>
+		<script src="../js/jquery.tablesorter.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('table#viewTableRecords').tablesorter({ sortList: [[0, 0], [1, 0]] });
+			});
+		</script>
 	</body>
 </html>

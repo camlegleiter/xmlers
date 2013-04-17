@@ -28,6 +28,7 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/* If the user is responding to an email, there should be a URLEncoded URI here that we can redirect to after they log in */
 	}
 
 	/**

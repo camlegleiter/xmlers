@@ -1,23 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%
-// Cookie[] cookies = request.getCookies(); // request is an instance of type HttpServletRequest
-// boolean foundCookie = false;
-
-// if (null != cookies) {
-// 	for (int i = 0; i < cookies.length; i++) {
-// 		Cookie c = cookies[i];
-// 		if (c.getName().equals("userid")) {
-// 			String userId = c.getValue();
-// 			foundCookie = true;
-// 		}
-// 	}
-// } 
-
-// if (!foundCookie) {
-// 	session.invalidate();
-// 	response.sendRedirect(request.getContextPath() + "/login.jsp");
-// }
-%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -63,10 +44,21 @@
 					</button>
 					<a class="brand" href="<%= request.getContextPath() %>/app/index.jsp">Task Manager</a>
 					<div class="nav-collapse collapse">
-						<form class="navbar-form pull-right" action="<%= request.getContextPath() %>/app/index" method="GET">
-							<input type="hidden" name="logout" value = "logout">
-							<button type="submit" class="btn">Sign Out</button>
-						</form>
+						<ul class="nav pull-right">
+							<li id="fat-menu" class="dropdown">
+								<a href="#" id="settingsDrop" role="button" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="settingsDrop">
+									<li><a role="menuitem" href="<%= request.getContextPath() %>/app/settings.jsp">User Settings</a></li>
+									<li class="divider"></li>
+									<li style="padding: 0 10px;">
+										<form class="navbar-form" action="<%= request.getContextPath() %>/app/logout" method="POST">
+											<input type="hidden" name="logout" value = "logout">
+											<button type="submit" class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;">Sign Out</button>
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -134,28 +126,19 @@
 				</div>
 				<div class="span8">
 					<div class="well">
+						<div id="initial-content"><h4>Click on a form to get started!</h4></div>
 						<div id="form-info">
 							<h4 id="form-name"></h4>
 							<p id="form-description"></p>
 							<h4 id="form-questions"></h4>
 							<ol id="form-questions-list">
 							</ol>
-							<div id="form-buttons">
-								<ul class="nav nav-pills">
-									<li>
-										<a href="#" title="See all of the records for this form">View Records</a>
-									</li>
-									<li>
-										<a href="#" title="Make changes to this form">Edit Form</a>
-									</li>
-									<li>
-										<a href="#" title="Resend an email to respondents who haven't completed this form yet.">Re-Email Respondents</a>
-									</li>
-								</ul>
-								<!-- <button title="See all of the records for this form">View Records</button>
-								<button title="Make changes to this form">Edit Form</button>
-								<button title="Resend an email to respondents who haven't completed this form yet.">Re-Email Respondents</button> -->
-							</div>
+							<form id="form-buttons" class="form-inline" action="<%=request.getContextPath()%>/app/index" method="POST" style="display: none;">
+								<input type="hidden" id="form-id" name="formid">
+								<input type="submit" id="viewRecords" class="btn" name="viewRecords" value="View Records" title="See all of the records for this form.">
+								<input type="submit" id="editForm" class="btn" name="editForm" value="Edit Form" title="Make changes to this form.">
+								<input type="submit" id="reemailParticipants" class="btn" name="reemailParticipants" value="Re-Email Participants" title="Sends a reminder to participants who haven't completed this form to do so.">
+							</form>
 						</div>
 					</div>
 				</div>
@@ -167,34 +150,28 @@
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="../js/jquery.js"></script>
-		<script src="../js/bootstrap-transition.js"></script>
-		<script src="../js/bootstrap-collapse.js"></script>
-		<script src="../js/bootstrap-dropdown.js"></script>
-		<script src="../js/bootstrap-tooltip.js"></script>
-		<script src="../js/bootstrap-tab.js"></script>
+		<script src="../js/bootstrap.js"></script>
 		<script>
 			$(document).ready(function() {
-				var forms;
+				var myForms;
 				
-				$('li a').click(function() {
-					//clearFormInfo();
-					
+				$('#myForms li a').click(function() {
 					var id = $(this).attr('id');
 					if (id) {
-						if (!forms) {
+						if (!myForms) {
 							$.ajax({
 								url: "form_metadata.json",
 								type: "POST",
 								dataType: "json"
 							}).done(function(json) {
-								forms = json["forms"];
+								myForms = json["forms"];
 							}).fail(function(jqXHR, textStatus) {
 								$('div#form-info').html('<h3><strong>Could not load the form data at this time :(</strong></h3>');
 							}).always(function() {
-								buildFormInfo(forms[id]);
+								if (myForms) buildFormInfo(myForms[id], id);
 							});
 						} else {
-							buildFormInfo(forms[id]);
+							buildFormInfo(myForms[id], id);
 						}
 					}
 				});
@@ -204,20 +181,22 @@
 					$('#form-description >').html('');
 					$('#form-questions').html('');
 					$('#form-questions-list').html('');
-					//$('#form-buttons >').html('');
+					$('#form-buttons').hide();
 				}
 				
-				function buildFormInfo(json) {
+				function buildFormInfo(json, id) {
 					$('#form-name').html('Name: ' + json.name);
 					$('#form-description').html('<h4>Description:</h4>' + json.description);
 					
-					$('#form-questions').html('');
-					$('#form-questions').prepend('Questions:');
+					$('#form-questions').html('').prepend('Questions:');
 					
 					$('#form-questions-list').html('');
-					for (var q in json.questions) {
-						$("#form-questions-list").append('<li><strong>' + json.questions[q].type + ': </strong>' + json.questions[q].description + '</li>');
-					}
+					$.each(json.questions, function(index, q) {
+						$('#form-questions-list').append('<li><strong>' + q.type + ': </strong>' + q.description + '</li>');
+					});
+					
+					$('#form-id').attr('value', id);
+					$('#form-buttons').show();
 				}
 			});
 		</script>

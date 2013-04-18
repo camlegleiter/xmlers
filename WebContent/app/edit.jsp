@@ -43,10 +43,21 @@
 					</button>
 					<a class="brand" href="<%= request.getContextPath() %>/app/index.jsp">Task Manager</a>
 					<div class="nav-collapse collapse">
-						<form class="navbar-form pull-right" action="<%= request.getContextPath() %>/app/index" method="GET">
-							<input type="hidden" name="logout" value = "logout">
-							<button type="submit" class="btn">Sign Out</button>
-						</form>
+						<ul class="nav pull-right">
+							<li id="fat-menu" class="dropdown">
+								<a href="#" id="settingsDrop" role="button" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="settingsDrop">
+									<li><a role="menuitem" href="<%= request.getContextPath() %>/app/settings.jsp">User Settings</a></li>
+									<li class="divider"></li>
+									<li style="padding: 0 10px;">
+										<form class="navbar-form" action="<%= request.getContextPath() %>/app/logout" method="POST">
+											<input type="hidden" name="logout" value = "logout">
+											<button type="submit" class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;">Sign Out</button>
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>

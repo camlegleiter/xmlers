@@ -156,6 +156,7 @@
 				var myForms;
 				
 				$('#myForms li a').click(function() {
+					$('#initial-content').remove();
 					var id = $(this).attr('id');
 					if (id) {
 						if (!myForms) {

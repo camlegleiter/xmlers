@@ -52,4 +52,12 @@
     <servlet-name>Create</servlet-name>
     <url-pattern>/app/create</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Settings</servlet-name>
+    <servlet-class>Settings</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Settings</servlet-name>
+    <url-pattern>/app/settings</url-pattern>
+  </servlet-mapping>
 </web-app>

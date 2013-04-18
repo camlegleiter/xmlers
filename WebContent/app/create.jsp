@@ -84,7 +84,7 @@
 				<div class="span9">
 					<form action="<%=request.getContextPath()%>/create" method="POST">
 						<fieldset>
-							<input type="text" class="inline-block-level" placeholder="Form Name" name="formName">
+							<input type="text" class="inline-block-level" placeholder="Form Name" name="formName" required>
 							<div>
 								<ol id="form-builder">
 									<li class="placeholder">Drag a column type here!</li>
@@ -95,7 +95,7 @@
 									<label class="checkbox"><input type="checkbox" name="participantsSeeAll">Participants can see the responses of others.</label>
 								</div>
 								
-								<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+								<button class="btn btn-large btn-primary" type="submit">Submit</button>
 								<a class="btn btn-large">Cancel</a>
 							</div>
 						</fieldset>

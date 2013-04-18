@@ -68,7 +68,18 @@
 				<div class="alert alert-error">
 					<p style="text-align: center; margin: 10px"><strong>This website works best when JavaScript is enabled.</strong></p>
 				</div>
-			</noscript>	
+			</noscript>
+			
+			<form method="post" action="<%= request.getContextPath() %>/app/settings">
+				<input type="submit" class="btn btn-primary" value="Test Email" />
+			</form>
 		</div>
+		
+		<!-- /container -->
+		<!-- Le javascript
+			================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../js/jquery.js"></script>
+		<script src="../js/bootstrap.js"></script>		
 	</body>
 </html>

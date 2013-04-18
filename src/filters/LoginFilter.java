@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
  * able to go back in their cached history, which is especially important for after
  * the user logs out.
  */
-@WebFilter("/xmlers/*")
+@WebFilter("/xmlers/app/*")
 public class LoginFilter implements Filter {
 
     /**

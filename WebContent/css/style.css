@@ -46,3 +46,7 @@ ul, ol {
 	border: 1px solid #fcefa1;
 	color: #363636;
 }
+
+#viewTableRecords th {
+	cursor: pointer;
+}

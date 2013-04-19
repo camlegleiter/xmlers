@@ -137,7 +137,7 @@
 								<input type="hidden" id="form-id" name="formid">
 								<input type="submit" id="viewRecords" class="btn" name="viewRecords" value="View Records" title="See all of the records for this form.">
 								<input type="submit" id="editForm" class="btn" name="editForm" value="Edit Form" title="Make changes to this form.">
-								<input type="submit" id="reemailParticipants" class="btn" name="reemailParticipants" value="Re-Email Participants" title="Sends a reminder to participants who haven't completed this form to do so.">
+								<button id="reemailParticipants" class="btn" name="reemailParticipants" value="Re-Email Participants" title="Sends a reminder to participants who haven't completed this form to do so.">Re-Email Participants</button>
 							</form>
 						</div>
 					</div>
@@ -175,6 +175,24 @@
 							buildFormInfo(myForms[id], id);
 						}
 					}
+				});
+							
+				$('#reemailParticipants').click(function() {
+					$('#form-id').attr('value');
+					
+					$.ajax({
+						url: "<%= request.getContextPath() %>/app/index",
+						type: "POST",
+						data: $('#form-id').attr('value')
+					}).done(function(result) {
+						
+					}).fail(function(result) {
+						
+					}).always(function() {
+						
+					});
+					
+					return false;
 				});
 					
 				function clearFormInfo() {

@@ -1,6 +1,7 @@
 package email;
 
 import java.util.Date;
+import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -30,13 +31,19 @@ public class EmailParticipants {
 	 * The keywords within the message ({admin}, {adminEmail}, and {url}) are replaced with their proper values
 	 * before being sent to the user.
 	 */
-	private static final String STANDARD_TEMPLATE_BODY = "{admin} ({adminEmail}) has created a form using Task Manager, and needs your response! Please follow the link:\n\n{url}\n\nand provide your response(s) as soon as possible.\n\nThanks,\nThe Task Manager Team";
+	private static final String STANDARD_TEMPLATE_BODY = 
+			new StringBuilder("\\[admin\\] (\\[adminEmail\\]) has created a form using Task Manager, and needs your response!")
+				.append("Please follow the link:\n\n\\")
+				.append("<a href=\"[getUrl]\">[url\\]</a>\n\n")
+				.append("and provide your response(s) as soon as possible.\n\n") 
+				.append("Thanks,\nThe Task Manager Team")
+				.toString();
 	
 	/**
 	 * Emails all of the participants of a form and asks that they complete the created form.
 	 * 
 	 * @param formID 
-	 * 			the ID of the corresponding form to retrieve basic information for
+	 * 			the ID of the corresponding form
 	 * @param admin
 	 * 			the name of the administrator of the form
 	 * @param adminEmail 
@@ -47,14 +54,22 @@ public class EmailParticipants {
 	 * 			the administrator-defined subject of the email message. If null or empty, uses a standard email subject.
 	 * @param body 
 	 * 			the administrator-defined body of the email message. If null or empty, uses a standard email body.
+	 * 
+	 * @throws MessagingException
+	 * 			if there is an issue in the JavaMail API when sending an email
+	 * @throws IllegalArgumentException
+	 * 			if any of the given arguments are null or empty, or if the array of participant emails is length 0
 	 */
-	public static void emailParticipants(String formID, String admin, String adminEmail, String[] participantEmails, String subject, String body) throws MessagingException {
+	public static void emailParticipants(String formID, String admin, String adminEmail, String[] participantEmails, String subject, String body) throws MessagingException, IllegalArgumentException {
 		// Initial check to make sure that the important arguments have been set
-		if (isNullOrEmpty(formID) || isNullOrEmpty(adminEmail) || 
-				null == participantEmails || 0 == participantEmails.length) {
+		if (isNullOrEmpty(formID) || isNullOrEmpty(admin) || isNullOrEmpty(adminEmail) || 
+				(null == participantEmails || 0 == participantEmails.length)) {
 			throw new IllegalArgumentException();
 		}
 		
+		Properties properties = new Properties();
+		properties.setProperty("mail.transport.protocol", "smtp");
+		properties.setProperty("mail.host", "");
 		System.setProperty("mail.smtp.host", "localhost");
 		Session session = Session.getDefaultInstance(System.getProperties());
 		
@@ -65,21 +80,54 @@ public class EmailParticipants {
 		}
 		
 		message.setSubject(isNullOrEmpty(subject) ? STANDARD_TEMPLATE_SUBJECT : subject);
-		message.setText(isNullOrEmpty(body) ? setMessageValues(admin, adminEmail, "", "") : body);
+		message.setContent(isNullOrEmpty(body) ? setMessageValues(admin, adminEmail, "", "") : body, "text/html; charset=ISO-8859-1");
 		message.setSentDate(new Date());
 		
-		Transport.send(message);
+		Transport transport = session.getTransport();
+		transport.connect();
+		transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
+		transport.close();
 	}
 	
 	/**
-	 * Gets all of the participants of the given form ID who haven't completed the form
-	 * and reminds them to do so.
+	 * Sends an email to all participants who haven't completed the given formID's questions to remind them to do so.
 	 * 
 	 * @param formID 
-	 * 			the ID of the corresponding form to retrieve basic information for
+	 * 			the ID of the corresponding form
+	 * @param participantEmails
+	 * 			a list of all participants' emails
+	 * 
+	 * @throws MessagingException
+	 * 			if there is an issue in the JavaMail API when sending an email
+	 * @throws IllegalArgumentException
+	 * 			if any of the given arguments are null or empty, or if the array of participant emails is length 0
 	 */
-	public static void reemailParticipants(String formID) {
+	public static void reemailParticipants(String formID, String admin, String adminEmail, String[] participantEmails) throws MessagingException, IllegalArgumentException {
+		if (isNullOrEmpty(formID) || 
+				(null == participantEmails || 0 == participantEmails.length)) {
+			throw new IllegalArgumentException();
+		}
 		
+		Properties properties = new Properties();
+		properties.setProperty("mail.transport.protocol", "smtp");
+		properties.setProperty("mail.host", "");
+		System.setProperty("mail.smtp.host", "localhost");
+		Session session = Session.getDefaultInstance(System.getProperties());
+		
+		Message message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(adminEmail));
+		for (String participantEmail : participantEmails) {
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(participantEmail));
+		}
+		
+		//message.setSubject(isNullOrEmpty(subject) ? STANDARD_TEMPLATE_SUBJECT : subject);
+		//message.setContent(isNullOrEmpty(body) ? setMessageValues(admin, adminEmail, "", "") : body, "text/html; charset=ISO-8859-1");
+		message.setSentDate(new Date());
+		
+		Transport transport = session.getTransport();
+		transport.connect();
+		transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
+		transport.close();
 	}
 	
 	/**
@@ -112,8 +160,8 @@ public class EmailParticipants {
 	 */
 	private static String setMessageValues(String admin, String adminEmail, String getUrl, String url) {
 		return STANDARD_TEMPLATE_BODY
-				.replaceAll("{admin}", admin)
-				.replaceAll("{adminEmail}", adminEmail)
-				.replaceAll("{url}", url);
+				.replaceAll("[admin]", admin)
+				.replaceAll("[adminEmail]", adminEmail)
+				.replaceAll("[url]", url);
 	}
 }

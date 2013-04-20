@@ -52,12 +52,12 @@ public class LoginFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpSession session = request.getSession(false);
 		
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", 0);
+		
 		// If there is no session or the session hasn't set the userid, redirect to login
-		if (null == session || null == session.getAttribute("userid")) {
-			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-			response.setHeader("Pragma", "no-cache");
-			response.setDateHeader("Expires", 0);
-			
+		if (null == session || null == session.getAttribute("userid")) {			
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 		} else {
 			chain.doFilter(req, res);

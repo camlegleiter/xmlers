@@ -3,11 +3,13 @@ ul, ol {
 	margin-left: 0px;
 }
 
-.clearfix:after {
-	content: "";
-	display: table;
-	clear: both;
+/* --- Index Page Styles --- */
+
+.sidebar-nav {
+	padding: 9px 0;
 }
+
+/* --- Create Page Draggable Effects --- */
 
 .columns li,
 #form-builder li {
@@ -46,6 +48,8 @@ ul, ol {
 	border: 1px solid #fcefa1;
 	color: #363636;
 }
+
+/* --- View Page Table CSS --- */
 
 #viewTableRecords th {
 	cursor: pointer;

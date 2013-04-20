@@ -28,7 +28,8 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<!-- Le styles -->
-		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				padding-top: 40px;
@@ -64,7 +65,6 @@
 				max-width: 300px;
 			}
 		</style>
-		<link href="css/bootstrap-responsive.css" rel="stylesheet">
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>
@@ -140,7 +140,7 @@
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap-tab.js"></script>
+		<script src="js/bootstrap.js"></script>
 		<script>
 			$(document).ready(function() {
 			    $('.form-signin').submit(function() {

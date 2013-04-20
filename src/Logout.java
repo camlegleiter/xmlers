@@ -26,13 +26,6 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Check if the user clicked the "logout" button
 		String logout = request.getParameter("logout");
 		if (null != logout && logout.equals("logout")) {
@@ -43,10 +36,17 @@ public class Logout extends HttpServlet {
 			// "Doubly" in the sense that the LoginFilter also sets the headers as well.
 			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 			response.setHeader("Pragma", "no-cache");
-			response.setDateHeader("Expires", -1);
+			response.setDateHeader("Expires", 0);
 			
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 	}
 	
 	/**

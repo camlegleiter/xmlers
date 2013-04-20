@@ -125,7 +125,7 @@
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="../js/jquery.js"></script>
-		<script src="../js/jquery.tablesorter.js"></script>
+		<script src="../js/jquery.tablesorter.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				$('table#viewTableRecords').tablesorter({ sortList: [[0, 0], [1, 0]] });

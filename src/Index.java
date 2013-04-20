@@ -43,7 +43,7 @@ public class Index extends HttpServlet {
 				// Redirect the user to the view results page
 				response.sendRedirect(request.getContextPath() + "/app/view.jsp?formid=" + formID);
 			} else if (null != editForm) {
-				// Redirect teh user to the edit form page
+				// Redirect the user to the edit form page
 				response.sendRedirect(request.getContextPath() + "/app/edit.jsp?formid=" + formID);
 			} else if (null != reemailParticipants) {
 				// TODO: Get form information regarding participants who haven't submitted responses,
@@ -58,9 +58,10 @@ public class Index extends HttpServlet {
 						//EmailParticipants.reemailParticipants(formID, null, null, participants);
 					} catch (IllegalArgumentException e) {
 						if (0 == participants.length) {
-							out.write("Either all of the participants have successfully responded, or there are no participants");
+							out.write("Either all of the participants have successfully responded, or there are no participants for this form.");
 						} else {
-							
+							// Should not happen if correctly logged in
+							out.write("Invalid user name. Please make sure you are logged in.");
 						}
 						return;
 					} //catch (MessagingException e) {

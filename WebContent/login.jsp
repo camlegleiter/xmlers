@@ -84,49 +84,55 @@
 				</div>
 			</noscript>
 			
-			<div class="tabbable">
-				<ul class="nav nav-tabs" id="loginTabs">
-					<li><a class="active" data-toggle="tab" data-target="#login")>Login</a></li>
-					<li><a data-toggle="tab" data-target="#register">Register</a></li>
-				</ul>
-				<div class="tab-content">
-				
-					<div class="tab-pane active" id="login">
-						<form class="form-signin" action="<%=request.getContextPath()%>/login" method="POST">
-							<h2 class="form-signin-heading">Please sign in</h2>
-							<div class="control-group" id="signin-input-group">
-								<div class="controls">
-									<input type="text" class="input-block-level" placeholder="User name" name="username">
-									<input type="password" class="input-block-level" placeholder="Password" name="password">
-									<span class="help-inline" id="login-error"></span>
-								</div>
+			<div class="row">
+				<div class="span4"></div>
+				<div class="span4">
+					<div class="tabbable">
+						<ul class="nav nav-tabs" id="loginTabs">
+							<li><a class="active" data-toggle="tab" data-target="#login")>Login</a></li>
+							<li><a data-toggle="tab" data-target="#register">Register</a></li>
+						</ul>
+						<div class="tab-content">
+						
+							<div class="tab-pane active" id="login">
+								<form class="form-signin" action="<%= request.getContextPath() %>/login" method="POST">
+									<h2 class="form-signin-heading">Please sign in</h2>
+									<div class="control-group" id="signin-input-group">
+										<div class="controls">
+											<input type="text" class="input-block-level" placeholder="User name" name="username">
+											<input type="password" class="input-block-level" placeholder="Password" name="password">
+											<span class="help-inline" id="login-error"></span>
+										</div>
+									</div>
+									<label class="checkbox">
+									<input type="checkbox" value="remember-me" name="remember"> Remember me
+									</label>
+									<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+								</form>					
 							</div>
-							<label class="checkbox">
-							<input type="checkbox" value="remember-me" name="remember"> Remember me
-							</label>
-							<button class="btn btn-large btn-primary" type="submit">Sign in</button>
-						</form>					
-					</div>
-					
-					<div class="tab-pane" id="register">
-						<form class="form-signin" action="<%=request.getContextPath()%>/register" method="POST">
-							<h2 class="form-signin-heading">Register</h2>
-							<div class="control-group" id="input-group">
-								<div class="controls">
-									<input type="text" required class="input-block-level" placeholder="First Name" name="first-name">
-									<input type="text" required class="input-block-level" placeholder="Last Name" name="last-name">
-									<input type="text" required class="input-block-level" placeholder="NetID" name="username">
-									<input type="text" required class="input-block-level" placeholder="Email" name="email">
-									<input type="password" required class="input-block-level" placeholder="Password" name="password">
-									<input type="password" required class="input-block-level" placeholder="Re-enter password" name="password-check">
-									<span class="help-inline" id="register-error"></span>
-								</div>
+							
+							<div class="tab-pane" id="register">
+								<form class="form-signin" action="<%= request.getContextPath() %>/register" method="POST">
+									<h2 class="form-signin-heading">Register</h2>
+									<div class="control-group" id="input-group">
+										<div class="controls">
+											<input type="text" required class="input-block-level" placeholder="First Name" name="first-name">
+											<input type="text" required class="input-block-level" placeholder="Last Name" name="last-name">
+											<input type="text" required class="input-block-level" placeholder="NetID" name="username">
+											<input type="text" required class="input-block-level" placeholder="Email" name="email">
+											<input type="password" required class="input-block-level" placeholder="Password" name="password">
+											<input type="password" required class="input-block-level" placeholder="Re-enter password" name="password-check">
+											<span class="help-inline" id="register-error"></span>
+										</div>
+									</div>
+									<button class="btn btn-large btn-primary" type="submit">Register</button>
+								</form>	
 							</div>
-							<button class="btn btn-large btn-primary" type="submit">Register</button>
-						</form>	
+							
+						</div>
 					</div>
-					
 				</div>
+				<div class="span4"></div>
 			</div>	
 		</div>
 		<!-- /container -->

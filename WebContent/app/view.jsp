@@ -51,12 +51,7 @@
 								<ul class="dropdown-menu" role="menu" aria-labelledby="settingsDrop">
 									<li><a role="menuitem" href="<%= request.getContextPath() %>/app/settings.jsp">User Settings</a></li>
 									<li class="divider"></li>
-									<li style="padding: 0 10px;">
-										<form class="navbar-form" action="<%= request.getContextPath() %>/app/logout" method="POST">
-											<input type="hidden" name="logout" value = "logout">
-											<button type="submit" class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;">Sign Out</button>
-										</form>
-									</li>
+									<li><a role="menuitem" href="<%= request.getContextPath() %>/app/logout?logout=logout">Sign Out</a></li>
 								</ul>
 							</li>
 						</ul>

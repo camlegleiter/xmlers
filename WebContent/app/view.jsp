@@ -9,7 +9,6 @@
 		<meta name="author" content="">
 		<!-- Le styles -->
 		<link href="../css/bootstrap.min.css" rel="stylesheet">
-		<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="../css/style.css" rel="stylesheet">
 		<link href="../css/themes/blue/style.css" rel="stylesheet">
 		<style type="text/css">
@@ -22,6 +21,7 @@
 				padding: 10px 0px 0px 10px;
 			}
 		</style>
+		<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">		
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>

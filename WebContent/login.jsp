@@ -1,24 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%
-// 	Cookie[] cookies = request.getCookies(); // request is an instance of type HttpServletRequest
-// 	boolean foundCookie = false;
 
-// 	if (null != cookies) {
-// 		for (int i = 0; i < cookies.length; i++) {
-// 			Cookie c = cookies[i];
-// 			if (c.getName().equals("userid")) {
-// 				String userId = c.getValue();
-// 				foundCookie = true;
-// 			}
-// 		}
-
-// 		if (foundCookie) {
-// 			response.sendRedirect(request.getContextPath() + "/index.jsp");
-// 		} else {
-// 			session.invalidate();
-// 		}
-// 	}
-%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -29,7 +10,6 @@
 		<meta name="author" content="">
 		<!-- Le styles -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				padding-top: 40px;
@@ -65,6 +45,7 @@
 				max-width: 300px;
 			}
 		</style>
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">		
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>
@@ -139,8 +120,8 @@
 		<!-- Le javascript
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 		<script>
 			$(document).ready(function() {
 			    $('.form-signin').submit(function() {

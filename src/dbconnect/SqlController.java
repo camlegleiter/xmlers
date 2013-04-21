@@ -91,7 +91,7 @@ public class SqlController extends AbstractDBController {
 			query.append("INSERT INTO users ");
 			query.append("(firstname, lastname, net_id, email, password, salt) ");
 			query.append("VALUES ");
-			query.append("(?, ?, ?, ?, ?, UNHEX(SHA1(?)), ?)");
+			query.append("(?, ?, ?, ?, UNHEX(SHA1(?)), ?)");
 			
 			preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setString(1, userDAO.getFirstName());

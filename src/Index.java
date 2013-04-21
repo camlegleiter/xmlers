@@ -48,7 +48,7 @@ public class Index extends HttpServlet {
 			} else if (null != reemailParticipants) {
 				// TODO: Get form information regarding participants who haven't submitted responses,
 				// as well as the last time any emails were sent out to participants.
-				// This should also only be allowed to execute once every X number of hours/days/etc.
+				// This should only be allowed to execute once every X number of hours/days/etc.
 				
 				// if (difference in time now - time last sent > 24 hours (etc...)) {
 					String[] participants = new String[] {};

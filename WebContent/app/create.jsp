@@ -39,7 +39,7 @@
 			
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="container">
+				<div class="container-fluid">
 					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -62,14 +62,14 @@
 			</div>
 		</div>
 		
-		<div class="container">
+		<div class="container-fluid">
 			<noscript>
 				<div class="alert alert-error">
 					<p style="text-align: center; margin: 10px"><strong>This website works best when JavaScript is enabled.</strong></p>
 				</div>
 			</noscript>	
 			
-			<div class="row">
+			<div class="row-fluid">
 				<div class="span3">
 					<h3>Select Column Type:</h3>
 					<div class="well" style="padding: 10px;">

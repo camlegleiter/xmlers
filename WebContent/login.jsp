@@ -58,14 +58,14 @@
 		<link rel="shortcut icon" href="../assets/ico/favicon.png">
 	</head>
 	<body>
-		<div class="container">
+		<div class="container-fluid">
 			<noscript>
 				<div class="alert alert-error">
 					<p style="text-align: center; margin: 10px"><strong>This website works best when JavaScript is enabled.</strong></p>
 				</div>
 			</noscript>
 			
-			<div class="row">
+			<div class="row-fluid">
 				<div class="span4"></div>
 				<div class="span4">
 					<div class="tabbable">

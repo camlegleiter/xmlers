@@ -60,17 +60,23 @@
 			</div>
 		</div>
 		
-		<div class="container">
+		<div class="container-fluid">
 			<noscript>
 				<div class="alert alert-error">
 					<p style="text-align: center; margin: 10px"><strong>This website works best when JavaScript is enabled.</strong></p>
 				</div>
 			</noscript>	
 			
-			<div class="row">
-				<div class="span10 offset1">
-					<div class="row">
-						<div class="span8">
+			<div class="row-fluid">
+				<div class="span2">
+				<h2>View Options</h2>
+					<div class="well">
+						asdf
+					</div>
+				</div>
+				<div class="span10">
+					<div class="row-fluid">
+						<div class="span10">
 							<h2>Form 1 Records</h2>
 						</div>
 						<div class="span2">
@@ -124,7 +130,7 @@
 		<!-- Le javascript
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="../js/jquery.js"></script>
+		<script src="../js/jquery.min.js"></script>
 		<script src="../js/jquery.tablesorter.min.js"></script>
 		<script>
 			$(document).ready(function() {

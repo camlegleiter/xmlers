@@ -9,7 +9,6 @@
 		<meta name="author" content="">
 		<!-- Le styles -->
 		<link href="../css/bootstrap.min.css" rel="stylesheet">
-		<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				padding-top: 60px;
@@ -20,6 +19,7 @@
 				padding: 10px 0px 0px 10px;
 			}
 		</style>
+		<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>
@@ -65,7 +65,7 @@
 				</div>
 			</noscript>
 			
-			<form method="post" action="<%= request.getContextPath() %>/app/settings">
+			<form method="POST" action="<%= request.getContextPath() %>/app/settings">
 				<input type="submit" class="btn btn-primary" value="Test Email" />
 			</form>
 		</div>
@@ -74,7 +74,7 @@
 		<!-- Le javascript
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="../js/jquery.js"></script>
-		<script src="../js/bootstrap.js"></script>		
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>		
 	</body>
 </html>

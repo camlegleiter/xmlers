@@ -70,7 +70,7 @@
 				<div class="span4">
 					<div class="tabbable">
 						<ul class="nav nav-tabs" id="loginTabs">
-							<li><a class="active" data-toggle="tab" data-target="#login")>Login</a></li>
+							<li><a class="active" data-toggle="tab" data-target="#login">Login</a></li>
 							<li><a data-toggle="tab" data-target="#register">Register</a></li>
 						</ul>
 						<div class="tab-content">

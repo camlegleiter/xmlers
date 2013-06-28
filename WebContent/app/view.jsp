@@ -7,10 +7,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<!-- Le styles -->
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
-		<link href="../css/style.css" rel="stylesheet">
-		<link href="../css/themes/blue/style.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/style.css" rel="stylesheet">
+		<link href="/css/themes/blue/style.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				padding-top: 60px;
@@ -22,16 +21,9 @@
 			}
 		</style>
 		<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">		
-		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>
 		<![endif]-->
-		<!-- Fav and touch icons -->
-		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-		<link rel="shortcut icon" href="../assets/ico/favicon.png">	
 	</head>
 	<body>
 		
@@ -125,14 +117,9 @@
 				</div>
 			</div>
 		</div>
-		
-		<!-- /container -->
-		<!-- Le javascript
-			================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="../js/jquery.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
-		<script src="../js/jquery.tablesorter.min.js"></script>
+		<script src="/js/vendor/jquery.min.js"></script>
+		<script src="/js/vendor/bootstrap.min.js"></script>
+		<script src="/js/vendor/jquery.tablesorter.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				$('table#viewTableRecords').tablesorter({ sortList: [[0, 0], [1, 0]] });

@@ -8,8 +8,8 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<!-- Le styles -->
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
-		<link href="../css/style.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/style.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				padding-top: 60px;
@@ -124,8 +124,8 @@
 		<!-- Le javascript
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="../js/jquery.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
+		<script src="/js/vendor/jquery.min.js"></script>
+		<script src="/js/vendor/bootstrap.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				var myForms, otherForms;

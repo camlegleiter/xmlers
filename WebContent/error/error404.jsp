@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>The page you were looking for doesn't exist (404)</title>
-		<script src="<%= request.getContextPath() %>/js/three.min.js" type="text/javascript"></script>
+		<title>This is not the page you were looking for</title>
 		<style type="text/css">
 			body {
 				background-color: #fff;
@@ -13,8 +12,7 @@
 				height: 100%;
 				background: #fff;
 				background: -moz-linear-gradient(white, #ccc);
-				background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#CCC),
-					to(white));
+				background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#CCC), to(white));
 				background: -webkit-linear-gradient(white, #ccc);
 				overflow: hidden;
 			}
@@ -30,14 +28,17 @@
 			.wrapper {
 				width: 320px;
 				line-height: 35px;
-				-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6), inset 1px 0px 0px
-					rgba(255, 255, 255, 0.1), inset -1px 0px 0px rgba(255, 255, 255, 0.1),
+				-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6), 
+					inset 1px 0px 0px rgba(255, 255, 255, 0.1), 
+					inset -1px 0px 0px rgba(255, 255, 255, 0.1),
 					inset 0px -1px 0px rgba(255, 255, 255, 0.1);
-				-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6), inset 1px 0px 0px
-					rgba(255, 255, 255, 0.1), inset -1px 0px 0px rgba(255, 255, 255, 0.1),
+				-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6), 
+					inset 1px 0px 0px rgba(255, 255, 255, 0.1), 
+					inset -1px 0px 0px rgba(255, 255, 255, 0.1),
 					inset 0px -1px 0px rgba(255, 255, 255, 0.1);
-				box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6), inset 1px 0px 0px
-					rgba(255, 255, 255, 0.1), inset -1px 0px 0px rgba(255, 255, 255, 0.1),
+				box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6), 
+					inset 1px 0px 0px rgba(255, 255, 255, 0.1), 
+					inset -1px 0px 0px rgba(255, 255, 255, 0.1),
 					inset 0px -1px 0px rgba(255, 255, 255, 0.1);
 				-webkit-border-radius: 5px;
 				-moz-border-radius: 5px;
@@ -59,6 +60,14 @@
 	</head>
 	
 	<body>
+		<div class="wrapper">
+			<h2>Error: 404</h2>
+			<div class="desc">
+				You seem to be lost in space<br>
+				<a href="index.jsp">Click here to go back</a>
+			</div>
+		</div>
+		<script src="/js/three.min.js" type="text/javascript"></script>
 		<script>
 			var container, stats;
 			var camera, scene, renderer, group, particle;
@@ -74,8 +83,7 @@
 				container = document.createElement('div');
 				document.body.appendChild(container);
 	
-				camera = new THREE.PerspectiveCamera(75, window.innerWidth
-						/ window.innerHeight, 1, 3000);
+				camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
 				camera.position.z = 1000;
 	
 				scene = new THREE.Scene();
@@ -86,12 +94,12 @@
 					context.arc(0, 0, 1, 0, PI2, true);
 					context.closePath();
 					context.fill();
-				}
+				};
 	
 				group = new THREE.Object3D();
 				scene.add(group);
 	
-				for ( var i = 0; i < 100; i++) {
+				for (var i = 0; i < 100; i++) {
 					particle = new THREE.Particle(new THREE.ParticleCanvasMaterial({
 						color: Math.random() * 0x808008 + 0x808080,
 						program: program
@@ -161,13 +169,5 @@
 				renderer.render(scene, camera);
 			}
 		</script>
-	
-		<div class="wrapper">
-			<h2>Error: 404</h2>
-			<div class="desc">
-				You seem to be lost in space<br>
-				<a href="javascript:javascript:history.go(-1)">Click here to go back</a>
-			</div>
-		</div>
 	</body>
 </html>

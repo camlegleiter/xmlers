@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/mstrobel/Documents/xmlers/View/WebContent/WEB-INF/lib/saxon9ee.jar"/>
-	<classpathentry kind="lib" path="C:/Users/mstrobel/Documents/xmlers/View/WebContent/WEB-INF/lib/saxon9ee-qc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/mstrobel/Documents/xmlers/View/WebContent/WEB-INF/lib/saxon9-sql.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>

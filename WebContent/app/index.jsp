@@ -2,14 +2,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Task Manager Home</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<!-- Le styles -->
-		<link href="/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/css/style.css" rel="stylesheet">
+        <jsp:include page="/app/includes/header.jsp">
+            <jsp:param name="title" value="Task Manager Home" />
+        </jsp:include>
+        
 		<style type="text/css">
 			body {
 				padding-top: 60px;
@@ -20,52 +16,13 @@
 				padding: 10px 0px 0px 10px;
 			}
 		</style>
-		<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">	
-		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<![endif]-->
-		<!-- Fav and touch icons -->
-		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-		<link rel="shortcut icon" href="../assets/ico/favicon.png">	
 	</head>
 	<body>
 	
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container-fluid">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="brand" href="<%= request.getContextPath() %>/app/index.jsp">Task Manager</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav pull-right">
-							<li id="fat-menu" class="dropdown">
-								<a href="#" id="settingsDrop" role="button" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="settingsDrop">
-									<li><a role="menuitem" href="<%= request.getContextPath() %>/app/settings.jsp">User Settings</a></li>
-									<li class="divider"></li>
-									<li><a role="menuitem" href="<%= request.getContextPath() %>/app/logout?logout=logout">Sign Out</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+        <jsp:include page="/app/includes/nav.jsp" />
 		
 		<div class="container-fluid">
-		
-			<noscript>
-				<div class="alert alert-error">
-					<p style="text-align: center; margin: 10px"><strong>This website works best when JavaScript is enabled.</strong></p>
-				</div>
-			</noscript>	
+			<jsp:include page="/app/includes/noscript.jsp" />
 			
 			<div class="row-fluid">
 				<div class="span3">
@@ -104,13 +61,13 @@
 							<p id="form-description"></p>
 							<h4 id="form-questions"></h4>
 							<ol id="form-questions-list"></ol>
-							<form id="form-buttons" class="form-inline" action="<%= request.getContextPath() %>/app/index" method="POST" style="display: none;">
+							<form id="form-buttons" class="form-inline" action="/app/index" method="POST" style="display: none;">
 								<input type="hidden" id="form-id" name="formid">
 								<input type="submit" id="viewRecords" class="btn" name="viewRecords" value="View Records" title="See all of the records for this form.">
 								<input type="submit" id="editForm" class="btn" name="editForm" value="Edit Form" title="Make changes to this form.">
 								<button id="reemailParticipants" class="btn" name="reemailParticipants" value="Re-Email Participants" title="Sends a reminder to participants who haven't completed this form to do so.">Re-Email Participants</button>
 							</form>
-							<form id="other-form-buttons" class="form-inline" action="<%= request.getContextPath() %>/app/index" method="POST" style="display: none;">
+							<form id="other-form-buttons" class="form-inline" action="/app/index" method="POST" style="display: none;">
 								<input type="hidden" id="otherform-id" name="otherformid">
 								<input type="submit" id="inputResponse" class="btn" name="inputResponse" value="Input Response" title="Submit a response to this form.">
 							</form>
@@ -124,8 +81,8 @@
 		<!-- Le javascript
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="/js/vendor/jquery.min.js"></script>
-		<script src="/js/vendor/bootstrap.min.js"></script>
+		<script src="<%= request.getContextPath() %>/assets/js/vendor/jquery.min.js"></script>
+		<script src="<%= request.getContextPath() %>/assets/js/vendor/bootstrap.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				var myForms, otherForms;

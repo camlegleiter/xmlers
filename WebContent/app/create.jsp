@@ -38,7 +38,7 @@
 				</div>
 				<div class="span9">
 					<h3>Form Builder:</h3>
-					<form action="<%=request.getContextPath()%>/create" method="POST">
+					<form id="user-form" action="<%=request.getContextPath()%>/create" method="POST">
 						<fieldset>
 							<input type="text" class="inline-block-level" placeholder="Form Name" name="formName" required>
 							<div>
@@ -59,14 +59,15 @@
 				</div>
 			</div>
 		</div>
-		<script src="<%= request.getContextPath() %>/assets/js/vendor/jquery.min.js"></script>
-		<script src="<%= request.getContextPath() %>/assets/js/vendor/jquery-ui.min.js"></script>
-		<script src="<%= request.getContextPath() %>/assets/js/vendor/bootstrap.min.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/vendor/underscore.min.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/vendor/backbone.min.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/vendor/marionette.min.js"></script>
+        <jsp:include page="/app/includes/footer.jsp" />
+        
+        <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/create.js"></script>
 		<script>
 			$(document).ready(function() {
+			    Create = TaskManager.Create;
+			    Create.start();
+			    
 				$('.columns li').draggable({
 					appendTo: "body",
 					helper: 'clone',
@@ -90,5 +91,68 @@
 				});
 			});
 		</script>
+    
+        <script id="checkbox-template" type="text/template">
+            <div class="clearfix">
+                <h3 class="pull-left">Checkbox</h3>
+                <a class="delete">Delete</span>
+            </div>
+            <div>
+                <div class="control-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" id="description" placeholder="Enter a description of the check field">
+                    </div>
+                </div>
+                <ul class="checkbox-content"></ul>
+                <a class="btn add-checkbox">Add Checkbox Option</a>
+            </div>
+        </script>
+        
+        <script id="checkbox-item-template" type="text/template">
+            <input type="text" placeholder="Checkbox text">
+            <a class="delete">Delete</a>
+        </script>
+        
+        <script id="radio-template" type="text/template">
+            <div class="clearfix">
+                <h3 class="pull-left">Radio</h3>
+                <a class="delete">Delete</span>
+            </div>
+            <div>
+                <div class="control-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" id="description" placeholder="Enter a description of the radio field">
+                    </div>
+                </div>
+                <ul class="radio-content"></ul>
+                <a class="btn add-radio">Add Radio Option</a>
+            </div>
+        </script>
+        
+        <script id="radio-item-template" type="text/template">
+            <input type="text" placeholder="Radio text">
+            <a class="delete">Delete</a>
+        </script>
+        
+        <script id="text-template" type="text/template">
+            <div class="clearfix">
+                <h3 class="pull-left">Textbox</h3>
+                <a class="delete">Delete</span>
+            </div>
+            <div>
+                <div class="control-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" id="description" placeholder="Enter a description of the text field">
+                    </div>
+                </div>
+            </div>
+        </script>
+        
+        <script id="datetime-template" type="text/template">
+            
+        </script>
 	</body>
 </html>

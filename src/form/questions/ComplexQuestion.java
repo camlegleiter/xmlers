@@ -1,12 +1,16 @@
-package form;
+package form.questions;
 
-public class SelectQuestion extends Question {
+import form.visitors.IQuestionVisitor;
 
-	public SelectQuestion(String id, int weight, String prompt) {
+public class ComplexQuestion extends Question {
+
+	public ComplexQuestion(String id, int weight, String prompt) {
 		super(id, weight, prompt);
 		// TODO Auto-generated constructor stub
 	}
 
+	private int min;
+	
 	@Override
 	public void accept(IQuestionVisitor visitor) {
 		visitor.visit(this);
@@ -23,4 +27,5 @@ public class SelectQuestion extends Question {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

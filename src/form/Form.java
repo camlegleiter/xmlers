@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import form.questions.Question;
+
 public class Form implements Iterable<Question>{
 	private Queue<Question> questions;
 

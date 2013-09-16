@@ -1,13 +1,17 @@
 package pages;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import form.*;
+import form.Form;
+import form.questions.Question;
+import form.visitors.IQuestionVisitor;
+import form.visitors.XMLVisitor;
 
 /**
  * Servlet implementation class ResponseCollector

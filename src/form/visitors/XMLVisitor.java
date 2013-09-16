@@ -1,4 +1,9 @@
-package form;
+package form.visitors;
+
+import form.questions.ComplexQuestion;
+import form.questions.RadioQuestion;
+import form.questions.SelectQuestion;
+import form.questions.TextQuestion;
 
 public class XMLVisitor implements IQuestionVisitor {
 

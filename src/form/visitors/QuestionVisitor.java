@@ -1,4 +1,6 @@
-package form;
+package form.visitors;
+
+import form.questions.Question;
 
 public abstract class QuestionVisitor implements IQuestionVisitor 
 {

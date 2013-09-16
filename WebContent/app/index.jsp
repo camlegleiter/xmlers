@@ -3,7 +3,7 @@
 <html>
 	<head>
         <jsp:include page="/app/includes/header.jsp">
-            <jsp:param name="title" value="Task Manager Home" />
+            <jsp:param name="title" value="Home - Task Manager" />
         </jsp:include>
         
 		<style type="text/css">

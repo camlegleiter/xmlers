@@ -1,6 +1,8 @@
 package form;
 
 import java.util.Iterator;
+import form.visitors.*;
+import form.questions.*;
 
 public class VisitMechanism {
 	

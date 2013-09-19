@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import form.Form;
-import form.HTMLVisitor;
-import form.VisitMechanism;
 
 /**
  * Servlet implementation class GetForm

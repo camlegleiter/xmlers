@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import form.questions.Question;
+import form.visitors.*;
+
 public class Form implements Iterable<Question>{
 	
 	private String title;

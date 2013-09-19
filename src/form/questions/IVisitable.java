@@ -1,4 +1,6 @@
-package form;
+package form.questions;
+
+import form.visitors.IQuestionVisitor;
 
 public interface IVisitable {
 

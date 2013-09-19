@@ -13,7 +13,6 @@ public class TextQuestion extends Question {
 		super(id, weight, prompt);
 		this.maxLength = max;
 		response = null;
-
 	}
 	
 	@Override

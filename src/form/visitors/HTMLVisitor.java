@@ -19,42 +19,40 @@ public class HTMLVisitor implements IQuestionVisitor {
 
 	@Override
 	public String visit(TextQuestion tq) {
-		String html = tq.getPrompt();
+		StringBuilder html = new StringBuilder(tq.getPrompt());
 
-		html += INPUT_TYPE_TAG + "text";
-		html += NAME_TAG + tq.getId() + MAXLENGTH_TAG + tq.getMaxLength();
-		html += END_TAG;
+		html.append(INPUT_TYPE_TAG + "text");
+		html.append(NAME_TAG + tq.getId() + MAXLENGTH_TAG + tq.getMaxLength());
+		html.append(END_TAG);
 
-		return html;
+		return html.toString();
 	}
 
 	@Override
 	public String visit(RadioQuestion rq) {
-		String html = rq.getPrompt();
+		StringBuilder html = new StringBuilder(rq.getPrompt());
 
-		for (String answer : rq.getAnswers()) {
-			html += INPUT_TYPE_TAG + "radio";
-			html += NAME_TAG + rq.getId() + VALUE_TAG + answer;
-			html += END_TAG;
-			html += answer;
+		for (String option : rq.getOptions()) {
+			html.append(INPUT_TYPE_TAG + "radio");
+			html.append(NAME_TAG + rq.getId() + VALUE_TAG + option);
+			html.append(END_TAG);
+			html.append(option);
 		}
-		// TODO Auto-generated method stub
-		return html;
+		return html.toString();
 	}
 
 	@Override
 	public String visit(SelectQuestion sq) {
-		String html = sq.getPrompt() + SELECT_TAG;
+		StringBuilder html = new StringBuilder(sq.getPrompt() + SELECT_TAG);
 
-		for (String answer : sq.getAnswers()) {
-			html += OPTION_VALUE_TAG + answer;
-			html += END_TAG + answer;
-			html += OPTION_END_TAG;
+		for (String option : sq.getOptions()) {
+			html.append(OPTION_VALUE_TAG + option);
+			html.append(END_TAG + option);
+			html.append(OPTION_END_TAG);
 		}
 		
-		html += SELECT_END_TAG;
-		// TODO Auto-generated method stub
-		return html;
+		html.append(SELECT_END_TAG);
+		return html.toString();
 	}
 
 	@Override

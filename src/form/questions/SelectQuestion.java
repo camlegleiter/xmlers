@@ -6,12 +6,14 @@ import form.visitors.IQuestionVisitor;
 
 public class SelectQuestion extends Question {
 	
-	private ArrayList<String> answers = new ArrayList<String>();
+	private String response;
+	
+	private ArrayList<String> options = new ArrayList<String>();
 
 	public SelectQuestion(String id, int weight, String prompt, ArrayList<String> answers) {
 		super(id, weight, prompt);
-		this.answers = answers;
-		// TODO Auto-generated constructor stub
+		this.options = answers;
+		response = "";
 	}
 
 	@Override
@@ -21,18 +23,16 @@ public class SelectQuestion extends Question {
 
 	@Override
 	public String getResponse() {
-		// TODO Auto-generated method stub
-		return null;
+		return response;
 	}
 
 	@Override
 	public void setResponse(String ans) {
-		// TODO Auto-generated method stub
-		
+		this.response = ans;
 	}
 
 	
-	public ArrayList<String> getAnswers() {
-		return answers;
+	public ArrayList<String> getOptions() {
+		return options;
 	}
 }

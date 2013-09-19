@@ -11,6 +11,7 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
 import form.visitors.HTMLVisitor;
+import form.visitors.XMLVisitor;
 
 public class simpleQuestionApp {
 
@@ -30,26 +31,35 @@ public class simpleQuestionApp {
 		formqs.add(radioq);
 		
 		//Prepare string to be printed
-		String rtrn = "";
+		String rtrnHTML = "";
+		String rtrnXML = "";
 		HTMLVisitor htmlVisitor = new HTMLVisitor();
+		XMLVisitor xmlVisitor = new XMLVisitor();
 //		for(Question q: formqs){
 //			rtrn += htmlVisitor.visit(q);
 //		}
-		rtrn += htmlVisitor.visit(textq);
-		rtrn += htmlVisitor.visit(radioq);
-		rtrn += htmlVisitor.visit(selectq);
+		rtrnHTML += htmlVisitor.visit(textq);
+		rtrnHTML += htmlVisitor.visit(radioq);
+		rtrnHTML += htmlVisitor.visit(selectq);
+		rtrnXML += xmlVisitor.visit(textq);
+		rtrnXML += xmlVisitor.visit(radioq);
+		rtrnXML += xmlVisitor.visit(selectq);
 		
 		System.out.println("Working Directory = " +
 	              System.getProperty("user.dir"));
 		//Preview the result
 		try {
 			 
-		      File file = new File("C:\\Users\\Public\\Documents\\simpleQuestion1.html");
+		      File fileHTML = new File("C:\\Users\\Public\\Documents\\formTestHTML.html");
+		      File fileXML = new File("C:\\Users\\Public\\Documents\\formTestXML.xml");
 		      
-		      BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-		      bw.write(rtrn);
-		      bw.close();
 		      
+		      BufferedWriter bwHTML = new BufferedWriter(new FileWriter(fileHTML));
+		      BufferedWriter bwXML = new BufferedWriter(new FileWriter(fileXML));
+		      bwHTML.write(rtrnHTML);
+		      bwXML.write(rtrnXML);
+		      bwHTML.close();
+		      bwXML.close();
 	    	} catch (IOException e) {
 		      e.printStackTrace();
 		}

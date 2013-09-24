@@ -7,23 +7,23 @@ import form.questions.TextQuestion;
 
 public class XMLVisitor implements IQuestionVisitor {
 
-	final String NAME_ELEMENT_ST = "<name>";
-	final String NAME_ELEMENT_END = "</name>";
-	final String LENGTH_ELEMENT_ST = "<max_length>";
-	final String LENGTH_ELEMENT_END = "</max_length>";
-	final String POSITION_ELEMENT_ST = "<position>";
-	final String POSITION_ELEMENT_END = "</position>";
-	final String PROMPT_ELEMENT_ST = "<prompt>";
-	final String PROMPT_ELEMENT_END = "</prompt>";
-	final String RESPONSE_ELEMENT_ST = "<response>";
-	final String RESPONSE_ELEMENT_END = "</response>";
+	private static final String NAME_ELEMENT_ST = "<name>";
+	private static final String NAME_ELEMENT_END = "</name>";
+	private static final String MAX_LEN_ELEMENT_ST = "<max_length>";
+	private static final String MAX_LEN_ELEMENT_END = "</max_length>";
+	private static final String POSITION_ELEMENT_ST = "<position>";
+	private static final String POSITION_ELEMENT_END = "</position>";
+	private static final String PROMPT_ELEMENT_ST = "<prompt>";
+	private static final String PROMPT_ELEMENT_END = "</prompt>";
+	private static final String RESPONSE_ELEMENT_ST = "<response>";
+	private static final String RESPONSE_ELEMENT_END = "</response>";
 
 	@Override
 	public String visit(TextQuestion tq) {
 		StringBuilder html = new StringBuilder("<text_question>");
 
 		html.append(NAME_ELEMENT_ST + tq.getId() + NAME_ELEMENT_END);
-		html.append(LENGTH_ELEMENT_ST + tq.getMaxLength() + LENGTH_ELEMENT_END);
+		html.append(MAX_LEN_ELEMENT_ST + tq.getMaxLength() + MAX_LEN_ELEMENT_END);
 		html.append(POSITION_ELEMENT_ST + tq.getPosition()
 				+ POSITION_ELEMENT_END);
 		html.append(PROMPT_ELEMENT_ST + tq.getPrompt() + PROMPT_ELEMENT_END);

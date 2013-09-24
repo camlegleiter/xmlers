@@ -11,6 +11,7 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
 import form.visitors.HTMLVisitor;
+import form.visitors.JSONVisitor;
 import form.visitors.XMLVisitor;
 
 public class simpleQuestionApp {
@@ -33,8 +34,11 @@ public class simpleQuestionApp {
 		//Prepare string to be printed
 		String rtrnHTML = "";
 		String rtrnXML = "";
+		String rtrnJSON = "";
 		HTMLVisitor htmlVisitor = new HTMLVisitor();
 		XMLVisitor xmlVisitor = new XMLVisitor();
+		JSONVisitor jsonVisitor = new JSONVisitor();
+
 //		for(Question q: formqs){
 //			rtrn += htmlVisitor.visit(q);
 //		}
@@ -44,6 +48,9 @@ public class simpleQuestionApp {
 		rtrnXML += xmlVisitor.visit(textq);
 		rtrnXML += xmlVisitor.visit(radioq);
 		rtrnXML += xmlVisitor.visit(selectq);
+		rtrnJSON += jsonVisitor.visit(textq);
+		rtrnJSON += jsonVisitor.visit(radioq);
+		rtrnJSON += jsonVisitor.visit(selectq);
 		
 		System.out.println("Working Directory = " +
 	              System.getProperty("user.dir"));
@@ -52,14 +59,18 @@ public class simpleQuestionApp {
 			 
 		      File fileHTML = new File("C:\\Users\\Public\\Documents\\formTestHTML.html");
 		      File fileXML = new File("C:\\Users\\Public\\Documents\\formTestXML.xml");
+		      File fileJSON = new File("C:\\Users\\Public\\Documents\\formTestJSON.html");
 		      
 		      
 		      BufferedWriter bwHTML = new BufferedWriter(new FileWriter(fileHTML));
 		      BufferedWriter bwXML = new BufferedWriter(new FileWriter(fileXML));
+		      BufferedWriter bwJSON = new BufferedWriter(new FileWriter(fileJSON));
 		      bwHTML.write(rtrnHTML);
 		      bwXML.write(rtrnXML);
+		      bwJSON.write(rtrnJSON);
 		      bwHTML.close();
 		      bwXML.close();
+		      bwJSON.close();
 	    	} catch (IOException e) {
 		      e.printStackTrace();
 		}

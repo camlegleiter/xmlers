@@ -7,15 +7,15 @@ import form.questions.TextQuestion;
 
 public class HTMLVisitor implements IQuestionVisitor {
 
-	final String INPUT_TYPE_TAG = "<input type=\"";
-	final String SELECT_TAG = "<select>";
-	final String OPTION_VALUE_TAG = "<option value=\"";
-	final String NAME_TAG = "\" name=\"";
-	final String MAXLENGTH_TAG = "\" maxlength=\"";
-	final String VALUE_TAG = "\" value=\"";
-	final String SELECT_END_TAG = "</select>";
-	final String OPTION_END_TAG = "</option>";
-	final String END_TAG = "\">";
+	private static final String INPUT_TYPE_TAG = "<input type=\"";
+	private static final String SELECT_TAG = "<select>";
+	private static final String OPTION_VALUE_TAG = "<option value=\"";
+	private static final String NAME_TAG = "\" name=\"";
+	private static final String MAXLENGTH_TAG = "\" maxlength=\"";
+	private static final String VALUE_TAG = "\" value=\"";
+	private static final String SELECT_END_TAG = "</select>";
+	private static final String OPTION_END_TAG = "</option>";
+	private static final String END_TAG = "\">";
 
 	@Override
 	public String visit(TextQuestion tq) {

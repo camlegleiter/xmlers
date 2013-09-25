@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.example.org/Users" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Users" xmlns:tns="http://www.example.org/Users" elementFormDefault="qualified">
+
+    <xs:complexType name="user_t">
+    	<xs:sequence>
+    		<xs:element name="id" type="xs:string" />
+    		<xs:element name="handle" type="xs:string" />
+    		<xs:element name="password" type="xs:string" />
+    	</xs:sequence>
+    </xs:complexType>
+    
+
+   	<xs:element name="users">
+   		<xs:complexType>
+   			<xs:sequence>
+				<xs:element name="user" type="user_t" maxOccurs="unbounded" minOccurs="0"/>
+   			</xs:sequence>
+   		</xs:complexType>
+    </xs:element>
+</xs:schema>

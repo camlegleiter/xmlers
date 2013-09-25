@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.example.org/Form" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Form" xmlns:tns="http://www.example.org/Form" elementFormDefault="qualified">
+
+	<xs:complexType name="permission_t">
+		<xs:attribute name="id" type="xs:string"/>
+		<xs:attribute name="read" type="xs:boolean" />
+		<xs:attribute name="write" type="xs:boolean" />
+		<xs:attribute name="submit" type="xs:boolean" />
+	</xs:complexType>
+	
+    <xs:complexType name="form">
+    	<xs:sequence>
+    		<xs:element name="id" type="xs:string" />
+    		<xs:element name="title" type="xs:string" />
+    		<xs:element name="description" type="xs:string" />
+    		<xs:element name="permissions">
+    			<xs:complexType>
+    				<xs:sequence>
+    					<xs:element name="group" maxOccurs="unbounded" minOccurs="1" type="permission_t" />
+    					<xs:element name="user" minOccurs="0" maxOccurs="unbounded" type="permission_t" />
+    				</xs:sequence>
+    			</xs:complexType>    			
+    		</xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+</xs:schema>

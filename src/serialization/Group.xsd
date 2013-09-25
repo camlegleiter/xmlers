@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.example.org/Group" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Group" xmlns:tns="http://www.example.org/Group" elementFormDefault="qualified">
+<xs:complexType name="group_t">
+	<xs:sequence>
+		<xs:element name="member" minOccurs="0" maxOccurs="unbounded">
+			<xs:complexType>
+				<xs:attribute name="id" type="xs:string" />
+			   	<xs:attribute name="type">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="group" />
+							<xs:enumeration value="user" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:complexType>
+		</xs:element>
+	</xs:sequence>
+	<xs:attribute name="id" type="xs:string" />
+</xs:complexType>
+</xs:schema>

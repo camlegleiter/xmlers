@@ -28,7 +28,7 @@
 			<div class="row-fluid">
 				<div class="span3">
 					<h3>Select Entry Type:</h3>
-					<div id="questionOptions" class="well" style="padding: 10px;"></div>
+					<div id="question-options" class="well" style="padding: 10px;"></div>
 				</div>
 				<div class="span9">
 					<h3>Form Builder:</h3>
@@ -57,9 +57,9 @@
         
         <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/questions.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/create/create.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.questions.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.form.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/create/create.js"></script>
         
 		<script>
 			$(document).ready(function() {
@@ -91,12 +91,15 @@
 		</script>
     
         <script id="question-option-template" type="text/template">
-            <@= getQuestionOptionLabel() @>
+            <input type="radio" id="question-<@= id @>" name="question-option">            
+            <label for="question-<@= id @>"><@= label @></label>
         </script>
     
-    
-    
-    
+        <script id="question-options-template" type="text/template">
+            <div id="questions-content"></div>
+            <hr />
+            <a class="add disabled btn btn-large">Add Question</a>
+        </script>
     
     
         <script id="checkbox-template" type="text/template">

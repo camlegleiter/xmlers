@@ -1,13 +1,7 @@
 package form;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.PriorityQueue;
-import java.util.Queue;
-
-import form.questions.Question;
+import java.util.*;
+import form.questions.*;
 import form.visitors.*;
 
 public class Form implements Iterable<Question>{

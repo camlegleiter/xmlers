@@ -4,7 +4,7 @@
 	<xs:sequence>
 		<xs:element name="member" minOccurs="0" maxOccurs="unbounded">
 			<xs:complexType>
-				<xs:attribute name="id" type="xs:string" />
+				<xs:attribute name="id" type="xs:ID" />
 			   	<xs:attribute name="type">
 					<xs:simpleType>
 						<xs:restriction base="xs:string">

@@ -3,7 +3,7 @@
 
     <xs:complexType name="user_t">
     	<xs:sequence>
-    		<xs:element name="id" type="xs:string" />
+    		<xs:element name="id" type="xs:ID" />
     		<xs:element name="handle" type="xs:string" />
     		<xs:element name="password" type="xs:string" />
     	</xs:sequence>

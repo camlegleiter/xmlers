@@ -21,7 +21,7 @@ public class XMLVisitor implements IQuestionVisitor {
 		html.append(RESPONSE_ELEMENT_ST + tq.getResponse(tq.getId())
 				+ RESPONSE_ELEMENT_END);
 
-		html.append("</text_question>");
+		html.append("</textQuestion>");
 
 		return html.toString();
 	}
@@ -37,7 +37,7 @@ public class XMLVisitor implements IQuestionVisitor {
 		html.append(RESPONSE_ELEMENT_ST + rq.getResponse(rq.getId())
 				+ RESPONSE_ELEMENT_END);
 
-		html.append("</radio_question>");
+		html.append("</radioQuestion>");
 
 		return html.toString();
 	}
@@ -53,7 +53,7 @@ public class XMLVisitor implements IQuestionVisitor {
 		html.append(RESPONSE_ELEMENT_ST + sq.getResponse(sq.getId())
 				+ RESPONSE_ELEMENT_END);
 
-		html.append("</select_question>");
+		html.append("</selectQuestion>");
 
 		return html.toString();
 	}

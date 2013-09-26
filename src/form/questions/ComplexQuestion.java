@@ -17,13 +17,13 @@ public class ComplexQuestion extends Question {
 	}
 
 	@Override
-	public String getResponse() {
+	public String getResponse(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setResponse(String ans) {
+	public void setResponse(String id, String ans) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -24,7 +24,7 @@ public class JSONVisitor implements IQuestionVisitor {
 		json.append(DL + MAX_LEN + tq.getMaxLength());
 		json.append(DL + POSITION + tq.getPosition());
 		json.append(DL + PROMPT + tq.getPrompt());
-		json.append(DL + RESPONSE + tq.getResponse());
+		json.append(DL + RESPONSE + tq.getResponse(tq.getId()));
 
 		json.append("\" }");
 		return json.toString();
@@ -37,7 +37,7 @@ public class JSONVisitor implements IQuestionVisitor {
 		json.append(DL + NAME + rq.getId());
 		json.append(DL + POSITION + rq.getPosition());
 		json.append(DL + PROMPT + rq.getPrompt());
-		json.append(DL + RESPONSE + rq.getResponse());
+		json.append(DL + RESPONSE + rq.getResponse(rq.getId()));
 		
 		json.append(DL + OPTIONS + "[");
 		boolean first = true;
@@ -61,7 +61,7 @@ public class JSONVisitor implements IQuestionVisitor {
 		json.append(DL + NAME + sq.getId());
 		json.append(DL + POSITION + sq.getPosition());
 		json.append(DL + PROMPT + sq.getPrompt());
-		json.append(DL + RESPONSE + sq.getResponse());
+		json.append(DL + RESPONSE + sq.getResponse(sq.getId()));
 		
 		json.append(DL + OPTIONS + "[");
 		boolean first = true;

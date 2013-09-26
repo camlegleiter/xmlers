@@ -45,7 +45,7 @@ public class ResponseCollector extends HttpServlet {
 		for(Question q: userResponse)
 		{
 			String questionResponse = (String) request.getAttribute(q.getId());
-			q.setResponse(questionResponse);
+			q.setResponse(q.getId(), questionResponse);
 						
 		}
 		//TODO Insert XML Generated in for-loop into the XMLDocument that represents the responses to this form.

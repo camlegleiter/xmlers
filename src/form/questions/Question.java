@@ -55,15 +55,17 @@ public abstract class Question implements IVisitable {
 
 	/**
 	 * Fetches a textual representation of how an end user responded.
+	 * @param id the id for the question the response is tied to. 
 	 * @return
 	 */
-	public abstract String getResponse();
+	public abstract String getResponse(String id);
 	
 	/**
 	 * Updates the response from the end user.
+	 * @param id the id for the question the response is tied to. 
 	 * @param ans
 	 */
-	public abstract void setResponse(String ans);
+	public abstract void setResponse(String id, String ans);
 	
 	/**
 	 * Retrieves the relative priority of the question to others.

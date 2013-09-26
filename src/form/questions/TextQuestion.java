@@ -21,12 +21,12 @@ public class TextQuestion extends Question {
 	}
 
 	@Override
-	public String getResponse() {
+	public String getResponse(String id) {
 		return response;
 	}
 
 	@Override
-	public void setResponse(String response) {
+	public void setResponse(String id, String response) {
 		if (response.length() <= this.maxLength) {
 			this.response = response;
 		} else {

@@ -70,10 +70,10 @@ public class Form implements Iterable<Question>{
 	
 	public String getHTML()
 	{
-		return getHTML(ALL_BITS);
+		return getHTML(ALL_BITS, null);
 	}
 	
-	public String getHTML(int settings)
+	public String getHTML(int settings, String user)
 	{
 		HTMLVisitor generator = new HTMLVisitor();
 		StringBuilder output = new StringBuilder();
@@ -102,12 +102,12 @@ public class Form implements Iterable<Question>{
 	
 	public String getJSON()
 	{
-		return getJSON(ALL_BITS);
+		return getJSON(ALL_BITS, null);
 	}
 	
-	public String getJSON(int settings)
+	public String getJSON(int settings, String user)
 	{
-		
+		//TODO
 		return "";
 	}
 	

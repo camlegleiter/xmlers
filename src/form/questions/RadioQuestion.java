@@ -26,12 +26,12 @@ public class RadioQuestion extends Question {
 	}
 
 	@Override
-	public String getResponse() {
+	public String getResponse(String id) {
 		return response;
 	}
 
 	@Override
-	public void setResponse(String ans) {
+	public void setResponse(String id, String ans) {
 		this.response = ans;
 		
 	}

@@ -25,8 +25,9 @@
 		<xs:complexContent>
 			<xs:extension base="question">
 				<xs:sequence>
-					<xs:element name="default" />
+					<xs:element name="default" type="xs:string" />
 				</xs:sequence>
+        <xs:attribute name="maxLength" type="xs:unsignedInt" />
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>

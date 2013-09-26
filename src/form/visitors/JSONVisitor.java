@@ -16,6 +16,16 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 	private static final String RESPONSE = "\"response\":\"";
 	private static final String DL = "\" , "; // Delimiter
 
+	public JSONVisitor()
+	{
+		super();
+	}
+	
+	public JSONVisitor(String user)
+	{
+		super(user);
+	}
+	
 	@Override
 	public String visit(TextQuestion tq) {
 		StringBuilder json = new StringBuilder(TYPE + "text");
@@ -24,7 +34,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		json.append(DL + MAX_LEN + tq.getMaxLength());
 		json.append(DL + POSITION + tq.getPosition());
 		json.append(DL + PROMPT + tq.getPrompt());
-		json.append(DL + RESPONSE + tq.getResponse());
+		json.append(DL + RESPONSE + tq.getResponse(this.userID));
 
 		json.append("\" }");
 		return json.toString();
@@ -37,7 +47,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		json.append(DL + NAME + rq.getId());
 		json.append(DL + POSITION + rq.getPosition());
 		json.append(DL + PROMPT + rq.getPrompt());
-		json.append(DL + RESPONSE + rq.getResponse());
+		json.append(DL + RESPONSE + rq.getResponse(this.userID));
 		
 		json.append(DL + OPTIONS + "[");
 		boolean first = true;
@@ -61,7 +71,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		json.append(DL + NAME + sq.getId());
 		json.append(DL + POSITION + sq.getPosition());
 		json.append(DL + PROMPT + sq.getPrompt());
-		json.append(DL + RESPONSE + sq.getResponse());
+		json.append(DL + RESPONSE + sq.getResponse(this.userID));
 		
 		json.append(DL + OPTIONS + "[");
 		boolean first = true;

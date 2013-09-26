@@ -7,12 +7,8 @@ import form.questions.TextQuestion;
 
 public class XMLVisitor extends AbstractQuestionVisitor {
 
-	private static final String NAME_ELEMENT_ST = "<name>";
-	private static final String NAME_ELEMENT_END = "</name>";
 	private static final String MAX_LEN_ELEMENT_ST = "<max_length>";
 	private static final String MAX_LEN_ELEMENT_END = "</max_length>";
-	private static final String POSITION_ELEMENT_ST = "<position>";
-	private static final String POSITION_ELEMENT_END = "</position>";
 	private static final String PROMPT_ELEMENT_ST = "<prompt>";
 	private static final String PROMPT_ELEMENT_END = "</prompt>";
 	private static final String RESPONSE_ELEMENT_ST = "<response>";
@@ -20,14 +16,10 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(TextQuestion tq) {
-		StringBuilder html = new StringBuilder("<text_question>");
-
-		html.append(NAME_ELEMENT_ST + tq.getId() + NAME_ELEMENT_END);
+		StringBuilder html = new StringBuilder("<textQuestion " + getIDPriority(tq.getId(), tq.getPosition()+"") + ">" );
 		html.append(MAX_LEN_ELEMENT_ST + tq.getMaxLength() + MAX_LEN_ELEMENT_END);
-		html.append(POSITION_ELEMENT_ST + tq.getPosition()
-				+ POSITION_ELEMENT_END);
 		html.append(PROMPT_ELEMENT_ST + tq.getPrompt() + PROMPT_ELEMENT_END);
-		html.append(RESPONSE_ELEMENT_ST + tq.getResponse()
+		html.append(RESPONSE_ELEMENT_ST + tq.getResponse(tq.getId())
 				+ RESPONSE_ELEMENT_END);
 
 		html.append("</text_question>");
@@ -37,16 +29,13 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(RadioQuestion rq) {
-		StringBuilder html = new StringBuilder("<radio_question>");
+		StringBuilder html = new StringBuilder("<radioQuestion " + getIDPriority(rq.getId(), rq.getPosition()+"") + ">" );
 
-		html.append(NAME_ELEMENT_ST + rq.getId() + NAME_ELEMENT_END);
-		html.append(POSITION_ELEMENT_ST + rq.getPosition()
-				+ POSITION_ELEMENT_END);
 		html.append(PROMPT_ELEMENT_ST + rq.getPrompt() + PROMPT_ELEMENT_END);
 		for (String option : rq.getOptions()) {
 			html.append("<option>" + option + "</option>");
 		}
-		html.append(RESPONSE_ELEMENT_ST + rq.getResponse()
+		html.append(RESPONSE_ELEMENT_ST + rq.getResponse(rq.getId())
 				+ RESPONSE_ELEMENT_END);
 
 		html.append("</radio_question>");
@@ -56,16 +45,13 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(SelectQuestion sq) {
-		StringBuilder html = new StringBuilder("<select_question>");
+		StringBuilder html = new StringBuilder("<selectQuestion " + getIDPriority(sq.getId(), sq.getPosition()+"") + ">");
 
-		html.append(NAME_ELEMENT_ST + sq.getId() + NAME_ELEMENT_END);
-		html.append(POSITION_ELEMENT_ST + sq.getPosition()
-				+ POSITION_ELEMENT_END);
 		html.append(PROMPT_ELEMENT_ST + sq.getPrompt() + PROMPT_ELEMENT_END);
 		for (String option : sq.getOptions()) {
 			html.append("<option>" + option + "</option>");
 		}
-		html.append(RESPONSE_ELEMENT_ST + sq.getResponse()
+		html.append(RESPONSE_ELEMENT_ST + sq.getResponse(sq.getId())
 				+ RESPONSE_ELEMENT_END);
 
 		html.append("</select_question>");
@@ -77,6 +63,10 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 	public String visit(ComplexQuestion cq) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private static String getIDPriority(String id, String priority){
+		return "id=\"" + id + "\" priority=\"" + priority + "\"";
 	}
 
 }

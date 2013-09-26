@@ -31,25 +31,10 @@
 					<div id="question-options" class="well" style="padding: 10px;"></div>
 				</div>
 				<div class="span9">
-					<h3>Form Builder:</h3>
-					<form id="user-form" action="<%=request.getContextPath()%>/create" method="POST">
-						<fieldset>
-							<input type="text" class="inline-block-level" placeholder="Form Name" name="formName" required>
-							<div>
-								<ol id="form-builder">
-									<li class="placeholder">Drag a column type here!</li>
-								</ol>
-							</div>
-							<div class="form-actions">
-								<div style="margin-bottom: 10px">
-									<label class="checkbox"><input type="checkbox" name="participantsSeeAll">Participants can see the responses of others.</label>
-								</div>
-								
-								<button class="btn btn-large btn-primary" type="submit">Submit</button>
-								<a class="btn btn-large">Cancel</a>
-							</div>
-						</fieldset>
-					</form>
+				    <h3>Form Builder:</h3>
+                    <div class="well">
+                        <form id="user-form" class="form-horizontal" action="<%=request.getContextPath()%>/create" method="POST"></form>
+                    </div>
 				</div>
 			</div>
 		</div>
@@ -98,14 +83,37 @@
         <script id="question-options-template" type="text/template">
             <div id="questions-content"></div>
             <hr />
-            <a class="add disabled btn btn-large">Add Question</a>
+            <a class="add disabled btn pull-right">Add Question</a>
         </script>
     
+        <script id="form-template" type="text/template">
+            <div class="control-group">
+                <label class="control-label" for="formName">Form Name</label>
+                <div class="controls">
+                    <input type="text" id="formName" placeholder="Form Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="description">Form Description</label>
+                <div class="controls">
+                    <textarea id="formDesc" placeholder="Enter a description of the form"></textarea>
+                </div>
+            </div>
+            <ol id="form-content"></ol>
+            <div class="form-actions">
+                <div style="margin-bottom: 10px">
+                    <label class="checkbox"><input type="checkbox" name="participantsSeeAll">Participants can see the responses of others.</label>
+                </div>
+                
+                <button class="btn btn-large btn-primary" type="submit">Submit</button>
+                <a class="btn btn-large">Cancel</a>
+            </div>
+        </script>
     
         <script id="checkbox-template" type="text/template">
             <div class="clearfix">
-                <h3 class="pull-left">Checkbox</h3>
-                <a class="delete">Delete</span>
+                <h4 class="pull-left">Checkbox</h3>
+                <a class="delete pull-right">Delete</a>
             </div>
             <div>
                 <div class="control-group">
@@ -114,8 +122,8 @@
                         <input type="text" id="description" placeholder="Enter a description of the check field">
                     </div>
                 </div>
-                <ol class="checkbox-content"></ol>
-                <a class="btn add-checkbox">Add Checkbox Option</a>
+                <ol class="content"></ol>
+                <a class="add btn">Add Checkbox Option</a>
             </div>
         </script>
         
@@ -126,8 +134,8 @@
         
         <script id="radio-template" type="text/template">
             <div class="clearfix">
-                <h3 class="pull-left">Radio</h3>
-                <a class="delete pull-right">Delete</span>
+                <h4 class="pull-left">Radio</h3>
+                <a class="delete pull-right">Delete</a>
             </div>
             <div>
                 <div class="control-group">
@@ -136,8 +144,8 @@
                         <input type="text" id="description" placeholder="Enter a description of the radio field">
                     </div>
                 </div>
-                <ol class="radio-content"></ol>
-                <a class="btn add-radio">Add Radio Option</a>
+                <ol class="content"></ol>
+                <a class="add btn">Add Radio Option</a>
             </div>
         </script>
         
@@ -146,10 +154,10 @@
             <a class="delete">Delete</a>
         </script>
         
-        <script id="text-template" type="text/template">
+        <script id="textbox-template" type="text/template">
             <div class="clearfix">
-                <h3 class="pull-left">Textbox</h3>
-                <a class="delete pull-right">Delete</span>
+                <h4 class="pull-left">Textbox</h3>
+                <a class="delete pull-right">Delete</a>
             </div>
             <div>
                 <div class="control-group">
@@ -169,8 +177,8 @@
         
         <script id="select-template" type="text/template">
             <div class="clearfix">
-                <h3 class="pull-left">Select (Drop Down)</h3>
-                <a class="delete pull-right">Delete</span>
+                <h4 class="pull-left">Select (Drop Down)</h3>
+                <a class="delete pull-right">Delete</a>
             </div>
             <div>
                 <div class="control-group">
@@ -186,8 +194,8 @@
                         </label>
                     </div>
                 </div>
-                <ol class="select-content"></ol>
-                <a class="btn add-select">Add Select Option</a>
+                <ol class="content"></ol>
+                <a class="btn add">Add Select Option</a>
             </div>
         </script>
         

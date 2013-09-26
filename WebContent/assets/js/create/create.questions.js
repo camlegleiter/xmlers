@@ -31,7 +31,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
     
     Module.QuestionOptionsView = Backbone.Marionette.CompositeView.extend({
         template: '#question-options-template',
-        className: 'question-options',
+        className: 'question-options clearfix',
         itemView: Module.QuestionOptionView,
         
         events: {
@@ -58,8 +58,8 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         onAddQuestion: function() {
-            if (!this.selectedQuestion) return;
-            this.trigger('add:question', this.question);
+            if (this.selectedQuestion)
+                this.trigger('add:question', this.selectedQuestion);
         },
         
         onSetSelectedQuestion: function(question) {

@@ -7,6 +7,15 @@ hr {
     margin: 5px 0px;
 }
 
+.delete, .remove {
+    color: red;
+    cursor: pointer;
+}
+
+.delete:hover, .remove:hover {
+    color: red;
+}
+
 /* --- Index Page Styles --- */
 
 .sidebar-nav {
@@ -39,45 +48,19 @@ hr {
     font-weight: bold;
 }
 
-
-/* --- Create Page Draggable Effects --- */
-
-.columns li,
-#form-builder li {
-	display: block;
-	margin: 0 auto 5px;
-	padding: 8px;
-	width: auto;
-	
-	background: rgba(255, 255, 255, 0.3);
-	border: 1px solid black;
-	border-radius: 5px;
-	
-	text-align: center;
-	text-decoration: none;
+.question {
+    padding: 5px 0px;
+  
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
-.columns li:hover,
-#form-builder li:not(.placeholder):hover {
-	cursor: pointer;
+.question:not(:first-child) {
+    margin-top: 5px;
 }
 
-.ui-state-hover,
-.ui-state-active,
-.ui-state-default,
-.ui-state-highlight {
-	list-style-type: none;
-}
-
-.ui-placeholder {
-	display: block;
-	margin: 0 auto 5px;
-	padding: 8px;
-	width: auto;
-	
-	background-color: #fbf9ee;
-	border: 1px solid #fcefa1;
-	color: #363636;
+.question h4 {
+    margin-top: 0px;
 }
 
 /* --- View Page Table CSS --- */

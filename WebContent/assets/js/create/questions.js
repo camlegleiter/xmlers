@@ -10,7 +10,6 @@ TaskManager.Models.Form = Backbone.Model.extend({
 });
 
 
-
 /*
  * An abstract model that acts as a super class for the different question types
  */
@@ -21,11 +20,9 @@ TaskManager.Models.Question = Backbone.Model.extend({
 /*
  * Stores a collection of questions in the form
  */
-TaskManager.Collections.Questions = new Backbone.Collection.extend({
+TaskManager.Collections.Questions = Backbone.Collection.extend({
     model: TaskManager.Models.Question
 });
-
-
 
 
 /*
@@ -34,8 +31,8 @@ TaskManager.Collections.Questions = new Backbone.Collection.extend({
 TaskManager.Models.Checkbox = TaskManager.Models.Question.extend({
     defaults: function() {
         return {
-            type: 'checkbox',
-            description: '',
+            type: 'Checkbox',
+            prompt: '',
             checkboxes: new TaskManager.Collections.Checkboxes()
         };
     }
@@ -47,10 +44,9 @@ TaskManager.Collections.Checkboxes = Backbone.Collection.extend({
 
 TaskManager.Models.CheckboxItem = Backbone.Model.extend({
     defaults: {
-        checkboxLabel: ''
+        label: ''
     }
 });
-
 
 
 /*
@@ -59,8 +55,8 @@ TaskManager.Models.CheckboxItem = Backbone.Model.extend({
 TaskManager.Models.Radio = TaskManager.Models.Question.extend({
     defaults: function() {
         return {
-            type: 'radio',
-            description: '',
+            type: 'Radio',
+            prompt: '',
             radios: new TaskManager.Collections.Radios()
         };
     }
@@ -72,10 +68,9 @@ TaskManager.Collections.Radios = Backbone.Collection.extend({
 
 TaskManager.Models.RadioItem = Backbone.Model.extend({
     defaults: {
-        radioLabel: ''
+        label: ''
     }
 });
-
 
 
 /*
@@ -84,13 +79,12 @@ TaskManager.Models.RadioItem = Backbone.Model.extend({
 TaskManager.Models.Textbox = TaskManager.Models.Question.extend({
     defaults: function() {
         return {
-            type: 'textbox',
-            description: '',
+            type: 'Textbox',
+            prompt: '',
             maxLength: 0
         };
     }
 });
-
 
 
 /*
@@ -99,10 +93,12 @@ TaskManager.Models.Textbox = TaskManager.Models.Question.extend({
 TaskManager.Models.Select = TaskManager.Models.Question.extend({
     defaults: function() {
         return {
-            type: 'select',
+            type: 'Select',
+            prompt: '',
             // Defines if the select allows for multiple options
             // false means single select
             isMulti: false,
+            
             options: new TaskManager.Collections.SelectOptions()
         };
     }
@@ -114,6 +110,6 @@ TaskManager.Collections.SelectOptions = Backbone.Collection.extend({
 
 TaskManager.Models.SelectOption = Backbone.Model.extend({
     defaults: {
-        optionValue: ''
+        value: ''
     }
 });

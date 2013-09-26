@@ -34,6 +34,7 @@ public class GetForm extends HttpServlet {
 		int settings = Form.ALL_BITS;
 		String formID = request.getHeader("ID");
 		String formFormat = request.getHeader("Format");
+		String userID = request.getHeader("User");
 
 		if(null == formID || formID.equals(""))
 		{
@@ -55,10 +56,10 @@ public class GetForm extends HttpServlet {
 		switch(formFormat)
 		{
 		case "HTML":
-			out.write(requestedForm.getHTML(settings));
+			out.write(requestedForm.getHTML(settings, userID));
 			break;
 		case "JSON":
-			out.write(requestedForm.getJSON(settings));
+			out.write(requestedForm.getJSON(settings, userID));
 			break;
 		case "XML":
 			throw new ServletException("Unimplemented Option Requested: \"" + formFormat +"\"");
@@ -67,12 +68,4 @@ public class GetForm extends HttpServlet {
 		}
 		out.flush();
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
 }

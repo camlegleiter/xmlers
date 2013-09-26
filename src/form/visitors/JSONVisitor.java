@@ -5,7 +5,7 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
 
-public class JSONVisitor implements IQuestionVisitor {
+public class JSONVisitor extends AbstractQuestionVisitor {
 
 	private static final String TYPE = "{ \"type\":\"";
 	private static final String MAX_LEN = "\"maxLength\":\"";
@@ -19,6 +19,16 @@ public class JSONVisitor implements IQuestionVisitor {
 	//private static final String POSITION = "\"position\":\"";
 	//private static final String RESPONSE = "\"response\":\"";
 
+	public JSONVisitor()
+	{
+		super();
+	}
+	
+	public JSONVisitor(String user)
+	{
+		super(user);
+	}
+	
 	@Override
 	public String visit(TextQuestion tq) {
 		StringBuilder json = new StringBuilder(TYPE + "textbox");

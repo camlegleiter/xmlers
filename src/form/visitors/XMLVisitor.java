@@ -5,7 +5,8 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
 
-public class XMLVisitor implements IQuestionVisitor {
+public class XMLVisitor extends AbstractQuestionVisitor {
+
 	private static final String MAX_LEN_ELEMENT_ST = "<max_length>";
 	private static final String MAX_LEN_ELEMENT_END = "</max_length>";
 	private static final String PROMPT_ELEMENT_ST = "<prompt>";

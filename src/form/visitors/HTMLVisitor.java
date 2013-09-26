@@ -5,7 +5,7 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
 
-public class HTMLVisitor implements IQuestionVisitor {
+public class HTMLVisitor extends AbstractQuestionVisitor {
 
 	private static final String INPUT_TYPE_TAG = "<input type=\"";
 	private static final String SELECT_TAG = "<select>";

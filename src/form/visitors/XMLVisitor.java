@@ -5,7 +5,7 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
 
-public class XMLVisitor implements IQuestionVisitor {
+public class XMLVisitor extends AbstractQuestionVisitor {
 
 	private static final String NAME_ELEMENT_ST = "<name>";
 	private static final String NAME_ELEMENT_END = "</name>";

@@ -5,7 +5,7 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
 
-public class JSONVisitor implements IQuestionVisitor {
+public class JSONVisitor extends AbstractQuestionVisitor {
 
 	private static final String TYPE = "{ \"type\":\"";
 	private static final String NAME = "\"name\":\"";

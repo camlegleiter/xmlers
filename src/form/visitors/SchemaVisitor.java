@@ -6,6 +6,7 @@ import com.saxonica.schema.sdoc.XSDAttribute;
 import com.saxonica.schema.sdoc.XSDComplexType;
 import com.saxonica.schema.sdoc.XSDElement;
 
+import form.questions.CheckQuestion;
 import form.questions.ComplexQuestion;
 import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
@@ -32,6 +33,12 @@ public class SchemaVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(SelectQuestion sq) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public String visit(CheckQuestion chq) {
 		// TODO Auto-generated method stub
 		return null;
 	}

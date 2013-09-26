@@ -1,5 +1,6 @@
 package form.visitors;
 
+import form.questions.CheckQuestion;
 import form.questions.ComplexQuestion;
 import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
@@ -39,6 +40,22 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 				+ RESPONSE_ELEMENT_END);
 
 		html.append("</radioQuestion>");
+
+		return html.toString();
+	}
+	
+	@Override
+	public String visit(CheckQuestion chq) {
+		StringBuilder html = new StringBuilder("<checkQuestion " + getIDPriority(chq.getId(), chq.getPosition()+"") + ">" );
+
+		html.append(PROMPT_ELEMENT_ST + chq.getPrompt() + PROMPT_ELEMENT_END);
+		for (String option : chq.getOptions()) {
+			html.append("<option>" + option + "</option>");
+		}
+		html.append(RESPONSE_ELEMENT_ST + chq.getResponse(chq.getId())
+				+ RESPONSE_ELEMENT_END);
+
+		html.append("</checkQuestion>");
 
 		return html.toString();
 	}

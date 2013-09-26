@@ -1,5 +1,6 @@
 package form.visitors;
 
+import form.questions.CheckQuestion;
 import form.questions.ComplexQuestion;
 import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
@@ -42,6 +43,19 @@ public class HTMLVisitor extends AbstractQuestionVisitor {
 	}
 
 	@Override
+	public String visit(CheckQuestion chq) {
+		StringBuilder html = new StringBuilder(chq.getPrompt());
+
+		for (String option : chq.getOptions()) {
+			html.append(INPUT_TYPE_TAG + "checkbox");
+			html.append(NAME_TAG + chq.getId() + VALUE_TAG + option);
+			html.append(END_TAG);
+			html.append(option);
+		}
+		return html.toString();
+	}
+	
+	@Override
 	public String visit(SelectQuestion sq) {
 		StringBuilder html = new StringBuilder(sq.getPrompt() + SELECT_TAG);
 
@@ -60,5 +74,4 @@ public class HTMLVisitor extends AbstractQuestionVisitor {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

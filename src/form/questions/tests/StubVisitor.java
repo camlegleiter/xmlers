@@ -1,5 +1,6 @@
 package form.questions.tests;
 
+import form.questions.CheckQuestion;
 import form.questions.ComplexQuestion;
 import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
@@ -26,6 +27,11 @@ public class StubVisitor implements IQuestionVisitor {
 	@Override
 	public String visit(ComplexQuestion cq) {
 		return "Complext Question: " + cq.toString();
+	}
+
+	@Override
+	public String visit(CheckQuestion chq) {
+		return "Checkbox Question: " + chq.toString();
 	}
 
 }

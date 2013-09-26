@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import form.questions.CheckQuestion;
 import form.questions.Question;
 import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
@@ -24,7 +25,8 @@ public class simpleQuestionApp {
 		answers.add("Female");
 		answers.add("Male");
 		RadioQuestion radioq = new RadioQuestion("second", 2, "Sex: ", answers);
-		SelectQuestion selectq = new SelectQuestion("third", 3, "Sex: ", answers);
+		CheckQuestion checkq = new CheckQuestion("third", 3, "Sex: ", answers);
+		SelectQuestion selectq = new SelectQuestion("fourth", 4, "Sex: ", answers);
 		
 		//Add questions to question list
 		ArrayList<Question> formqs = new ArrayList<Question>();
@@ -45,12 +47,15 @@ public class simpleQuestionApp {
 		rtrnHTML += htmlVisitor.visit(textq);
 		rtrnHTML += htmlVisitor.visit(radioq);
 		rtrnHTML += htmlVisitor.visit(selectq);
+		rtrnHTML += htmlVisitor.visit(checkq);
 		rtrnXML += xmlVisitor.visit(textq);
 		rtrnXML += xmlVisitor.visit(radioq);
 		rtrnXML += xmlVisitor.visit(selectq);
+		rtrnXML += xmlVisitor.visit(checkq);
 		rtrnJSON += jsonVisitor.visit(textq);
 		rtrnJSON += jsonVisitor.visit(radioq);
 		rtrnJSON += jsonVisitor.visit(selectq);
+		rtrnJSON += jsonVisitor.visit(checkq);
 		
 		System.out.println("Working Directory = " +
 	              System.getProperty("user.dir"));

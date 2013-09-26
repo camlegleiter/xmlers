@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns="http://www.example.org/Form" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Form" xmlns:tns="http://www.example.org/Form" elementFormDefault="qualified">
 
-	<xs:complexType name="permission_t">
+	<xs:complexType name="permission">
 		<xs:attribute name="id" type="xs:IDREF"/>
 		<xs:attribute name="read" type="xs:boolean" />
 		<xs:attribute name="write" type="xs:boolean" />
 		<xs:attribute name="append" type="xs:boolean" />
 	</xs:complexType>
 		
-	<xs:complexType name="question_t">
+	<xs:complexType name="question">
 		<xs:sequence>
 			<xs:element type="xs:string" name="prompt" />
 		</xs:sequence>
 		<xs:attribute type="xs:ID" name="id" />
 		<xs:attribute type="xs:unsignedInt" name="priority" />
 	</xs:complexType>
-	<xs:complexType name="response_t">
+	<xs:complexType name="response">
 		<xs:attribute type="xs:ID" name="id" />
 		<xs:attribute type="xs:IDREF" name="parent"/>
 		<xs:attribute type="xs:IDREF" name="author"/>
 	</xs:complexType>
 	
-	<xs:complexType name="textQuestion_t">
+	<xs:complexType name="textQuestion">
 		<xs:complexContent>
-			<xs:extension base="question_t">
+			<xs:extension base="question">
 				<xs:sequence>
 					<xs:element name="default" />
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="textResponse_t">
+	<xs:complexType name="textResponse">
 		<xs:complexContent>
-			<xs:extension base="response_t">
+			<xs:extension base="response">
 				<xs:sequence>
 					<xs:element type="xs:string" name="value" />
 				</xs:sequence>
@@ -41,9 +41,9 @@
 	</xs:complexType>
 	
 	
-	<xs:complexType name="selectQuestion_t">
+	<xs:complexType name="selectQuestion">
 		<xs:complexContent>
-			<xs:extension base="question_t">
+			<xs:extension base="question">
 				<xs:sequence>
 					<xs:element name="options">
 						<xs:complexType>
@@ -65,9 +65,9 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="selectResponse_t">
+	<xs:complexType name="selectResponse">
 		<xs:complexContent>
-			<xs:extension base="response_t" >
+			<xs:extension base="response" >
 				<xs:sequence>
 					<xs:element type="xs:integer" name="selection" />
 				</xs:sequence>
@@ -75,7 +75,7 @@
 		</xs:complexContent>
 	</xs:complexType>
 	
-    <xs:complexType name="form_t">
+    <xs:complexType name="form">
     	<xs:sequence>
     		<xs:element name="id" type="xs:string" />
     		<xs:element name="title" type="xs:string" />
@@ -83,8 +83,8 @@
     		<xs:element name="permissions">
     			<xs:complexType>
     				<xs:sequence>
-    					<xs:element name="group" maxOccurs="unbounded" minOccurs="1" type="permission_t" />
-    					<xs:element name="user" minOccurs="0" maxOccurs="unbounded" type="permission_t" />
+    					<xs:element name="group" maxOccurs="unbounded" minOccurs="1" type="permission" />
+    					<xs:element name="user" minOccurs="0" maxOccurs="unbounded" type="permission" />
     				</xs:sequence>
     			</xs:complexType>
     		</xs:element>
@@ -103,8 +103,8 @@
     			<xs:complexType>
 					<xs:sequence>
 						<xs:choice maxOccurs="unbounded" minOccurs="0">
-							<xs:element name="textQuestion" type="textQuestion_t"/>
-							<xs:element name="selectQuestion" type="selectQuestion_t" />
+							<xs:element name="textQuestion" type="textQuestion"/>
+							<xs:element name="selectQuestion" type="selectQuestion" />
 						</xs:choice>
 					</xs:sequence>
     			</xs:complexType>
@@ -113,8 +113,8 @@
     			<xs:complexType>
     				<xs:sequence>
     					<xs:choice maxOccurs="unbounded" minOccurs="0">
-    						<xs:element name="textResponse" type="textResponse_t" />
-    						<xs:element name="selectResponse" type="selectResponse_t" />
+    						<xs:element name="textResponse" type="textResponse" />
+    						<xs:element name="selectResponse" type="selectResponse" />
     					</xs:choice>
     				</xs:sequence>
     			</xs:complexType>
@@ -122,5 +122,5 @@
     	</xs:sequence>
     </xs:complexType>
 
-    <xs:element name="forms" type="form_t"></xs:element>
+    <xs:element name="forms" type="form"></xs:element>
 </xs:schema>

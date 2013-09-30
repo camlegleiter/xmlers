@@ -1,49 +1,118 @@
+// NOTE: The order of these may or may not be in the same order
 {
+    // The ID of the form
+    // default: -1
     formID: 123456789,
+    
+    // The name of the form
+    // default: ''
     formName: "Example Form",
+    
+    // The user's description of the form (i.e. describing what the form asks);
+    // default: ''
     formDesc: "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
+    
+    // The ID of the owner/administrator of this
+    // default: -1
     formOwner: 987654321,
-    participants: [
+    
+    // A list of required participants as defined by the owner/administrator;
+    // default: []
+    formParticipants: [
         "email1@example.com", "email2@example.com", "email3@example.com"
     ],
+    
+    // A list of question objects
+    // default: []
     formQuestions: [
+    
+        // TEXTBOX
         {
-            type: "textbox",
+            // Type is always 'Textbox'
+            type: "Textbox",
+            
+            // Maximum number of characters that can be entered
+            // default: 1000
             maxLength: 1000,
-            description: "Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock.",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            prompt: "Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock.", 
         },
+        
+        // CHECKBOX
         {
-            type: "checkbox",
-            description: "Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate.",
+            // Type is always 'Checkbox'
+            type: "Checkbox",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            prompt: "Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate.",
+            
+            // A list of checkbox labels; the length of the array is the number of checkbox options
+            // default: []
             checkboxes: [
                 { label: "Checkbox1" },
                 { label: "Checkbox2" },
                 { label: "Checkbox3" }
             ]
         },
+        
+        // RADIO
         {
-            type: "radio",
-            description: "Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
+            // Type is always 'Radio'
+            type: "Radio",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            prompt: "Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
+            
+            // A list of radio labels; the length of the array is the number of radio options
+            // default: []
             radios: [
                 { label: "Radio1" },
                 { label: "Radio2" },
                 { label: "Radio3" }
             ]
         },
+        
+        // SELECT
         {
-            type: "select",
-            description: "Aliquip beef ribs dolore shoulder ad consectetur pork belly minim.",
-            isMulti: false, // true = multiple options can be chosen
+            // Type is always 'Select'
+            type: "Select",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            prompt: "Aliquip beef ribs dolore shoulder ad consectetur pork belly minim.",
+            
+            // Flag for if multiple options can be chosen (multi-select)
+            // default: false (single-select)
+            isMulti: false,
+            
+            // A list of options; the length of the array is the number of options
+            // default: []
             options: [
                 { value: "Option1" },
                 { value: "Option2" },
                 { value: "Option3" }
             ]
         },
+        
+        // DATETIME -- FUTURE IMPLEMENTATION (?)
         {
-            type: "datetime",
-            description: "Flank duis consequat ut dolore doner ribeye turkey. Bacon fugiat in dolore, doner laborum tongue shankle.",
-            isAllDay: false, // true = no time options, only dates
+            // Type is always 'Datetime'
+            type: "Datetime",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            prompt: "Flank duis consequat ut dolore doner ribeye turkey.",
+            
+            // Flag for if the field encompasses an entire day--time is not needed
+            // default: false (time-specific; need to include hour and minute)
+            isAllDay: false,
+            
+            // A list of start-end times; the length of the array is the number of times
+            // default: []
             datetimes: [
                 {
                     start: "9/23/13 4:00 pm",

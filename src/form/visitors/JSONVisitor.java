@@ -32,7 +32,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(TextQuestion tq) {
-		StringBuilder json = new StringBuilder(TYPE + "textbox");
+		StringBuilder json = new StringBuilder(TYPE + "Textbox");
 
 		json.append(DL + MAX_LEN + tq.getMaxLength());
 		json.append(DL + PROMPT + tq.getPrompt());
@@ -46,7 +46,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(RadioQuestion rq) {
-		StringBuilder json = new StringBuilder(TYPE + "radio");
+		StringBuilder json = new StringBuilder(TYPE + "Radio");
 
 		json.append(DL + PROMPT + rq.getPrompt());
 		// json.append(DL + NAME + rq.getId());
@@ -70,7 +70,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(CheckQuestion chq) {
-		StringBuilder json = new StringBuilder(TYPE + "checkbox");
+		StringBuilder json = new StringBuilder(TYPE + "Checkbox");
 
 		json.append(DL + PROMPT + chq.getPrompt());
 		// json.append(DL + NAME + rq.getId());
@@ -94,7 +94,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(SelectQuestion sq) {
-		StringBuilder json = new StringBuilder(TYPE + "select");
+		StringBuilder json = new StringBuilder(TYPE + "Select");
 
 		json.append(DL + PROMPT + sq.getPrompt());
 		// json.append(DL + NAME + sq.getId());

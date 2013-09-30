@@ -4,6 +4,8 @@ TaskManager.Models.Form = Backbone.Model.extend({
             formID: -1,
             formName: '',
             formDescription: '',
+            formOwner: -1,
+            formParticipants: [],
             formQuestions: new TaskManager.Collections.Questions()
         };
     }
@@ -81,7 +83,7 @@ TaskManager.Models.Textbox = TaskManager.Models.Question.extend({
         return {
             type: 'Textbox',
             prompt: '',
-            maxLength: 0
+            maxLength: 1000
         };
     }
 });

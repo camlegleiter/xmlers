@@ -30,7 +30,7 @@
 					<h3>Select Entry Type:</h3>
 					<div id="question-options" class="well" style="padding: 10px;"></div>
 				</div>
-				<div class="span9">
+				<div class="span6">
 				    <h3>Form Builder:</h3>
                     <div class="well">
                         <form id="user-form" class="form-horizontal" action="<%=request.getContextPath()%>/create" method="POST"></form>
@@ -50,63 +50,49 @@
 			$(document).ready(function() {
 			    Create = TaskManager.Create;
 			    Create.start();
-			    
-// 				$('.columns li').draggable({
-// 					appendTo: "body",
-// 					helper: 'clone',
-// 					cursor: "pointer"
-// 				});
-				
-// 				$('#form-builder').droppable({
-// 					activeClass: "ui-state-default",
-// 					hoverClass: "ui-state-hover",
-// 					accept: ":not(.ui-sortable-helper)",
-// 					drop: function(event, ui) {
-// 						$(this).find(".placeholder").remove();
-// 						$('<li></li>').text(ui.draggable.text()).appendTo(this);
-// 					}
-// 				}).sortable({
-// 					placeholder: "ui-placeholder",
-// 					forcePlaceholderSize: true,
-// 					sort: function() {
-// 						$(this).removeClass("ui-state-default");
-// 					}
-// 				});
 			});
 		</script>
     
-        <script id="question-option-template" type="text/template">
-            <input type="radio" id="question-<@= id @>" name="question-option">            
-            <label for="question-<@= id @>"><@= label @></label>
+        <script id="empty-view-template" type="text/template">
+            <div class="controls">
+                <@= message @>
+            </div>
         </script>
     
         <script id="question-options-template" type="text/template">
             <div id="questions-content"></div>
             <hr />
             <a class="add disabled btn pull-right">Add Question</a>
+        </script>    
+    
+        <script id="question-option-template" type="text/template">
+            <input type="radio" id="question-<@= id @>" name="question-option">            
+            <label for="question-<@= id @>"><@= label @></label>
         </script>
     
         <script id="form-template" type="text/template">
             <div class="control-group">
                 <label class="control-label" for="formName">Form Name</label>
                 <div class="controls">
-                    <input type="text" id="formName" placeholder="Form Name">
+                    <input type="text" id="formName" placeholder="Form Name" required>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="description">Form Description</label>
+                <label class="control-label" for="formDesc">Form Description</label>
                 <div class="controls">
-                    <textarea id="formDesc" placeholder="Enter a description of the form"></textarea>
+                    <textarea id="formDesc" placeholder="Enter a description of the form" required></textarea>
                 </div>
             </div>
             <ol id="form-content"></ol>
             <div class="form-actions">
                 <div style="margin-bottom: 10px">
-                    <label class="checkbox"><input type="checkbox" name="participantsSeeAll">Participants can see the responses of others.</label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="participantsSeeAll">Participants can see the responses of others.
+                    </label>
                 </div>
                 
-                <button class="btn btn-large btn-primary" type="submit">Submit</button>
-                <a class="btn btn-large">Cancel</a>
+                <a class="submit btn btn-large btn-primary">Submit</a>
+                <a class="cancel btn btn-large">Cancel</a>
             </div>
         </script>
     
@@ -117,19 +103,25 @@
             </div>
             <div>
                 <div class="control-group">
-                    <label class="control-label" for="description">Description</label>
+                    <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="description" placeholder="Enter a description of the check field">
+                        <input type="text" id="prompt-<@= id @>" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
-                <ol class="content"></ol>
-                <a class="add btn">Add Checkbox Option</a>
+                <div class="content"></div>
+                <div class="control-group">
+                    <div class="controls">
+                        <a class="btn add">Add Select Option</a>
+                    </div>
+                </div>
             </div>
         </script>
         
         <script id="checkbox-item-template" type="text/template">
-            <input type="text" placeholder="Checkbox text">
-            <a class="delete">Delete</a>
+            <li class="controls">
+                <input type="text" value="<@= data.label @>" placeholder="Checkbox text" required>
+                <a class="delete">Delete</a>
+            </li>
         </script>
         
         <script id="radio-template" type="text/template">
@@ -139,19 +131,25 @@
             </div>
             <div>
                 <div class="control-group">
-                    <label class="control-label" for="description">Description</label>
+                    <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="description" placeholder="Enter a description of the radio field">
+                        <input type="text" id="prompt-<@= id @>" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
-                <ol class="content"></ol>
-                <a class="add btn">Add Radio Option</a>
+                <div class="content"></div>
+                <div class="control-group">
+                    <div class="controls">
+                        <a class="btn add">Add Radio Option</a>
+                    </div>
+                </div>
             </div>
         </script>
         
         <script id="radio-item-template" type="text/template">
-            <input type="text" placeholder="Radio text">
-            <a class="delete">Delete</a>
+            <li class="controls">
+                <input type="text" value="<@= data.label @>" placeholder="Radio text" required>
+                <a class="delete">Delete</a>
+            </li>
         </script>
         
         <script id="textbox-template" type="text/template">
@@ -161,15 +159,15 @@
             </div>
             <div>
                 <div class="control-group">
-                    <label class="control-label" for="description">Description</label>
+                    <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="description" placeholder="Enter a description of the text field">
+                        <input type="text" id="prompt-<@= id @>" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="maxLength">Maximum Length</label>
+                    <label class="control-label" for="max-length-<@= id @>">Maximum Length</label>
                     <div class="controls">
-                        <input type="text" id="maxLength" placeholder="Maximum number of characters" value="1000">
+                        <input type="number" id="max-length-<@= id @>" value="<@= data.maxLength @>" placeholder="Maximum number of characters" required>
                     </div>
                 </div>
             </div>
@@ -182,26 +180,36 @@
             </div>
             <div>
                 <div class="control-group">
-                    <label class="control-label" for="description">Description</label>
+                    <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="description" placeholder="Enter a description of the text field">
+                        <input type="text" id="prompt-<@= id @>" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
                 <div class="control-group">
-                    <div class="controsl">
-                        <label class="control-label">
-                            <input type="checkbox">Allow for multiple selections?
+                    <div class="controls">
+                        <label class="checkbox">
+                            <input id="is-multi-<@= id @>" type="checkbox"
+                                <@ if (data.isMulti) { @>
+                                    checked
+                                <@ } @>
+                            >Allow for multiple selections?
                         </label>
                     </div>
                 </div>
-                <ol class="content"></ol>
-                <a class="btn add">Add Select Option</a>
+                <div class="content"></div>
+                <div class="control-group">
+                    <div class="controls">
+                        <a class="btn add">Add Select Option</a>
+                    </div>
+                </div>
             </div>
         </script>
         
         <script id="select-option-item-template" type="text/template">
-            <input type="text" placeholder="Option text">
-            <a class="delete">Delete</a>
+            <li class="controls">
+                <input type="text" value="<@= data.label @>" placeholder="Option text" required>
+                <a class="delete">Delete</a>
+            </li>
         </script>
         
         <script id="datetime-template" type="text/template"></script>

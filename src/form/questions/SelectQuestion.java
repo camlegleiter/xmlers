@@ -1,38 +1,16 @@
 package form.questions;
 
-import java.util.ArrayList;
+/**
+ * A set of radio buttons and a select question resolve the same logically.
+ * However, their appearances differ. For that reason, we have a basic
+ * extension to allow for visitors to treat them differently.
+ * 
+ * @author mstrobel
+ *
+ */
+public class SelectQuestion extends RadioQuestion {
 
-import form.visitors.IQuestionVisitor;
-
-public class SelectQuestion extends Question {
-	
-	private String response;
-	
-	private ArrayList<String> options = new ArrayList<String>();
-
-	public SelectQuestion(String id, int weight, String prompt, ArrayList<String> answers) {
-		super(id, weight, prompt);
-		this.options = answers;
-		response = "";
-	}
-
-	@Override
-	public void accept(IQuestionVisitor visitor) {
-		visitor.visit(this);
-	}
-
-	@Override
-	public String getResponse(String id) {
-		return response;
-	}
-
-	@Override
-	public void setResponse(String id, String ans) {
-		this.response = ans;
-	}
-
-	
-	public ArrayList<String> getOptions() {
-		return options;
+	public SelectQuestion(String id, int weight, String prompt, Iterable<String> answers) {
+		super(id, weight, prompt, answers);
 	}
 }

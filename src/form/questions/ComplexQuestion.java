@@ -1,12 +1,26 @@
 package form.questions;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import form.visitors.IQuestionVisitor;
 
-public class ComplexQuestion extends Question {
+public class ComplexQuestion extends Question<Collection<Question<?>>> {
 
+	public Collection<Question<?>> questions;
+	
 	public ComplexQuestion(String id, int weight, String prompt) {
 		super(id, weight, prompt);
-		// TODO Auto-generated constructor stub
+		this.questions = new ArrayList<Question<?>>();
+	}
+	
+	public ComplexQuestion(String id, int weight, String prompt, Iterable<Question<?>> questions)
+	{
+		this(id, weight, prompt);
+		for(Question<?> entry : questions)
+		{
+			this.questions.add(entry);
+		}
 	}
 
 	private int min;
@@ -15,17 +29,6 @@ public class ComplexQuestion extends Question {
 	public void accept(IQuestionVisitor visitor) {
 		visitor.visit(this);
 	}
-
-	@Override
-	public String getResponse(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setResponse(String id, String ans) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
+	
 }

@@ -2,7 +2,7 @@ package form.questions;
 
 import form.visitors.IQuestionVisitor;
 
-public class TextQuestion extends Question {
+public class TextQuestion extends Question<String> {
 
 	private String response;
 

@@ -1,6 +1,7 @@
 package form;
 
 import java.util.*;
+
 import form.questions.*;
 import form.visitors.*;
 
@@ -107,8 +108,7 @@ public class Form implements Iterable<Question>{
 	
 	public String getJSON(int settings, String user)
 	{
-		//TODO
-		return "";
+		throw new RuntimeException("This function is not yet implemented");
 	}
 	
 	private static boolean bitSet(int field, int mask)

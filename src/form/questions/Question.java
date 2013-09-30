@@ -1,18 +1,24 @@
 package form.questions;
 
+import java.util.HashMap;
+
 
 /**
  * 
  * @author Martin Strobel
  *
  */
-public abstract class Question implements IVisitable {
+public abstract class Question<T> implements IVisitable {
 
+	
+	private HashMap<String, QuestionResponse<T>> responses;
+	
 	public Question(String id, int weight, String prompt)
 	{
 		this.id = id;
 		this.setPrompt(prompt);
 		this.setPosition(weight);
+		responses = new HashMap<String, QuestionResponse<T>>();
 	}
 	
 	/**
@@ -46,8 +52,7 @@ public abstract class Question implements IVisitable {
 	/**
 	 * Updates the text that the End User will respond to.
 	 * 
-	 * @param s
-	 *            The string the should be used as the prompt.
+	 * @param s The string the should be used as the prompt.
 	 */
 	public void setPrompt(String s) {
 		this.prompt = s;
@@ -55,17 +60,28 @@ public abstract class Question implements IVisitable {
 
 	/**
 	 * Fetches a textual representation of how an end user responded.
-	 * @param id the id for the question the response is tied to. 
-	 * @return
+	 * @param userID The unique string that identifies a user.
+	 * @return The response that the specified end user provided.
 	 */
-	public abstract String getResponse(String id);
+	public T getResponse(String userID)
+	{
+		return responses.get(userID).getValue();
+	}
 	
 	/**
-	 * Updates the response from the end user.
+	 * Updates the response from the end user. 
 	 * @param id the id for the question the response is tied to. 
 	 * @param ans
 	 */
-	public abstract void setResponse(String id, String ans);
+	public void setResponse(String id, T ans)
+	{
+		responses.get(id).setValue(ans);
+	}
+	
+	public void insertResponse(String id, QuestionResponse<T> resp)
+	{
+		responses.put(id, resp);
+	}
 	
 	/**
 	 * Retrieves the relative priority of the question to others.

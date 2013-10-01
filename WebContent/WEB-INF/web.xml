@@ -8,14 +8,18 @@
     <error-code>404</error-code>
     <location>/error/error404.jsp</location>
   </error-page>
+  
+  <!--
   <filter>
     <filter-name>loginFilter</filter-name>
     <filter-class>filters.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>loginFilter</filter-name>
-    <url-pattern>/app/*</url-pattern>
+    <url-pattern>/app/asdf</url-pattern>
   </filter-mapping>
+  -->
+  
   <servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>Login</servlet-class>
@@ -24,6 +28,7 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>Logout</servlet-name>
     <servlet-class>Logout</servlet-class>
@@ -32,6 +37,7 @@
     <servlet-name>Logout</servlet-name>
     <url-pattern>/app/logout</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>Index</servlet-name>
     <servlet-class>Index</servlet-class>
@@ -40,14 +46,16 @@
     <servlet-name>Index</servlet-name>
     <url-pattern>/app/index</url-pattern>
   </servlet-mapping>
+  
   <servlet>
-    <servlet-name>View</servlet-name>
-    <servlet-class>View</servlet-class>
+    <servlet-name>GetResponses</servlet-name>
+    <servlet-class>GetResponses</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>View</servlet-name>
-    <url-pattern>/app/view</url-pattern>
+    <servlet-name>GetResponses</servlet-name>
+    <url-pattern>/app/getResponses</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>Edit</servlet-name>
     <servlet-class>Edit</servlet-class>
@@ -56,14 +64,16 @@
     <servlet-name>Edit</servlet-name>
     <url-pattern>/app/edit</url-pattern>
   </servlet-mapping>
+  
   <servlet>
-    <servlet-name>Create</servlet-name>
-    <servlet-class>Create</servlet-class>
+    <servlet-name>UpsertForm</servlet-name>
+    <servlet-class>UpsertForm</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Create</servlet-name>
-    <url-pattern>/app/create</url-pattern>
+    <servlet-name>UpsertForm</servlet-name>
+    <url-pattern>/app/upsert</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>Settings</servlet-name>
     <servlet-class>Settings</servlet-class>

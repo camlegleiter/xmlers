@@ -22,6 +22,10 @@
         "email1@example.com", "email2@example.com", "email3@example.com"
     ],
     
+    // Flag for if the participants can view all of the participants' responses, not just their own
+    // default: false (view only their own)
+    participantsCanSeeAll: false,
+    
     // A list of question objects
     // default: []
     formQuestions: [

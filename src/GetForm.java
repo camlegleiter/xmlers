@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dbconnect.SingletonDBController;
 import form.Form;
 
 /**
@@ -35,6 +36,8 @@ public class GetForm extends HttpServlet {
 		String formID = request.getHeader("ID");
 		String formFormat = request.getHeader("Format");
 		String userID = request.getHeader("User");
+		Form requestedForm;
+		PrintWriter out;
 
 		if(null == formID || formID.equals(""))
 		{
@@ -43,11 +46,11 @@ public class GetForm extends HttpServlet {
 		if(null == formFormat || formFormat.equals(""))
 		{
 			throw new ServletException("No format specified in request.");
-		}
+		}				
 		
-		PrintWriter out = response.getWriter();		
+		out = response.getWriter();
+		requestedForm = SingletonDBController.getInstance().fetchForm(formID);
 		
-		Form requestedForm = Form.fetchForm(formID);
 		if(null == requestedForm)
 		{
 			throw new ServletException("Unable to find form: \"" + formID + "\"");

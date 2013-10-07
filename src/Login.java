@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dbconnect.IDBController;
+import dbconnect.SingletonDBController;
 import dbconnect.SqlController;
+import dbconnect.dao.UserDAO;
 
 /**
  * Servlet implementation class Login
@@ -34,10 +36,17 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IDBController library = new SqlController();
+		String password;
+		String userID;
+		IDBController library = SingletonDBController.getInstance();
+		UserDAO user;
+		
+		userID = request.getHeader("userID");
+		password = request.getHeader("password");
+		user = library.fetchUser(userID);
 		
 		// If the login is valid
-		if (library.checkLogin(request)) {
+		if (user.checkPassword(password)) {
 			// Create a "remember me" cookie for logging in
 			String rememberMe = request.getParameter("remember");
 			if (null != rememberMe && rememberMe.equals("remember-me")) {

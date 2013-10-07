@@ -4,15 +4,12 @@ import form.visitors.IQuestionVisitor;
 
 public class TextQuestion extends Question<String> {
 
-	private String response;
 
 	private int maxLength;
 
 	public TextQuestion(String id, int weight, String prompt, int max) {
 		super(id, weight, prompt);
 		this.maxLength = max;
-		response = "";
-
 	}
 
 	@Override
@@ -21,14 +18,9 @@ public class TextQuestion extends Question<String> {
 	}
 
 	@Override
-	public String getResponse(String id) {
-		return response;
-	}
-
-	@Override
 	public void setResponse(String id, String response) {
 		if (response.length() <= this.maxLength) {
-			this.response = response;
+			super.setResponse(id, response);
 		} else {
 			throw new IllegalArgumentException("The String \"" + response
 					+ "\" is longer than the maximum of " + maxLength
@@ -47,5 +39,14 @@ public class TextQuestion extends Question<String> {
 			throw new IllegalArgumentException(
 					"The maximum length of a string must be greater than zero.");
 		}
+	}
+
+	@Override
+	public TextQuestion clone() {
+		TextQuestion retVal = new TextQuestion(this.getId(), this.getPosition(), this.getPrompt(), this.getMaxLength());
+		retVal.maxLength = this.maxLength;
+		
+		return retVal;
+		
 	}
 }

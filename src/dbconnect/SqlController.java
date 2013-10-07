@@ -10,15 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import dbconnect.dao.UserDAO;
+import form.Form;
+import form.questions.Question;
+import form.questions.QuestionResponse;
 
-public class SqlController extends AbstractDBController {
+public class SqlController implements IDBController {
 	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/task_manager";
 	
 	public SqlController() {
 		registerDriver();
 	}
 	
-	@Override
 	public boolean checkLogin(HttpServletRequest request) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
@@ -77,7 +79,6 @@ public class SqlController extends AbstractDBController {
 		}
 	}
 
-	@Override
 	public boolean registerNewUser(UserDAO userDAO, String password) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
@@ -99,7 +100,9 @@ public class SqlController extends AbstractDBController {
 			preparedStatement.setString(3, userDAO.getUserName());
 			preparedStatement.setString(4, userDAO.getEmail());
 			
-			String salt = generateUserSalt(128);
+			//TODO Find missing Salt function!
+			//String salt = SingletonDBController.generateUserSalt(128);
+			String salt = "tr5r";
 			preparedStatement.setString(5, password + salt);
 			preparedStatement.setString(6, salt);
 			
@@ -117,5 +120,95 @@ public class SqlController extends AbstractDBController {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public boolean formExists(String key) {
+		//TODO
+		throw new RuntimeException("Function is not yet implemented.");
+	}
+
+	@Override
+	public boolean userExists(String key) {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("Function is not yet implemented.");
+	}
+
+	@Override
+	public boolean upsertForm(Form f) {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("Function is not yet implemented.");
+	}
+
+	@Override
+	public boolean upsertUser(UserDAO user) {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("Function is not yet implemented.");
+	}
+
+	@Override
+	public boolean questionExists(String key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean responseExists(String key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean upsertResponse(QuestionResponse<?> resp) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public <T> boolean upsertQuestion(Question<T> question) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Form fetchForm(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDAO fetchUser(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public QuestionResponse<?> fetchResponse(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteForm(String key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteUser(String key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteResponse(String key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteQuestion(String key) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

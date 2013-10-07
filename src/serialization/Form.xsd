@@ -8,6 +8,7 @@
 		<xs:attribute name="append" type="xs:boolean" />
 	</xs:complexType>
 		
+  <!-- Basic components taht must be present in a question. -->
 	<xs:complexType name="question">
 		<xs:sequence>
 			<xs:element type="xs:string" name="prompt" />
@@ -15,12 +16,15 @@
 		<xs:attribute type="xs:ID" name="id" />
 		<xs:attribute type="xs:unsignedInt" name="priority" />
 	</xs:complexType>
+  
+  <!-- Basic components that must be present in a response. -->
 	<xs:complexType name="response">
 		<xs:attribute type="xs:ID" name="id" />
 		<xs:attribute type="xs:IDREF" name="parent"/>
 		<xs:attribute type="xs:IDREF" name="author"/>
 	</xs:complexType>
 	
+  <!-- A question that is answered with one line of text. -->
 	<xs:complexType name="textQuestion">
 		<xs:complexContent>
 			<xs:extension base="question">
@@ -31,6 +35,8 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+  
+  <!-- A response to a question that is answered with one line of text. -->
 	<xs:complexType name="textResponse">
 		<xs:complexContent>
 			<xs:extension base="response">
@@ -41,7 +47,7 @@
 		</xs:complexContent>
 	</xs:complexType>
 	
-	
+	<!-- A question that is  -->
 	<xs:complexType name="selectQuestion">
 		<xs:complexContent>
 			<xs:extension base="question">
@@ -76,52 +82,52 @@
 		</xs:complexContent>
 	</xs:complexType>
 	
-    <xs:complexType name="form">
-    	<xs:sequence>
-    		<xs:element name="id" type="xs:string" />
-    		<xs:element name="title" type="xs:string" />
-    		<xs:element name="description" type="xs:string" />
-    		<xs:element name="permissions">
-    			<xs:complexType>
-    				<xs:sequence>
-    					<xs:element name="group" maxOccurs="unbounded" minOccurs="1" type="permission" />
-    					<xs:element name="user" minOccurs="0" maxOccurs="unbounded" type="permission" />
-    				</xs:sequence>
-    			</xs:complexType>
-    		</xs:element>
-    		<xs:element name="participants">
-    			<xs:complexType>
-    				<xs:sequence>
-    					<xs:element name="participant" maxOccurs="unbounded" minOccurs="0" >
-    						<xs:complexType>
-    							<xs:attribute name="id" />
-    						</xs:complexType>
-    					</xs:element>    					
-    				</xs:sequence>
-    			</xs:complexType>
-    		</xs:element>
-    		<xs:element name="questions">
-    			<xs:complexType>
-					<xs:sequence>
-						<xs:choice maxOccurs="unbounded" minOccurs="0">
-							<xs:element name="textQuestion" type="textQuestion"/>
-							<xs:element name="selectQuestion" type="selectQuestion" />
-						</xs:choice>
-					</xs:sequence>
-    			</xs:complexType>
-    		</xs:element>
-    		<xs:element name="responses">
-    			<xs:complexType>
-    				<xs:sequence>
-    					<xs:choice maxOccurs="unbounded" minOccurs="0">
-    						<xs:element name="textResponse" type="textResponse" />
-    						<xs:element name="selectResponse" type="selectResponse" />
-    					</xs:choice>
-    				</xs:sequence>
-    			</xs:complexType>
-    		</xs:element>
-    	</xs:sequence>
-    </xs:complexType>
+  <xs:complexType name="form">
+    <xs:sequence>
+    	<xs:element name="id" type="xs:string" />
+    	<xs:element name="title" type="xs:string" />
+    	<xs:element name="description" type="xs:string" />
+    	<xs:element name="permissions">
+    		<xs:complexType>
+    			<xs:sequence>
+    				<xs:element name="group" maxOccurs="unbounded" minOccurs="1" type="permission" />
+    				<xs:element name="user" minOccurs="0" maxOccurs="unbounded" type="permission" />
+    			</xs:sequence>
+    		</xs:complexType>
+    	</xs:element>
+    	<xs:element name="participants">
+    		<xs:complexType>
+    			<xs:sequence>
+    				<xs:element name="participant" maxOccurs="unbounded" minOccurs="0" >
+    					<xs:complexType>
+    						<xs:attribute name="id" />
+    					</xs:complexType>
+    				</xs:element>    					
+    			</xs:sequence>
+    		</xs:complexType>
+    	</xs:element>
+    	<xs:element name="questions">
+    		<xs:complexType>
+				<xs:sequence>
+					<xs:choice maxOccurs="unbounded" minOccurs="0">
+						<xs:element name="textQuestion" type="textQuestion"/>
+						<xs:element name="selectQuestion" type="selectQuestion" />
+					</xs:choice>
+				</xs:sequence>
+    		</xs:complexType>
+    	</xs:element>
+    	<xs:element name="responses">
+    		<xs:complexType>
+    			<xs:sequence>
+    				<xs:choice maxOccurs="unbounded" minOccurs="0">
+    					<xs:element name="textResponse" type="textResponse" />
+    					<xs:element name="selectResponse" type="selectResponse" />
+    				</xs:choice>
+    			</xs:sequence>
+    		</xs:complexType>
+    	</xs:element>
+    </xs:sequence>
+  </xs:complexType>
 
-    <xs:element name="forms" type="form"></xs:element>
+  <xs:element name="forms" type="form"></xs:element>
 </xs:schema>

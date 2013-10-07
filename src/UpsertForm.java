@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.*;
+
 /**
  * Servlet implementation class UpsertForm
  */
@@ -26,7 +28,17 @@ public class UpsertForm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String formSource = request.getHeader("Form");		
+		
+		if(null == formSource || formSource.equals(""))
+		{
+			throw new ServletException("No form provided for upsert function.");
+		}
+		
+		JSONObject foo = JSONObject.fromObject(formSource);
+		
+		
+		
 	}
 
 }

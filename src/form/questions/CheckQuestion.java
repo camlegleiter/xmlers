@@ -76,4 +76,9 @@ public class CheckQuestion extends Question<List<CheckQuestion.Entry>> {
 			this.checked = checked;
 		}
 	}
+
+	@Override
+	public Question<List<Entry>> clone() {
+		return null;
+	}
 }

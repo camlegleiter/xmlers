@@ -5,11 +5,7 @@ import java.util.*;
 import form.questions.*;
 import form.visitors.*;
 
-public class Form implements Iterable<Question>{
-	
-	private String title;
-	private String key;
-	private String description;
+public class Form implements Iterable<Question<?>>{
 	
 	public static final int ALL_BITS = -1;
 	public static final int KEY_BIT = 0x1;
@@ -17,23 +13,40 @@ public class Form implements Iterable<Question>{
 	public static final int TITLE_BIT = 0x4;
 	public static final int QUESTIONS_BIT = 0x8;
 	
-	
-	private Queue<Question> questions;
+	private String title;
+	private String key;
+	private String description;	
+	private Queue<Question<?>> questions;
 
-	/**
-	 * Finds an existing form in the file system, and loads it into
-	 * a new instance of the form. 
-	 * @param formID
-	 * @return
-	 */
-	public static Form fetchForm(String formID)
-	{
-		//TODO
-		return null;
+	public Form() {
+		questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
 	}
 	
-	public Form() {
-		questions = new PriorityQueue<Question>(1, new QuestionPriority());
+	public Form(String key, String title, String description)
+	{
+		this.title = title;
+		this.key = key;
+		this.description = description;
+	}
+	
+	/**
+	 * Creates a shallow copy of a form.
+	 * @param other
+	 */
+	public Form(Form other)
+	{
+		this();
+		
+		this.title = other.title;
+		this.key = other.key;
+		this.description = other.description;
+
+		this.questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
+		
+		for(Question<?> q : other)
+		{
+			this.questions.add(q);
+		}
 	}
 
 	public String getTitle() {
@@ -60,12 +73,12 @@ public class Form implements Iterable<Question>{
 		this.description = description;
 	}
 
-	public void add(Question q) {
+	public void add(Question<?> q) {
 		questions.add(q);
 	}
 
 	@Override
-	public Iterator<Question> iterator() {
+	public Iterator<Question<?>> iterator() {
 		return questions.iterator();
 	}
 	
@@ -111,6 +124,24 @@ public class Form implements Iterable<Question>{
 		throw new RuntimeException("This function is not yet implemented");
 	}
 	
+	@Override
+	public Form clone()
+	{
+		Form other = new Form();
+		other.key = this.key;
+		other.description = this.description;
+		other.title = this.title;
+		
+		other.questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
+		
+		for(Question<?> q : questions)
+		{
+			other.questions.add(q.clone());
+		}
+		
+		return other;
+	}
+	
 	private static boolean bitSet(int field, int mask)
 	{
 		return 0 != (field & mask);
@@ -130,4 +161,5 @@ public class Form implements Iterable<Question>{
 		}
 	}
 
+	
 }

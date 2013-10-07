@@ -84,8 +84,12 @@ public class CreateDatabase {
 		user.setLastName("User");
 		user.setUserName("testuser");
 		user.setEmail("testuser@example.com");
+		user.setPassword("password");
+//		
+//		IDBController controller = new SqlController();
+//		controller.registerNewUser(user, "password");
 		
-		IDBController controller = new SqlController();
-		controller.registerNewUser(user, "password");
+		IDBController controller = SingletonDBController.getInstance();
+		controller.upsertUser(user);
 	}
 }

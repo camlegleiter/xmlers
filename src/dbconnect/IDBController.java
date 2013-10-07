@@ -1,27 +1,40 @@
 package dbconnect;
 
-import javax.servlet.http.HttpServletRequest;
-
 import dbconnect.dao.UserDAO;
+import form.Form;
+import form.questions.Question;
+import form.questions.QuestionResponse;
 
-public interface IDBController {
-	/**
-	 * Checks the login to determine if the POSTed user data is valid.
-	 * 
-	 * @param request
-	 * 			The given request data that should contain the POST user credentials.
-	 * @return
-	 * 			<code>true</code> if the credentials are valid, <code>false</code> otherwise.
-	 */
-	public boolean checkLogin(HttpServletRequest request);
+public interface IDBController  
+{	
+	public boolean formExists(String key);
 	
-	/**
-	 * Attempts to register a new user with parameters passed in the given request.
-	 * 
-	 * @param request
-	 * 			The given request data that should contain the POST user credentials.
-	 * @return
-	 * 			<code>true</code> if the user was successfully added to the database.
-	 */
-	public boolean registerNewUser(UserDAO userDAO, String password);
+	public boolean userExists(String key);
+	
+	public boolean questionExists(String key);
+	
+	public boolean responseExists(String key);
+	
+	public boolean upsertForm(Form f);
+	
+	public boolean upsertUser(UserDAO user);
+	
+	public boolean upsertResponse(QuestionResponse<?> resp);
+	
+	public <T> boolean upsertQuestion(Question<T> question);
+	
+	public Form fetchForm(String id);
+	
+	public UserDAO fetchUser(String id);
+	
+	public QuestionResponse<?> fetchResponse(String id);
+	
+	public boolean deleteForm(String key);
+	
+	public boolean deleteUser(String key);
+	
+	public boolean deleteResponse(String key);
+	
+	public boolean deleteQuestion(String key);	
+	
 }

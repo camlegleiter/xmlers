@@ -120,4 +120,7 @@ public abstract class Question<T> implements IVisitable {
 	public final void setId(String id) {
 		this.id = id;
 	}
+	
+	@Override
+	public abstract Question<T> clone();
 }

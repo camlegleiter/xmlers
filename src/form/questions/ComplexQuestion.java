@@ -29,6 +29,12 @@ public class ComplexQuestion extends Question<Collection<Question<?>>> {
 	public void accept(IQuestionVisitor visitor) {
 		visitor.visit(this);
 	}
+
+	@Override
+	public Question<Collection<Question<?>>> clone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

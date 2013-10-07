@@ -6,6 +6,7 @@
     <meta name="author" content="">
     <link href="<%= request.getContextPath() %>/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%= request.getContextPath() %>/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="<%= request.getContextPath() %>/assets/js/vendor/select2/select2.css" rel="stylesheet">
     
     <!--[if lt IE 9]>
     <script src="/assets/js/vendor/html5shiv.js"></script>

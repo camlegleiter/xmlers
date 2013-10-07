@@ -77,12 +77,8 @@
 			</div>		
 		</div>
 	
-		<!-- /container -->
-		<!-- Le javascript
-			================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="<%= request.getContextPath() %>/assets/js/vendor/jquery.min.js"></script>
-		<script src="<%= request.getContextPath() %>/assets/js/vendor/bootstrap.min.js"></script>
+        <jsp:include page="/app/includes/footer.jsp" />
+
 		<script>
 			$(document).ready(function() {
 				var myForms, otherForms;

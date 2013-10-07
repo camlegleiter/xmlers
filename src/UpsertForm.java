@@ -23,6 +23,13 @@ public class UpsertForm extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		return;
+	}
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -36,7 +43,6 @@ public class UpsertForm extends HttpServlet {
 		}
 		
 		JSONObject foo = JSONObject.fromObject(formSource);
-		
 		
 		
 	}

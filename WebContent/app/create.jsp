@@ -33,7 +33,7 @@
 				<div class="span6">
 				    <h3>Form Builder:</h3>
                     <div class="well">
-                        <form id="user-form" class="form-horizontal" action="<%=request.getContextPath()%>/create" method="POST"></form>
+                        <form id="user-form" class="form-horizontal" action="<%= request.getContextPath() %>/create" method="POST"></form>
                     </div>
 				</div>
 			</div>
@@ -74,25 +74,36 @@
             <div class="control-group">
                 <label class="control-label" for="formName">Form Name</label>
                 <div class="controls">
-                    <input type="text" id="formName" placeholder="Form Name" required>
+                    <input type="text" id="formName" class="required-input" placeholder="Form Name" required>
                 </div>
             </div>
+
             <div class="control-group">
                 <label class="control-label" for="formDesc">Form Description</label>
                 <div class="controls">
-                    <textarea id="formDesc" placeholder="Enter a description of the form" required></textarea>
+                    <textarea id="formDesc" class="required-input" placeholder="Enter a description of the form" required></textarea>
                 </div>
             </div>
+
             <ol id="form-content"></ol>
+            
+            <div class="control-group">
+                <label class="control-label" for="formParticipants">Participants</label>
+                <div class="controls">
+                    <input type="hidden" id="formParticipants" style="width: 300px;">
+                </div>
+            </div>
+
             <div class="form-actions">
                 <div style="margin-bottom: 10px">
                     <label class="checkbox">
-                        <input type="checkbox" name="participantsSeeAll">Participants can see the responses of others.
+                        <input type="checkbox" id="participantsSeeAll">Participants can see the responses of others.
                     </label>
                 </div>
                 
                 <a class="submit btn btn-large btn-primary">Submit</a>
                 <a class="cancel btn btn-large">Cancel</a>
+                <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
             </div>
         </script>
     
@@ -101,17 +112,20 @@
                 <h4 class="pull-left">Checkbox</h3>
                 <a class="delete pull-right">Delete</a>
             </div>
+
             <div>
                 <div class="control-group">
                     <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="prompt-<@= id @>" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
+                        <input type="text" id="prompt-<@= id @>" class="required-input" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
+
                 <div class="content"></div>
+
                 <div class="control-group">
                     <div class="controls">
-                        <a class="btn add">Add Select Option</a>
+                        <a class="btn add">Add Checkbox Option</a>
                     </div>
                 </div>
             </div>
@@ -119,7 +133,7 @@
         
         <script id="checkbox-item-template" type="text/template">
             <li class="controls">
-                <input type="text" value="<@= data.label @>" placeholder="Checkbox text" required>
+                <input type="text" class="required-input" value="<@= data.label @>" placeholder="Checkbox text" required>
                 <a class="delete">Delete</a>
             </li>
         </script>
@@ -129,14 +143,17 @@
                 <h4 class="pull-left">Radio</h3>
                 <a class="delete pull-right">Delete</a>
             </div>
+
             <div>
                 <div class="control-group">
                     <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="prompt-<@= id @>" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
+                        <input type="text" id="prompt-<@= id @>" class="required-input" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
+
                 <div class="content"></div>
+
                 <div class="control-group">
                     <div class="controls">
                         <a class="btn add">Add Radio Option</a>
@@ -147,7 +164,7 @@
         
         <script id="radio-item-template" type="text/template">
             <li class="controls">
-                <input type="text" value="<@= data.label @>" placeholder="Radio text" required>
+                <input type="text" class="required-input" value="<@= data.label @>" placeholder="Radio text" required>
                 <a class="delete">Delete</a>
             </li>
         </script>
@@ -157,17 +174,19 @@
                 <h4 class="pull-left">Textbox</h3>
                 <a class="delete pull-right">Delete</a>
             </div>
+
             <div>
                 <div class="control-group">
                     <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="prompt-<@= id @>" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
+                        <input type="text" id="prompt-<@= id @>" class="required-input" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
+
                 <div class="control-group">
                     <label class="control-label" for="max-length-<@= id @>">Maximum Length</label>
                     <div class="controls">
-                        <input type="number" id="max-length-<@= id @>" value="<@= data.maxLength @>" placeholder="Maximum number of characters" required>
+                        <input type="number" id="max-length-<@= id @>" class="required-input" value="<@= data.maxLength @>" placeholder="Maximum number of characters" required>
                     </div>
                 </div>
             </div>
@@ -178,13 +197,15 @@
                 <h4 class="pull-left">Select (Drop Down)</h3>
                 <a class="delete pull-right">Delete</a>
             </div>
+
             <div>
                 <div class="control-group">
                     <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="prompt-<@= id @>" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
+                        <input type="text" id="prompt-<@= id @>" class="required-input" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
+
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
@@ -196,7 +217,9 @@
                         </label>
                     </div>
                 </div>
+
                 <div class="content"></div>
+
                 <div class="control-group">
                     <div class="controls">
                         <a class="btn add">Add Select Option</a>
@@ -207,7 +230,7 @@
         
         <script id="select-option-item-template" type="text/template">
             <li class="controls">
-                <input type="text" value="<@= data.label @>" placeholder="Option text" required>
+                <input type="text" class="required-input" value="<@= data.label @>" placeholder="Option text" required>
                 <a class="delete">Delete</a>
             </li>
         </script>

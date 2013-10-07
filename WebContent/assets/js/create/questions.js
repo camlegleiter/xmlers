@@ -1,3 +1,5 @@
+'use strict';
+
 TaskManager.Models.Form = Backbone.Model.extend({
     defaults: function() {
         return {
@@ -6,6 +8,7 @@ TaskManager.Models.Form = Backbone.Model.extend({
             formDescription: '',
             formOwner: -1,
             formParticipants: [],
+            participantsCanSeeAll: false,
             formQuestions: new TaskManager.Collections.Questions()
         };
     }

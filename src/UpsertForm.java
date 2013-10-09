@@ -8,10 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dbconnect.IDBController;
-import dbconnect.DBManager;
-import form.Form;
-import net.sf.json.*;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class UpsertForm
@@ -32,25 +30,31 @@ public class UpsertForm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IDBController controller;
-		String formSource = request.getHeader("Form");		
+		String formData = (String) request.getAttribute("model");
 		
-		if(null == formSource || formSource.equals(""))
-		{
-			throw new ServletException("No form provided for upsert function.");
+		JSONObject jsonObject;
+		try {
+			jsonObject = JSONObject.fromObject(formData);
+			
+			// Add the userID from the session
+			String userID = (String) request.getSession().getAttribute("userID");
+			jsonObject.element("formOwner", userID);
+			
+			if (jsonObject.containsKey("formID")) {
+				// UPDATE
+			} else {
+				// INSERT
+			}
+			
+			response.sendRedirect("app/index");
+			
+		} catch (JSONException e) {
+			jsonObject = new JSONObject();
+			jsonObject.element("error", e.getMessage());
+			
+			response.setContentType("application/json");
+			response.getWriter().write(jsonObject.toString());
 		}
-		
-		JSONObject foo = JSONObject.fromObject(formSource);
-		
-		Form product = new Form(foo.getString("formKey"), foo.getString("formTitle"), foo.getString("formDescription"));
-		
-
-		controller = DBManager.getInstance();
-		
-		controller.upsertForm(product);
-		
-		//TODO Discuss this handshake
-		response.getWriter().print("Success\n");
 	}
 
 }

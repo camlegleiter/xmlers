@@ -1,10 +1,11 @@
-package dbconnect.dao;
+package form;
+
 
 import java.security.SecureRandom;
 
 import org.apache.commons.codec.binary.Base64;
 
-public class UserDAO {
+public class User {
 	private int userID;
 	private String userName;
 	private String firstName;

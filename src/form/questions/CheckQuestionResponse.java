@@ -3,12 +3,12 @@ package form.questions;
 import java.util.ArrayList;
 import java.util.List;
 
-import dbconnect.dao.UserDAO;
+import form.User;
 import form.questions.CheckQuestion.Entry;
 
 public class CheckQuestionResponse extends QuestionResponse<List<CheckQuestion.Entry>> {
 	
-	public CheckQuestionResponse(String key, Question<List<Entry>> parent, UserDAO author) {
+	public CheckQuestionResponse(String key, Question<List<Entry>> parent, User author) {
 		super(key, parent, author);
 		CheckQuestion realParent;
 		if(!(parent instanceof CheckQuestion))

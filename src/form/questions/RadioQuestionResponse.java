@@ -2,12 +2,12 @@ package form.questions;
 
 import java.util.List;
 
-import dbconnect.dao.UserDAO;
+import form.User;
 import form.questions.CheckQuestion.Entry;
 
 public class RadioQuestionResponse extends CheckQuestionResponse {
 
-	public RadioQuestionResponse(String key, Question<List<Entry>> parent, UserDAO author) {
+	public RadioQuestionResponse(String key, Question<List<Entry>> parent, User author) {
 		super(key, parent, author);
 	}
 	

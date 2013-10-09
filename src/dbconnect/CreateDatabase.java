@@ -1,7 +1,7 @@
 package dbconnect;
 import java.sql.*;
 
-import dbconnect.dao.UserDAO;
+import form.User;
 
 public class CreateDatabase {
 	public static void main(String[] args) {
@@ -79,7 +79,7 @@ public class CreateDatabase {
 	}
 	
 	public static void createTestUser(Connection conn) throws SQLException {
-		UserDAO user = new UserDAO();
+		User user = new User();
 		user.setFirstName("Test");
 		user.setLastName("User");
 		user.setUserName("testuser");

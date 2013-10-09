@@ -2,8 +2,8 @@ package dbconnect;
 
 import javax.servlet.http.HttpServletRequest;
 
-import dbconnect.dao.UserDAO;
 import form.Form;
+import form.User;
 import form.questions.Question;
 import form.questions.QuestionResponse;
 
@@ -53,7 +53,7 @@ public class SingletonDBController implements IDBController{
 		return false;
 	}
 
-	public boolean registerNewUser(UserDAO userDAO, String password) {
+	public boolean registerNewUser(User userDAO, String password) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -83,7 +83,7 @@ public class SingletonDBController implements IDBController{
 	}
 
 	@Override
-	public boolean upsertUser(UserDAO user) {
+	public boolean upsertUser(User user) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -124,7 +124,7 @@ public class SingletonDBController implements IDBController{
 
 
 	@Override
-	public UserDAO fetchUser(String id) {
+	public User fetchUser(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

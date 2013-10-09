@@ -1,6 +1,6 @@
 package form.questions;
 
-import dbconnect.dao.UserDAO;
+import form.User;
 
 /**
  * Represents all of the metadata about a response, without holding the actual
@@ -25,11 +25,11 @@ public abstract class QuestionResponse<E>
 	
 	private Question<E> parent;
 	
-	private UserDAO author;
+	private User author;
 	
 
 
-	public QuestionResponse(String key, Question<E> parent, UserDAO author)
+	public QuestionResponse(String key, Question<E> parent, User author)
 	{
 		this.key = key;
 		this.parent = parent;

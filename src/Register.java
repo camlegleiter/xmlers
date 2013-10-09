@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import dbconnect.IDBController;
 import dbconnect.SingletonDBController;
 import dbconnect.SqlController;
-import dbconnect.dao.UserDAO;
+import form.User;
 
 /**
  * Servlet implementation class Register
@@ -43,7 +43,7 @@ public class Register extends HttpServlet {
 		
 		passwd = request.getHeader("password");
 		
-		UserDAO newUser = new UserDAO();
+		User newUser = new User();
 		newUser.setFirstName((String) request.getAttribute("first-name"));
 		newUser.setFirstName((String) request.getAttribute("last-name"));
 		newUser.setFirstName((String) request.getAttribute("username"));

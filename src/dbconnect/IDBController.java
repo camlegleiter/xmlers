@@ -1,7 +1,7 @@
 package dbconnect;
 
-import dbconnect.dao.UserDAO;
 import form.Form;
+import form.User;
 import form.questions.Question;
 import form.questions.QuestionResponse;
 
@@ -17,7 +17,7 @@ public interface IDBController
 	
 	public boolean upsertForm(Form f);
 	
-	public boolean upsertUser(UserDAO user);
+	public boolean upsertUser(User user);
 	
 	public boolean upsertResponse(QuestionResponse<?> resp);
 	
@@ -25,7 +25,7 @@ public interface IDBController
 	
 	public Form fetchForm(String id);
 	
-	public UserDAO fetchUser(String id);
+	public User fetchUser(String id);
 	
 	public QuestionResponse<?> fetchResponse(String id);
 	

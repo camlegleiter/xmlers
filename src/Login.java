@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import dbconnect.IDBController;
 import dbconnect.SingletonDBController;
 import dbconnect.SqlController;
-import dbconnect.dao.UserDAO;
+import form.User;
 
 /**
  * Servlet implementation class Login
@@ -39,7 +39,7 @@ public class Login extends HttpServlet {
 		String password;
 		String userID;
 		IDBController library = SingletonDBController.getInstance();
-		UserDAO user;
+		User user;
 		
 		userID = request.getHeader("userID");
 		password = request.getHeader("password");

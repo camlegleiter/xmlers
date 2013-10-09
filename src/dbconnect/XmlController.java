@@ -1,7 +1,7 @@
 package dbconnect;
 
-import dbconnect.dao.UserDAO;
 import form.Form;
+import form.User;
 import form.questions.Question;
 import form.questions.QuestionResponse;
 
@@ -26,7 +26,7 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public boolean upsertUser(UserDAO user) {
+	public boolean upsertUser(User user) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -62,7 +62,7 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public UserDAO fetchUser(String id) {
+	public User fetchUser(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

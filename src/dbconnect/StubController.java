@@ -2,8 +2,8 @@ package dbconnect;
 
 import java.util.HashMap;
 
-import dbconnect.dao.UserDAO;
 import form.Form;
+import form.User;
 import form.questions.Question;
 import form.questions.QuestionResponse;
 
@@ -11,7 +11,7 @@ public class StubController implements IDBController {
 	
 	public HashMap<String, Form> forms;
 	
-	public HashMap<String, UserDAO> users;
+	public HashMap<String, User> users;
 	
 	public HashMap<String, QuestionResponse<?>> responses;
 	
@@ -20,7 +20,7 @@ public class StubController implements IDBController {
 	public StubController()
 	{
 		forms = new HashMap<String, Form>();
-		users = new HashMap<String, UserDAO>();
+		users = new HashMap<String, User>();
 		responses = new HashMap<String, QuestionResponse<?>>();
 		questions = new HashMap<String, Question<?>>();
 	}
@@ -77,7 +77,7 @@ public class StubController implements IDBController {
 	}
 
 	@Override
-	public boolean upsertUser(UserDAO user) {
+	public boolean upsertUser(User user) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -101,7 +101,7 @@ public class StubController implements IDBController {
 	}
 
 	@Override
-	public UserDAO fetchUser(String id) {
+	public User fetchUser(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

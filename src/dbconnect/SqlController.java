@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import dbconnect.dao.UserDAO;
 import form.Form;
+import form.User;
 import form.questions.Question;
 import form.questions.QuestionResponse;
 
@@ -79,7 +79,7 @@ public class SqlController implements IDBController {
 		}
 	}
 
-	public boolean registerNewUser(UserDAO userDAO, String password) {
+	public boolean registerNewUser(User userDAO, String password) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet results = null;
@@ -141,7 +141,7 @@ public class SqlController implements IDBController {
 	}
 
 	@Override
-	public boolean upsertUser(UserDAO user) {
+	public boolean upsertUser(User user) {
 		// TODO Auto-generated method stub
 		throw new RuntimeException("Function is not yet implemented.");
 	}
@@ -177,7 +177,7 @@ public class SqlController implements IDBController {
 	}
 
 	@Override
-	public UserDAO fetchUser(String id) {
+	public User fetchUser(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

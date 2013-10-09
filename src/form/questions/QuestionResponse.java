@@ -90,5 +90,18 @@ public abstract class QuestionResponse<E>
 		this.parent = parent;
 	}
 
+	/**
+	 * Fetches the user that 
+	 * @return
+	 */
+	public User getAuthor()
+	{
+		return author;
+	}
+	
+	public void setAuthor(User u)
+	{
+		author = u;
+	}
 }
 

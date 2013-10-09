@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dbconnect.IDBController;
-import dbconnect.SingletonDBController;
+import dbconnect.DBManager;
 import form.Form;
 import net.sf.json.*;
 
@@ -45,7 +45,7 @@ public class UpsertForm extends HttpServlet {
 		Form product = new Form(foo.getString("formKey"), foo.getString("formTitle"), foo.getString("formDescription"));
 		
 
-		controller = SingletonDBController.getInstance();
+		controller = DBManager.getInstance();
 		
 		controller.upsertForm(product);
 		

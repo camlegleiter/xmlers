@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dbconnect.SingletonDBController;
+import dbconnect.DBManager;
 import form.Form;
 
 /**
@@ -49,7 +49,7 @@ public class GetForm extends HttpServlet {
 		}				
 		
 		out = response.getWriter();
-		requestedForm = SingletonDBController.getInstance().fetchForm(formID);
+		requestedForm = DBManager.getInstance().fetchForm(formID);
 		
 		if(null == requestedForm)
 		{

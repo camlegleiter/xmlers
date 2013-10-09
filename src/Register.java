@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dbconnect.IDBController;
-import dbconnect.SingletonDBController;
+import dbconnect.DBManager;
 import dbconnect.SqlController;
 import form.User;
 
@@ -39,7 +39,7 @@ public class Register extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String passwd;
-		IDBController library = SingletonDBController.getInstance();
+		IDBController library = DBManager.getInstance();
 		
 		passwd = request.getHeader("password");
 		

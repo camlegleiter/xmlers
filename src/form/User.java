@@ -6,47 +6,80 @@ import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base64;
 
 public class User {
-	private int userID;
+	private String userID;
 	private String userName;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
 	
-	public int getUserID() {
+	public User()
+	{
+		userID = "";
+		userName = "";
+		firstName = "";
+		lastName = "";
+		email = "";
+		password = "";
+	}
+	
+	public User(User other) {
+		this.userID = other.userID;
+		this.userName = other.userName;
+		this.firstName = other.firstName;
+		this.lastName = other.lastName;
+		this.email = other.email;
+		this.password = other.password;
+	}
+	
+	public String getUserID() {
 		return userID;
 	}
+	
+	/**
+	 * Sets a user's ID.
+	 * @param userID
+	 * @deprecated
+	 */
 	public void setUserID(int userID) {
+		setUserID(Integer.toString(userID));
+	}
+	
+	public void setUserID(String userID)
+	{
 		this.userID = userID;
 	}
+	
 	public String getUserName() {
 		return userName;
 	}
+	
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
+	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
 	public String getLastName() {
 		return lastName;
 	}
+	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	
-	public String getPassword()
-	{
-		return password;
 	}
 	
 	public void setPassword(String passwd)

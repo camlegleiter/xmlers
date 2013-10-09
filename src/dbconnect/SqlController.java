@@ -146,29 +146,6 @@ public class SqlController implements IDBController {
 		throw new RuntimeException("Function is not yet implemented.");
 	}
 
-	@Override
-	public boolean questionExists(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean responseExists(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean upsertResponse(QuestionResponse<?> resp) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public <T> boolean upsertQuestion(Question<T> question) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public Form fetchForm(String id) {
@@ -182,11 +159,6 @@ public class SqlController implements IDBController {
 		return null;
 	}
 
-	@Override
-	public QuestionResponse<?> fetchResponse(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public boolean deleteForm(String key) {
@@ -196,18 +168,6 @@ public class SqlController implements IDBController {
 
 	@Override
 	public boolean deleteUser(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteResponse(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteQuestion(String key) {
 		// TODO Auto-generated method stub
 		return false;
 	}

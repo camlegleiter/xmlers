@@ -2,7 +2,6 @@ package form.questions;
 
 import java.util.HashMap;
 
-
 /**
  * 
  * @author Martin Strobel
@@ -66,6 +65,11 @@ public abstract class Question<T> implements IVisitable {
 	public T getResponse(String userID)
 	{
 		return responses.get(userID).getValue();
+	}
+	
+	public Iterable<QuestionResponse<T>> getResponse()
+	{
+		return responses.values();
 	}
 	
 	/**

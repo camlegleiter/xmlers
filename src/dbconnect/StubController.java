@@ -36,31 +36,6 @@ public class StubController implements IDBController {
 	}
 
 	@Override
-	public boolean questionExists(String key) {
-		boolean found = false;
-		
-		outside:
-		for(Form f: forms.values())
-		{
-			for(Question<?> q: f)
-			{
-				if(q.getId().equals(key))
-				{
-					found = true;
-					break outside;
-				}
-			}
-		}
-		
-		return found;
-	}
-
-	@Override
-	public boolean responseExists(String key) {
-		return responses.containsKey(key);
-	}
-
-	@Override
 	public boolean upsertForm(Form f) {
 		boolean retVal;
 		if(this.formExists(f.getKey()))
@@ -78,61 +53,28 @@ public class StubController implements IDBController {
 
 	@Override
 	public boolean upsertUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean upsertResponse(QuestionResponse<?> resp) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public <T> boolean upsertQuestion(Question<T> question) {
-		// TODO Auto-generated method stub
-		return false;
+		return null != users.put(user.getUserID(), user);
 	}
 
 	@Override
 	public Form fetchForm(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Form(forms.get(id));
 	}
 
 	@Override
 	public User fetchUser(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return new User(users.get(id));
 	}
 
-	@Override
-	public QuestionResponse<?> fetchResponse(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public boolean deleteForm(String key) {
-		// TODO Auto-generated method stub
-		return false;
+		return null != forms.remove(key);
 	}
 
 	@Override
 	public boolean deleteUser(String key) {
-		// TODO Auto-generated method stub
-		return false;
+		return null != users.remove(key);
 	}
 
-	@Override
-	public boolean deleteResponse(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteQuestion(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

@@ -89,7 +89,7 @@ public class CreateDatabase {
 //		IDBController controller = new SqlController();
 //		controller.registerNewUser(user, "password");
 		
-		IDBController controller = SingletonDBController.getInstance();
+		IDBController controller = DBManager.getInstance();
 		controller.upsertUser(user);
 	}
 }

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dbconnect.IDBController;
-import dbconnect.SingletonDBController;
+import dbconnect.DBManager;
 import form.Form;
 import form.questions.Question;
 import form.visitors.IQuestionVisitor;
@@ -41,7 +41,7 @@ public class ResponseCollector extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String formID = (String) request.getAttribute("formID");
-		IDBController foo = SingletonDBController.getInstance();
+		IDBController foo = DBManager.getInstance();
 		
 		Form userResponse = foo.fetchForm(formID);
 		

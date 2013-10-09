@@ -2,8 +2,6 @@ package dbconnect;
 
 import form.Form;
 import form.User;
-import form.questions.Question;
-import form.questions.QuestionResponse;
 
 public class XmlController implements IDBController {
 
@@ -32,30 +30,6 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public boolean questionExists(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean responseExists(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean upsertResponse(QuestionResponse<?> resp) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public <T> boolean upsertQuestion(Question<T> question) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public Form fetchForm(String id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -68,12 +42,6 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public QuestionResponse<?> fetchResponse(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean deleteForm(String key) {
 		// TODO Auto-generated method stub
 		return false;
@@ -81,18 +49,6 @@ public class XmlController implements IDBController {
 
 	@Override
 	public boolean deleteUser(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteResponse(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteQuestion(String key) {
 		// TODO Auto-generated method stub
 		return false;
 	}

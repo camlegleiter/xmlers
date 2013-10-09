@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dbconnect.IDBController;
-import dbconnect.SingletonDBController;
+import dbconnect.DBManager;
 import dbconnect.SqlController;
 import form.User;
 
@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String password;
 		String userID;
-		IDBController library = SingletonDBController.getInstance();
+		IDBController library = DBManager.getInstance();
 		User user;
 		
 		userID = request.getHeader("userID");

@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dbconnect.IDBController;
 import dbconnect.DBManager;
-import dbconnect.SqlController;
+import dbconnect.IDBController;
 import form.User;
 
 /**
@@ -41,7 +40,7 @@ public class Register extends HttpServlet {
 		String passwd;
 		IDBController library = DBManager.getInstance();
 		
-		passwd = request.getHeader("password");
+		passwd = request.getParameter("password");
 		
 		User newUser = new User();
 		newUser.setFirstName((String) request.getAttribute("first-name"));
@@ -51,14 +50,5 @@ public class Register extends HttpServlet {
 		newUser.setPassword(passwd);
 		
 		library.upsertUser(newUser);
-	}
-
-	/**
-	 * Validates the parameters passed in the given request.
-	 * @param request
-	 * @return
-	 */
-	private boolean validateCredentials(HttpServletRequest request) {
-		return false;
 	}
 }

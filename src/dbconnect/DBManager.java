@@ -21,6 +21,10 @@ public class DBManager {
 	
 	static {
 		String strat = System.getenv(ENVIRONMENT_STRATEGY);
+		if(null == strat)
+		{
+			strat = "none";
+		}
 		
 		switch(strat)
 		{

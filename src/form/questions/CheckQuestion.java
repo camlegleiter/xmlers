@@ -8,6 +8,9 @@ import form.visitors.IQuestionVisitor;
 
 public class CheckQuestion extends Question<List<CheckQuestion.Entry>> {
 
+	/**
+	 * All of the lines of text that may either be checked or not checked.
+	 */
 	private Collection<String> options;
 	
 	public CheckQuestion(String id, int weight, String prompt, Iterable<String> answers) {
@@ -28,6 +31,12 @@ public class CheckQuestion extends Question<List<CheckQuestion.Entry>> {
 		return options;
 	}
 	
+	/**
+	 * Represents one line of a response to a question where one must
+	 * select or not select each option.
+	 * @author mstrobel
+	 *
+	 */
 	public class Entry
 	{
 		private String text;

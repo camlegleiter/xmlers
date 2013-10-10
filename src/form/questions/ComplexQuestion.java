@@ -22,8 +22,6 @@ public class ComplexQuestion extends Question<Collection<Question<?>>> {
 			this.questions.add(entry);
 		}
 	}
-
-	private int min;
 	
 	@Override
 	public void accept(IQuestionVisitor visitor) {

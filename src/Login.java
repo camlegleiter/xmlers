@@ -7,9 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dbconnect.IDBController;
 import dbconnect.DBManager;
-import dbconnect.SqlController;
+import dbconnect.IDBController;
 import form.User;
 
 /**

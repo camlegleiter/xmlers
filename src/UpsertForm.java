@@ -42,7 +42,7 @@ public class UpsertForm extends HttpServlet {
 		
 		JSONObject foo = JSONObject.fromObject(formSource);
 		
-		Form product = new Form(foo.getString("formKey"), foo.getString("formTitle"), foo.getString("formDescription"));
+		Form product = new Form(foo.getString("formID"), foo.getString("formTitle"), foo.getString("formDescription"));
 		
 
 		controller = DBManager.getInstance();

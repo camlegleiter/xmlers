@@ -12,6 +12,11 @@ public abstract class Question<T> implements IVisitable {
 	
 	private HashMap<String, QuestionResponse<T>> responses;
 	
+	public Question()
+	{
+		
+	}
+	
 	public Question(String id, int weight, String prompt)
 	{
 		this.id = id;

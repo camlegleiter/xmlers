@@ -17,9 +17,11 @@ public class Form implements Iterable<Question<?>>{
 	private String key;
 	private String description;	
 	private Queue<Question<?>> questions;
+	private Collection<User> participants;
 
 	public Form() {
 		questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
+		participants = new ArrayList<User>();
 	}
 	
 	public Form(String key, String title, String description)
@@ -85,6 +87,35 @@ public class Form implements Iterable<Question<?>>{
 	public String getHTML()
 	{
 		return getHTML(ALL_BITS, null);
+	}
+	
+	/**
+	 * The people who may respond to this Form.
+	 * @return A copy of the list of those people who may respond to
+	 * 	this form. 
+	 */
+	public Collection<User> getParticipants()
+	{
+		return new ArrayList<User>(participants);
+	}
+	
+	/**
+	 * Returns a copy 
+	 * @param u
+	 */
+	public void addParticipant(User u)
+	{
+		participants.add(u);
+	}
+	
+	/**
+	 * No longer allow someone to respond. Does not remove their
+	 * response if applicable.
+	 * @param u
+	 */
+	public void removeParticipant(User u)
+	{
+		participants.remove(u);
 	}
 	
 	public String getHTML(int settings, String user)

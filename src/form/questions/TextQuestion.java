@@ -7,6 +7,16 @@ public class TextQuestion extends Question<String> {
 
 	private int maxLength;
 
+	public TextQuestion()
+	{
+		this(255);
+	}
+	
+	public TextQuestion(int max){
+		super();
+		this.maxLength = max;
+	}
+	
 	public TextQuestion(String id, int weight, String prompt, int max) {
 		super(id, weight, prompt);
 		this.maxLength = max;

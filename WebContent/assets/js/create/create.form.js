@@ -136,25 +136,6 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
     });
     
     
-    /*
-     * 
-     */
-    Module.EmptyView = Backbone.Marionette.ItemView.extend({
-        template: '#empty-view-template',
-        className: 'control-group',
-    
-        initialize: function(options) {
-            this.message = options.message;
-        },
-        
-        serializeData: function() {
-            return {
-                message: this.message
-            };
-        }
-    });
-    
-    
     
     
     

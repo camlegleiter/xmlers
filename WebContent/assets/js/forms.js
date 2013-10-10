@@ -17,3 +17,21 @@ TaskManager.Models.Form = Backbone.Model.extend({
 TaskManager.Collections.Forms = Backbone.Collection.extend({
     model: TaskManager.Models.Form
 });
+
+/*
+ * 
+ */
+TaskManager.EmptyView = Backbone.Marionette.ItemView.extend({
+    template: '#empty-view-template',
+    className: 'control-group',
+
+    initialize: function(options) {
+        this.message = options.message;
+    },
+    
+    serializeData: function() {
+        return {
+            message: this.message
+        };
+    }
+});

@@ -23,11 +23,13 @@ hr {
 
 /* --- Create Page Styles --- */
 
-#question-options input[type="radio"] {
+#question-options input[type="radio"],
+.form-item input[type="radio"] {
     display: none;
 }
 
-#question-options label {
+#question-options label,
+.form-item label {
     display: block;
     margin: 0 auto 5px;
     padding: 8px;
@@ -40,7 +42,8 @@ hr {
     text-decoration: none;
 }
 
-#question-options input[type="radio"]:checked + label {
+#question-options input[type="radio"]:checked + label,
+.form-item input[type="radio"]:checked + label {
     background-color: #08c;
     color: #fff;
     

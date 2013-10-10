@@ -10,7 +10,7 @@
     
     // The user's description of the form (i.e. describing what the form asks);
     // default: ''
-    formDesc: "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
+    formDescription: "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
     
     // The ID of the owner/administrator of this form
     // default: -1

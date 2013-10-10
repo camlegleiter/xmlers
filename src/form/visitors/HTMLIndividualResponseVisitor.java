@@ -6,20 +6,19 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
 
-public class HTMLVisitor extends AbstractQuestionVisitor {
+public class HTMLIndividualResponseVisitor extends HTMLVisitor {
 
-	public static final String INPUT_TYPE_TAG = "<input type=\"";
-	public static final String SELECT_TAG = "<select>";
-	public static final String OPTION_VALUE_TAG = "<option value=\"";
-	public static final String NAME_TAG = "\" name=\"";
-	public static final String MAXLENGTH_TAG = "\" maxlength=\"";
-	public static final String VALUE_TAG = "\" value=\"";
-	public static final String SELECT_END_TAG = "</select>";
-	public static final String OPTION_END_TAG = "</option>";
-	public static final String END_TAG = "\">";
-
+	private String userID;
+	
+	public HTMLIndividualResponseVisitor(String user)
+	{
+		userID = user;
+	}
+	
 	@Override
 	public String visit(TextQuestion tq) {
+
+		//TODO Update with response
 		StringBuilder html = new StringBuilder(tq.getPrompt());
 
 		html.append(INPUT_TYPE_TAG + "text");
@@ -31,6 +30,7 @@ public class HTMLVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(RadioQuestion rq) {
+		//TODO Update with response
 		StringBuilder html = new StringBuilder(rq.getPrompt());
 
 		for (String option : rq.getOptions()) {
@@ -44,6 +44,8 @@ public class HTMLVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(CheckQuestion chq) {
+
+		//TODO Update with response
 		StringBuilder html = new StringBuilder(chq.getPrompt());
 
 		for (String option : chq.getOptions()) {
@@ -57,6 +59,8 @@ public class HTMLVisitor extends AbstractQuestionVisitor {
 	
 	@Override
 	public String visit(SelectQuestion sq) {
+
+		//TODO Update with response
 		StringBuilder html = new StringBuilder(sq.getPrompt() + SELECT_TAG);
 
 		for (String option : sq.getOptions()) {

@@ -1,9 +1,14 @@
 package form.factory;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import form.Form;
-import form.questions.*;
+import form.questions.CheckQuestion;
+import form.questions.Question;
+import form.questions.RadioQuestion;
+import form.questions.SelectQuestion;
+import form.questions.TextQuestion;
 
 public class DefaultFactory extends FormFactory {
 	
@@ -39,7 +44,7 @@ public class DefaultFactory extends FormFactory {
 		return retval;
 	}
 	
-	private TextQuestion buildStringQuestion(JSONObject src)
+	private static TextQuestion buildStringQuestion(JSONObject src)
 	{
 		TextQuestion tq;
 		
@@ -49,10 +54,23 @@ public class DefaultFactory extends FormFactory {
 	}
 	
 	
-	private CheckQuestion buildCheckQuestion(JSONObject src)
+	private static CheckQuestion buildCheckQuestion(JSONObject src)
 	{
 		//TODO
 		return null;
 	}
 
+	private static RadioQuestion buildRadioQuestion(JSONObject src)
+	{
+		//TODO
+		return null;
+	}
+	
+	private static SelectQuestion buildSelectQuestion(JSONObject src)
+	{
+		//TODO
+		return null;
+	}
+	
+	
 }

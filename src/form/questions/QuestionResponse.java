@@ -91,7 +91,7 @@ public abstract class QuestionResponse<E>
 	}
 
 	/**
-	 * Fetches the user that 
+	 * Fetches the user that created this response.
 	 * @return
 	 */
 	public User getAuthor()

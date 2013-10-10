@@ -1,11 +1,5 @@
 package dbconnect;
 
-import javax.servlet.http.HttpServletRequest;
-
-import form.Form;
-import form.User;
-import form.questions.Question;
-import form.questions.QuestionResponse;
 
 public class DBManager {
 	

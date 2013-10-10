@@ -64,6 +64,9 @@ public abstract class Question<T> implements IVisitable {
 	 */
 	public T getResponse(String userID)
 	{
+		if(responses.isEmpty()){
+			return null;
+		}
 		return responses.get(userID).getValue();
 	}
 	

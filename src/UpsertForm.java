@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dbconnect.IDBController;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import dbconnect.DBManager;
+import dbconnect.IDBController;
 import form.Form;
-import net.sf.json.*;
+import form.factory.DefaultFactory;
+import form.factory.FormFactory;
 
 /**
  * Servlet implementation class UpsertForm
@@ -32,25 +36,31 @@ public class UpsertForm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IDBController controller;
-		String formSource = request.getHeader("Form");		
-		
-		if(null == formSource || formSource.equals(""))
-		{
-			throw new ServletException("No form provided for upsert function.");
-		}
-		
-		JSONObject foo = JSONObject.fromObject(formSource);
-		
-		Form product = new Form(foo.getString("formID"), foo.getString("formTitle"), foo.getString("formDescription"));
-		
+		String formData = (String) request.getAttribute("model");
 
-		controller = DBManager.getInstance();
-		
-		controller.upsertForm(product);
-		
-		//TODO Discuss this handshake
-		response.getWriter().print("Success\n");
+		IDBController controller = DBManager.getInstance();
+		JSONObject jsonObject;
+		try {
+			jsonObject = new JSONObject(formData);
+			
+			// Add the userID from the session
+			String userID = (String) request.getSession().getAttribute("userID");
+			jsonObject.put("formOwner", userID);
+			
+			FormFactory factory = new DefaultFactory();
+			Form form = factory.BuildForm(jsonObject);
+
+			controller.upsertForm(form);
+			
+			response.sendRedirect("app/index");
+			
+		} catch (JSONException e) {
+			jsonObject = new JSONObject();
+			jsonObject.put("error", e.getMessage());
+			
+			response.setContentType("application/json");
+			response.getWriter().write(jsonObject.toString());
+		}
 	}
 
 }

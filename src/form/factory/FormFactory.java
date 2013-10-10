@@ -1,6 +1,7 @@
 package form.factory;
 
-import net.sf.json.JSONObject;
+import org.json.JSONObject;
+
 import form.Form;
 import form.questions.Question;
 

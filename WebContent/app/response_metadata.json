@@ -1,0 +1,105 @@
+// NOTE: The order of these may or may not be consistent
+{
+    // The ID of the form
+    // default: -1,
+    
+    // The ID of the participant of this response
+    // default: -1
+    responseOwner: 987654321,
+    
+    // A list of question responses
+    // default: []
+    responses: [
+        
+        // TEXTBOX
+        {
+            // The ID of the associated question for this response
+            // This value is generated server-side beforehand
+            // default: -1
+            questionID: 123456789,
+            
+            // Type is always 'Textbox'
+            type: "Textbox",
+            
+            // A list of responses. Textboxes only have one value to return.
+            // default: []
+            values: [
+                {
+                    // The participant's response to the Textbox question.
+                    value: "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur."
+                }
+            ]
+        },
+        
+        // CHECKBOX
+        {
+            // The ID of the associated question for this response
+            // This value is generated server-side beforehand
+            // default: -1
+            questionID: 234567890,
+            
+            // Type is always 'Checkbox'
+            type: "Checkbox",
+            
+            // A list of responses. Checkboxes can have one or more return values.
+            // default: []
+            values: [
+                {
+                    value: "Beef"
+                },
+                {
+                    value: "Pork"
+                },
+                {
+                    value: "Chicken
+                }
+            ]
+        },
+        
+        // RADIO
+        {
+            // The ID of the associated question for this response
+            // This value is generated server-side beforehand
+            // default: -1
+            questionID: 345678901,
+            
+            // Type is always 'Radio'
+            type: "Radio",
+            
+            // A list of responses. Radios only have one value to return.
+            // default: []
+            values: [
+                {
+                    value: "Bacon"
+                }
+            ]
+        },
+        
+        // SELECT
+        {
+            // The ID of the associated question for this response
+            // This value is generated server-side beforehand
+            // default: -1
+            questionID: 456789012,
+            
+            // Type is always 'Select'
+            type: "Select",
+            
+            // A list of responses. Selects can have one or more return values
+            // depending on if they are specified as "Single" or "Multiple"
+            // by the form owner
+            // default: []
+            values: [
+                {
+                    value: "Pizza"
+                },
+                {
+                    value: "Ice Cream"
+                },
+                {
+                    value: "Chicken Wings
+                }
+            ]
+        },
+    ]
+}

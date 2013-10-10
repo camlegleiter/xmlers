@@ -12,7 +12,7 @@
     // default: ''
     formDesc: "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
     
-    // The ID of the owner/administrator of this
+    // The ID of the owner/administrator of this form
     // default: -1
     formOwner: 987654321,
     

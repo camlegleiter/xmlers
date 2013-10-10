@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Servlet implementation class UpsertForm
@@ -34,13 +34,13 @@ public class UpsertForm extends HttpServlet {
 		
 		JSONObject jsonObject;
 		try {
-			jsonObject = JSONObject.fromObject(formData);
+			jsonObject = new JSONObject(formData);
 			
 			// Add the userID from the session
 			String userID = (String) request.getSession().getAttribute("userID");
-			jsonObject.element("formOwner", userID);
+			jsonObject.put("formOwner", userID);
 			
-			if (jsonObject.containsKey("formID")) {
+			if (jsonObject.has("formID")) {
 				// UPDATE
 			} else {
 				// INSERT
@@ -50,7 +50,7 @@ public class UpsertForm extends HttpServlet {
 			
 		} catch (JSONException e) {
 			jsonObject = new JSONObject();
-			jsonObject.element("error", e.getMessage());
+			jsonObject.put("error", e.getMessage());
 			
 			response.setContentType("application/json");
 			response.getWriter().write(jsonObject.toString());

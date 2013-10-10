@@ -1,9 +1,12 @@
 package form.factory;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import form.Form;
-import form.questions.*;
+import form.questions.CheckQuestion;
+import form.questions.Question;
+import form.questions.TextQuestion;
 
 public class DefaultFactory extends FormFactory {
 	

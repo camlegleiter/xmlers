@@ -19,7 +19,7 @@ public class DefaultFactory extends FormFactory {
 		JSONObject currentObj; //The JSONObject depicting a question. Used as a cursor inside the loop below. 
 		
 		f.setKey(src.getString("formID"));
-		f.setDescription(src.getString("formDesc"));
+		f.setDescription(src.getString("formDescription"));
 		f.setTitle(src.getString("formName"));
 		
 		JSONArray questions = src.getJSONArray("formQuestions");

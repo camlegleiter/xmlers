@@ -9,10 +9,9 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import form.Form;
 import form.User;
-import form.questions.Question;
-import form.questions.QuestionResponse;
 
 public class SqlController implements IDBController {
 	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/task_manager";
@@ -125,25 +124,25 @@ public class SqlController implements IDBController {
 	@Override
 	public boolean formExists(String key) {
 		//TODO
-		throw new RuntimeException("Function is not yet implemented.");
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public boolean userExists(String key) {
 		// TODO Auto-generated method stub
-		throw new RuntimeException("Function is not yet implemented.");
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public boolean upsertForm(Form f) {
 		// TODO Auto-generated method stub
-		throw new RuntimeException("Function is not yet implemented.");
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public boolean upsertUser(User user) {
 		// TODO Auto-generated method stub
-		throw new RuntimeException("Function is not yet implemented.");
+		throw new NotImplementedException();
 	}
 
 
@@ -158,7 +157,6 @@ public class SqlController implements IDBController {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public boolean deleteForm(String key) {

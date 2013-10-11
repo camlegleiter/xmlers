@@ -52,7 +52,4 @@ public class XmlController implements IDBController {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
-
 }

@@ -13,4 +13,9 @@ public class SelectQuestion extends RadioQuestion {
 	public SelectQuestion(String id, int weight, String prompt, Iterable<String> answers) {
 		super(id, weight, prompt, answers);
 	}
+
+	public SelectQuestion(CheckQuestion buildCheckQuestion) 
+	{
+		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(), buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions());
+	}
 }

@@ -8,6 +8,10 @@ public class RadioQuestion extends CheckQuestion {
 		super(id, weight, prompt, answers);
 	}
 
+	public RadioQuestion(CheckQuestion buildCheckQuestion) {
+		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(), buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions());
+	}
+
 	@Override
 	public void accept(IQuestionVisitor visitor) {
 		visitor.visit(this);

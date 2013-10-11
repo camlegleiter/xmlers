@@ -13,6 +13,30 @@ public class CheckQuestion extends Question<List<CheckQuestion.Entry>> {
 	 */
 	private Collection<String> options;
 	
+	public CheckQuestion()
+	{
+		super();
+		options = new ArrayList<String>();
+	}
+	
+	public CheckQuestion(Iterable<String> answers)
+	{
+		this();
+		for(String s : answers)
+		{
+			options.add(s);
+		}
+	}
+	
+	public CheckQuestion(String[] answers)
+	{
+		this();
+		for(String s : answers)
+		{
+			options.add(s);
+		}
+	}
+	
 	public CheckQuestion(String id, int weight, String prompt, Iterable<String> answers) {
 		super(id, weight, prompt);
 		options = new ArrayList<String>();
@@ -28,7 +52,17 @@ public class CheckQuestion extends Question<List<CheckQuestion.Entry>> {
 	}
 
 	public Collection<String> getOptions() {
-		return options;
+		return new ArrayList<String>(options);
+	}
+	
+	public void addOption(String option)
+	{
+		options.add(option);
+	}
+	
+	public void removeOption(String option)
+	{
+		options.remove(option);
 	}
 	
 	/**

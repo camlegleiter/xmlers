@@ -55,9 +55,25 @@ public class StubController implements IDBController {
 
 	@Override
 	public User fetchUser(String id) {
-		return new User(users.get(id));
+		//TODO remove this call when testing is done.
+		putTestUser();
+		User requestedUser = users.get(id);
+		if(requestedUser == null){
+			return null;
+		}
+		return new User(requestedUser);
 	}
 
+
+	private void putTestUser() {
+		User user = new User();
+		user.setFirstName("Test");
+		user.setLastName("User");
+		user.setUserName("testuser");
+		user.setEmail("testuser@example.com");
+		user.setPassword("password");
+		users.put(user.getUserName(), user);
+	}
 
 	@Override
 	public boolean deleteForm(String key) {

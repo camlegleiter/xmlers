@@ -58,6 +58,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="login">
                             <form class="form-signin" action="<%= request.getContextPath() %>/login" method="POST">
+                            	<div style="color: #FF0000;">${errorMessage}</div>
                                 <h2 class="form-signin-heading">Please sign in</h2>
                                 <div class="control-group" id="signin-input-group">
                                     <div class="controls">

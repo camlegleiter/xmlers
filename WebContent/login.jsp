@@ -58,7 +58,6 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="login">
                             <form class="form-signin" action="<%= request.getContextPath() %>/login" method="POST">
-                            	<div style="color: #FF0000;">${errorMessage}</div>
                                 <h2 class="form-signin-heading">Please sign in</h2>
                                 <div class="control-group" id="signin-input-group">
                                     <div class="controls">
@@ -97,19 +96,16 @@
                 <div class="span4"></div>
             </div>    
         </div>
-        <script src="assets/js/vendor/jquery.min.js"></script>
+        <script src="assets/js/vendor/jquery.js"></script>
         <script src="assets/js/vendor/bootstrap.min.js"></script>
         <script>
             $(document).ready(function() {
                 $('.form-signin').submit(function() {
-                    
                     $form = $(this);
                     $.post($form.attr('action'), $form.serialize(), function(responseText) {
                         if ("" != responseText) {
                             $('#signin-input-group').addClass("error");
                             $('#login-error').html(responseText).slideDown();
-                        } else {
-                            window.location.replace("app/index.jsp");
                         }
                     });
                     return false;

@@ -16,6 +16,7 @@
                 padding: 10px 0px 0px 10px;
             }
         </style>
+        <link href="/xmlers/assets/css/style.css" rel="stylesheet">
 	</head>
 	<body>
 		
@@ -28,20 +29,10 @@
 				<div class="span2">
 				<h2>View Options</h2>
 					<div class="well">
-						asdf
 					</div>
 				</div>
 				<div class="span10">
-					<div class="row-fluid">
-						<div class="span10">
-							<h2>Form 1 Records</h2>
-						</div>
-						<div class="span2">
-							<div class="btn-group pull-right" style="margin-top: 16px">
-								<a class="btn" href="<%=request.getContextPath()%>/app/index.jsp" title="Go back to the index">Back</a>	
-							</div>
-						</div>
-					</div>
+					<h2>Form 1 Records</h2>
 				
 					<table id="viewTableRecords" class="table table-bordered table-striped">
 						<thead>
@@ -82,9 +73,8 @@
 				</div>
 			</div>
 		</div>
-		<script src="/js/vendor/jquery.min.js"></script>
-		<script src="/js/vendor/bootstrap.min.js"></script>
-		<script src="/js/vendor/jquery.tablesorter.min.js"></script>
+		<jsp:include page="/app/includes/footer.jsp" />
+		<script src="<%= request.getContextPath() %>/assets/js/vendor/jquery.tablesorter.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				$('table#viewTableRecords').tablesorter({ sortList: [[0, 0], [1, 0]] });

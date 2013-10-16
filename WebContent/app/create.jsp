@@ -86,14 +86,14 @@
                 </div>
             </div>
 
-            <ol id="form-content"></ol>
-            
             <div class="control-group">
                 <label class="control-label" for="formParticipants">Participants</label>
                 <div class="controls">
                     <input type="hidden" id="formParticipants" style="width: 300px;">
                 </div>
             </div>
+
+            <ol id="form-content"></ol>
 
             <div class="form-actions">
                 <div style="margin-bottom: 10px">

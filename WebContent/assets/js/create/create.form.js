@@ -11,7 +11,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             return Module[item.get('type') + 'View'];
         },
         emptyView: function() {
-            return new Module.EmptyView({
+            return new App.EmptyView({
                 message: 'Select an entry type to get started!'
             });
         },
@@ -210,7 +210,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         template: '#checkbox-template',
         itemView: Module.CheckboxItemView,
         emptyView: function() {
-            return new Module.EmptyView({
+            return new App.EmptyView({
                 message: 'Add options for the user to choose from.'
             });
         },
@@ -271,7 +271,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         template: '#radio-template',
         itemView: Module.RadioItemView,
         emptyView: function() {
-            return new Module.EmptyView({
+            return new App.EmptyView({
                 message: 'Add options for the user to choose from.'
             });
         },
@@ -363,7 +363,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         template: '#select-template',
         itemView: Module.SelectOptionItemView,
         emptyView: function() {
-            return new Module.EmptyView({
+            return new App.EmptyView({
                 message: 'Add options for the user to choose from.'
             });
         },

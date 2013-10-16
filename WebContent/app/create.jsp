@@ -75,14 +75,14 @@
             <div class="control-group">
                 <label class="control-label" for="formName">Form Name</label>
                 <div class="controls">
-                    <input type="text" id="formName" class="required-input" placeholder="Form Name" required>
+                    <input type="text" id="formName" class="required-input" placeholder="Form Name" value="<@= formName @>" required>
                 </div>
             </div>
 
             <div class="control-group">
                 <label class="control-label" for="formDesc">Form Description</label>
                 <div class="controls">
-                    <textarea id="formDesc" class="required-input" placeholder="Enter a description of the form" required></textarea>
+                    <textarea id="formDesc" class="required-input" placeholder="Enter a description of the form" value="<@= formDescription @>" required></textarea>
                 </div>
             </div>
 

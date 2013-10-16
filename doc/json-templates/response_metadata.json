@@ -2,6 +2,7 @@
 {
     // The ID of the form
     // default: -1,
+    formID: 123456789
     
     // The ID of the participant of this response
     // default: -1
@@ -21,14 +22,9 @@
             // Type is always 'Textbox'
             type: "Textbox",
             
-            // A list of responses. Textboxes only have one value to return.
-            // default: []
-            values: [
-                {
-                    // The participant's response to the Textbox question.
-                    value: "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur."
-                }
-            ]
+            // The participant's response to the Textbox question.
+            // default: ''
+            value: "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur."
         },
         
         // CHECKBOX
@@ -66,13 +62,9 @@
             // Type is always 'Radio'
             type: "Radio",
             
-            // A list of responses. Radios only have one value to return.
-            // default: []
-            values: [
-                {
-                    value: "Bacon"
-                }
-            ]
+            // The user's response value. Radios only have one value to return.
+            // default: ''
+            value: "Bacon"
         },
         
         // SELECT

@@ -1,6 +1,10 @@
 'use strict';
 
 TaskManager.Models.Form = Backbone.Model.extend({
+    initialize: function() {
+        this.set('formQuestions', new TaskManager.Collections.Questions(this.get('formQuestions')));
+    },
+    
     defaults: function() {
         return {
             formID: -1,
@@ -9,7 +13,7 @@ TaskManager.Models.Form = Backbone.Model.extend({
             formOwner: -1,
             formParticipants: [],
             participantsCanSeeAll: false,
-            formQuestions: new TaskManager.Collections.Questions()
+            formQuestions: []
         };
     }
 });

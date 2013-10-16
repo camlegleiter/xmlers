@@ -19,11 +19,15 @@ TaskManager.Collections.Questions = Backbone.Collection.extend({
  * 
  */
 TaskManager.Models.Checkbox = TaskManager.Models.Question.extend({
+    initialize: function() {
+        this.set('checkboxes', new TaskManager.Collections.Checkboxes(this.get('checkboxes')));
+    },
+    
     defaults: function() {
         return {
             type: 'Checkbox',
             prompt: '',
-            checkboxes: new TaskManager.Collections.Checkboxes()
+            checkboxes: []
         };
     }
 });
@@ -43,11 +47,15 @@ TaskManager.Models.CheckboxItem = Backbone.Model.extend({
  * 
  */
 TaskManager.Models.Radio = TaskManager.Models.Question.extend({
+    initialize: function() {
+        this.set('radios', new TaskManager.Collections.Radios(this.get('radios')));
+    },
+    
     defaults: function() {
         return {
             type: 'Radio',
             prompt: '',
-            radios: new TaskManager.Collections.Radios()
+            radios: []
         };
     }
 });
@@ -81,6 +89,10 @@ TaskManager.Models.Textbox = TaskManager.Models.Question.extend({
  *
  */
 TaskManager.Models.Select = TaskManager.Models.Question.extend({
+    initialize: function() {
+        this.set('options', new TaskManager.Collections.SelectOptions(this.get('options')));
+    },
+    
     defaults: function() {
         return {
             type: 'Select',
@@ -89,7 +101,7 @@ TaskManager.Models.Select = TaskManager.Models.Question.extend({
             // false means single select
             isMulti: false,
             
-            options: new TaskManager.Collections.SelectOptions()
+            options: []
         };
     }
 });

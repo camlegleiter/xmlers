@@ -113,7 +113,7 @@
                     <@ if (participantsCanSeeAll) { @>
                         <a href="viewResponses.jsp?form=<@= formID @>" class="btn view-records" title="See all of the records for this form.">View Records</a>
                     <@ } @>
-                    <a class="btn submit-response" title="Submit a response to this form.">Submit Response</a>
+                    <a href="response.jsp?form=<@= formID @>" class="btn submit-response" title="Submit a response to this form.">Submit Response</a>
                 </form>
             </div>
         </script>

@@ -98,7 +98,7 @@
                 <p><strong>Description: </strong><@= formDescription @></p>
                 <p><strong>Participants: </strong><@= getFormParticipants() @></p>
                 <form class="form-inline owner-buttons" action="/app/index" method="POST">
-                    <a class="btn view-records" title="See all of the records for this form.">View Records</a>
+                    <a href="viewResponses.jsp?form=<@= formID @>" class="btn view-records" title="See all of the records for this form.">View Records</a>
                     <a class="btn edit-form" title="Make changes to this form.">Edit Form</a>
                     <a class="btn reemail-participants" title="Sends a reminder to participants who haven't completed this form to do so.">Re-Email Participants</a>
                 </form>

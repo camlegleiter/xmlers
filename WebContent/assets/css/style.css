@@ -6,12 +6,18 @@ hr {
     margin: 5px 0px;
 }
 
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .delete, .remove {
     color: red;
     cursor: pointer;
 }
 
-.delete:hover, .remove:hover {
+.delete:hover, .remove:hover, .error {
     color: red;
 }
 
@@ -52,7 +58,6 @@ hr {
 
 .question {
     padding: 5px 0px;
-  
     border-top: 1px solid #ddd;
 }
 
@@ -62,6 +67,12 @@ hr {
 
 .question h4 {
     margin-top: 0px;
+}
+
+/* ---  --- */
+
+.response-content {
+    margin-left: 20px;
 }
 
 /* --- View Page Table CSS --- */

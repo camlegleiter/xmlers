@@ -1,5 +1,5 @@
-// An example template for the JSON data sent from the response.jsp page to the
-// UpsertResponse servlet
+// An example template for the JSON data sent TO the response.jsp page to build
+// the form for the participant to complete
 // NOTE: The order of these may or may not be consistent
 {
     // The ID of the form
@@ -26,7 +26,7 @@
         {
             // The ID of the question
             // default: -1
-            questionID: 123456789,
+            "questionID": 123456789,
         
             // Type is always 'Textbox'
             "type": "Textbox",
@@ -37,18 +37,14 @@
             
             // The prompt displayed to the participants (e.g. a question)
             // default: ''
-            "prompt": "Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock.",
-            
-            // The response of the user to this question
-            // default: ''
-            "value": "I do enjoy a tasty salami"
+            "prompt": "Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock."
         },
         
         // CHECKBOX
         {
             // The ID of the question
             // default: -1
-            questionID: 234567890,
+            "questionID": 234567890,
         
             // Type is always 'Checkbox'
             "type": "Checkbox",
@@ -57,21 +53,12 @@
             // default: ''
             "prompt": "Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate.",
             
-            // A list of checkbox labels; the length of the array is the number 
-            // of checkbox options
+            // A list of checkbox labels; the length of the array is the number of checkbox options
             // default: []
             "checkboxes": [
                 { "label": "Checkbox1" },
                 { "label": "Checkbox2" },
                 { "label": "Checkbox3" }
-            ],
-            
-            // The response of the user to this question. May contain zero or
-            // more answers
-            // default: []
-            "values": [
-                "Checkbox1",
-                "Checkbox3"
             ]
         },
         
@@ -79,7 +66,7 @@
         {
             // The ID of the question
             // default: -1
-            questionID: 345678901,
+            "questionID": 345678901,
         
             // Type is always 'Radio'
             "type": "Radio",
@@ -88,25 +75,20 @@
             // default: ''
             "prompt": "Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
             
-            // A list of radio labels; the length of the array is the number of 
-            // radio options
+            // A list of radio labels; the length of the array is the number of radio options
             // default: []
             "radios": [
                 { "label": "Radio1" },
                 { "label": "Radio2" },
                 { "label": "Radio3" }
-            ],
-            
-            // The response of the user to this question.
-            // default: ''
-            "value": "Radio2"
+            ]
         },
         
         // SELECT
         {
             // The ID of the question
             // default: -1
-            questionID: 456789012,
+            "questionID": 456789012,
         
             // Type is always 'Select'
             "type": "Select",
@@ -119,20 +101,12 @@
             // default: false (single-select)
             "isMulti": false,
             
-            // A list of options; the length of the array is the number of 
-            // select options
+            // A list of options; the length of the array is the number of options
             // default: []
             "options": [
-                { value: "Option1" },
-                { value: "Option2" },
-                { value: "Option3" }
-            ],
-            
-            // The response of the user to this question. May contain one or
-            // more options depending on if the select supports multiple values
-            // default: []
-            "values": [
-                "Option1"
+                { "value": "Option1" },
+                { "value": "Option2" },
+                { "value": "Option3" }
             ]
         }
     ]

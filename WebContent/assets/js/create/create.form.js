@@ -47,17 +47,15 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 placeholder: 'Type an email to add a participant',
                 
                 tags: [],
-                tokenSeparators: [',', ' ']
+                tokenSeparators: [',', ' '],                
             });
+            
+            // Need to set the current participants after initializing select
+            this.ui.formParticipants.select2('val', this.model.get('formParticipants'));
             
             var self = this;
             this.ui.formParticipants.on('change', function(e) {
-                var participants = self.model.get('formParticipants');
-                if (!_.isUndefined(e.added) && !_.contains(participants, e.added.text)) {
-                    participants.push(e.added.text);
-                } else if (!_.isUndefined(e.removed)) {
-                    self.model.set('formParticipants', _.without(participants, e.removed.text));
-                }
+                self.model.set('formParticipants', e.val);
             });
         },
         

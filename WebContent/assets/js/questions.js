@@ -35,8 +35,8 @@ TaskManager.Models.Checkbox = TaskManager.Models.Question.extend({
 });
 
 TaskManager.Collections.Checkboxes = Backbone.Collection.extend({
-    model: function(attrs) {
-        return new TaskManager.Models.CheckboxItem(attrs);
+    model: function(attrs, options) {
+        return new TaskManager.Models.CheckboxItem(attrs, options);
     }
 });
 

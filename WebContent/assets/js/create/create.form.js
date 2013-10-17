@@ -102,9 +102,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         onCancel: function() {
-            if (confirm("The current form will not be saved. Are you sure you wish to cancel?")) {
-                window.location.href = 'index.jsp';
-            }
+            return confirm("The current form will not be saved. Are you sure you wish to cancel?");
         },
         
         appendHtml: function(collectionView, itemView) {

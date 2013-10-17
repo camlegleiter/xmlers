@@ -103,7 +103,7 @@
                 </div>
                 
                 <a class="submit btn btn-large btn-primary">Submit</a>
-                <a class="cancel btn btn-large">Cancel</a>
+                <a href="index.jsp" class="cancel btn btn-large">Cancel</a>
                 <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
             </div>
         </script>

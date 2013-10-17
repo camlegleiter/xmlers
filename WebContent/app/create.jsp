@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <ol id="form-content"></ol>
+            <div id="form-content"></div>
 
             <div class="form-actions">
                 <div style="margin-bottom: 10px">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="content"></div>
+                <ol class="content"></ol>
 
                 <div class="control-group">
                     <div class="controls">
@@ -153,7 +153,7 @@
                     </div>
                 </div>
 
-                <div class="content"></div>
+                <ol class="content"></ol>
 
                 <div class="control-group">
                     <div class="controls">
@@ -219,7 +219,7 @@
                     </div>
                 </div>
 
-                <div class="content"></div>
+                <ol class="content"></ol>
 
                 <div class="control-group">
                     <div class="controls">

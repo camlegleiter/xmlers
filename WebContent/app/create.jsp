@@ -49,8 +49,12 @@
         
 		<script>
 			$(document).ready(function() {
+			    <% // if there is an edit queryarg, need to get form ID to edit from it and bootstrap data %>
+			    
+			    var formModel = new TaskManager.Models.Form();
+			    
 			    Create = TaskManager.Create;
-			    Create.start();
+			    Create.start({ model: formModel });
 			});
 		</script>
     
@@ -82,7 +86,7 @@
             <div class="control-group">
                 <label class="control-label" for="formDesc">Form Description</label>
                 <div class="controls">
-                    <textarea id="formDesc" class="required-input" placeholder="Enter a description of the form" value="<@= formDescription @>" required></textarea>
+                    <textarea id="formDesc" class="required-input" placeholder="Enter a description of the form" required><@= formDescription @></textarea>
                 </div>
             </div>
 
@@ -231,7 +235,7 @@
         
         <script id="select-option-item-template" type="text/template">
             <li class="controls">
-                <input type="text" class="required-input" value="<@= data.label @>" placeholder="Option text" required>
+                <input type="text" class="required-input" value="<@= data.value @>" placeholder="Option text" required>
                 <a class="delete">Delete</a>
             </li>
         </script>

@@ -95,9 +95,24 @@
                       ]
                     },
                     {
+                      "type":"Radio",
+                      "prompt":"Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
+                      "radios":[
+                        {
+                          "label":"Radio1"
+                        },
+                        {
+                          "label":"Radio2"
+                        },
+                        {
+                          "label":"Radio3"
+                        }
+                      ]
+                    },
+                    {
                       "type":"Select",
                       "prompt":"Aliquip beef ribs dolore shoulder ad consectetur pork belly minim.",
-                      "isMulti":false,
+                      "isMulti":true,
                       "options":[
                         {
                           "value":"Option1"
@@ -134,7 +149,7 @@
 
             <div class="form-actions">
                 <a class="submit btn btn-large btn-primary">Submit</a>
-                <a class="cancel btn btn-large">Cancel</a>
+                <a href="index.jsp" class="cancel btn btn-large">Cancel</a>
                 <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
             </div>
         </script>
@@ -146,8 +161,8 @@
         
         <script id="checkbox-item-template" type="text/template">
             <label class="checkbox inline">
-                <input type="checkbox" id="inlineCheckbox1" value="<@= label @>">
-                <@= label @>
+                <input type="checkbox" class="required-input" name="optionsCheckboxes<@= id @>" value="<@= data.label @>" required>
+                <@= data.label @>
             </label>
         </script>
         
@@ -158,15 +173,15 @@
         
         <script id="radio-item-template" type="text/template">
             <label class="radio inline">
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="<@= label @>">
-                <@= label @>
+                <input type="radio" class="required-input" name="optionsRadios<@= id @>" value="<@= data.label @>" required>
+                <@= data.label @>
             </label>
         </script>
         
         <script id="textbox-template" type="text/template">
             <strong><@= prompt @></strong>
             <div>
-                <textarea rows="4" cols="200" maxlength="<@= maxLength @>"></textarea>
+                <textarea class="required-input" rows="4" maxlength="<@= maxLength @>" required></textarea>
             </div>
             <p>Characters remaining: <span class="character-count"><@= maxLength @></span></p>
         </script>
@@ -174,7 +189,9 @@
         <script id="select-template" type="text/template">
             <strong><@= prompt @></strong>
             <div>
-                <select class="content"></select>
+                <select class="content required-input" <@ if (isMulti) { @> multiple <@ } @>>
+                    <option></option>
+                </select>
             </div>
         </script>
         

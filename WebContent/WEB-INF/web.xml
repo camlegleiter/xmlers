@@ -54,7 +54,15 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>UpsertForm</servlet-name>
-    <url-pattern>/app/upsert</url-pattern>
+    <url-pattern>/app/upsertForm</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UpsertResponse</servlet-name>
+    <servlet-class>UpsertResponse</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpsertResponse</servlet-name>
+    <url-pattern>/app/upsertResponse</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Settings</servlet-name>

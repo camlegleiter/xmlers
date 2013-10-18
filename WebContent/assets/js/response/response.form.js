@@ -32,30 +32,100 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
             this.collection = this.model.get('formQuestions');
         },
         
-        onCancel: function() {
-            if (confirm("The current form will not be saved. Are you sure you wish to cancel?")) {
-                window.location.href = 'index.jsp';
+        onSubmit: function() {
+            if (this.inputsAreValid()) {
+                
+                this.toggleButtonsDisabled(true);
+                this.ui.loading.show();
+                
+                var self = this;
+                $.post('/xmlers/app/upsertResponse', {
+                    model: JSON.stringify(this.model)
+                }).done(function(data, textStatus, jqXHR) {
+                    console.log(textStatus);
+                }).error(function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }).always(function() {
+                    self.toggleButtonsDisabled(false);
+                    self.ui.loading.hide();
+                });
             }
+        },
+        
+        onCancel: function() {
+            return confirm("The current form will not be saved. Are you sure you wish to cancel?");
         },
         
         appendHtml: function(collectionView, itemView) {
             collectionView.$('.response-content').append(itemView.el);
+        },
+        
+        inputsAreValid: function() {
+            var $inputs = this.$('.required-input');
+            for (var i = 0; i < $inputs.length; ++i) {
+                if ($($inputs[i]).is(':invalid')) {
+                    $($inputs[i]).focus();
+                    return false;
+                }
+            }
+            
+            return true;
+        },
+        
+        toggleButtonsDisabled: function(isDisabled) {
+            this.ui.submit.toggleClass('disabled', isDisabled);
+            this.ui.cancel.toggleClass('disabled', isDisabled);
         }
     });
     
-    /*
-     * 
-     */
-    Module.ResponseView = Backbone.Marionette.ItemView.extend({
-
-    });
     
     /*
      * 
      */
-    Module.ResponsesView = Backbone.Marionette.CompositeView.extend({
-        className: 'response',
-
+    Module.CheckboxItemView = Backbone.Marionette.ItemView.extend({
+        template: '#checkbox-item-template',
+        
+        events: {
+            'change input': 'onUpdateCheckbox'
+        },
+        
+        initialize: function(options) {
+            this.checkboxNameId = options.checkboxNameId;
+        },
+        
+        onUpdateCheckbox: function() {
+            this.trigger('checkbox:update', this.model.get('label'));
+        },
+        
+        serializeData: function() {
+            return {
+                data: this.model.attributes,
+                id: this.checkboxNameId
+            };
+        }
+    });
+    
+    Module.CheckboxView = Backbone.Marionette.CompositeView.extend({
+        template: '#checkbox-template',
+        tagName: 'li',
+        className: 'question',
+        
+        itemView: Module.CheckboxItemView,
+        itemViewOptions: function(model, index) {
+            return {
+                checkboxNameId: this.cid
+            };
+        },
+        
+        initialize: function() {
+            this.collection = this.model.get('checkboxes');
+        },
+        
+        onUpdateCheckbox: function(view, label) {
+            this.model.set('value', label);
+        },
+        
         appendHtml: function(collectionView, itemView) {
             collectionView.$('.content').append(itemView.el);
         }
@@ -65,73 +135,53 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
     /*
      * 
      */
-    Module.CheckboxItemView = Module.ResponseView.extend({
-        template: '#checkbox-item-template',
-        
-        events: {
-
-        },
-        
-        ui: {
-            
-        },
-        
-        initialize: function() {
-            console.log();
-        }
-    });
-    
-    Module.CheckboxView = Module.ResponsesView.extend({
-        template: '#checkbox-template',
-        tagName: 'li',
-        className: 'question',
-        itemView: Module.CheckboxItemView,
-        
-        events: {
-            
-        },
-        
-        ui: {
-            
-        },
-        
-        initialize: function() {
-            this.collection = this.model.get('checkboxes');
-        }
-    });
-    
-    
-    /*
-     * 
-     */
-    Module.RadioItemView = Module.ResponseView.extend({
+    Module.RadioItemView = Backbone.Marionette.ItemView.extend({
         template: '#radio-item-template',
         
         events: {
-            'change input': 'onUpdateSelection'
+            'change input': 'onUpdateRadio'
         },
         
-        ui: {
-        
+        initialize: function(options) {
+            this.radioNameId = options.radioNameId;
         },
         
-        onUpdateSelection: function() {
-            this.trigger('radio:updateSelect', this.model.get('label'));
+        onUpdateRadio: function() {
+            this.trigger('radio:update', this.model.get('label'));
+        },
+        
+        serializeData: function() {
+            return {
+                data: this.model.attributes,
+                id: this.radioNameId
+            };
         }
     });
     
-    Module.RadioView = Module.ResponsesView.extend({
+    Module.RadioView = Backbone.Marionette.CompositeView.extend({
         template: '#radio-template',
         tagName: 'li',
         className: 'question',
+        
         itemView: Module.RadioItemView,
+        itemViewOptions: function(model, index) {
+            return { 
+                radioNameId: this.cid
+            };
+        },
         
         initialize: function(options) {
             this.collection = this.model.get('radios');
+            
+            this.on('itemview:radio:update', this.onUpdateRadio);
         },
         
-        onRender: function() {
-            console.log(this.el);
+        onUpdateRadio: function(view, label) {
+            this.model.set('value', label);
+        },
+        
+        appendHtml: function(collectionView, itemView) {
+            collectionView.$('.content').append(itemView.el);
         }
     });
     
@@ -139,7 +189,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
     /*
      * 
      */
-    Module.TextboxView = Module.ResponsesView.extend({
+    Module.TextboxView = Backbone.Marionette.CompositeView.extend({
         template: '#textbox-template',
         tagName: 'li',
         className: 'question',
@@ -159,13 +209,17 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
             }
         },
         
+        toggleError: function(isError) {
+            return this.ui.charsLeft.toggleClass('error', isError);
+        },
+        
         updateCharactersLeft: function() {
-            var left = this.model.get('maxLength') - this.ui.textarea.val().length;
+            var left = parseInt(this.model.get('maxLength'), 10) - this.ui.textarea.val().length;
             if (left < 0) {
-                this.ui.charsLeft.toggleClass('error', true).text(left);
+                this.toggleError(true).text(left);
                 return false;
             } else {
-                this.ui.charsLeft.toggleClass('error', false).text(left);
+                this.toggleError(false).text(left);
                 return true;
             }
         }
@@ -175,35 +229,40 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
     /*
      * 
      */
-    Module.SelectOptionItemView = Module.ResponseView.extend({
+    Module.SelectOptionItemView = Backbone.Marionette.ItemView.extend({
         template: '#select-option-item-template',
-        tagName: 'option',
-        
-        events: {
-            
-        },
-        
-        ui: {
-            
-        }
+        tagName: 'option'
     });
     
-    Module.SelectView = Module.ResponsesView.extend({
+    Module.SelectView = Backbone.Marionette.CompositeView.extend({
         template: '#select-template',
         tagName: 'li',
         className: 'question',
         itemView: Module.SelectOptionItemView,
         
-        events: {
-            
-        },
-        
         ui: {
-            
+            select: 'select'
         },
 
         initialize: function(options) {
             this.collection = this.model.get('options');
+            this.isMulti = this.model.get('isMulti');            
+        },
+        
+        onRender: function() {
+            this.ui.select.select2({
+                width: '300px',
+                placeholder: 'Select a value'
+            });
+            
+            var self = this;
+            this.ui.select.on('change', function(e) {
+                self.model.set('values', e.val);
+            });
+        },
+        
+        appendHtml: function(collectionView, itemView) {
+            collectionView.$('.content').append(itemView.el);
         }
     });
 });

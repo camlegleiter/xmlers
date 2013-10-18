@@ -84,7 +84,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 this.ui.loading.show();
                 
                 var self = this;
-                $.post('/xmlers/app/upsert', {model: JSON.stringify(this.model)})
+                $.post('/xmlers/app/upsertForm', { model: JSON.stringify(this.model) })
                 .done(function(data, textStatus, jqXHR) {
                     console.log(textStatus);
                 })

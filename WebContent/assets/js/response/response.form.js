@@ -120,10 +120,18 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
         
         initialize: function() {
             this.collection = this.model.get('checkboxes');
+            this.model.set('values', []);
+            
+            this.on('itemview:checkbox:update', this.onUpdateCheckbox);
         },
         
         onUpdateCheckbox: function(view, label) {
-            this.model.set('value', label);
+            var values = this.model.get('values');
+            if (_.indexOf(values, label) === -1) {
+                values.push(label);
+            } else {
+                this.model.set('values', _.without(values, label));
+            }
         },
         
         appendHtml: function(collectionView, itemView) {
@@ -257,7 +265,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
             
             var self = this;
             this.ui.select.on('change', function(e) {
-                self.model.set('values', e.val);
+                self.model.set(self.isMulti ? 'values' : 'value', e.val);
             });
         },
         

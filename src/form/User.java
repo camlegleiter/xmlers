@@ -5,6 +5,8 @@ import java.security.SecureRandom;
 
 import org.apache.commons.codec.binary.Base64;
 
+import utils.Utils;
+
 public class User {
 	private String userID;
 	private String userName;
@@ -92,6 +94,14 @@ public class User {
 	{
 		//TODO Update this to hash some stuff
 		return passwd.equals(this.password);
+	}
+	
+	/**
+	 * Returns the user's full name in the format "firstName lastName"
+	 * @return
+	 */
+	public String getFullName() {
+		return Utils.join(" ", firstName, lastName);
 	}
 	
 

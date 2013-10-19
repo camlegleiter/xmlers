@@ -92,6 +92,10 @@
             // The ID of the participant
             // default: -1
             "responseOwner": 888888888,
+            
+            // The NetID of the participant (for display purposes)
+            // default: ''
+            "responseOwnerName": "Robert Paulson",
         
             // An array containing all of the participant's responses
             // to this form

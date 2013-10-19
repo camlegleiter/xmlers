@@ -39,8 +39,8 @@
         <jsp:include page="/app/includes/footer.jsp" />
         
         <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/questions.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/forms.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/questions.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/forms.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/response/response.form.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/response/response.js"></script>
         

@@ -38,17 +38,18 @@
 				</div>
 			</div>
 		</div>
+    
         <jsp:include page="/app/includes/footer.jsp" />
         
         <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/forms.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/questions.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/forms.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/questions.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.questions.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.form.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.js"></script>
         
 		<script>
-			$(document).ready(function() {
+		    $(document).ready(function() {
 			    <% // if there is an edit queryarg, need to get form ID to edit from it and bootstrap data %>
 			    
 			    var formModel = new TaskManager.Models.Form();

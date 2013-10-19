@@ -1,18 +1,22 @@
 'use strict';
 
 TaskManager.Models.Response = Backbone.Model.extend({
+    initialize: function() {
+        this.set('responses', new TaskManager.Collections.QuestionResponses(this.get('responses')));
+    },
+    
     defaults: function() {
         return {
             formID: -1,
             responseOwner: -1,
             formParticipants: [],
-            responses: new TaskManager.Collections.Responses()
+            responses: []
         };
     }
 });
 
 TaskManager.Collections.Responses = Backbone.Collection.extend({
-    model: TaskManager.Models.ResponseModel
+    model: TaskManager.Models.Response
 });
 
 
@@ -34,7 +38,7 @@ TaskManager.Collections.QuestionResponses = Backbone.Collection.extend({
 /*
  * 
  */
-TaskManager.Models.CheckboxResponse = TaskManager.Models.Response.extend({
+TaskManager.Models.CheckboxResponse = TaskManager.Models.QuestionResponse.extend({
     defaults: function() {
         return {
             questionID: -1,
@@ -58,7 +62,7 @@ TaskManager.Models.CheckboxValue = Backbone.Model.extend({
 /*
  * 
  */
-TaskManager.Models.RadioResponse = TaskManager.Models.Response.extend({
+TaskManager.Models.RadioResponse = TaskManager.Models.QuestionResponse.extend({
     defaults: function() {
         return {
             questionID: -1,
@@ -82,7 +86,7 @@ TaskManager.Models.RadioValue = Backbone.Model.extend({
 /*
  * 
  */
-TaskManager.Models.Textbox = TaskManager.Models.Question.extend({
+TaskManager.Models.Textbox = TaskManager.Models.QuestionResponse.extend({
     defaults: function() {
         return {
             questionID: -1,
@@ -96,7 +100,7 @@ TaskManager.Models.Textbox = TaskManager.Models.Question.extend({
 /*
  *
  */
-TaskManager.Models.SelectResponse = TaskManager.Models.Response.extend({
+TaskManager.Models.SelectResponse = TaskManager.Models.QuestionResponse.extend({
     defaults: function() {
         return {
             questionID: -1,

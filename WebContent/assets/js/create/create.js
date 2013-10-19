@@ -1,6 +1,6 @@
 'use strict';
 
-TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
+TaskManager.module('Create', function(Module, App, Backbone, Marionette, $, _) {
     this.startWithParent = false;
     
     App.addRegions({

@@ -107,6 +107,7 @@ public class StubController implements IDBController {
 		
 		Form form2 = new Form(form);
 		form2.setKey("2");
+		form2.setTitle("Another gender questionnaire");
 		TextQuestion textq2 = new TextQuestion("first", 5, "Type in your Sex to confirm:", 5);
 		form2.add(textq2);
 		

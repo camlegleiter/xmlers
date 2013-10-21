@@ -73,6 +73,14 @@ public class StubController implements IDBController {
 		user.setEmail("testuser@example.com");
 		user.setPassword("password");
 		users.put(user.getUserName(), user);
+		
+		User user2 = new User();
+		user2.setFirstName("T");
+		user2.setLastName("U");
+		user2.setUserName("t");
+		user2.setEmail("tp@example.com");
+		user2.setPassword("p");
+		users.put(user2.getUserName(), user2);
 	}
 
 	@Override

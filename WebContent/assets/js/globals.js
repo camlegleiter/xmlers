@@ -7,3 +7,21 @@ _.templateSettings = {
     evaluate: /\<\@(.+?)\@\>/gim,
     escape: /\<\@\-(.+?)\@\>/gim
 };
+
+/*
+ * 
+ */
+TaskManager.EmptyView = Backbone.Marionette.ItemView.extend({
+    template: '#empty-view-template',
+    className: 'control-group',
+
+    initialize: function(options) {
+        this.message = options.message;
+    },
+    
+    serializeData: function() {
+        return {
+            message: this.message
+        };
+    }
+});

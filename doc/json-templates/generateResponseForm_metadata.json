@@ -1,0 +1,113 @@
+// An example template for the JSON data sent TO the response.jsp page to build
+// the form for the participant to complete
+// NOTE: The order of these may or may not be consistent
+{
+    // The ID of the form
+    // default: -1
+    "formID": 123456789,
+    
+    // The name of the form
+    // default: ''
+    "formName": "Example Form",
+    
+    // The user's description of the form (i.e. describing what the form asks);
+    // default: ''
+    "formDescription": "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
+    
+    // The ID of the owner/administrator of this form
+    // default: -1
+    "formOwner": 987654321,
+    
+    // A list of question objects
+    // default: []
+    "formQuestions": [
+    
+        // TEXTBOX
+        {
+            // The ID of the question
+            // default: -1
+            "questionID": 123456789,
+        
+            // Type is always 'Textbox'
+            "type": "Textbox",
+            
+            // Maximum number of characters that can be entered
+            // default: 1000
+            "maxLength": 1000,
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            "prompt": "Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock."
+        },
+        
+        // CHECKBOX
+        {
+            // The ID of the question
+            // default: -1
+            "questionID": 234567890,
+        
+            // Type is always 'Checkbox'
+            "type": "Checkbox",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            "prompt": "Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate.",
+            
+            // A list of checkbox labels; the length of the array is the number of checkbox options
+            // default: []
+            "checkboxes": [
+                { "label": "Checkbox1" },
+                { "label": "Checkbox2" },
+                { "label": "Checkbox3" }
+            ]
+        },
+        
+        // RADIO
+        {
+            // The ID of the question
+            // default: -1
+            "questionID": 345678901,
+        
+            // Type is always 'Radio'
+            "type": "Radio",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            "prompt": "Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
+            
+            // A list of radio labels; the length of the array is the number of radio options
+            // default: []
+            "radios": [
+                { "label": "Radio1" },
+                { "label": "Radio2" },
+                { "label": "Radio3" }
+            ]
+        },
+        
+        // SELECT
+        {
+            // The ID of the question
+            // default: -1
+            "questionID": 456789012,
+        
+            // Type is always 'Select'
+            "type": "Select",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            "prompt": "Aliquip beef ribs dolore shoulder ad consectetur pork belly minim.",
+            
+            // Flag for if multiple options can be chosen (multi-select)
+            // default: false (single-select)
+            "isMulti": false,
+            
+            // A list of options; the length of the array is the number of options
+            // default: []
+            "options": [
+                { "value": "Option1" },
+                { "value": "Option2" },
+                { "value": "Option3" }
+            ]
+        }
+    ]
+}

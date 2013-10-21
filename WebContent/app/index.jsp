@@ -34,18 +34,38 @@
         <jsp:include page="/app/includes/footer.jsp" />
         
         <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/forms.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/questions.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/forms.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/questions.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/index/index.forms.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/index/index.content.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/index/index.js"></script>
         
         <script type="text/javascript">
+            var form1 = {
+                formID: 123456789,
+                formName: 'Form 1',
+                formDescription: 'This is the form thing you are an owner of',
+                formOwner: 123456789,
+                formParticipants: ['test1@example.com', 'test2@example.com', 'test3@example.com'],
+                participantsCanSeeAll: false,
+                formQuestions: new TaskManager.Collections.Questions()
+            };
+            
+            var form2 = {
+                formID: 987654321,
+                formName: 'Form 2',
+                formDescription: 'This is the form thing you are a participant of',
+                formOwner: 123456789,
+                formParticipants: [],
+                participantsCanSeeAll: true,
+                formQuestions: new TaskManager.Collections.Questions()
+            };
+        
             $(document).ready(function() {
                 var ownerCollection = new TaskManager.Collections.Forms();
-                ownerCollection.reset([{ formName: "name1" }, { formName: "name2" }, { formName: "name3" }]);
+                ownerCollection.reset(form1);
                 var participantCollection = new TaskManager.Collections.Forms();
-                participantCollection.reset();
+                participantCollection.reset(form2);
                 
                 Index = TaskManager.Index;
                 Index.start({
@@ -58,8 +78,10 @@
         <script id="forms-layout" type="text/template">
             <h3>Forms</h3>
             <div class="well sidebar-nav">
-                <a class="add btn" href="create.jsp" title="Create a New Form">Add Form</a>
-                <a class="delete btn" title="Delete an Existing Form">Delete Form</a>
+                <div class="pagination-centered clearfix">
+                    <a class="add btn" href="create.jsp" title="Create a New Form">Add Form</a>
+                    <a class="delete btn" title="Delete an Existing Form">Delete Form</a>
+                </div>
                 <div id="owner-forms"></div>
                 <div id="participant-forms"></div>
             </div>
@@ -70,19 +92,28 @@
             <div class="well form-content"></div>
         </script>
         
-        <script id="form-content-template" type="text/template">
+        <script id="owner-form-template" type="text/template">
             <div id="form-info">
                 <p><strong>Form Name: </strong><@= formName @></p>
                 <p><strong>Description: </strong><@= formDescription @></p>
-                <form id="form-buttons" class="form-inline" action="/app/index" method="POST" style="display: none;">
-                    <input type="hidden" id="form-id" name="formid">
-                    <input type="submit" id="viewRecords" class="btn" name="viewRecords" value="View Records" title="See all of the records for this form.">
-                    <input type="submit" id="editForm" class="btn" name="editForm" value="Edit Form" title="Make changes to this form.">
-                    <button id="reemailParticipants" class="btn" name="reemailParticipants" value="Re-Email Participants" title="Sends a reminder to participants who haven't completed this form to do so.">Re-Email Participants</button>
+                <p><strong>Participants: </strong><@= getFormParticipants() @></p>
+                <form class="form-inline owner-buttons" action="/app/index" method="POST">
+                    <a href="viewResponses.jsp?form=<@= formID @>" class="btn view-records" title="See all of the records for this form.">View Records</a>
+                    <a class="btn edit-form" title="Make changes to this form.">Edit Form</a>
+                    <a class="btn reemail-participants" title="Sends a reminder to participants who haven't completed this form to do so.">Re-Email Participants</a>
                 </form>
-                <form id="other-form-buttons" class="form-inline" action="/app/index" method="POST" style="display: none;">
-                    <input type="hidden" id="otherform-id" name="otherformid">
-                    <input type="submit" id="inputResponse" class="btn" name="inputResponse" value="Input Response" title="Submit a response to this form.">
+            </div>
+        </script>
+        
+        <script id="participant-form-template" type="text/template">
+            <div id="form-info">
+                <p><strong>Form Name: </strong><@= formName @></p>
+                <p><strong>Description: </strong><@= formDescription @></p>
+                <form class="form-inline participant-buttons" action="/app/index" method="POST">
+                    <@ if (participantsCanSeeAll) { @>
+                        <a href="viewResponses.jsp?form=<@= formID @>" class="btn view-records" title="See all of the records for this form.">View Records</a>
+                    <@ } @>
+                    <a href="response.jsp?form=<@= formID @>" class="btn submit-response" title="Submit a response to this form.">Submit Response</a>
                 </form>
             </div>
         </script>

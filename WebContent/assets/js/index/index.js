@@ -1,6 +1,6 @@
 'use strict';
 
-TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
+TaskManager.module('Index', function(Module, App, Backbone, Marionette, $, _) {
     this.startWithParent = false;
     
     App.addRegions({

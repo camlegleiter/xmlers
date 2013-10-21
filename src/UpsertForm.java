@@ -60,6 +60,12 @@ public class UpsertForm extends HttpServlet {
 			
 			response.setContentType("application/json");
 			response.getWriter().write(jsonObject.toString());
+		} catch (Exception e) {
+			jsonObject = new JSONObject();
+			jsonObject.put("error", e.getMessage());
+			
+			response.setContentType("application/json");
+			response.getWriter().write(jsonObject.toString());
 		}
 	}
 

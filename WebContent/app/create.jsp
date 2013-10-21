@@ -38,19 +38,24 @@
 				</div>
 			</div>
 		</div>
+    
         <jsp:include page="/app/includes/footer.jsp" />
         
         <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/forms.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/questions.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/forms.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/questions.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.questions.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.form.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.js"></script>
         
 		<script>
-			$(document).ready(function() {
+		    $(document).ready(function() {
+			    <% // if there is an edit queryarg, need to get form ID to edit from it and bootstrap data %>
+			    
+			    var formModel = new TaskManager.Models.Form();
+			    
 			    Create = TaskManager.Create;
-			    Create.start();
+			    Create.start({ model: formModel });
 			});
 		</script>
     
@@ -75,25 +80,25 @@
             <div class="control-group">
                 <label class="control-label" for="formName">Form Name</label>
                 <div class="controls">
-                    <input type="text" id="formName" class="required-input" placeholder="Form Name" required>
+                    <input type="text" id="formName" class="required-input" placeholder="Form Name" value="<@= formName @>" required>
                 </div>
             </div>
 
             <div class="control-group">
                 <label class="control-label" for="formDesc">Form Description</label>
                 <div class="controls">
-                    <textarea id="formDesc" class="required-input" placeholder="Enter a description of the form" required></textarea>
+                    <textarea id="formDesc" class="required-input" placeholder="Enter a description of the form" required><@= formDescription @></textarea>
                 </div>
             </div>
 
-            <ol id="form-content"></ol>
-            
             <div class="control-group">
                 <label class="control-label" for="formParticipants">Participants</label>
                 <div class="controls">
                     <input type="hidden" id="formParticipants" style="width: 300px;">
                 </div>
             </div>
+
+            <div id="form-content"></div>
 
             <div class="form-actions">
                 <div style="margin-bottom: 10px">
@@ -103,7 +108,7 @@
                 </div>
                 
                 <a class="submit btn btn-large btn-primary">Submit</a>
-                <a class="cancel btn btn-large">Cancel</a>
+                <a href="index.jsp" class="cancel btn btn-large">Cancel</a>
                 <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
             </div>
         </script>
@@ -122,7 +127,7 @@
                     </div>
                 </div>
 
-                <div class="content"></div>
+                <ol class="content"></ol>
 
                 <div class="control-group">
                     <div class="controls">
@@ -153,7 +158,7 @@
                     </div>
                 </div>
 
-                <div class="content"></div>
+                <ol class="content"></ol>
 
                 <div class="control-group">
                     <div class="controls">
@@ -219,7 +224,7 @@
                     </div>
                 </div>
 
-                <div class="content"></div>
+                <ol class="content"></ol>
 
                 <div class="control-group">
                     <div class="controls">
@@ -231,7 +236,7 @@
         
         <script id="select-option-item-template" type="text/template">
             <li class="controls">
-                <input type="text" class="required-input" value="<@= data.label @>" placeholder="Option text" required>
+                <input type="text" class="required-input" value="<@= data.value @>" placeholder="Option text" required>
                 <a class="delete">Delete</a>
             </li>
         </script>

@@ -118,7 +118,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         initialize: function() {
-            this.$el.append('<li class="nav-header">My Forms</li>');
+            this.$el.append('<li class="nav-header">Forms I Own</li>');
         }
     });
     

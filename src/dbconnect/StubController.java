@@ -24,6 +24,8 @@ public class StubController implements IDBController {
 	{
 		forms = new HashMap<String, Form>();
 		users = new HashMap<String, User>();
+		
+		putTestUser();
 	}
 
 	@Override
@@ -64,8 +66,6 @@ public class StubController implements IDBController {
 
 	@Override
 	public User fetchUser(String id) {
-		//TODO remove this call when testing is done.
-		putTestUser();
 		User requestedUser = users.get(id);
 		if(requestedUser == null){
 			return null;
@@ -90,6 +90,7 @@ public class StubController implements IDBController {
 		user2.setEmail("tp@example.com");
 		user2.setPassword("p");
 		users.put(user2.getUserName(), user2);
+		
 		//Form(String key, String title, String description, String owner)
 		Form form = new Form("1", "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserName());
 		TextQuestion textq = new TextQuestion("first", 1, "What's your name?", 5);
@@ -111,14 +112,12 @@ public class StubController implements IDBController {
 		
 		forms.put(form.getKey(), form);
 		forms.put(form2.getKey(), form);
-		getOwnerForms(user.getUserName());
-		Utils.getFormsUserIsOwnerOf(user.getUserName());
 	}
 	
 	@Override
 	public ArrayList<Form> getOwnerForms(String userID){
 		ArrayList<Form> ownerForms = new ArrayList<Form>();
-		for (Map.Entry entry : forms.entrySet()) { 
+		for (Map.Entry<String, Form> entry : forms.entrySet()) { 
 			Form form = (Form) entry.getValue();
 			if(form.getOwner().equals(userID)){
 				ownerForms.add(form);

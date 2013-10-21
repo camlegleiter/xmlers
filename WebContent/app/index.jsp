@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="utils.Utils" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -63,7 +64,7 @@
         
             $(document).ready(function() {
                 var ownerCollection = new TaskManager.Collections.Forms();
-                ownerCollection.reset(form1);
+                ownerCollection.reset(<%= Utils.getFormsUserIsOwnerOf("testuser") %>);
                 var participantCollection = new TaskManager.Collections.Forms();
                 participantCollection.reset(form2);
                 

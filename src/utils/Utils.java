@@ -185,7 +185,7 @@ public final class Utils {
 	 * "Now is the time for all good men" into "...is the time for..."
 	 * </p>
 	 * <p>
-	 * Works like abbreviate(String, int), but allows you to specify a
+	 * Works like <code>abbreviate(String, int)</code>, but allows you to specify a
 	 * "left edge" offset. Note that this left edge is not necessarily going to
 	 * be the leftmost character in the result, or the first character following
 	 * the ellipses, but it will appear somewhere in the result.

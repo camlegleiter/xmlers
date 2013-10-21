@@ -21,6 +21,7 @@ public class DefaultFactory extends FormFactory {
 		f.setKey(src.getString("formID"));
 		f.setDescription(src.getString("formDescription"));
 		f.setTitle(src.getString("formName"));
+		f.setOwner(src.getString("formOwner"));
 		
 		JSONArray questions = src.getJSONArray("formQuestions");
 		numQuestions = questions.length();

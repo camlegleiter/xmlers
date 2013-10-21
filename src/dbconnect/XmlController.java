@@ -1,5 +1,7 @@
 package dbconnect;
 
+import java.util.ArrayList;
+
 import form.Form;
 import form.User;
 
@@ -51,5 +53,11 @@ public class XmlController implements IDBController {
 	public boolean deleteUser(String key) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<Form> getOwnerForms(String userID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

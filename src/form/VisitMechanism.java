@@ -60,6 +60,10 @@ public class VisitMechanism {
 		{
 			retval = v.visit((ComplexQuestion) q);
 		}
+		else if(q instanceof CheckQuestion)
+		{
+			retval = v.visit((CheckQuestion) q);
+		}
 		else
 		{
 			throw new IllegalArgumentException();

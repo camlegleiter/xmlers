@@ -1,9 +1,9 @@
 package dbconnect;
 
+import java.util.ArrayList;
+
 import form.Form;
 import form.User;
-import form.questions.Question;
-import form.questions.QuestionResponse;
 
 public interface IDBController  
 {	
@@ -21,5 +21,7 @@ public interface IDBController
 	
 	public boolean deleteForm(String key);
 	
-	public boolean deleteUser(String key);	
+	public boolean deleteUser(String key);
+
+	ArrayList<Form> getOwnerForms(String userID);	
 }

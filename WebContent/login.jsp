@@ -106,6 +106,8 @@
                         if ("" != responseText) {
                             $('#signin-input-group').addClass("error");
                             $('#login-error').html(responseText).slideDown();
+                        } else {
+                            window.location.href = 'app/index.jsp';
                         }
                     });
                     return false;

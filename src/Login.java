@@ -58,8 +58,8 @@ public class Login extends HttpServlet {
 			// ...
 			
 			// No errors, send back an empty string
-			//response.getWriter().write("");
-			request.getRequestDispatcher("app/index.jsp").forward(request, response);
+			response.getWriter().write("");
+			//request.getRequestDispatcher("app/index.jsp").forward(request, response);
 			
 		} else {
 			// Bad credentials, try again

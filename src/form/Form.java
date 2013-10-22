@@ -23,6 +23,10 @@ public class Form implements Iterable<Question<?>> {
 	private Queue<Question<?>> questions;
 	private Collection<User> participants;
 	private String owner;
+	
+	private boolean participantsCanSeeAll;
+	private boolean participantsCanEditResponse;
+	private boolean participantResponseIsRequired;
 
 	public Form() {
 		questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
@@ -35,6 +39,10 @@ public class Form implements Iterable<Question<?>> {
 		this.key = key;
 		this.description = description;
 		this.owner = owner;
+		
+		this.participantsCanSeeAll = false;
+		this.participantsCanEditResponse = false;
+		this.participantResponseIsRequired = true;
 	}
 
 	/**
@@ -48,6 +56,10 @@ public class Form implements Iterable<Question<?>> {
 		this.title = other.title;
 		this.key = other.key;
 		this.description = other.description;
+		
+		this.participantsCanSeeAll = other.participantsCanSeeAll;
+		this.participantsCanEditResponse = other.participantsCanEditResponse;
+		this.participantResponseIsRequired = other.participantResponseIsRequired;
 
 		this.questions = new PriorityQueue<Question<?>>(1,
 				new QuestionPriority());
@@ -79,6 +91,30 @@ public class Form implements Iterable<Question<?>> {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public void canParticipantsSeeAll(boolean flag) {
+		this.participantsCanSeeAll = flag;
+	}
+	
+	public boolean participantsCanSeeAll() {
+		return this.participantsCanSeeAll;
+	}
+	
+	public void canParticipantsEditResponse(boolean flag) {
+		this.participantsCanEditResponse = flag;
+	}
+	
+	public boolean participantsCanEditResponse() {
+		return this.participantsCanEditResponse;
+	}
+	
+	public void isParticipantResponseRequired(boolean flag) {
+		this.participantResponseIsRequired = flag;
+	}
+	
+	public boolean participantResponseIsRequired() {
+		return this.participantResponseIsRequired;
 	}
 
 	public void add(Question<?> q) {
@@ -154,6 +190,7 @@ public class Form implements Iterable<Question<?>> {
 	public String getJSON(int settings, String user) {
 		JSONVisitor generator = new JSONVisitor();
 		JSONObject form = new JSONObject();
+		
 		if (bitSet(settings, TITLE_BIT)) {
 			form.put("formName", this.getTitle());
 		}
@@ -177,12 +214,17 @@ public class Form implements Iterable<Question<?>> {
 
 	@Override
 	public Form clone() {
+		// Returns a deep copy of this form
 		Form other = new Form();
 		other.key = this.key;
 		other.description = this.description;
 		other.title = this.title;
+		
+		other.participantsCanSeeAll = this.participantsCanSeeAll;
+		other.participantsCanEditResponse = this.participantsCanEditResponse;
+		other.participantResponseIsRequired = this.participantResponseIsRequired;
 
-		other.questions = new PriorityQueue<Question<?>>(1,
+		other.questions = new PriorityQueue<Question<?>>(this.questions.size(),
 				new QuestionPriority());
 
 		for (Question<?> q : questions) {
@@ -203,9 +245,9 @@ public class Form implements Iterable<Question<?>> {
 	 * @author mstrobel
 	 * 
 	 */
-	private class QuestionPriority implements Comparator<Question> {
+	private class QuestionPriority implements Comparator<Question<?>> {
 		@Override
-		public int compare(Question o1, Question o2) {
+		public int compare(Question<?> o1, Question<?> o2) {
 			return o1.getPosition() - o2.getPosition();
 		}
 	}

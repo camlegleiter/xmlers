@@ -29,7 +29,6 @@ public class UpsertForm extends HttpServlet {
      */
     public UpsertForm() {
         super();
-        // TODO Auto-generated constructor stub
     }
     	
 	/**
@@ -47,8 +46,7 @@ public class UpsertForm extends HttpServlet {
 			String userID = (String) request.getSession().getAttribute("userID");
 			jsonObject.put("formOwner", userID);
 			
-			FormFactory factory = new DefaultFactory();
-			Form form = factory.BuildForm(jsonObject);
+			Form form = new DefaultFactory().BuildForm(jsonObject);
 
 			controller.upsertForm(form);
 			

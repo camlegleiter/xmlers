@@ -13,6 +13,8 @@ TaskManager.Models.Form = Backbone.Model.extend({
             formOwner: -1,
             formParticipants: [],
             participantsCanSeeAll: false,
+            participantsCanEditResponse: false,
+            participantResponseIsRequired: true,
             formQuestions: []
         };
     }

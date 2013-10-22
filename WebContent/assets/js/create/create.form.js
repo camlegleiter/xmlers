@@ -29,7 +29,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             formName: '#formName',
             formDesc: '#formDesc',
             formParticipants: '#formParticipants',
-            participantsCanSeeAll: '#participantsSeeAll',
+            participantsCanSeeAll: '#participantsCanSeeAll',
+            participantsCanEditResponse: '#participantsCanEditResponse',
+            participantResponseIsRequired: '#participantResponseIsRequired',
             
             submit: '.submit',
             cancel: '.cancel',
@@ -63,7 +65,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             this.model.set({
                 formName: this.ui.formName.val(),
                 formDescription: this.ui.formDesc.val(),
-                participantsCanSeeAll: this.ui.participantsCanSeeAll.is(':checked')
+                participantsCanSeeAll: this.ui.participantsCanSeeAll.is(':checked'),
+                participantsCanEditResponse: this.ui.participantsCanEditResponse.is(':checked'),
+                participantResponseIsRequired: this.ui.participantResponseIsRequired.is(':checked')
             });
         },
         

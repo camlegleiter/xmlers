@@ -103,7 +103,22 @@
             <div class="form-actions">
                 <div style="margin-bottom: 10px">
                     <label class="checkbox">
-                        <input type="checkbox" id="participantsSeeAll">Participants can see the responses of others.
+                        <input type="checkbox" id="participantsCanSeeAll" <@ if (participantsCanSeeAll) { @> checked <@ } @>>
+                        Participants can see the responses of others.
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 10px">
+                    <label class="checkbox">
+                        <input type="checkbox" id="participantsCanEditResponse" <@ if (participantsCanEditResponse) { @> checked <@ } @>>
+                        Participants can edit their response after submitting.
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 10px">
+                    <label class="checkbox">
+                        <input type="checkbox" id="participantResponseIsRequired" <@ if (participantResponseIsRequired) { @> checked <@ } @>>
+                        Participants <strong>cannot</strong> opt out of completing this form
                     </label>
                 </div>
                 

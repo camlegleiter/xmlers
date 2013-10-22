@@ -28,6 +28,14 @@
     // default: false (view only their own)
     "participantsCanSeeAll": false,
     
+    // Flag for if the participants can edit their response after submitting it
+    // default: false (cannot edit responses after submitting)
+    "participantsCanEditResponse": false,
+    
+    // Flag for if the participants can unparticipate from a form if their input is not required
+    // default: false (response is required by the participant)
+    "participantResponseIsOptional": false,
+    
     // A list of question objects
     // default: []
     "formQuestions": [

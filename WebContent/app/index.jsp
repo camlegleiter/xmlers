@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ page import="utils.Utils" %>
+<%@ page import="form.utils.Forms" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -64,9 +64,9 @@
         
             $(document).ready(function() {
                 var ownerCollection = new TaskManager.Collections.Forms();
-                ownerCollection.reset(<%= Utils.getFormsUserIsOwnerOf("testuser") %>);
+                ownerCollection.reset(<%= Forms.getFormsUserIsOwnerOf("testuser") %>);
                 var participantCollection = new TaskManager.Collections.Forms();
-                participantCollection.reset(form2);
+                participantCollection.reset(<%= Forms.getFormsUserIsParticipantOf("testuser") %>);
                 
                 Index = TaskManager.Index;
                 Index.start({

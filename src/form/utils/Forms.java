@@ -32,7 +32,6 @@ public class Forms {
 			userForms.put(form.getJSON());
 		}
 		return userForms;
-
 	}
 
 	/**
@@ -48,7 +47,20 @@ public class Forms {
 		for (Form form : forms) {
 			userForms.put(form.getJSON());
 		}
-		
 		return userForms;
+	}
+
+	/**
+	 * Returns a JSONObject containing basic Form information and all Response
+	 * data. Data is used to populate a table on the viewResponses.jsp page.
+	 * 
+	 * @param formId
+	 * 				the ID of the form data to retrieve.
+	 * @return
+	 */
+	public static final JSONObject getResponseRecordsForForm(String formId) {
+		JSONObject jsonObject = new JSONObject();
+
+		return jsonObject;
 	}
 }

@@ -163,6 +163,17 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public void removeParticipant(User u) {
 		participants.remove(u);
 	}
+	
+	public boolean containsParticipant(String userId) {
+		if (userId == null || userId.isEmpty())
+			return false;
+		
+		for (User u : participants)
+			if (u.getUserID().equals(userId))
+				return true;
+		
+		return false;
+	}
 
 	public String getHTML(int settings, String user) {
 		HTMLVisitor generator = new HTMLVisitor();

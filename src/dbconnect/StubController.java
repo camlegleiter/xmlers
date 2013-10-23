@@ -136,9 +136,14 @@ public class StubController implements IDBController {
 	}
 
 	@Override
-	public List<Form> getParticipantForms(String userID) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Form> getParticipantForms(String userId) {
+		List<Form> participantForms = new ArrayList<Form>();
+		for (Map.Entry<String, Form> entry : forms.entrySet()) {
+			Form form = (Form) entry.getValue();
+			if (form.containsParticipant(userId))
+				participantForms.add(form);
+		}
+		
+		return participantForms;
 	}
-
 }

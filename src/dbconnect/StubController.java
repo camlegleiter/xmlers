@@ -2,11 +2,9 @@ package dbconnect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import utils.Utils;
 import form.Form;
 import form.User;
 import form.questions.CheckQuestion;
@@ -29,21 +27,21 @@ public class StubController implements IDBController {
 	}
 
 	@Override
-	public boolean formExists(String key) {
-		return forms.containsKey(key);
+	public boolean formExists(String formId) {
+		return forms.containsKey(formId);
 	}
 
 	@Override
-	public boolean userExists(String key) {
-		return users.containsKey(key);
+	public boolean userExists(String userId) {
+		return users.containsKey(userId);
 	}
 
 	@Override
-	public boolean upsertForm(Form f) {
+	public boolean upsertForm(Form form) {
 		boolean retVal;
-		if(this.formExists(f.getKey()))
+		if(this.formExists(form.getKey()))
 		{
-			forms.put(f.getKey(), new Form(f));
+			forms.put(form.getKey(), new Form(form));
 			retVal = true;
 		}
 		else
@@ -116,8 +114,8 @@ public class StubController implements IDBController {
 	}
 	
 	@Override
-	public ArrayList<Form> getOwnerForms(String userID){
-		ArrayList<Form> ownerForms = new ArrayList<Form>();
+	public List<Form> getOwnerForms(String userID){
+		List<Form> ownerForms = new ArrayList<Form>();
 		for (Map.Entry<String, Form> entry : forms.entrySet()) { 
 			Form form = (Form) entry.getValue();
 			if(form.getOwner().equals(userID)){
@@ -135,6 +133,12 @@ public class StubController implements IDBController {
 	@Override
 	public boolean deleteUser(String key) {
 		return null != users.remove(key);
+	}
+
+	@Override
+	public List<Form> getParticipantForms(String userID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

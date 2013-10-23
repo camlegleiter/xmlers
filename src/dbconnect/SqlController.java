@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -172,7 +172,13 @@ public class SqlController implements IDBController {
 	}
 
 	@Override
-	public ArrayList<Form> getOwnerForms(String userID) {
+	public List<Form> getOwnerForms(String userID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Form> getParticipantForms(String userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

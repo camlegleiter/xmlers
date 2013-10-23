@@ -1,14 +1,20 @@
 package form;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import form.questions.*;
-import form.visitors.*;
+import form.questions.Question;
+import form.visitors.HTMLVisitor;
+import form.visitors.JSONVisitor;
 
-public class Form implements Iterable<Question<?>> {
+public class Form implements Iterable<Question<?>>, Cloneable {
 
 	public static final int ALL_BITS = -1;
 	public static final int KEY_BIT = 0x1;
@@ -183,11 +189,11 @@ public class Form implements Iterable<Question<?>> {
 		return output.toString();
 	}
 
-	public String getJSON() {
+	public JSONObject getJSON() {
 		return getJSON(ALL_BITS, null);
 	}
 
-	public String getJSON(int settings, String user) {
+	public JSONObject getJSON(int settings, String user) {
 		JSONVisitor generator = new JSONVisitor();
 		JSONObject form = new JSONObject();
 		
@@ -209,26 +215,37 @@ public class Form implements Iterable<Question<?>> {
 					+ "]");
 			form.put("formQuestions", array);
 		}
-		return form.toString();
+		return form;
+	}
+	
+	public String getJSONString() {
+		return getJSONString(ALL_BITS, null);
+	}
+	
+	public String getJSONString(int settings, String user) {
+		return getJSON(settings, user).toString();
 	}
 
 	@Override
 	public Form clone() {
 		// Returns a deep copy of this form
-		Form other = new Form();
-		other.key = this.key;
-		other.description = this.description;
-		other.title = this.title;
-		
-		other.participantsCanSeeAll = this.participantsCanSeeAll;
-		other.participantsCanEditResponse = this.participantsCanEditResponse;
-		other.participantResponseIsRequired = this.participantResponseIsRequired;
+		Form other = null;
+		try {
+			other = (Form) super.clone();
+			
+			other.key = this.key;
+			other.description = this.description;
+			other.title = this.title;
+			other.participantsCanSeeAll = this.participantsCanSeeAll;
+			other.participantsCanEditResponse = this.participantsCanEditResponse;
+			other.participantResponseIsRequired = this.participantResponseIsRequired;
 
-		other.questions = new PriorityQueue<Question<?>>(this.questions.size(),
-				new QuestionPriority());
-
-		for (Question<?> q : questions) {
-			other.questions.add(q.clone());
+			other.questions = new PriorityQueue<Question<?>>(
+					this.questions.size(), new QuestionPriority());
+			for (Question<?> q : questions) {
+				other.questions.add(q.clone());
+			}
+		} catch (CloneNotSupportedException e) {
 		}
 
 		return other;
@@ -259,5 +276,4 @@ public class Form implements Iterable<Question<?>> {
 	public String getOwner() {
 		return owner;
 	}
-
 }

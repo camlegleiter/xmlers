@@ -248,33 +248,4 @@ public final class Utils {
 		}
 		return "..." + str.substring(str.length() - (maxWidth - 3));
 	}
-	
-	// JSONArray methods. Need to be moved to more specific utility class.
-	
-	/**
-	 * Returns a JSONArray containing Form objects (each converted to a JSONObject) of all the forms the given userID is the owner of
-	 * @param userID
-	 * @return
-	 */
-	public static final JSONArray getFormsUserIsOwnerOf(String userID){
-		JSONArray userForms = new JSONArray();
-		
-		ArrayList<Form> formArray = DBManager.getInstance().getOwnerForms(userID);
-		for(Form form: formArray){
-			userForms.put(new JSONObject(form.getJSON()));
-		}
-		return userForms;
-		
-	}
-	
-	/**
-	 * Returns a JSONArray containing Form objects (each converted to a JSONObject) of all the forms the given userID is the participant of
-	 * @param userID
-	 * @return
-	 */
-
-	public static final JSONArray getFormsUserIsParticipantOf(String userID){
-		JSONArray userForms = new JSONArray();
-		return userForms;
-	}
 }

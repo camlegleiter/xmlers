@@ -129,5 +129,5 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:element name="forms" type="form"></xs:element>
+  <xs:element name="form" type="form"></xs:element>
 </xs:schema>

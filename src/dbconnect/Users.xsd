@@ -6,6 +6,16 @@
     		<xs:element name="id" type="xs:ID" />
     		<xs:element name="handle" type="xs:string" />
     		<xs:element name="password" type="xs:string" />
+    		<xs:element name="owns" maxOccurs="unbounded" minOccurs="0">
+    		  <xs:complexType>
+    		    <xs:attribute name="formID" type="xs:string" />
+    		  </xs:complexType>
+    		</xs:element>
+    		<xs:element name="participating" maxOccurs="unbounded" minOccurs="0">    		
+	    	  <xs:complexType>
+	    	    <xs:attribute name="formID" type="xs:string" />
+	          </xs:complexType>
+    		</xs:element>
     	</xs:sequence>
     </xs:complexType>
     

@@ -8,7 +8,7 @@
 		<xs:attribute name="append" type="xs:boolean" />
 	</xs:complexType>
 		
-  <!-- Basic components taht must be present in a question. -->
+  <!-- Basic components that must be present in a question. -->
 	<xs:complexType name="question">
 		<xs:sequence>
 			<xs:element type="xs:string" name="prompt" />

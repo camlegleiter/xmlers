@@ -88,20 +88,20 @@ public class DefaultFactory extends FormFactory {
 	 */
 	private static CheckQuestion buildCheckQuestion(JSONObject src)
 	{
-		return buildCheckHelper(src, "checkboxes");
+		return buildCheckHelper(src, "checkboxes", "label");
 	}
 
 	private static RadioQuestion buildRadioQuestion(JSONObject src)
 	{
-		return new RadioQuestion(buildCheckHelper(src, "radios"));
+		return new RadioQuestion(buildCheckHelper(src, "radios", "label"));
 	}
 	
 	private static SelectQuestion buildSelectQuestion(JSONObject src)
 	{
-		return new SelectQuestion(buildCheckHelper(src, "options"));
+		return new SelectQuestion(buildCheckHelper(src, "options", "value"));
 	}
 	
-	private static CheckQuestion buildCheckHelper(JSONObject src, String kind)
+	private static CheckQuestion buildCheckHelper(JSONObject src, String kind, String inner)
 	{
 		CheckQuestion cq;		
 		JSONArray givenOptions;
@@ -117,7 +117,8 @@ public class DefaultFactory extends FormFactory {
 		
 		for(int i = 0; i < numOptions; i++)
 		{
-			parsedOptions[i] = givenOptions.getString(i);
+			JSONObject jo = givenOptions.getJSONObject(i);
+			parsedOptions[i] = jo.getString(inner);
 		}
 		
 		cq = new CheckQuestion(parsedOptions);

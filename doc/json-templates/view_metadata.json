@@ -1,0 +1,181 @@
+// An example template for the JSON data sent TO the viewResponses.jsp page to
+// display a table of all participant responses
+// NOTE: The order of these may or may not be consistent
+{
+    // The ID of the form
+    // default: -1
+    "formID": 123456789,
+    
+    // The name of the form
+    // default: ''
+    "formName": "Example Form",
+    
+    // The user's description of the form (i.e. describing what the form asks);
+    // default: ''
+    "formDescription": "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
+    
+    // The ID of the owner/administrator of this form
+    // default: -1
+    "formOwner": 987654321,
+    
+    // A list of question objects
+    // default: []
+    "formQuestions": [
+    
+        // TEXTBOX
+        {
+            // The id of the question
+            // default: -1
+            "id": 234567890,
+        
+            // Type is always 'Textbox'
+            "type": "Textbox",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            "prompt": "Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock."
+        },
+        
+        // CHECKBOX
+        {
+            // The id of the question
+            // default: -1
+            "id": 234567891,
+                
+            // Type is always 'Checkbox'
+            "type": "Checkbox",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            "prompt": "Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate."
+        },
+        
+        // RADIO
+        {
+            // The id of the question
+            // default: -1
+            "id": 234567892,
+        
+            // Type is always 'Radio'
+            "type": "Radio",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            "prompt": "Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner."
+        },
+        
+        // SELECT
+        {
+            // The id of the question
+            // default: -1
+            "id": 234567893,
+        
+            // Type is always 'Select'
+            "type": "Select",
+            
+            // The prompt displayed to the participants (e.g. a question)
+            // default: ''
+            "prompt": "Aliquip beef ribs dolore shoulder ad consectetur pork belly minim."
+        }
+    ],
+    
+    // A list of participant responses
+    // default: []
+    "responses": [
+        
+        // Each object represents one participant's responses to a form
+        {
+            // The ID of the response
+            // default: -1
+            "responseID": 999999999,
+            
+            // The ID of the participant
+            // default: -1
+            "responseOwner": 888888888,
+            
+            // The NetID of the participant (for display purposes)
+            // default: ''
+            "responseOwnerName": "Robert Paulson",
+        
+            // An array containing all of the participant's responses
+            // to this form
+            // default: []
+            "responses": [
+            
+                // TEXTBOX
+                {
+                    // The ID of the associated question for this response
+                    // This value is generated server-side beforehand
+                    // default: -1
+                    "questionID": 234567890,
+                    
+                    // Type is always 'Textbox'
+                    "type": "Textbox",
+                    
+                    // The participant's response to the Textbox question.
+                    // default: ''
+                    "value": "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur."
+                },
+                
+                // CHECKBOX
+                {
+                    // The ID of the associated question for this response
+                    // This value is generated server-side beforehand
+                    // default: -1
+                    "questionID": 234567891,
+                    
+                    // Type is always 'Checkbox'
+                    "type": "Checkbox",
+                    
+                    // A list of responses. Checkboxes can have one or more return values.
+                    // default: []
+                    "values": [
+                        "Beef",
+                        "Pork",
+                        "Chicken"
+                    ]
+                },
+                
+                // RADIO
+                {
+                    // The ID of the associated question for this response
+                    // This value is generated server-side beforehand
+                    // default: -1
+                    "questionID": 234567892,
+                    
+                    // Type is always 'Radio'
+                    "type": "Radio",
+                    
+                    // A list of responses. Radios only have one value to return.
+                    // default: ''
+                    "value": "Bacon"
+                },
+                
+                // SELECT
+                {
+                    // The ID of the associated question for this response
+                    // This value is generated server-side beforehand
+                    // default: -1
+                    "questionID": 234567893,
+                    
+                    // Type is always 'Select'
+                    "type": "Select",
+                    
+                    // A list of responses. Selects can have one or more return values
+                    // depending on if they are specified as "Single" or "Multiple"
+                    // by the form owner
+                    // default: []
+                    "values": [
+                        "Pizza",
+                        "Ice Cream",
+                        "Chicken Wings"
+                    ]
+                }
+                
+            ] // end responses
+        },
+        
+        // One or more response objects
+        // ...
+    ]
+}

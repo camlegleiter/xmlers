@@ -6,13 +6,25 @@ hr {
     margin: 5px 0px;
 }
 
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    
+    width: 100%;
+}
+
 .delete, .remove {
     color: red;
     cursor: pointer;
 }
 
-.delete:hover, .remove:hover {
+.delete:hover, .remove:hover, .error {
     color: red;
+}
+
+.delete.disabled, .remove.disabled, .error.disabled {
+    color: inherit;
 }
 
 /* --- Index Page Styles --- */
@@ -52,7 +64,6 @@ hr {
 
 .question {
     padding: 5px 0px;
-  
     border-top: 1px solid #ddd;
 }
 
@@ -64,8 +75,14 @@ hr {
     margin-top: 0px;
 }
 
+/* --- Response Page CSS --- */
+
+.response-content {
+    margin-left: 20px;
+}
+
 /* --- View Page Table CSS --- */
 
-#viewTableRecords th {
+.header {
 	cursor: pointer;
 }

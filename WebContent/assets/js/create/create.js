@@ -1,6 +1,6 @@
 'use strict';
 
-TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
+TaskManager.module('Create', function(Module, App, Backbone, Marionette, $, _) {
     this.startWithParent = false;
     
     App.addRegions({
@@ -9,10 +9,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
     });
     
     Module.addInitializer(function(options) {
-        var formModel = new App.Models.Form();
         var questionView = new Module.QuestionOptionsView();
         var formView = new Module.FormView({
-            model: formModel
+            model: options.model
         });
         
         Module.listenTo(questionView, 'add:question', function(question) {

@@ -62,7 +62,7 @@ public class GetForm extends HttpServlet {
 			out.write(requestedForm.getHTML(settings, userID));
 			break;
 		case "JSON":
-			out.write(requestedForm.getJSON(settings, userID));
+			out.write(requestedForm.getJSONString(settings, userID));
 			break;
 		case "XML":
 			throw new ServletException("Unimplemented Option Requested: \"" + formFormat +"\"");

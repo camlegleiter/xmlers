@@ -11,7 +11,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             return Module[item.get('type') + 'View'];
         },
         emptyView: function() {
-            return new Module.EmptyView({
+            return new App.EmptyView({
                 message: 'Select an entry type to get started!'
             });
         },
@@ -29,7 +29,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             formName: '#formName',
             formDesc: '#formDesc',
             formParticipants: '#formParticipants',
-            participantsCanSeeAll: '#participantsSeeAll',
+            participantsCanSeeAll: '#participantsCanSeeAll',
+            participantsCanEditResponse: '#participantsCanEditResponse',
+            participantResponseIsRequired: '#participantResponseIsRequired',
             
             submit: '.submit',
             cancel: '.cancel',
@@ -47,17 +49,15 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 placeholder: 'Type an email to add a participant',
                 
                 tags: [],
-                tokenSeparators: [',', ' ']
+                tokenSeparators: [',', ' '],                
             });
+            
+            // Need to set the current participants after initializing select
+            this.ui.formParticipants.select2('val', this.model.get('formParticipants'));
             
             var self = this;
             this.ui.formParticipants.on('change', function(e) {
-                var participants = self.model.get('formParticipants');
-                if (!_.isUndefined(e.added) && !_.contains(participants, e.added.text)) {
-                    participants.push(e.added.text);
-                } else if (!_.isUndefined(e.removed)) {
-                    self.model.set('formParticipants', _.without(participants, e.removed.text));
-                }
+                self.model.set('formParticipants', e.val);
             });
         },
         
@@ -65,7 +65,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             this.model.set({
                 formName: this.ui.formName.val(),
                 formDescription: this.ui.formDesc.val(),
-                participantsCanSeeAll: this.ui.participantsCanSeeAll.is(':checked')
+                participantsCanSeeAll: this.ui.participantsCanSeeAll.is(':checked'),
+                participantsCanEditResponse: this.ui.participantsCanEditResponse.is(':checked'),
+                participantResponseIsRequired: this.ui.participantResponseIsRequired.is(':checked')
             });
         },
         
@@ -86,7 +88,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 this.ui.loading.show();
                 
                 var self = this;
-                $.post('/xmlers/app/upsert', {model: JSON.stringify(this.model)})
+                $.post('/xmlers/app/upsertForm', { model: JSON.stringify(this.model) })
                 .done(function(data, textStatus, jqXHR) {
                     console.log(textStatus);
                 })
@@ -102,9 +104,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         onCancel: function() {
-            if (confirm("The current form will not be saved. Are you sure you wish to cancel?")) {
-                window.location.href = 'index.jsp';
-            }
+            return confirm("The current form will not be saved. Are you sure you wish to cancel?");
         },
         
         appendHtml: function(collectionView, itemView) {
@@ -210,7 +210,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         template: '#checkbox-template',
         itemView: Module.CheckboxItemView,
         emptyView: function() {
-            return new Module.EmptyView({
+            return new App.EmptyView({
                 message: 'Add options for the user to choose from.'
             });
         },
@@ -271,7 +271,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         template: '#radio-template',
         itemView: Module.RadioItemView,
         emptyView: function() {
-            return new Module.EmptyView({
+            return new App.EmptyView({
                 message: 'Add options for the user to choose from.'
             });
         },
@@ -363,7 +363,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         template: '#select-template',
         itemView: Module.SelectOptionItemView,
         emptyView: function() {
-            return new Module.EmptyView({
+            return new App.EmptyView({
                 message: 'Add options for the user to choose from.'
             });
         },

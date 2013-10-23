@@ -1,6 +1,7 @@
 package form.factory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import form.Form;
@@ -13,30 +14,29 @@ import form.questions.TextQuestion;
 public class DefaultFactory extends FormFactory {
 	
 	@Override
-	public Form BuildForm(JSONObject src) {
-		int numQuestions; //The number of questions contained in the form represented in 'src'
-		Form f = new Form(); //The instantiation
-		JSONObject currentObj; //The JSONObject depicting a question. Used as a cursor inside the loop below. 
-		
+	public Form BuildForm(JSONObject src) throws JSONException {
+		Form f = new Form();
 		f.setKey(src.getString("formID"));
-		f.setDescription(src.getString("formDesc"));
+		f.setDescription(src.getString("formDescription"));
 		f.setTitle(src.getString("formName"));
+		f.setOwner(src.getString("formOwner"));
+		
+		f.canParticipantsSeeAll(src.getBoolean("participantsCanSeeAll"));
+		f.canParticipantsEditResponse(src.getBoolean("participantsCanEditResponse"));
+		f.isParticipantResponseRequired(src.getBoolean("participantResponseIsRequired"));
 		
 		JSONArray questions = src.getJSONArray("formQuestions");
-		numQuestions = questions.length();
-		
-		for(int i = 0; i < numQuestions; ++i)
+		for(int i = 0; i < questions.length(); ++i)
 		{	
-			currentObj = questions.getJSONObject(i);
+			JSONObject currentObj = questions.getJSONObject(i);
 			f.add(BuildQuestion(currentObj));
 		}
-		
 		
 		return f;
 	}
 
 	@Override
-	public Question<?> BuildQuestion(JSONObject src) {
+	public Question<?> BuildQuestion(JSONObject src) throws JSONException {
 		Question<?> retval;
 		String type = src.getString("type");
 		
@@ -46,16 +46,14 @@ public class DefaultFactory extends FormFactory {
 			retval = buildStringQuestion(src);
 			break;
 		case "Checkbox":
-			retval = DefaultFactory.buildCheckQuestion(src);
+			retval = buildCheckQuestion(src);
 			break;
 		case "Radio":
-			retval = DefaultFactory.buildRadioQuestion(src);
+			retval = buildRadioQuestion(src);
 			break;
 		case "Select":
-			retval = DefaultFactory.buildSelectQuestion(src);
+			retval = buildSelectQuestion(src);
 			break;
-		case "Datetime":
-			//TODO Implement Datetime in factory
 		default:
 			throw new IllegalArgumentException("When building Question: Unrecognized type of JSONObject");
 		}
@@ -63,19 +61,11 @@ public class DefaultFactory extends FormFactory {
 		return retval;
 	}
 	
-	private static TextQuestion buildStringQuestion(JSONObject src)
+	private static TextQuestion buildStringQuestion(JSONObject src) throws JSONException
 	{
-		TextQuestion tq;
-		int maxLength;
-		String prompt;
-		
-		
-		maxLength = src.getInt("maxLength");
-		prompt = src.getString("prompt");
-
-		tq = new TextQuestion();
-		tq.setMaxLength(maxLength);
-		tq.setPrompt(prompt);
+		TextQuestion tq = new TextQuestion();
+		tq.setMaxLength(src.getInt("maxLength"));
+		tq.setPrompt(src.getString("prompt"));
 		
 		return tq;
 	}
@@ -86,43 +76,34 @@ public class DefaultFactory extends FormFactory {
 	 * @param src
 	 * @return
 	 */
-	private static CheckQuestion buildCheckQuestion(JSONObject src)
+	private static CheckQuestion buildCheckQuestion(JSONObject src) throws JSONException
 	{
 		return buildCheckHelper(src, "checkboxes", "label");
 	}
 
-	private static RadioQuestion buildRadioQuestion(JSONObject src)
+	private static RadioQuestion buildRadioQuestion(JSONObject src) throws JSONException
 	{
 		return new RadioQuestion(buildCheckHelper(src, "radios", "label"));
 	}
 	
-	private static SelectQuestion buildSelectQuestion(JSONObject src)
+	private static SelectQuestion buildSelectQuestion(JSONObject src) throws JSONException
 	{
 		return new SelectQuestion(buildCheckHelper(src, "options", "value"));
 	}
 	
-	private static CheckQuestion buildCheckHelper(JSONObject src, String kind, String inner)
+	private static CheckQuestion buildCheckHelper(JSONObject src, String kind, String inner) throws JSONException
 	{
-		CheckQuestion cq;		
-		JSONArray givenOptions;
-		String prompt;
-		String[] parsedOptions;
-		int numOptions;
+		JSONArray givenOptions = src.getJSONArray(kind);
 		
-		
-		givenOptions = src.getJSONArray(kind);
-		numOptions = givenOptions.length();
-		parsedOptions = new String[numOptions];
-		prompt = src.getString("prompt");
-		
-		for(int i = 0; i < numOptions; i++)
+		String[] parsedOptions = new String[givenOptions.length()];
+		for(int i = 0; i < parsedOptions.length; i++)
 		{
 			JSONObject jo = givenOptions.getJSONObject(i);
 			parsedOptions[i] = jo.getString(inner);
 		}
 		
-		cq = new CheckQuestion(parsedOptions);
-		cq.setPrompt(prompt);
+		CheckQuestion cq = new CheckQuestion(parsedOptions);
+		cq.setPrompt(src.getString("prompt"));
 		return cq;
 	}
 }

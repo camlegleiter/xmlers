@@ -64,10 +64,10 @@
 			<h2>Error: 404</h2>
 			<div class="desc">
 				You seem to be lost in space<br>
-				<a href="index.jsp">Click here to go back</a>
+				<a href="<%= request.getContextPath() %>/app/index.jsp">Click here to go back</a>
 			</div>
 		</div>
-		<script src="/js/three.min.js" type="text/javascript"></script>
+		<script src="<%= request.getContextPath() %>/assets/js/vendor/three.min.js" type="text/javascript"></script>
 		<script>
 			var container, stats;
 			var camera, scene, renderer, group, particle;

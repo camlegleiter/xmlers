@@ -1,104 +1,114 @@
+// An example template for the JSON data sent FROM the create.jsp or edit.jsp
+// pages TO the UpsertForm servlet
 // NOTE: The order of these may or may not be consistent
 {
     // The ID of the form
     // default: -1
-    formID: 123456789,
+    "formID": 123456789,
     
     // The name of the form
     // default: ''
-    formName: "Example Form",
+    "formName": "Example Form",
     
     // The user's description of the form (i.e. describing what the form asks);
     // default: ''
-    formDescription: "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
+    "formDescription": "Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
     
     // The ID of the owner/administrator of this form
     // default: -1
-    formOwner: 987654321,
+    "formOwner": 987654321,
     
     // A list of required participants as defined by the owner/administrator;
     // default: []
-    formParticipants: [
+    "formParticipants": [
         "email1@example.com", "email2@example.com", "email3@example.com"
     ],
     
     // Flag for if the participants can view all of the participants' responses, not just their own
     // default: false (view only their own)
-    participantsCanSeeAll: false,
+    "participantsCanSeeAll": false,
+    
+    // Flag for if the participants can edit their response after submitting it
+    // default: false (cannot edit responses after submitting)
+    "participantsCanEditResponse": false,
+    
+    // Flag for if the participants can unparticipate from a form if their input is not required
+    // default: true (response is required by the participant)
+    "participantResponseIsRequired": true,
     
     // A list of question objects
     // default: []
-    formQuestions: [
+    "formQuestions": [
     
         // TEXTBOX
         {
             // Type is always 'Textbox'
-            type: "Textbox",
+            "type": "Textbox",
             
             // Maximum number of characters that can be entered
             // default: 1000
-            maxLength: 1000,
+            "maxLength": 1000,
             
             // The prompt displayed to the participants (e.g. a question)
             // default: ''
-            prompt: "Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock.", 
+            "prompt": "Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock.", 
         },
         
         // CHECKBOX
         {
             // Type is always 'Checkbox'
-            type: "Checkbox",
+            "type": "Checkbox",
             
             // The prompt displayed to the participants (e.g. a question)
             // default: ''
-            prompt: "Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate.",
+            "prompt": "Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate.",
             
             // A list of checkbox labels; the length of the array is the number of checkbox options
             // default: []
-            checkboxes: [
-                { label: "Checkbox1" },
-                { label: "Checkbox2" },
-                { label: "Checkbox3" }
+            "checkboxes": [
+                { "label": "Checkbox1" },
+                { "label": "Checkbox2" },
+                { "label": "Checkbox3" }
             ]
         },
         
         // RADIO
         {
             // Type is always 'Radio'
-            type: "Radio",
+            "type": "Radio",
             
             // The prompt displayed to the participants (e.g. a question)
             // default: ''
-            prompt: "Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
+            "prompt": "Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
             
             // A list of radio labels; the length of the array is the number of radio options
             // default: []
-            radios: [
-                { label: "Radio1" },
-                { label: "Radio2" },
-                { label: "Radio3" }
+            "radios": [
+                { "label": "Radio1" },
+                { "label": "Radio2" },
+                { "label": "Radio3" }
             ]
         },
         
         // SELECT
         {
             // Type is always 'Select'
-            type: "Select",
+            "type": "Select",
             
             // The prompt displayed to the participants (e.g. a question)
             // default: ''
-            prompt: "Aliquip beef ribs dolore shoulder ad consectetur pork belly minim.",
+            "prompt": "Aliquip beef ribs dolore shoulder ad consectetur pork belly minim.",
             
             // Flag for if multiple options can be chosen (multi-select)
             // default: false (single-select)
-            isMulti: false,
+            "isMulti": false,
             
             // A list of options; the length of the array is the number of options
             // default: []
-            options: [
-                { value: "Option1" },
-                { value: "Option2" },
-                { value: "Option3" }
+            "options": [
+                { "value": "Option1" },
+                { "value": "Option2" },
+                { "value": "Option3" }
             ]
         },
         

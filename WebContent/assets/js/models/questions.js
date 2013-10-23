@@ -11,7 +11,9 @@ TaskManager.Models.Question = Backbone.Model.extend({
  * Stores a collection of questions in the form
  */
 TaskManager.Collections.Questions = Backbone.Collection.extend({
-    model: TaskManager.Models.Question
+    model: function(attrs, options) {
+        return (attrs.type) ? new TaskManager.Models[attrs.type](attrs, options) : new TaskManager.Models.Question(attrs, options);
+    }
 });
 
 
@@ -19,17 +21,23 @@ TaskManager.Collections.Questions = Backbone.Collection.extend({
  * 
  */
 TaskManager.Models.Checkbox = TaskManager.Models.Question.extend({
+    initialize: function() {
+        this.set('checkboxes', new TaskManager.Collections.Checkboxes(this.get('checkboxes')));
+    },
+    
     defaults: function() {
         return {
             type: 'Checkbox',
             prompt: '',
-            checkboxes: new TaskManager.Collections.Checkboxes()
+            checkboxes: []
         };
     }
 });
 
 TaskManager.Collections.Checkboxes = Backbone.Collection.extend({
-    model: TaskManager.Models.CheckboxItem
+    model: function(attrs, options) {
+        return new TaskManager.Models.CheckboxItem(attrs, options);
+    }
 });
 
 TaskManager.Models.CheckboxItem = Backbone.Model.extend({
@@ -43,17 +51,23 @@ TaskManager.Models.CheckboxItem = Backbone.Model.extend({
  * 
  */
 TaskManager.Models.Radio = TaskManager.Models.Question.extend({
+    initialize: function() {
+        this.set('radios', new TaskManager.Collections.Radios(this.get('radios')));
+    },
+    
     defaults: function() {
         return {
             type: 'Radio',
             prompt: '',
-            radios: new TaskManager.Collections.Radios()
+            radios: []
         };
     }
 });
 
 TaskManager.Collections.Radios = Backbone.Collection.extend({
-    model: TaskManager.Models.RadioItem
+    model: function(attrs, options) {
+        return new TaskManager.Models.RadioItem(attrs, options);
+    }
 });
 
 TaskManager.Models.RadioItem = Backbone.Model.extend({
@@ -81,6 +95,10 @@ TaskManager.Models.Textbox = TaskManager.Models.Question.extend({
  *
  */
 TaskManager.Models.Select = TaskManager.Models.Question.extend({
+    initialize: function() {
+        this.set('options', new TaskManager.Collections.SelectOptions(this.get('options')));
+    },
+    
     defaults: function() {
         return {
             type: 'Select',
@@ -89,13 +107,15 @@ TaskManager.Models.Select = TaskManager.Models.Question.extend({
             // false means single select
             isMulti: false,
             
-            options: new TaskManager.Collections.SelectOptions()
+            options: []
         };
     }
 });
 
 TaskManager.Collections.SelectOptions = Backbone.Collection.extend({
-    model: TaskManager.Models.SelectOption
+    model: function(attrs, options) {
+        return new TaskManager.Models.SelectOption(attrs, options);
+    }
 });
 
 TaskManager.Models.SelectOption = Backbone.Model.extend({

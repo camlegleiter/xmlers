@@ -40,12 +40,12 @@ public class Login extends HttpServlet {
 		IDBController library = DBManager.getInstance();
 		User user;
 		
-		userID = request.getHeader("userID");
-		password = request.getHeader("password");
+		userID = request.getParameter("username"); //request.getHeader("userID");
+		password =  request.getParameter("password");// request.getHeader("password");
 		user = library.fetchUser(userID);
 		
 		// If the login is valid
-		if (user.checkPassword(password)) {
+		if (user != null && user.checkPassword(password)) {
 			// Create a "remember me" cookie for logging in
 			String rememberMe = request.getParameter("remember");
 			if (null != rememberMe && rememberMe.equals("remember-me")) {
@@ -59,6 +59,7 @@ public class Login extends HttpServlet {
 			
 			// No errors, send back an empty string
 			response.getWriter().write("");
+			//request.getRequestDispatcher("app/index.jsp").forward(request, response);
 			
 		} else {
 			// Bad credentials, try again

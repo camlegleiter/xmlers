@@ -74,20 +74,4 @@ public class Index extends HttpServlet {
 			}
 		}
 	}
-	
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Handles deleting an existing form or removing a participant from an existing form
-		String userID = (String) request.getSession().getAttribute("userID");
-		
-		// Get the formID and flag isOwner
-		// If the current user is the owner
-			// Delete the form, responses and all related data
-			// Notify participants???
-		// Else
-			// Remove the user's email from the list of participants
-			// Notify owner???
-	}
 }

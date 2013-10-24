@@ -108,7 +108,7 @@ public class StubController implements IDBController {
 		form2.add(textq2);
 		
 		forms.put(form.getKey(), form);
-		forms.put(form2.getKey(), form);
+		forms.put(form2.getKey(), form2);
 	}
 	
 	@Override

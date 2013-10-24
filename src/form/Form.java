@@ -22,6 +22,9 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public static final int TITLE_BIT = 0x4;
 	public static final int QUESTIONS_BIT = 0x8;
 	public static final int OWNER_BIT = 0x16;
+	public static final int partCanSeeAll_BIT = 0x32;
+	public static final int partCanEditResponse_BIT = 0x64;
+	public static final int partResponseIsRequired_BIT = 0x128;
 
 	private String title;
 	private String key;
@@ -220,6 +223,15 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		}
 		if (bitSet(settings, Form.OWNER_BIT)) {
 			form.put("formOwner", this.getOwner());
+		}
+		if (bitSet(settings, Form.partCanSeeAll_BIT)) {
+			form.put("participantsCanSeeAll", this.participantsCanSeeAll());
+		}
+		if (bitSet(settings, Form.partCanEditResponse_BIT)) {
+			form.put("participantsCanEditResponse", this.participantsCanEditResponse());
+		}
+		if (bitSet(settings, Form.partResponseIsRequired_BIT)) {
+			form.put("participantResponseIsRequired", this.participantResponseIsRequired());
 		}
 		if (bitSet(settings, Form.QUESTIONS_BIT)) {
 			JSONArray array = new JSONArray("["

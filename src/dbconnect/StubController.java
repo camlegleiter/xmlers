@@ -1,6 +1,7 @@
 package dbconnect;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,16 +15,16 @@ import form.questions.TextQuestion;
 
 public class StubController implements IDBController {
 	
-	public HashMap<String, Form> forms;
-	
-	public HashMap<String, User> users;
+	public Map<String, Form> forms;
+	public Map<String, User> users;
 		
 	public StubController()
 	{
-		forms = new HashMap<String, Form>();
-		users = new HashMap<String, User>();
+		// Ensure no concurrency issues arise when reading/writing
+		forms = Collections.synchronizedMap(new HashMap<String, Form>());
+		users = Collections.synchronizedMap(new HashMap<String, User>());
 		
-		putTestUser();
+		createStubData();
 	}
 
 	@Override
@@ -38,37 +39,38 @@ public class StubController implements IDBController {
 
 	@Override
 	public boolean upsertForm(Form form) {
-		boolean retVal;
-		if(this.formExists(form.getKey()))
-		{
-			forms.put(form.getKey(), new Form(form));
-			retVal = true;
-		}
-		else
-		{
-			retVal = false;
-		}
-		
-		return retVal;
+		forms.put(form.getKey(), form);
+		return true;
 	}
 
 	@Override
 	public boolean upsertUser(User user) {
-		return null != users.put(user.getUserID(), user);
+		users.put(user.getUserID(), user);
+		return true;
 	}
 
 	@Override
-	public Form fetchForm(String id) {
-		return forms.get(id);
+	public Form fetchForm(String formId) {
+		return forms.get(formId);
 	}
 
 	@Override
-	public User fetchUser(String id) {
-		return users.get(id);
+	public User fetchUser(String userId) {
+		return users.get(userId);
+	}
+	
+	@Override
+	public User fetchUser(String username, String password) {
+		for (User user : users.values()) {
+			if (user.getUserName().equals(username) &&
+					user.checkPassword(password)) {
+				return user;
+			}
+		}
+		return null;
 	}
 
-
-	private void putTestUser() {
+	private void createStubData() {
 		User user = new User();
 		user.setFirstName("Test");
 		user.setLastName("User");
@@ -87,25 +89,24 @@ public class StubController implements IDBController {
 		user2.setUserID("2");
 		users.put(user2.getUserID(), user2);
 		
-		//Form(String key, String title, String description, String owner)
 		Form form = new Form("1", "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserID());
-		TextQuestion textq = new TextQuestion("first", 1, "What's your name?", 5);
+		form.addParticipant(user2);
+		
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add("Female");
 		answers.add("Male");
-		RadioQuestion radioq = new RadioQuestion("second", 2, "Sex: ", answers);
-		CheckQuestion checkq = new CheckQuestion("third", 3, "Sex: ", answers);
-		SelectQuestion selectq = new SelectQuestion("fourth", 4, "Sex: ", answers);
-		form.add(textq);
-		form.add(radioq);
-		form.add(checkq);
-		form.add(selectq);
+		
+		form.add(new TextQuestion("12345", 1, "What's your name?", 5));
+		form.add(new RadioQuestion("23456", 2, "Sex: ", answers));
+		form.add(new CheckQuestion("34567", 3, "Sex: ", answers));
+		form.add(new SelectQuestion("45678", 4, "Sex: ", answers));
 		
 		Form form2 = new Form(form);
 		form2.setKey("2");
 		form2.setTitle("Another gender questionnaire");
-		TextQuestion textq2 = new TextQuestion("first", 5, "Type in your Sex to confirm:", 5);
-		form2.add(textq2);
+		form2.addParticipant(user2);
+		
+		form2.add(new TextQuestion("56789", 5, "Type in your Sex to confirm:", 5));
 		
 		forms.put(form.getKey(), form);
 		forms.put(form2.getKey(), form2);
@@ -122,6 +123,17 @@ public class StubController implements IDBController {
 		}
 		return ownerForms;
 	}
+	
+	@Override
+	public List<Form> getParticipantForms(String userId) {
+		List<Form> participantForms = new ArrayList<Form>();
+		for (Map.Entry<String, Form> entry : forms.entrySet()) {
+			Form form = (Form) entry.getValue();
+			if (form.containsParticipant(userId))
+				participantForms.add(form);
+		}
+		return participantForms;
+	}
 
 	@Override
 	public boolean deleteForm(String key) {
@@ -131,29 +143,5 @@ public class StubController implements IDBController {
 	@Override
 	public boolean deleteUser(String key) {
 		return null != users.remove(key);
-	}
-
-	@Override
-	public List<Form> getParticipantForms(String userId) {
-		List<Form> participantForms = new ArrayList<Form>();
-		for (Map.Entry<String, Form> entry : forms.entrySet()) {
-			Form form = (Form) entry.getValue();
-			if (form.containsParticipant(userId))
-				participantForms.add(form);
-		}
-		
-		return participantForms;
-	}
-
-	@Override
-	public User fetchUser(String username, String password) {
-		for (User user : users.values()) {
-			if (user.getUserName().equals(username) &&
-					user.checkPassword(password)) {
-				return user;
-			}
-		}
-		
-		return null;
 	}
 }

@@ -3,7 +3,7 @@ import java.sql.*;
 
 import form.User;
 
-public class CreateDatabase {
+public class CreateSqlDatabase {
 	public static void main(String[] args) {
 		
 		try {
@@ -70,7 +70,7 @@ public class CreateDatabase {
 		query.append("firstname VARCHAR(30) NOT NULL, ");
 		query.append("lastname VARCHAR(30) NOT NULL, ");
 		query.append("net_id VARCHAR(30) NOT NULL, ");
-		query.append("email VARCHAR(30) NOT NULL, ");
+		query.append("email VARCHAR(64) NOT NULL, ");
 		query.append("password BINARY(20) NOT NULL, ");
 		query.append("salt VARCHAR(128) NOT NULL, ");
 		query.append("PRIMARY KEY (id))");

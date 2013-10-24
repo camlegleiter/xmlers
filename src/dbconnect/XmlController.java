@@ -252,4 +252,10 @@ public class XmlController implements IDBController {
 	{
 		return new File(FORM_DIRECTORY.getAbsolutePath(), formId + EXTENSION);
 	}
+	
+	@Override
+	public User fetchUser(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

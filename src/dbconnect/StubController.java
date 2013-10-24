@@ -59,16 +59,12 @@ public class StubController implements IDBController {
 
 	@Override
 	public Form fetchForm(String id) {
-		return new Form(forms.get(id));
+		return forms.get(id);
 	}
 
 	@Override
 	public User fetchUser(String id) {
-		User requestedUser = users.get(id);
-		if(requestedUser == null){
-			return null;
-		}
-		return new User(requestedUser);
+		return users.get(id);
 	}
 
 
@@ -79,7 +75,8 @@ public class StubController implements IDBController {
 		user.setUserName("testuser");
 		user.setEmail("testuser@example.com");
 		user.setPassword("password");
-		users.put(user.getUserName(), user);
+		user.setUserID("1");
+		users.put(user.getUserID(), user);
 		
 		User user2 = new User();
 		user2.setFirstName("T");
@@ -87,10 +84,11 @@ public class StubController implements IDBController {
 		user2.setUserName("t");
 		user2.setEmail("tp@example.com");
 		user2.setPassword("p");
-		users.put(user2.getUserName(), user2);
+		user2.setUserID("2");
+		users.put(user2.getUserID(), user2);
 		
 		//Form(String key, String title, String description, String owner)
-		Form form = new Form("1", "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserName());
+		Form form = new Form("1", "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserID());
 		TextQuestion textq = new TextQuestion("first", 1, "What's your name?", 5);
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add("Female");
@@ -110,7 +108,7 @@ public class StubController implements IDBController {
 		form2.add(textq2);
 		
 		forms.put(form.getKey(), form);
-		forms.put(form2.getKey(), form);
+		forms.put(form2.getKey(), form2);
 	}
 	
 	@Override
@@ -145,5 +143,17 @@ public class StubController implements IDBController {
 		}
 		
 		return participantForms;
+	}
+
+	@Override
+	public User fetchUser(String username, String password) {
+		for (User user : users.values()) {
+			if (user.getUserName().equals(username) &&
+					user.checkPassword(password)) {
+				return user;
+			}
+		}
+		
+		return null;
 	}
 }

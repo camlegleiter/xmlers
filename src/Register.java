@@ -1,5 +1,4 @@
 
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -37,17 +36,14 @@ public class Register extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String passwd;
 		IDBController library = DBManager.getInstance();
 		
-		passwd = request.getParameter("password");
-		
 		User newUser = new User();
-		newUser.setFirstName((String) request.getAttribute("first-name"));
-		newUser.setFirstName((String) request.getAttribute("last-name"));
-		newUser.setFirstName((String) request.getAttribute("username"));
-		newUser.setFirstName((String) request.getAttribute("email"));
-		newUser.setPassword(passwd);
+		newUser.setFirstName((String) request.getParameter("first-name"));
+		newUser.setFirstName((String) request.getParameter("last-name"));
+		newUser.setFirstName((String) request.getParameter("username"));
+		newUser.setFirstName((String) request.getParameter("email"));
+		newUser.setPassword(request.getParameter("password"));
 		
 		library.upsertUser(newUser);
 	}

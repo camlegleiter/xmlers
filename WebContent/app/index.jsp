@@ -64,7 +64,7 @@
         
             $(document).ready(function() {
                 var ownerCollection = new TaskManager.Collections.Forms();
-                ownerCollection.reset(<%= Forms.getFormsUserIsOwnerOf("testuser") %>);
+                ownerCollection.reset(<%= Forms.getFormsUserIsOwnerOf("1") %>);
                 var participantCollection = new TaskManager.Collections.Forms();
                 participantCollection.reset(<%= Forms.getFormsUserIsParticipantOf("testuser") %>);
                 

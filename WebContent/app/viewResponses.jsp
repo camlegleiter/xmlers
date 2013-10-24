@@ -1,27 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@ page import="dbconnect.DBManager" %>
 <%@ page import="form.Form" %>
+<%@ page import="form.User" %>
 <%@ page import="form.utils.Forms" %>
 <%@ page import="utils.Utils" %>
-<% 
-String formId = request.getParameter("form");
-boolean isInvalidFormId = Utils.isNullOrEmpty(formId);
+<%
+int formId = -1;
+boolean isInvalidFormId = false;
+try {
+    formId = Integer.parseInt(request.getParameter("form"));
+} catch (NumberFormatException e) {
+    isInvalidFormId = true;
+}
 
 Form form = DBManager.getInstance().fetchForm(formId);
 isInvalidFormId = form == null;
 
-String userId = (String) request.getSession().getAttribute("userid");
+User user = (User) request.getSession().getAttribute("user");
 boolean userCanSeeForm = true;
-if (!form.getOwner().equals(userId) || !form.participantsCanSeeAll() || !form.containsParticipant(userId)) {
+if (form.getOwnerId() == user.getUserID() || !form.participantsCanSeeAll() || !form.containsParticipant(user.getUserID())) {
     userCanSeeForm = false;
 }
 %>
 <!DOCTYPE html>
 <html>
 	<head>
-        <jsp:include page="/app/includes/header.jsp">
-            <jsp:param name="title" value="View Results - Task Manager" />
-        </jsp:include>
+        <c:import url="/app/includes/header.jsp">
+            <c:param name="title" value="View - Task Manager" />
+        </c:import>
         
         <style type="text/css">
             body {
@@ -37,10 +45,10 @@ if (!form.getOwner().equals(userId) || !form.participantsCanSeeAll() || !form.co
 	</head>
 	<body>
 		
-        <jsp:include page="/app/includes/nav.jsp" />
+        <c:import url="/app/includes/nav.jsp" />
 		
 		<div class="container-fluid">
-			<jsp:include page="/app/includes/noscript.jsp" />	
+			<c:import url="/app/includes/noscript.jsp" />	
 			
 			<div class="row-fluid">
 				<div id="viewOptions" class="span2">
@@ -48,38 +56,41 @@ if (!form.getOwner().equals(userId) || !form.participantsCanSeeAll() || !form.co
 					<div class="well"></div>
 				</div>
 				<div id="responseTable" class="span10">
-<% if (isInvalidFormId) { %>
+<c:choose>
+    <c:when test="${isInvalidFormId}">
                     <h3>We don't seem to have a record of this form. Please make sure you're viewing the right form!</h3>
-<% } else if (!userCanSeeForm) { %>
+    </c:when>
+    <c:when test="${userCanSeeForm}">
                     <h3>You are not allowed to view data for this form. Check with the owner of the form to verify your access to this data.</h3>
-<% } %>
+    </c:when>             
+</c:choose>
                 </div>
 			</div>
 		</div>
     
-		<jsp:include page="/app/includes/footer.jsp" />
+		<c:import url="/app/includes/footer.jsp" />
     
-		<script src="<%= request.getContextPath() %>/assets/js/vendor/jquery.tablesorter.min.js"></script>
+		<script src="<%=request.getContextPath()%>/assets/js/vendor/jquery.tablesorter.min.js"></script>
         
-        <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/models/questions.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/models/responses.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/models/views.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/globals.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/models/questions.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/models/responses.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/models/views.js"></script>
         
-        <script src="<%= request.getContextPath() %>/assets/js/view/view.options.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/view/view.table.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/view/view.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/view/view.options.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/view/view.table.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/view/view.js"></script>
 
-<% if (!isInvalidFormId || userCanSeeForm) { %>
+    <c:if test="${!isInvalidFormId || userCanSeeForm}">
         <script>
             $(document).ready(function() {
                 View = TaskManager.View;
                 View.start({
-                    model: new TaskManager.Models.View(<%= Forms.getResponseRecordsForForm(formId) %>)
+                    model: new TaskManager.Models.View(<%=Forms.getResponseRecordsForForm(formId)%>)
                 }); 
             });
         </script>
-<% } %>
+    </c:if>
 
         <script id="table-layout" type="text/template">
             <h3><@= formName @> Records</h3>
@@ -101,7 +112,5 @@ if (!form.getOwner().equals(userId) || !form.participantsCanSeeAll() || !form.co
                 <td><@= getResponseValue(response) @></td>
             <@ }); @>
         </script>
-        <%= userId %>
-        <%= form.getOwner() %>
 	</body>
 </html>

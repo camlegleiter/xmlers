@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
-        <jsp:include page="/app/includes/header.jsp">
-            <jsp:param name="title" value="Settings - Task Manager" />
-        </jsp:include>
+        <c:import url="/app/includes/header.jsp">
+            <c:param name="title" value="Settings - Task Manager" />
+        </c:import>
         
         <style type="text/css">
             body {
@@ -19,10 +20,10 @@
 	</head>
 	<body>
 			
-		<jsp:include page="/app/includes/nav.jsp" />
+		<c:import url="/app/includes/nav.jsp" />
 		
 		<div class="container-fluid">
-			<jsp:include page="/app/includes/noscript.jsp" />
+			<c:import url="/app/includes/noscript.jsp" />
 			
 			<form method="POST" action="<%= request.getContextPath() %>/app/settings">
 				<input type="submit" class="btn btn-primary" value="Test Email" />

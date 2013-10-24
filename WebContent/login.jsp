@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <jsp:include page="app/includes/header.jsp">
-            <jsp:param name="title" value="Task Manager Sign In" />
-        </jsp:include>
+        <c:import url="/app/includes/header.jsp">
+            <c:param name="title" value="Login - Task Manager" />
+        </c:import>
 
         <style type="text/css">
             body {
@@ -48,7 +48,7 @@
     </head>
     <body>
         <div class="container-fluid">
-            <jsp:include page="/app/includes/noscript.jsp" />
+            <c:import url="/app/includes/noscript.jsp" />
             
             <div class="row-fluid">
                 <div class="span4"></div>
@@ -98,7 +98,6 @@
                             </form>    
                         </div>
                     </div>
-                
                 </div>
                 <div class="span4"></div>
             </div>    

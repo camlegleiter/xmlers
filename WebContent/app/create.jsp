@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
-       <jsp:include page="/app/includes/header.jsp">
-            <jsp:param name="title" value="Create a Form - Task Manager" />
-        </jsp:include>
+        <c:import url="/app/includes/header.jsp">
+            <c:param name="title" value="Create - Task Manager" />
+        </c:import>
         
         <style type="text/css">
             body {
@@ -20,10 +21,10 @@
 	</head>
 	<body>
 			
-		<jsp:include page="/app/includes/nav.jsp" />
+		<c:import url="/app/includes/nav.jsp" />
 		
 		<div class="container-fluid">
-			<jsp:include page="/app/includes/noscript.jsp" />	
+			<c:import url="/app/includes/noscript.jsp" />	
 			
 			<div class="row-fluid">
 				<div class="span3">
@@ -39,7 +40,7 @@
 			</div>
 		</div>
     
-        <jsp:include page="/app/includes/footer.jsp" />
+        <c:import url="/app/includes/footer.jsp" />
         
         <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/models/forms.js"></script>

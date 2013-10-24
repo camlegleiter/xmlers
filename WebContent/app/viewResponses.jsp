@@ -1,4 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="dbconnect.DBManager" %>
+<%@ page import="form.Form" %>
+<%@ page import="form.utils.Forms" %>
+<%@ page import="utils.Utils" %>
+<% 
+String formId = request.getParameter("form");
+boolean isInvalidFormId = Utils.isNullOrEmpty(formId);
+
+Form form = DBManager.getInstance().fetchForm(formId);
+isInvalidFormId = form == null;
+
+String userId = (String) request.getSession().getAttribute("userid");
+boolean userCanSeeForm = true;
+if (!form.getOwner().equals(userId) || !form.participantsCanSeeAll() || !form.containsParticipant(userId)) {
+    userCanSeeForm = false;
+}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -30,7 +47,13 @@
 				    <h2>View Options</h2>
 					<div class="well"></div>
 				</div>
-				<div id="responseTable" class="span10"></div>
+				<div id="responseTable" class="span10">
+<% if (isInvalidFormId) { %>
+                    <h3>We don't seem to have a record of this form. Please make sure you're viewing the right form!</h3>
+<% } else if (!userCanSeeForm) { %>
+                    <h3>You are not allowed to view data for this form. Check with the owner of the form to verify your access to this data.</h3>
+<% } %>
+                </div>
 			</div>
 		</div>
     
@@ -47,159 +70,16 @@
         <script src="<%= request.getContextPath() %>/assets/js/view/view.table.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/view/view.js"></script>
 
+<% if (!isInvalidFormId || userCanSeeForm) { %>
         <script>
             $(document).ready(function() {
-                <% // Insert view bootstrap data %>
-                var data = {
-                    "formID":123456789,
-                    "formName":"Bridge Keeper Questionnaire",
-                    "formDescription":"Who would cross the Bridge of Death must answer me these questions three, ere the other side he see.",
-                    "formOwner":987654321,
-                    "formQuestions":[
-                      {
-                        "id":234567890,
-                        "type":"Textbox",
-                        "prompt":"What is your name?"
-                      },
-                      {
-                        "id":234567891,
-                        "type":"Radio",
-                        "prompt":"What is your quest?"
-                      },
-                      {
-                        "id":234567892,
-                        "type":"Select",
-                        "prompt":"What is your favorite color?"
-                      },
-                      {
-                        "id":234567893,
-                        "type":"Radio",
-                        "prompt":"Did you survive the Bridge of Death?"
-                      }
-                    ],
-                    "responses":[
-                      {
-                        "responseID":999999999,
-                        "responseOwner":888888888,
-                        "responseOwnerName":"Sir Launcelot the Brave",
-                        "responses":[
-                          {
-                            "questionID":234567890,
-                            "type":"Textbox",
-                            "value":"Sir Launcelot of Camelot"
-                          },
-                          {
-                            "questionID":234567891,
-                            "type":"Radio",
-                            "value":"To seek the Holy Grail"
-                          },
-                          {
-                            "questionID":234567892,
-                            "type":"Select",
-                            "value":"Blue"
-                          },
-                          {
-                            "id":234567893,
-                            "type":"Radio",
-                            "value":"Yes"
-                          }
-                        ]
-                      },
-                      {
-                        "responseID":222222222,
-                        "responseOwner":333333333,
-                        "responseOwnerName":"Sir Robin the Not-Quite-So-Brave-As-Sir Launcelot",
-                        "responses":[
-                          {
-                            "questionID":234567890,
-                            "type":"Textbox",
-                            "value":"Sir Robin of Camelot"
-                          },
-                          {
-                            "questionID":234567891,
-                            "type":"Radio",
-                            "value":"To seek the Holy Grail"
-                          },
-                          {
-                            "questionID":234567892,
-                            "type":"Select",
-                            "values":[
-                            ]
-                          },
-                          {
-                            "id":234567893,
-                            "type":"Radio",
-                            "value":"No"
-                          }
-                        ]
-                      },
-                      {
-                        "responseID":222222222,
-                        "responseOwner":333333333,
-                        "responseOwnerName":"Sir Galahad the Pure",
-                        "responses":[
-                          {
-                            "questionID":234567890,
-                            "type":"Textbox",
-                            "value":"Sir Galahad of Camelot"
-                          },
-                          {
-                            "questionID":234567891,
-                            "type":"Radio",
-                            "value":"I seek the Grail"
-                          },
-                          {
-                            "questionID":234567892,
-                            "type":"Select",
-                            "values":[
-                              "Blue",
-                              "Yellow"
-                            ]
-                          },
-                          {
-                            "id":234567893,
-                            "type":"Radio",
-                            "value":"No"
-                          }
-                        ]
-                      },
-                      {
-                        "responseID":333333333,
-                        "responseOwner":444444444,
-                        "responseOwnerName":"King Arthur",
-                        "responses":[
-                          {
-                            "questionID":234567890,
-                            "type":"Textbox",
-                            "value":"Arthur, King of the Britains"
-                          },
-                          {
-                            "questionID":234567891,
-                            "type":"Radio",
-                            "value":"To seek the Holy Grail"
-                          },
-                          {
-                            "questionID":234567892,
-                            "type":"Select",
-                            "values":[
-                            ]
-                          },
-                          {
-                            "id":234567893,
-                            "type":"Radio",
-                            "value":"Yes"
-                          }
-                        ]
-                      }
-                    ]
-                  };
-                
-                var tableData = new TaskManager.Models.View(data);
-                
                 View = TaskManager.View;
-                View.start({ model: tableData }); 
+                View.start({
+                    model: new TaskManager.Models.View(<%= Forms.getResponseRecordsForForm(formId) %>)
+                }); 
             });
         </script>
+<% } %>
 
         <script id="table-layout" type="text/template">
             <h3><@= formName @> Records</h3>
@@ -221,5 +101,7 @@
                 <td><@= getResponseValue(response) @></td>
             <@ }); @>
         </script>
+        <%= userId %>
+        <%= form.getOwner() %>
 	</body>
 </html>

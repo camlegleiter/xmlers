@@ -36,15 +36,37 @@ public class Register extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO:
+		// - Check that password and password-check match
+		// - Check that there isn't a user with the username existing
+		// - Add the user to the database
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String passwordCheck = request.getParameter("password-check");
+		if (!password.equals(passwordCheck)) {
+			returnError(request, response, "Passwords do not match, please try again.");
+		}
+		
 		IDBController library = DBManager.getInstance();
+		if (library.fetchUser(username, password) != null) {
+			returnError(request, response, "A user with that username already exists.");
+		}
 		
-		User newUser = new User();
-		newUser.setFirstName((String) request.getParameter("first-name"));
-		newUser.setFirstName((String) request.getParameter("last-name"));
-		newUser.setFirstName((String) request.getParameter("username"));
-		newUser.setFirstName((String) request.getParameter("email"));
-		newUser.setPassword(request.getParameter("password"));
+		User user = new User();
+		user.setFirstName((String) request.getParameter("first-name"));
+		user.setFirstName((String) request.getParameter("last-name"));
+		user.setFirstName(username);
+		user.setFirstName((String) request.getParameter("email"));
+		user.setPassword(password);
 		
-		library.upsertUser(newUser);
+		library.upsertUser(user);
+		
+		request.getSession().setAttribute("user", user);
+		response.sendRedirect("app/index.jsp");
+	}
+	
+	private void returnError(HttpServletRequest request, HttpServletResponse response, String message) throws ServletException, IOException {
+		request.setAttribute("registererror", message);
+		request.getRequestDispatcher("login.jsp#register").forward(request, response);
 	}
 }

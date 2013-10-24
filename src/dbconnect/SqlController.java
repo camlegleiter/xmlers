@@ -21,53 +21,6 @@ public class SqlController implements IDBController {
 		registerDriver();
 	}
 	
-	public boolean checkLogin(HttpServletRequest request) {
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet results = null;
-		
-		try {
-			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "");
-			
-			// Build the search query to see if the login is good
-			StringBuilder query = new StringBuilder();
-			query.append("SELECT * FROM users WHERE ");
-			query.append("net_id = ? ");
-			query.append("AND password = UNHEX(SHA1(CONCAT(?, salt)))");
-			
-			// Run the query with the POSTed username and password
-			preparedStatement = conn.prepareStatement(query.toString());
-			preparedStatement.setString(1, request.getParameter("username"));
-			preparedStatement.setString(2, request.getParameter("password"));
-			
-			results = preparedStatement.executeQuery();
-			if (results.next()) {
-				// Set all the session information with the user's information
-				HttpSession session = request.getSession(true);
-				session.setAttribute("userid", results.getString("id"));
-				session.setAttribute("net_id", results.getString("net_id"));
-				session.setAttribute("firstname", results.getString("firstname"));
-				session.setAttribute("lastname", results.getString("lastname"));
-				session.setAttribute("email", results.getString("email"));
-				
-				return true;
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (null != results) results.close();
-				if (null != preparedStatement) preparedStatement.close();
-				if (null != conn) conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return false;
-	}
-	
 	/**
 	 * Initializes a new JDBC driver connection
 	 */
@@ -180,6 +133,54 @@ public class SqlController implements IDBController {
 	@Override
 	public List<Form> getParticipantForms(String userID) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User fetchUser(String username, String password) {
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet results = null;
+		
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "");
+			
+			// Build the search query to see if the login is good
+			StringBuilder query = new StringBuilder();
+			query.append("SELECT * FROM users WHERE ");
+			query.append("net_id = ? ");
+			query.append("AND password = UNHEX(SHA1(CONCAT(?, salt)))");
+			
+			// Run the query with the POSTed username and password
+			preparedStatement = conn.prepareStatement(query.toString());
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);
+			
+			results = preparedStatement.executeQuery();
+			if (results.next()) {
+				// Set all the session information with the user's information
+				User user = new User();
+				user.setUserID(results.getString("id"));
+				user.setUserName(results.getString("net_id"));
+				user.setFirstName(results.getString("firstname"));
+				user.setLastName(results.getString("lastname"));
+				user.setEmail(results.getString("email"));
+				
+				return user;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (null != results) results.close();
+				if (null != preparedStatement) preparedStatement.close();
+				if (null != conn) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return null;
 	}
 }

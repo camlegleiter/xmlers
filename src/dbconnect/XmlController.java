@@ -66,4 +66,10 @@ public class XmlController implements IDBController {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public User fetchUser(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

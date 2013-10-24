@@ -67,6 +67,17 @@ public interface IDBController {
 	public User fetchUser(String userId);
 
 	/**
+	 * Retrieves a User with the given username and password. Verifies that the
+	 * given username and password is valid.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return A User object containing basic information about a user, or
+	 *         <code>null</code> if the given information is invalid.
+	 */
+	public User fetchUser(String username, String password);
+
+	/**
 	 * Deletes a Form with the given ID.
 	 * 
 	 * @param formId

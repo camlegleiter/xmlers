@@ -144,4 +144,16 @@ public class StubController implements IDBController {
 		
 		return participantForms;
 	}
+
+	@Override
+	public User fetchUser(String username, String password) {
+		for (User user : users.values()) {
+			if (user.getUserName().equals(username) &&
+					user.checkPassword(password)) {
+				return user;
+			}
+		}
+		
+		return null;
+	}
 }

@@ -27,11 +27,11 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public static final int partResponseIsRequired_BIT = 0x128;
 
 	private String title;
-	private String key;
+	private int id;
 	private String description;
 	private Queue<Question<?>> questions;
 	private Collection<User> participants;
-	private String owner;
+	private int ownerId;
 	
 	private boolean participantsCanSeeAll;
 	private boolean participantsCanEditResponse;
@@ -42,12 +42,12 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		participants = new ArrayList<User>();
 	}
 
-	public Form(String key, String title, String description, String owner) {
+	public Form(int id, String title, String description, int ownerId) {
 		this();
 		this.title = title;
-		this.key = key;
+		this.id = id;
 		this.description = description;
-		this.owner = owner;
+		this.ownerId = ownerId;
 		
 		this.participantsCanSeeAll = false;
 		this.participantsCanEditResponse = false;
@@ -63,9 +63,9 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		this();
 
 		this.title = other.title;
-		this.key = other.key;
+		this.id = other.id;
 		this.description = other.description;
-		this.owner = other.owner;
+		this.ownerId = other.ownerId;
 		
 		this.participantsCanSeeAll = other.participantsCanSeeAll;
 		this.participantsCanEditResponse = other.participantsCanEditResponse;
@@ -87,12 +87,12 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		this.title = title;
 	}
 
-	public String getKey() {
-		return key;
+	public int getFormId() {
+		return id;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setFormId(int id) {
+		this.id = id;
 	}
 
 	public String getDescription() {
@@ -168,12 +168,9 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		participants.remove(u);
 	}
 	
-	public boolean containsParticipant(String userId) {
-		if (userId == null || userId.isEmpty())
-			return false;
-		
+	public boolean containsParticipant(int userId) {
 		for (User u : participants)
-			if (u.getUserID().equals(userId))
+			if (u.getUserID() == userId)
 				return true;
 		
 		return false;
@@ -188,7 +185,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 					+ "</div>\n");
 		}
 		if (bitSet(settings, KEY_BIT)) {
-			output.append("\t<div class=\"formID\">" + this.getKey()
+			output.append("\t<div class=\"formID\">" + this.getFormId()
 					+ "</div>\n");
 		}
 		if (bitSet(settings, Form.DESCRIPTION_BIT)) {
@@ -216,13 +213,13 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			form.put("formName", this.getTitle());
 		}
 		if (bitSet(settings, KEY_BIT)) {
-			form.put("formID", this.getKey());
+			form.put("formID", this.getFormId());
 		}
 		if (bitSet(settings, Form.DESCRIPTION_BIT)) {
 			form.put("formDescription", this.getDescription());
 		}
 		if (bitSet(settings, Form.OWNER_BIT)) {
-			form.put("formOwner", this.getOwner());
+			form.put("formOwner", this.getOwnerId());
 		}
 		if (bitSet(settings, Form.partCanSeeAll_BIT)) {
 			form.put("participantsCanSeeAll", this.participantsCanSeeAll());
@@ -257,7 +254,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		try {
 			other = (Form) super.clone();
 			
-			other.key = this.key;
+			other.id = this.id;
 			other.description = this.description;
 			other.title = this.title;
 			other.participantsCanSeeAll = this.participantsCanSeeAll;
@@ -293,11 +290,11 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		}
 	}
 
-	public void setOwner(String owner) {
-		this.owner = owner;
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 
-	public String getOwner() {
-		return owner;
+	public int getOwnerId() {
+		return ownerId;
 	}
 }

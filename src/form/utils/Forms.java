@@ -23,9 +23,9 @@ public class Forms {
 	 * @param userID
 	 * @return
 	 */
-	public static final JSONArray getFormsUserIsOwnerOf(String userID) {
+	public static final JSONArray getFormsUserIsOwnerOf(int userId) {
 		JSONArray userForms = new JSONArray();
-		List<Form> formArray = DBManager.getInstance().getOwnerForms(userID);
+		List<Form> formArray = DBManager.getInstance().getOwnerForms(userId);
 		for (Form form : formArray) {
 			userForms.put(form.getJSON());
 		}
@@ -39,9 +39,9 @@ public class Forms {
 	 * @param userID
 	 * @return
 	 */
-	public static final JSONArray getFormsUserIsParticipantOf(String userID) {
+	public static final JSONArray getFormsUserIsParticipantOf(int userId) {
 		JSONArray userForms = new JSONArray();
-		List<Form> forms = DBManager.getInstance().getParticipantForms(userID);
+		List<Form> forms = DBManager.getInstance().getParticipantForms(userId);
 		for (Form form : forms) {
 			userForms.put(form.getJSON());
 		}
@@ -56,7 +56,7 @@ public class Forms {
 	 * 				the ID of the form data to retrieve.
 	 * @return
 	 */
-	public static final JSONObject getResponseRecordsForForm(String formId) {
+	public static final JSONObject getResponseRecordsForForm(int formId) {
 		JSONObject jsonObject = new JSONObject();
 
 		return jsonObject;

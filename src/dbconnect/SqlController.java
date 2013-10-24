@@ -76,13 +76,13 @@ public class SqlController implements IDBController {
 	}
 
 	@Override
-	public boolean formExists(String key) {
+	public boolean formExists(int key) {
 		//TODO
 		throw new NotImplementedException();
 	}
 
 	@Override
-	public boolean userExists(String key) {
+	public boolean userExists(int key) {
 		// TODO Auto-generated method stub
 		throw new NotImplementedException();
 	}
@@ -101,43 +101,25 @@ public class SqlController implements IDBController {
 
 
 	@Override
-	public Form fetchForm(String id) {
+	public Form fetchForm(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public User fetchUser(String id) {
+	public User fetchUser(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
-	public boolean deleteForm(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteUser(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<Form> getOwnerForms(String userID) {
+	public User fetchUser(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
-	public List<Form> getParticipantForms(String userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public User fetchUser(String username, String password) {
+	public User fetchUserFromLogin(String username, String password) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet results = null;
@@ -181,6 +163,30 @@ public class SqlController implements IDBController {
 			}
 		}
 		
+		return null;
+	}
+
+	@Override
+	public boolean deleteForm(int key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteUser(int key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Form> getOwnerForms(int userID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Form> getParticipantForms(int userID) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

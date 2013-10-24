@@ -36,7 +36,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		IDBController library = DBManager.getInstance();
-		User user = library.fetchUser(request.getParameter("username"), request.getParameter("password"));
+		User user = library.fetchUserFromLogin(request.getParameter("username"), request.getParameter("password"));
 		
 		// If the login is valid
 		if (user != null) {
@@ -46,7 +46,7 @@ public class Login extends HttpServlet {
 			// Create a "remember me" cookie for logging in
 			String rememberMe = request.getParameter("remember");
 			if (null != rememberMe && rememberMe.equals("remember-me")) {
-				Cookie cookie = new Cookie("userid", ((User) request.getSession().getAttribute("user")).getUserID());
+				Cookie cookie = new Cookie("userid", Integer.toString(((User) request.getSession().getAttribute("user")).getUserID()));
 				cookie.setMaxAge(15);
 				response.addCookie(cookie);
 			}

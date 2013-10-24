@@ -13,7 +13,7 @@ public interface IDBController {
 	 *            The ID of the form to check for existence.
 	 * @return
 	 */
-	public boolean formExists(String formId);
+	public boolean formExists(int formId);
 
 	/**
 	 * Returns <code>true</code> if the user with the given ID exists.
@@ -22,7 +22,7 @@ public interface IDBController {
 	 *            The ID of the form to check for existence.
 	 * @return
 	 */
-	public boolean userExists(String userId);
+	public boolean userExists(int userId);
 
 	/**
 	 * Checks if the given form exists in the database. If it does, the form
@@ -54,17 +54,26 @@ public interface IDBController {
 	 *         is null or has length == 0, or if there is no Form that exists
 	 *         that matches the formId
 	 */
-	public Form fetchForm(String formId);
+	public Form fetchForm(int formId);
 
 	/**
 	 * Retrieves a User with the given ID.
 	 * 
 	 * @param formId
-	 * @return The corresponding User, or <code>null</code> if the given userId
-	 *         is null or has length == 0, or if there is no User that exists
-	 *         that matches the userId
+	 * @return The corresponding User, or <code>null</code> if there is no User
+	 *         that exists that matches the userId
 	 */
-	public User fetchUser(String userId);
+	public User fetchUser(int userId);
+
+	/**
+	 * Retrives a User with the given username
+	 * 
+	 * @param username
+	 * @return The corresponding User, or <code>null</code> if the given
+	 *         username is null or has length == 0, or if there is no User that
+	 *         exists that matches the username.
+	 */
+	public User fetchUser(String username);
 
 	/**
 	 * Retrieves a User with the given username and password. Verifies that the
@@ -75,7 +84,7 @@ public interface IDBController {
 	 * @return A User object containing basic information about a user, or
 	 *         <code>null</code> if the given information is invalid.
 	 */
-	public User fetchUser(String username, String password);
+	public User fetchUserFromLogin(String username, String password);
 
 	/**
 	 * Deletes a Form with the given ID.
@@ -83,7 +92,7 @@ public interface IDBController {
 	 * @param formId
 	 * @return <code>true</code> if the Form matching the given ID was deleted.
 	 */
-	public boolean deleteForm(String formId);
+	public boolean deleteForm(int formId);
 
 	/**
 	 * Deletes a User with the given ID.
@@ -91,7 +100,7 @@ public interface IDBController {
 	 * @param userId
 	 * @return <code>true</code> if the User matching the given ID was deleted.
 	 */
-	public boolean deleteUser(String userId);
+	public boolean deleteUser(int userId);
 
 	/**
 	 * Retrieves all of the Forms where the owner matches the given userId.
@@ -99,7 +108,7 @@ public interface IDBController {
 	 * @param userId
 	 * @return a List of all Forms that the given userId is the owner of.
 	 */
-	public List<Form> getOwnerForms(String userId);
+	public List<Form> getOwnerForms(int userId);
 
 	/**
 	 * Retrieves all of the Forms the given userId is a participant of.
@@ -107,5 +116,5 @@ public interface IDBController {
 	 * @param userId
 	 * @return a List of all Forms that the given userId is a participant of.
 	 */
-	public List<Form> getParticipantForms(String userId);
+	public List<Form> getParticipantForms(int userId);
 }

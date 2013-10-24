@@ -118,12 +118,12 @@ public class XmlController implements IDBController {
 	}
 	
 	@Override
-	public boolean formExists(String formId) {
+	public boolean formExists(int formId) {
 		return getFormFile(formId).exists();
 	}
 
 	@Override
-	public boolean userExists(String userId) {
+	public boolean userExists(int userId) {
 		return getFormFile(userId).exists();
 	}
 
@@ -135,7 +135,7 @@ public class XmlController implements IDBController {
 		formDAO = FormConverter.getInstance().unconvert(form);
 		
 		try {
-			FORM_MARSHALLER .marshal(formDAO, getFormFile(form.getKey()));
+			FORM_MARSHALLER .marshal(formDAO, getFormFile(form.getFormId()));
 			success = true;
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -162,7 +162,7 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public Form fetchForm(String id) {
+	public Form fetchForm(int id) {
 		Form form;
 		dbconnect.dao.Form formDAO;
 		if(!formExists(id))
@@ -182,7 +182,7 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public User fetchUser(String id) {
+	public User fetchUser(int id) {
 		User user;
 		dbconnect.dao.User userDAO;
 		
@@ -202,9 +202,21 @@ public class XmlController implements IDBController {
 		
 		return user;
 	}
+	
+	@Override
+	public User fetchUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public User fetchUserFromLogin(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
-	public boolean deleteForm(String key) {
+	public boolean deleteForm(int key) {
 		// TODO iterate through all users that own or participate in a form, and delete references to those.
 		
 		File formFile = getFormFile(key);
@@ -213,37 +225,31 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public boolean deleteUser(String key) {
+	public boolean deleteUser(int key) {
 		File userFile = getUserFile(key);
 		//TODO Iterate through all references to this user and delete them.
 		return userFile.delete();
 	}
 
 	@Override
-	public List<Form> getOwnerForms(String userID) {
+	public List<Form> getOwnerForms(int userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Form> getParticipantForms(String userID) {
+	public List<Form> getParticipantForms(int userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	private File getUserFile(String userId)
+	private File getUserFile(int userId)
 	{
 		return new File(USER_DIRECTORY.getAbsolutePath(), userId + EXTENSION);
 	}
 	
-	private File getFormFile(String formId)
+	private File getFormFile(int formId)
 	{
 		return new File(FORM_DIRECTORY.getAbsolutePath(), formId + EXTENSION);
-	}
-	
-	@Override
-	public User fetchUser(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

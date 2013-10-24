@@ -14,8 +14,8 @@ import org.json.JSONObject;
 import dbconnect.DBManager;
 import dbconnect.IDBController;
 import form.Form;
+import form.User;
 import form.factory.DefaultFactory;
-import form.factory.FormFactory;
 
 /**
  * Servlet implementation class UpsertForm
@@ -35,7 +35,7 @@ public class UpsertForm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String formData = (String) request.getAttribute("model");
+		String formData = (String) request.getParameter("model");
 
 		IDBController controller = DBManager.getInstance();
 		JSONObject jsonObject;
@@ -43,8 +43,8 @@ public class UpsertForm extends HttpServlet {
 			jsonObject = new JSONObject(formData);
 			
 			// Add the userID from the session
-			String userID = (String) request.getSession().getAttribute("userID");
-			jsonObject.put("formOwner", userID);
+			User user = (User) request.getSession().getAttribute("user");
+			jsonObject.put("formOwner", user.getUserID());
 			
 			Form form = new DefaultFactory().BuildForm(jsonObject);
 

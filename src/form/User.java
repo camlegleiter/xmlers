@@ -8,7 +8,7 @@ import org.apache.commons.codec.binary.Base64;
 import utils.Utils;
 
 public class User {
-	private String userID;
+	private int id;
 	private String userName;
 	private String firstName;
 	private String lastName;
@@ -17,16 +17,16 @@ public class User {
 	
 	public User()
 	{
-		userID = "";
-		userName = "";
-		firstName = "";
-		lastName = "";
-		email = "";
-		password = "";
+		id = -1;
+		userName = Utils.EMPTY_STRING;
+		firstName = Utils.EMPTY_STRING;
+		lastName = Utils.EMPTY_STRING;
+		email = Utils.EMPTY_STRING;
+		password = Utils.EMPTY_STRING;
 	}
 	
 	public User(User other) {
-		this.userID = other.userID;
+		this.id = other.id;
 		this.userName = other.userName;
 		this.firstName = other.firstName;
 		this.lastName = other.lastName;
@@ -34,22 +34,27 @@ public class User {
 		this.password = other.password;
 	}
 	
-	public String getUserID() {
-		return userID;
+	public int getUserID() {
+		return id;
 	}
 	
 	/**
 	 * Sets a user's ID.
 	 * @param userID
-	 * @deprecated
 	 */
-	public void setUserID(int userID) {
-		setUserID(Integer.toString(userID));
+	public void setUserID(int id) {
+		this.id = id;
 	}
 	
-	public void setUserID(String userID)
+	/**
+	 * Sets the user ID
+	 * @param userID
+	 * @throws NumberFormatException
+	 * @deprecated
+	 */
+	public void setUserID(String id)
 	{
-		this.userID = userID;
+		this.id = Integer.parseInt(id);
 	}
 	
 	public String getUserName() {

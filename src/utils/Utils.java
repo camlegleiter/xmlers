@@ -1,14 +1,7 @@
 package utils;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import dbconnect.DBManager;
-import form.Form;
 
 public final class Utils {
 	// Ensures the class cannot be instantiated
@@ -136,7 +129,7 @@ public final class Utils {
 		}
 	}
 
-	private static final String EMPTY_STRING = "";
+	public static final String EMPTY_STRING = "";
 	
 	/**
 	 * <p>

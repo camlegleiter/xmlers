@@ -16,10 +16,10 @@ public class DefaultFactory extends FormFactory {
 	@Override
 	public Form BuildForm(JSONObject src) throws JSONException {
 		Form f = new Form();
-		f.setKey(src.getString("formID"));
+		f.setFormId(src.getInt("formID"));
 		f.setDescription(src.getString("formDescription"));
 		f.setTitle(src.getString("formName"));
-		f.setOwner(src.getString("formOwner"));
+		f.setOwnerId(src.getInt("formOwner"));
 		
 		f.canParticipantsSeeAll(src.getBoolean("participantsCanSeeAll"));
 		f.canParticipantsEditResponse(src.getBoolean("participantsCanEditResponse"));

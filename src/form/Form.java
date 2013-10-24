@@ -62,6 +62,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		this.title = other.title;
 		this.key = other.key;
 		this.description = other.description;
+		this.owner = other.owner;
 		
 		this.participantsCanSeeAll = other.participantsCanSeeAll;
 		this.participantsCanEditResponse = other.participantsCanEditResponse;
@@ -218,7 +219,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			form.put("formDescription", this.getDescription());
 		}
 		if (bitSet(settings, Form.OWNER_BIT)) {
-			form.put("formOwner", this.getDescription());
+			form.put("formOwner", this.getOwner());
 		}
 		if (bitSet(settings, Form.QUESTIONS_BIT)) {
 			JSONArray array = new JSONArray("["

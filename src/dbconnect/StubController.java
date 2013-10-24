@@ -75,7 +75,8 @@ public class StubController implements IDBController {
 		user.setUserName("testuser");
 		user.setEmail("testuser@example.com");
 		user.setPassword("password");
-		users.put(user.getUserName(), user);
+		user.setUserID("1");
+		users.put(user.getUserID(), user);
 		
 		User user2 = new User();
 		user2.setFirstName("T");
@@ -83,10 +84,11 @@ public class StubController implements IDBController {
 		user2.setUserName("t");
 		user2.setEmail("tp@example.com");
 		user2.setPassword("p");
-		users.put(user2.getUserName(), user2);
+		user2.setUserID("2");
+		users.put(user2.getUserID(), user2);
 		
 		//Form(String key, String title, String description, String owner)
-		Form form = new Form("1", "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserName());
+		Form form = new Form("1", "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserID());
 		TextQuestion textq = new TextQuestion("first", 1, "What's your name?", 5);
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add("Female");

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -41,6 +41,9 @@
                 text-align: center;
                 max-width: 300px;
             }
+            .error {
+                color: red;
+            }
         </style>
     </head>
     <body>
@@ -69,7 +72,9 @@
                                 <input type="checkbox" value="remember-me" name="remember"> Remember me
                                 </label>
                                 <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-                                <span class="help-inline" id="login-error"></span>
+                                <span class="help-inline error" id="login-error">
+                                    ${loginerror}
+                                </span>
                             </form>                    
                         </div>
                         
@@ -87,7 +92,9 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-large btn-primary" type="submit">Register</button>
-                                <span class="help-inline" id="register-error"></span>
+                                <span class="help-inline" id="register-error">
+                                    ${registererror}
+                                </span>
                             </form>    
                         </div>
                     </div>
@@ -100,25 +107,10 @@
         <script src="assets/js/vendor/bootstrap.min.js"></script>
         <script>
             $(document).ready(function() {
-//                 $('.form-signin').submit(function() {
-//                     $form = $(this);
-//                     $.post($form.attr('action'), $form.serialize(), function(responseText) {
-//                         if ("" != responseText) {
-//                             $('#signin-input-group').addClass("error");
-//                             $('#login-error').html(responseText).slideDown();
-//                         } else {
-//                             window.location.href = 'app/index.jsp';
-//                         }
-//                     });
-//                     return false;
-//                 });
-                
-//                 $('#error').hide();
-                
-//                 $('#loginTabs a').click(function(e) {
-//                     e.preventDefault();
-//                     $(this).tab('show');
-//                 });
+                $('#loginTabs a').click(function(e) {
+                    e.preventDefault();
+                    $(this).tab('show');
+                });
             });
         </script>
     </body>

@@ -54,11 +54,11 @@ public class Login extends HttpServlet {
 			/* If the user is responding to an email, there should be a URLEncoded URI here that we can redirect to after they log in */
 			// ...
 			
-			request.getRequestDispatcher("app/index.jsp").forward(request, response);
+			response.sendRedirect("app/index.jsp");
 			
 		} else {
 			// Bad credentials, try again
-			request.setAttribute("error", "Invalid username or password.");
+			request.setAttribute("loginerror", "Invalid username or password.");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	}

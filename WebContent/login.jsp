@@ -100,25 +100,25 @@
         <script src="assets/js/vendor/bootstrap.min.js"></script>
         <script>
             $(document).ready(function() {
-                $('.form-signin').submit(function() {
-                    $form = $(this);
-                    $.post($form.attr('action'), $form.serialize(), function(responseText) {
-                        if ("" != responseText) {
-                            $('#signin-input-group').addClass("error");
-                            $('#login-error').html(responseText).slideDown();
-                        } else {
-                            window.location.href = 'app/index.jsp';
-                        }
-                    });
-                    return false;
-                });
+//                 $('.form-signin').submit(function() {
+//                     $form = $(this);
+//                     $.post($form.attr('action'), $form.serialize(), function(responseText) {
+//                         if ("" != responseText) {
+//                             $('#signin-input-group').addClass("error");
+//                             $('#login-error').html(responseText).slideDown();
+//                         } else {
+//                             window.location.href = 'app/index.jsp';
+//                         }
+//                     });
+//                     return false;
+//                 });
                 
-                $('#error').hide();
+//                 $('#error').hide();
                 
-                $('#loginTabs a').click(function(e) {
-                    e.preventDefault();
-                    $(this).tab('show');
-                });
+//                 $('#loginTabs a').click(function(e) {
+//                     e.preventDefault();
+//                     $(this).tab('show');
+//                 });
             });
         </script>
     </body>

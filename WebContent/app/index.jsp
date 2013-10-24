@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="form.utils.Forms" %>
+<%@ page import="form.User" %>
+<% User currentUser = (User) session.getAttribute("user"); %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -64,7 +66,7 @@
         
             $(document).ready(function() {
                 var ownerCollection = new TaskManager.Collections.Forms();
-                ownerCollection.reset(<%= Forms.getFormsUserIsOwnerOf("1") %>);
+                ownerCollection.reset(<%= Forms.getFormsUserIsOwnerOf(currentUser.getUserID()) %>);
                 var participantCollection = new TaskManager.Collections.Forms();
                 participantCollection.reset(<%= Forms.getFormsUserIsParticipantOf("testuser") %>);
                 

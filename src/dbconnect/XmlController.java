@@ -8,6 +8,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import dbconnect.dao.FormConverter;
+import dbconnect.dao.UserConverter;
 import form.Form;
 import form.User;
 
@@ -109,7 +111,6 @@ public class XmlController implements IDBController {
 			
 			USER_MARSHALLER = null;
 			USER_UNMARSHALLER = null;
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -129,12 +130,9 @@ public class XmlController implements IDBController {
 	@Override
 	public boolean upsertForm(Form form) {
 		boolean success;
-		dbconnect.dao.Form formDAO = new dbconnect.dao.Form();
-		
-		formDAO.setId(form.getKey());
-		formDAO.setTitle(form.getTitle());
-		
-		//TODO Finish copying form info into DAO
+		dbconnect.dao.Form formDAO;
+			
+		formDAO = FormConverter.getInstance().unconvert(form);
 		
 		try {
 			FORM_MARSHALLER .marshal(formDAO, getFormFile(form.getKey()));
@@ -151,18 +149,14 @@ public class XmlController implements IDBController {
 		boolean success;
 		dbconnect.dao.User userDAO;
 		
-		//TODO Copy data from regular user Object to DAO.
-		
-		userDAO = new dbconnect.dao.User();
+		userDAO = UserConverter.getInstance().unconvert(user);
 		
 		try {
 			USER_MARSHALLER.marshal(userDAO, getUserFile(user.getUserID()));
 			success = true;
 		} catch (JAXBException e) {
 			success = false;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
+			e.printStackTrace();			
 		}
 		return success;
 	}
@@ -178,13 +172,11 @@ public class XmlController implements IDBController {
 		try {
 			formDAO = (dbconnect.dao.Form) FORM_UNMARSHALLER.unmarshal(getFormFile(id));
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
-		form = new Form();
-		form.setKey(formDAO.getId());
-		form.setDescription(formDAO.getDescription());
+		
+		form = FormConverter.getInstance().convert(formDAO);
 		
 		return form;
 	}
@@ -202,16 +194,11 @@ public class XmlController implements IDBController {
 		try {
 			userDAO = (dbconnect.dao.User) USER_UNMARSHALLER.unmarshal(getUserFile(id));
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
 		
-		user = new User();
-		user.setUserID(userDAO.getId());
-		user.setFirstName(userDAO.getFirstName());
-		user.setLastName(userDAO.getLastName());
-		user.setPassword(userDAO.getPassword());
+		user = UserConverter.getInstance().convert(userDAO);
 		
 		return user;
 	}
@@ -228,6 +215,7 @@ public class XmlController implements IDBController {
 	@Override
 	public boolean deleteUser(String key) {
 		File userFile = getUserFile(key);
+		//TODO Iterate through all references to this user and delete them.
 		return userFile.delete();
 	}
 

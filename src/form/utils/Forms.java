@@ -10,8 +10,6 @@ import form.Form;
 
 /**
  * Utility class for getting Form information
- * 
- * @author Cameron
  */
 public class Forms {
 	// Ensures the class cannot be instantiated

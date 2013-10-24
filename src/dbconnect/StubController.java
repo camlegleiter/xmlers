@@ -59,16 +59,12 @@ public class StubController implements IDBController {
 
 	@Override
 	public Form fetchForm(String id) {
-		return new Form(forms.get(id));
+		return forms.get(id);
 	}
 
 	@Override
 	public User fetchUser(String id) {
-		User requestedUser = users.get(id);
-		if(requestedUser == null){
-			return null;
-		}
-		return new User(requestedUser);
+		return users.get(id);
 	}
 
 

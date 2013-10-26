@@ -11,7 +11,7 @@
     <location>/error/error404.jsp</location>
   </error-page>
   
-  <!-- Filters 
+  <!-- Filters -->
   <filter>
     <filter-name>loginFilter</filter-name>
     <filter-class>filters.LoginFilter</filter-class>
@@ -19,7 +19,7 @@
   <filter-mapping>
     <filter-name>loginFilter</filter-name>
     <url-pattern>/app/*</url-pattern>
-  </filter-mapping> -->
+  </filter-mapping>
   
   <servlet>
     <servlet-name>Login</servlet-name>

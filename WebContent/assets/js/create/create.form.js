@@ -90,7 +90,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 var self = this;
                 $.post('/xmlers/app/upsertForm', { model: JSON.stringify(this.model) })
                 .done(function(data, textStatus, jqXHR) {
-                    console.log(textStatus);
+                    if (data.success) {
+                        window.location.href = data.success;
+                    }
                 })
                 .error(function(jqXHR, textStatus, errorThrown) {
                     console.log(textStatus);

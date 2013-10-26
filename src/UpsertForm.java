@@ -38,7 +38,7 @@ public class UpsertForm extends HttpServlet {
 		String formData = (String) request.getParameter("model");
 
 		IDBController controller = DBManager.getInstance();
-		JSONObject jsonObject;
+		JSONObject jsonObject = null;
 		try {
 			jsonObject = new JSONObject(formData);
 			
@@ -50,18 +50,10 @@ public class UpsertForm extends HttpServlet {
 
 			controller.upsertForm(form);
 			
-			response.sendRedirect("app/index");
-			
-		} catch (JSONException e) {
-			jsonObject = new JSONObject();
-			jsonObject.put("error", e.getMessage());
-			
-			response.setContentType("application/json");
-			response.getWriter().write(jsonObject.toString());
+			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp");
 		} catch (Exception e) {
-			jsonObject = new JSONObject();
-			jsonObject.put("error", e.getMessage());
-			
+			jsonObject = new JSONObject().put("error", e.getMessage());
+		} finally {
 			response.setContentType("application/json");
 			response.getWriter().write(jsonObject.toString());
 		}

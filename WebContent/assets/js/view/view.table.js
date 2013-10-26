@@ -61,7 +61,9 @@ TaskManager.module('View', function(Module, App, Backbone, Marionette, $, _) {
         itemView: Module.TableHeadItem,
         
         initialize: function() {
-            this.$el.prepend('<th class="header">Participants</th>');
+            if (this.collection.length > 0) {
+                this.$el.prepend('<th class="header">Participants</th>');
+            }
         }
     });
     

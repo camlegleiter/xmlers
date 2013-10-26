@@ -6,24 +6,18 @@
 <%@ page import="form.User" %>
 <%@ page import="form.utils.Forms" %>
 <%@ page import="utils.Utils" %>
-<%
-int formId = -1;
-boolean isInvalidFormId = false;
-try {
-    formId = Integer.parseInt(request.getParameter("form"));
-} catch (NumberFormatException e) {
-    isInvalidFormId = true;
-}
-
-Form form = DBManager.getInstance().fetchForm(formId);
-isInvalidFormId = form == null;
-
-User user = (User) request.getSession().getAttribute("user");
-boolean userCanSeeForm = true;
-if (form.getOwnerId() == user.getUserID() || !form.participantsCanSeeAll() || !form.containsParticipant(user.getUserID())) {
-    userCanSeeForm = false;
-}
-%>
+<c:set var="formId" value="-1"></c:set>
+<c:set var="isInvalidFormId" value="false"></c:set>
+<c:catch var="invalidFormIdException">
+    <c:set var="formId" value="${Integer.parseInt(param.form)}"></c:set>
+</c:catch>
+<c:if test="">
+    <c:set var="isInvalidFormId" value="true"></c:set>
+</c:if>
+<c:set var="form" value="${DBManager.getInstance().fetchForm(formId)}"></c:set>
+<c:set var="isInvalidFormId" value="${form == null}"></c:set>
+<c:set var="currentUser" value="${sessionScope.user})"></c:set>
+<c:set var="userCanSeeForm" value="${form.getOwnerId() == user.getUserID() || form.participantsCanSeeAll() || form.containsParticipant(user.getUserID())}"></c:set>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -58,10 +52,12 @@ if (form.getOwnerId() == user.getUserID() || !form.participantsCanSeeAll() || !f
 				<div id="responseTable" class="span10">
 <c:choose>
     <c:when test="${isInvalidFormId}">
-                    <h3>We don't seem to have a record of this form. Please make sure you're viewing the right form!</h3>
+                    <h2>Uh oh!</h2>
+                    <p>We don't seem to have a record of this form. Return to the <a href="<%= request.getContextPath() %>/app/index.jsp">home page</a> and try a different form.</p>
     </c:when>
     <c:when test="${userCanSeeForm}">
-                    <h3>You are not allowed to view data for this form. Check with the owner of the form to verify your access to this data.</h3>
+                    <h2>Uh oh!</h2>
+                    <p>You are not allowed to view data for this form. Check with the owner of the form to verify your access to this data.</p>
     </c:when>             
 </c:choose>
                 </div>
@@ -86,7 +82,7 @@ if (form.getOwnerId() == user.getUserID() || !form.participantsCanSeeAll() || !f
             $(document).ready(function() {
                 View = TaskManager.View;
                 View.start({
-                    model: new TaskManager.Models.View(<%=Forms.getResponseRecordsForForm(formId)%>)
+                    model: new TaskManager.Models.View("${Forms.getResponseRecordsForForm(${formId})")
                 }); 
             });
         </script>

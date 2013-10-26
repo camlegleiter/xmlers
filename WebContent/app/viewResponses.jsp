@@ -66,16 +66,15 @@
     
 		<c:import url="/app/includes/footer.jsp" />
     
-		<script src="<%=request.getContextPath()%>/assets/js/vendor/jquery.tablesorter.min.js"></script>
+		<script src="<%= request.getContextPath() %>/assets/js/vendor/jquery.tablesorter.min.js"></script>
         
-        <script src="<%=request.getContextPath()%>/assets/js/globals.js"></script>
-        <script src="<%=request.getContextPath()%>/assets/js/models/questions.js"></script>
-        <script src="<%=request.getContextPath()%>/assets/js/models/responses.js"></script>
-        <script src="<%=request.getContextPath()%>/assets/js/models/views.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/questions.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/responses.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/models/views.js"></script>
         
-        <script src="<%=request.getContextPath()%>/assets/js/view/view.options.js"></script>
-        <script src="<%=request.getContextPath()%>/assets/js/view/view.table.js"></script>
-        <script src="<%=request.getContextPath()%>/assets/js/view/view.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/view/view.options.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/view/view.table.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/view/view.js"></script>
 
     <c:if test="${!isInvalidFormId || userCanSeeForm}">
         <script>

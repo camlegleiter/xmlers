@@ -42,7 +42,6 @@
     
         <c:import url="/app/includes/footer.jsp" />
         
-        <script src="<%= request.getContextPath() %>/assets/js/globals.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/models/forms.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/models/questions.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/create/create.questions.js"></script>

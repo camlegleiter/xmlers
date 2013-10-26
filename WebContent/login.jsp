@@ -64,7 +64,7 @@
                                 <h2 class="form-signin-heading">Please sign in</h2>
                                 <div class="control-group" id="signin-input-group">
                                     <div class="controls">
-                                        <input type="text" class="input-block-level" placeholder="User name" name="username">
+                                        <input type="text" class="input-block-level" placeholder="NetID" name="username">
                                         <input type="password" class="input-block-level" placeholder="Password" name="password">
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-large btn-primary" type="submit">Register</button>
-                                <span class="help-inline" id="register-error">
+                                <span class="help-inline error" id="register-error">
                                     ${registererror}
                                 </span>
                             </form>    

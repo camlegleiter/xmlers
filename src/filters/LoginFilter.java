@@ -33,14 +33,12 @@ public class LoginFilter implements Filter {
      * Default constructor. 
      */
     public LoginFilter() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -56,8 +54,8 @@ public class LoginFilter implements Filter {
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", 0);
 		
-		// If there is no session or the session hasn't set the userid, redirect to login
-		if (null == session || null == session.getAttribute("userid")) {			
+		// If there is no session or the session hasn't set the user, redirect to login
+		if (null == session || null == session.getAttribute("user")) {			
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 		} else {
 			chain.doFilter(req, res);
@@ -68,7 +66,6 @@ public class LoginFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
 	}
 
 }

@@ -42,14 +42,16 @@ public class StubController implements IDBController {
 
 	@Override
 	public boolean upsertForm(Form form) {
-		form.setFormId(FORM_ID++);
+		if (!forms.containsKey(form.getFormId()))
+			form.setFormId(FORM_ID++);
 		forms.put(form.getFormId(), form);
 		return true;
 	}
 
 	@Override
 	public boolean upsertUser(User user) {
-		user.setUserID(USER_ID++);
+		if (!users.containsKey(user.getUserID()))
+			user.setUserID(USER_ID++);
 		users.put(user.getUserID(), user);
 		return true;
 	}

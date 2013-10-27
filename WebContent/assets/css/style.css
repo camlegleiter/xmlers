@@ -15,12 +15,12 @@ textarea {
 }
 
 .delete, .remove {
-    color: red;
+    color: #d14;
     cursor: pointer;
 }
 
 .delete:hover, .remove:hover, .error {
-    color: red;
+    color: #d14;
 }
 
 .delete.disabled, .remove.disabled, .error.disabled {

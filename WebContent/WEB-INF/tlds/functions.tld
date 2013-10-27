@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib 
+    version="2.1" 
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+
+    <display-name>Custom Functions</display-name>
+    <tlib-version>1.0</tlib-version>
+    <short-name>func</short-name>
+    <uri>/WEB-INF/tlds</uri>
+
+    <function>
+        <name>getInstance</name>
+        <function-class>dbconnect.DBManager</function-class>
+        <function-signature>dbconnect.IDBController getInstance()</function-signature>
+    </function>
+    
+    <function>
+        <name>getResponseRecordsForForm</name>
+        <function-class>form.utils.Forms</function-class>
+        <function-signature>org.json.JSONObject getResponseRecordsForForm(int)</function-signature>
+    </function>
+    
+    <function>
+        <name>getFormsUserIsOwnerOf</name>
+        <function-class>form.utils.Forms</function-class>
+        <function-signature>org.json.JSONArray getFormsUserIsOwnerOf(int)</function-signature>
+    </function>
+    
+    <function>
+        <name>getFormsUserIsParticipantOf</name>
+        <function-class>form.utils.Forms</function-class>
+        <function-signature>org.json.JSONArray getFormsUserIsParticipantOf(int)</function-signature>
+    </function>
+</taglib>

@@ -107,17 +107,17 @@ public class StubController implements IDBController {
 		answers.add("Female");
 		answers.add("Male");
 		
-		form.add(new TextQuestion("12345", 1, "What's your name?", 5));
-		form.add(new RadioQuestion("23456", 2, "Sex: ", answers));
-		form.add(new CheckQuestion("34567", 3, "Sex: ", answers));
-		form.add(new SelectQuestion("45678", 4, "Sex: ", answers));
+		form.add(new TextQuestion(12345, 1, "What's your name?", 5));
+		form.add(new RadioQuestion(23456, 2, "Sex: ", answers));
+		form.add(new CheckQuestion(34567, 3, "Sex: ", answers));
+		form.add(new SelectQuestion(45678, 4, "Sex: ", answers));
 		
 		Form form2 = new Form(form);
 		form2.setFormId(2);
 		form2.setTitle("Another gender questionnaire");
 		form2.addParticipant(user2);
 		
-		form2.add(new TextQuestion("56789", 5, "Type in your Sex to confirm:", 5));
+		form2.add(new TextQuestion(56789, 5, "Type in your Sex to confirm:", 5));
 		
 		upsertForm(form);
 		upsertForm(form2);

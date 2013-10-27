@@ -4,7 +4,7 @@ import form.visitors.IQuestionVisitor;
 
 public class RadioQuestion extends CheckQuestion {
 	
-	public RadioQuestion(String id, int weight, String prompt, Iterable<String> answers) {
+	public RadioQuestion(int id, int weight, String prompt, Iterable<String> answers) {
 		super(id, weight, prompt, answers);
 	}
 

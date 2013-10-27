@@ -9,12 +9,12 @@ public class ComplexQuestion extends Question<Collection<Question<?>>> {
 
 	public Collection<Question<?>> questions;
 	
-	public ComplexQuestion(String id, int weight, String prompt) {
+	public ComplexQuestion(int id, int weight, String prompt) {
 		super(id, weight, prompt);
 		this.questions = new ArrayList<Question<?>>();
 	}
 	
-	public ComplexQuestion(String id, int weight, String prompt, Iterable<Question<?>> questions)
+	public ComplexQuestion(int id, int weight, String prompt, Iterable<Question<?>> questions)
 	{
 		this(id, weight, prompt);
 		for(Question<?> entry : questions)

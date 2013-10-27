@@ -1,6 +1,7 @@
 package form.questions;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -10,20 +11,20 @@ import java.util.HashMap;
 public abstract class Question<T> implements IVisitable {
 
 	
-	private HashMap<String, QuestionResponse<T>> responses;
+	private Map<Integer, QuestionResponse<T>> responses;
 	
 	
 	public Question()
 	{
-		this("", -1, "");
+		this(-1, -1, "");
 	}
 	
-	public Question(String id, int weight, String prompt)
+	public Question(int id, int weight, String prompt)
 	{
 		this.id = id;
 		this.setPrompt(prompt);
 		this.setPosition(weight);
-		responses = new HashMap<String, QuestionResponse<T>>();
+		responses = new HashMap<Integer, QuestionResponse<T>>();
 	}
 	
 	/**
@@ -43,7 +44,7 @@ public abstract class Question<T> implements IVisitable {
 	 * tag's name. This will allow for POST access to individual question's
 	 * responses.
 	 */
-	private String id;
+	private int id;
 
 	/**
 	 * Returns the text that the End User will respond to.
@@ -68,7 +69,7 @@ public abstract class Question<T> implements IVisitable {
 	 * @param userID The unique string that identifies a user.
 	 * @return The response that the specified end user provided.
 	 */
-	public T getResponse(String userID)
+	public T getResponse(int userID)
 	{
 		if(responses.isEmpty()){
 			return null;
@@ -86,12 +87,12 @@ public abstract class Question<T> implements IVisitable {
 	 * @param id the id for the question the response is tied to. 
 	 * @param ans
 	 */
-	public void setResponse(String id, T ans)
+	public void setResponse(int id, T ans)
 	{
 		responses.get(id).setValue(ans);
 	}
 	
-	public void insertResponse(String id, QuestionResponse<T> resp)
+	public void insertResponse(int id, QuestionResponse<T> resp)
 	{
 		responses.put(id, resp);
 	}
@@ -119,7 +120,7 @@ public abstract class Question<T> implements IVisitable {
 	 * 
 	 * @return the unique ID of this question.
 	 */
-	public final String getId() {
+	public final int getId() {
 		return id;
 	}
 
@@ -130,7 +131,7 @@ public abstract class Question<T> implements IVisitable {
 	 *            The string to use as the unique ID. This should normally
 	 *            either be automatically generated, or
 	 */
-	public final void setId(String id) {
+	public final void setId(int id) {
 		this.id = id;
 	}
 	

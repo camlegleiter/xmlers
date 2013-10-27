@@ -17,7 +17,7 @@ public class TextQuestion extends Question<String> {
 		this.maxLength = max;
 	}
 	
-	public TextQuestion(String id, int weight, String prompt, int max) {
+	public TextQuestion(int id, int weight, String prompt, int max) {
 		super(id, weight, prompt);
 		this.maxLength = max;
 	}
@@ -28,7 +28,7 @@ public class TextQuestion extends Question<String> {
 	}
 
 	@Override
-	public void setResponse(String id, String response) {
+	public void setResponse(int id, String response) {
 		if (response.length() <= this.maxLength) {
 			super.setResponse(id, response);
 		} else {

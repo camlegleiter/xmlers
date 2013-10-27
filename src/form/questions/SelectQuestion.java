@@ -10,7 +10,7 @@ package form.questions;
  */
 public class SelectQuestion extends RadioQuestion {
 
-	public SelectQuestion(String id, int weight, String prompt, Iterable<String> answers) {
+	public SelectQuestion(int id, int weight, String prompt, Iterable<String> answers) {
 		super(id, weight, prompt, answers);
 	}
 

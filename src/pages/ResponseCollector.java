@@ -54,7 +54,7 @@ public class ResponseCollector extends HttpServlet {
 
 		// Build form
 		for (Question q : userResponse) {
-			String questionResponse = (String) request.getAttribute(q.getId());
+			String questionResponse = (String) request.getAttribute(Integer.toString(q.getId()));
 			q.setResponse(q.getId(), questionResponse);
 
 		}

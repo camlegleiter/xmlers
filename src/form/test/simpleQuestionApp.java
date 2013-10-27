@@ -20,16 +20,16 @@ public class simpleQuestionApp {
 	public static void main(String[] args) {
 		
 		//Create questions
-		TextQuestion textq = new TextQuestion("first", 1, "What's your name?", 5);
+		TextQuestion textq = new TextQuestion(1, 1, "What's your name?", 5);
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add("Female");
 		answers.add("Male");
-		RadioQuestion radioq = new RadioQuestion("second", 2, "Sex: ", answers);
-		CheckQuestion checkq = new CheckQuestion("third", 3, "Sex: ", answers);
-		SelectQuestion selectq = new SelectQuestion("fourth", 4, "Sex: ", answers);
+		RadioQuestion radioq = new RadioQuestion(2, 2, "Sex: ", answers);
+		CheckQuestion checkq = new CheckQuestion(3, 3, "Sex: ", answers);
+		SelectQuestion selectq = new SelectQuestion(4, 4, "Sex: ", answers);
 		
 		//Add questions to question list
-		ArrayList<Question> formqs = new ArrayList<Question>();
+		ArrayList<Question<?>> formqs = new ArrayList<Question<?>>();
 		formqs.add(textq);
 		formqs.add(radioq);
 		

@@ -37,7 +37,7 @@ public class CheckQuestion extends Question<List<CheckQuestion.Entry>> {
 		}
 	}
 	
-	public CheckQuestion(String id, int weight, String prompt, Iterable<String> answers) {
+	public CheckQuestion(int id, int weight, String prompt, Iterable<String> answers) {
 		super(id, weight, prompt);
 		options = new ArrayList<String>();
 		for(String entry: answers)

@@ -30,7 +30,7 @@ public class VisitMechanismTest {
 		
 		for(int i = 0; i < 10; i++)
 		{
-			questionList.add(new TextQuestion(Integer.toString(i), i, "Prompt " + i, (int)(Math.pow(2, i))));
+			questionList.add(new TextQuestion(i, i, "Prompt " + i, (int)(Math.pow(2, i))));
 		}
 		
 		String result = VisitMechanism.visit(visitor, questionList, "\n");
@@ -54,7 +54,7 @@ public class VisitMechanismTest {
 	@Test
 	public void oneQuestion()
 	{
-		questionList.add(new TextQuestion("1", 3, "Prompt 1", 2));
+		questionList.add(new TextQuestion(1, 3, "Prompt 1", 2));
 		
 		String result = VisitMechanism.visit(visitor, questionList, "\n");
 		assertEquals("Text Question: " + questionList.get(0).toString(), result);

@@ -17,7 +17,7 @@ public class TextQuestionTests {
 	@Test
 	public void happyConstructor1()
 	{
-		TextQuestion q1 = new TextQuestion("1", 1, "Howdy", 255);
+		TextQuestion q1 = new TextQuestion(1, 1, "Howdy", 255);
 		assertEquals("1", q1.getId());
 		assertEquals("Howdy", q1.getPrompt());
 		assertEquals(1, q1.getPosition());
@@ -28,7 +28,7 @@ public class TextQuestionTests {
 	public void happyConstructor2()
 	{
 		String prompt = "Doodle";
-		TextQuestion q2 = new TextQuestion("2", 1, prompt, 253);
+		TextQuestion q2 = new TextQuestion(2, 1, prompt, 253);
 		assertEquals("2", q2.getId());
 		assertEquals(prompt, q2.getPrompt());
 		assertEquals(253, q2.getMaxLength());

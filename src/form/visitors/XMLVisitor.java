@@ -17,7 +17,7 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(TextQuestion tq) {
-		StringBuilder html = new StringBuilder("<textQuestion " + getIDPriority(tq.getId(), tq.getPosition()+"") + ">" );
+		StringBuilder html = new StringBuilder("<textQuestion " + getIDPriority(tq.getId(), tq.getPosition()) + ">" );
 		html.append(MAX_LEN_ELEMENT_ST + tq.getMaxLength() + MAX_LEN_ELEMENT_END);
 		html.append(PROMPT_ELEMENT_ST + tq.getPrompt() + PROMPT_ELEMENT_END);
 		html.append(RESPONSE_ELEMENT_ST + tq.getResponse(tq.getId())
@@ -30,7 +30,7 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(RadioQuestion rq) {
-		StringBuilder html = new StringBuilder("<radioQuestion " + getIDPriority(rq.getId(), rq.getPosition()+"") + ">" );
+		StringBuilder html = new StringBuilder("<radioQuestion " + getIDPriority(rq.getId(), rq.getPosition()) + ">" );
 
 		html.append(PROMPT_ELEMENT_ST + rq.getPrompt() + PROMPT_ELEMENT_END);
 		for (String option : rq.getOptions()) {
@@ -46,7 +46,7 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 	
 	@Override
 	public String visit(CheckQuestion chq) {
-		StringBuilder html = new StringBuilder("<checkQuestion " + getIDPriority(chq.getId(), chq.getPosition()+"") + ">" );
+		StringBuilder html = new StringBuilder("<checkQuestion " + getIDPriority(chq.getId(), chq.getPosition()) + ">" );
 
 		html.append(PROMPT_ELEMENT_ST + chq.getPrompt() + PROMPT_ELEMENT_END);
 		for (String option : chq.getOptions()) {
@@ -62,7 +62,7 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 
 	@Override
 	public String visit(SelectQuestion sq) {
-		StringBuilder html = new StringBuilder("<selectQuestion " + getIDPriority(sq.getId(), sq.getPosition()+"") + ">");
+		StringBuilder html = new StringBuilder("<selectQuestion " + getIDPriority(sq.getId(), sq.getPosition()) + ">");
 
 		html.append(PROMPT_ELEMENT_ST + sq.getPrompt() + PROMPT_ELEMENT_END);
 		for (String option : sq.getOptions()) {
@@ -82,7 +82,7 @@ public class XMLVisitor extends AbstractQuestionVisitor {
 		return null;
 	}
 	
-	private static String getIDPriority(String id, String priority){
+	private static String getIDPriority(int id, int priority){
 		return "id=\"" + id + "\" priority=\"" + priority + "\"";
 	}
 

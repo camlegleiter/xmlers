@@ -41,13 +41,6 @@ public class Logout extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
 	
 	/**
 	 * Used to specifically remove the "Remember Me" cookie that may be created on user login.

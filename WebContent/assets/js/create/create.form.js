@@ -64,7 +64,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         onUpdateModel: function() {
             this.model.set({
                 formName: this.ui.formName.val(),
-                formDescription: this.ui.formDesc.val(),
+                formDescription: _.escape(this.ui.formDesc.val()),
                 participantsCanSeeAll: this.ui.participantsCanSeeAll.is(':checked'),
                 participantsCanEditResponse: this.ui.participantsCanEditResponse.is(':checked'),
                 participantResponseIsRequired: this.ui.participantResponseIsRequired.is(':checked')
@@ -325,7 +325,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         onUpdateModel: function() {
-            this.model.set('prompt', this.ui.prompt.val());
+            this.model.set('prompt', _.escape(this.ui.prompt.val()));
             
             var l = this.ui.maxLength.val();
             if (!_.isUndefined(l)) {

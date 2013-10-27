@@ -17,6 +17,9 @@ public class StubController implements IDBController {
 	
 	public Map<Integer, Form> forms;
 	public Map<Integer, User> users;
+	
+	private static int FORM_ID;
+	private static int USER_ID;
 		
 	public StubController()
 	{
@@ -39,12 +42,14 @@ public class StubController implements IDBController {
 
 	@Override
 	public boolean upsertForm(Form form) {
+		form.setFormId(FORM_ID++);
 		forms.put(form.getFormId(), form);
 		return true;
 	}
 
 	@Override
 	public boolean upsertUser(User user) {
+		user.setUserID(USER_ID++);
 		users.put(user.getUserID(), user);
 		return true;
 	}
@@ -83,8 +88,7 @@ public class StubController implements IDBController {
 		user.setUserName("testuser");
 		user.setEmail("testuser@example.com");
 		user.setPassword("password");
-		user.setUserID(1);
-		users.put(user.getUserID(), user);
+		upsertUser(user);
 		
 		User user2 = new User();
 		user2.setFirstName("T");
@@ -92,10 +96,9 @@ public class StubController implements IDBController {
 		user2.setUserName("t");
 		user2.setEmail("tp@example.com");
 		user2.setPassword("p");
-		user2.setUserID(2);
-		users.put(user2.getUserID(), user2);
+		upsertUser(user2);
 		
-		Form form = new Form(1, "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserID());
+		Form form = new Form(-1, "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserID());
 		form.addParticipant(user2);
 		
 		ArrayList<String> answers = new ArrayList<String>();
@@ -114,8 +117,8 @@ public class StubController implements IDBController {
 		
 		form2.add(new TextQuestion("56789", 5, "Type in your Sex to confirm:", 5));
 		
-		forms.put(form.getFormId(), form);
-		forms.put(form2.getFormId(), form2);
+		upsertForm(form);
+		upsertForm(form2);
 	}
 	
 	@Override

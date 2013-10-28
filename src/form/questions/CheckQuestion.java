@@ -19,30 +19,30 @@ public class CheckQuestion extends Question<List<CheckQuestion.Entry>> {
 		options = new ArrayList<String>();
 	}
 	
-	public CheckQuestion(Iterable<String> answers)
+	public CheckQuestion(Iterable<String> options)
 	{
 		this();
-		for(String s : answers)
+		for(String s : options)
 		{
-			options.add(s);
+			this.options.add(s);
 		}
 	}
 	
-	public CheckQuestion(String[] answers)
+	public CheckQuestion(String[] options)
 	{
 		this();
-		for(String s : answers)
+		for(String s : options)
 		{
-			options.add(s);
+			this.options.add(s);
 		}
 	}
 	
-	public CheckQuestion(int id, int weight, String prompt, Iterable<String> answers) {
+	public CheckQuestion(int id, int weight, String prompt, Iterable<String> options) {
 		super(id, weight, prompt);
-		options = new ArrayList<String>();
-		for(String entry: answers)
+		this.options = new ArrayList<String>();
+		for(String entry: options)
 		{
-			options.add(entry);
+			this.options.add(entry);
 		}
 	}
 

@@ -67,9 +67,17 @@ public class StubController implements IDBController {
 	}
 	
 	@Override
-	public User fetchUser(String username) {
+	public User fetchUserByUsername(String username) {
 		for (User user : users.values())
 			if (user.getUserName().equals(username))
+				return user;
+		return null;
+	}
+	
+	@Override
+	public User fetchUserByEmail(String email) {
+		for (User user : users.values())
+			if (user.getEmail().equals(email))
 				return user;
 		return null;
 	}
@@ -110,7 +118,7 @@ public class StubController implements IDBController {
 		form.add(new TextQuestion(12345, 1, "What's your name?", 5));
 		form.add(new RadioQuestion(23456, 2, "Sex: ", answers));
 		form.add(new CheckQuestion(34567, 3, "Sex: ", answers));
-		form.add(new SelectQuestion(45678, 4, "Sex: ", answers));
+		form.add(new SelectQuestion(45678, 4, "Sex: ", true, answers));
 		
 		Form form2 = new Form(form);
 		form2.setFormId(2);
@@ -124,11 +132,11 @@ public class StubController implements IDBController {
 	}
 	
 	@Override
-	public List<Form> getOwnerForms(int userID){
+	public List<Form> getOwnerForms(int userId){
 		List<Form> ownerForms = new ArrayList<Form>();
 		for (Map.Entry<Integer, Form> entry : forms.entrySet()) { 
 			Form form = (Form) entry.getValue();
-			if(form.getOwnerId() == userID){
+			if(form.getOwnerId() == userId){
 				ownerForms.add(form);
 			}
 		}

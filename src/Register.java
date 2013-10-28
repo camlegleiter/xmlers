@@ -48,7 +48,7 @@ public class Register extends HttpServlet {
 		}
 		
 		IDBController library = DBManager.getInstance();
-		if (library.fetchUser(username) != null) {
+		if (library.fetchUserByUsername(username) != null) {
 			returnError(request, response, "A user with that username already exists.");
 		}
 		

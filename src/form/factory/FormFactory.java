@@ -20,16 +20,17 @@ public abstract class FormFactory {
 	 * @return A fully instantiated Form.
 	 * @throws JSONException
 	 */
-	public abstract Form BuildForm(JSONObject src) throws JSONException;
+	public abstract Form buildForm(JSONObject src) throws JSONException;
 	
 	/**
 	 * Determines which type of question the JSON Object represents, if any,
 	 * and builds the appropriate question based off of that.
 	 * @param src
+	 * @param weight
 	 * @return
 	 * @throws JSONException
 	 * @throws IllegalArgumentException
 	 * 				if the type of question is not defined correctly
 	 */
-	public abstract Question<?> BuildQuestion(JSONObject src) throws JSONException;
+	public abstract Question<?> buildQuestion(JSONObject src, int weight) throws JSONException;
 }

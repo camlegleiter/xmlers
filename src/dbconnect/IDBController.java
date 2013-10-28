@@ -67,14 +67,24 @@ public interface IDBController {
 	public User fetchUser(int userId);
 
 	/**
-	 * Retrives a User with the given username
+	 * Retrieves a User with the given username
 	 * 
 	 * @param username
 	 * @return The corresponding User, or <code>null</code> if the given
 	 *         username is null or has length == 0, or if there is no User that
 	 *         exists that matches the username.
 	 */
-	public User fetchUser(String username);
+	public User fetchUserByUsername(String username);
+
+	/**
+	 * Retrieves a User with the given email
+	 * 
+	 * @param email
+	 * @return The corresponding User, or <code>null</code> if the given email
+	 *         is null or has length == 0, or if there is no User that exists
+	 *         that matches the email.
+	 */
+	public User fetchUserByEmail(String email);
 
 	/**
 	 * Retrieves a User with the given username and password. Verifies that the

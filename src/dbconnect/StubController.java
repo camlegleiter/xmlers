@@ -70,9 +70,17 @@ public class StubController implements IDBController {
 	}
 	
 	@Override
-	public User fetchUser(String username) {
+	public User fetchUserByUsername(String username) {
 		for (User user : users.values())
 			if (user.getUserName().equals(username))
+				return user;
+		return null;
+	}
+	
+	@Override
+	public User fetchUserByEmail(String email) {
+		for (User user : users.values())
+			if (user.getEmail().equals(email))
 				return user;
 		return null;
 	}
@@ -118,7 +126,7 @@ public class StubController implements IDBController {
 		answers.add("Male");
 		RadioQuestion radioQ1 = new RadioQuestion(23456, 2, "Sex: ", answers);
 		CheckQuestion checkQ1 = new CheckQuestion(34567, 3, "Sex: ", answers);
-		SelectQuestion selectQ1 = new SelectQuestion(45678, 4, "Sex: ", answers);
+		SelectQuestion selectQ1 = new SelectQuestion(45678, 4, "Sex: ", false, answers);
 		//Create the form using questions
 		Form form = new Form(-1, "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", mainUser.getUserID());
 		form.add(textQ1);
@@ -128,7 +136,7 @@ public class StubController implements IDBController {
 		//Adding participants
 		form.addParticipant(participant1);
 		form.addParticipant(participant2);
-		
+
 		//FORM 2 CREATION (mainUser is the owner)
 		Form form2 = new Form(form);
 		form2.setFormId(2);
@@ -147,7 +155,6 @@ public class StubController implements IDBController {
 		TextResponse p1TextQ1Response = new TextResponse("1", textQ1, participant1);
 		p1TextQ1Response.setValue("I am participant 1!");
 		p1Response.add(p1TextQ1Response);
-		System.out.println(answers.get(0) + "HERE");
 		RadioQuestionResponse radioQ1Response = new RadioQuestionResponse("2", radioQ1, participant1);
 		CheckQuestion.Entry radioAnswer = radioQ1.new Entry(answers.get(0), true);
 		CheckQuestion.Entry radioAnswer2 = radioQ1.new Entry(answers.get(1), false);
@@ -169,11 +176,11 @@ public class StubController implements IDBController {
 	}
 	
 	@Override
-	public List<Form> getOwnerForms(int userID){
+	public List<Form> getOwnerForms(int userId){
 		List<Form> ownerForms = new ArrayList<Form>();
 		for (Map.Entry<Integer, Form> entry : forms.entrySet()) { 
 			Form form = (Form) entry.getValue();
-			if(form.getOwnerId() == userID){
+			if(form.getOwnerId() == userId){
 				ownerForms.add(form);
 			}
 		}

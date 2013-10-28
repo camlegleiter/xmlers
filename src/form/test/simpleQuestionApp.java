@@ -26,7 +26,7 @@ public class simpleQuestionApp {
 		answers.add("Male");
 		RadioQuestion radioq = new RadioQuestion(2, 2, "Sex: ", answers);
 		CheckQuestion checkq = new CheckQuestion(3, 3, "Sex: ", answers);
-		SelectQuestion selectq = new SelectQuestion(4, 4, "Sex: ", answers);
+		SelectQuestion selectq = new SelectQuestion(4, 4, "Sex: ", true, answers);
 		
 		//Add questions to question list
 		ArrayList<Question<?>> formqs = new ArrayList<Question<?>>();

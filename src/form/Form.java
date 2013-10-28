@@ -22,10 +22,11 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public static final int TITLE_BIT = 0x4;
 	public static final int QUESTIONS_BIT = 0x8;
 	public static final int OWNER_BIT = 0x16;
-	public static final int partCanSeeAll_BIT = 0x32;
-	public static final int partCanEditResponse_BIT = 0x64;
-	public static final int partResponseIsRequired_BIT = 0x128;
-	public static final int RESPONSES_BIT = 0x256;
+	public static final int PARTICIPANTS_CAN_SEE_ALL_BIT = 0x32;
+	public static final int PARTICIPANTS_CAN_EDIT_RESPONSE_BIT = 0x64;
+	public static final int PARTICIPANT_RESPONSE_IS_REQUIRED_BIT = 0x128;
+	public static final int FORM_PARTICIPANTS_BIT = 0x256;
+	public static final int RESPONSES_BIT = 0x512;
 
 	private String title;
 	private int id;
@@ -74,12 +75,11 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		this.participantsCanEditResponse = other.participantsCanEditResponse;
 		this.participantResponseIsRequired = other.participantResponseIsRequired;
 
-		this.questions = new PriorityQueue<Question<?>>(1,
-				new QuestionPriority());
-
-		for (Question<?> q : other) {
+		for (User u : other.getParticipants())
+			this.participants.add(u);
+		
+		for (Question<?> q : other)
 			this.questions.add(q);
-		}
 	}
 
 	public String getTitle() {
@@ -228,14 +228,19 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		if (bitSet(settings, Form.OWNER_BIT)) {
 			form.put("formOwner", this.getOwnerId());
 		}
-		if (bitSet(settings, Form.partCanSeeAll_BIT)) {
+		if (bitSet(settings, Form.PARTICIPANTS_CAN_SEE_ALL_BIT)) {
 			form.put("participantsCanSeeAll", this.participantsCanSeeAll());
 		}
-		if (bitSet(settings, Form.partCanEditResponse_BIT)) {
+		if (bitSet(settings, Form.PARTICIPANTS_CAN_EDIT_RESPONSE_BIT)) {
 			form.put("participantsCanEditResponse", this.participantsCanEditResponse());
 		}
-		if (bitSet(settings, Form.partResponseIsRequired_BIT)) {
+		if (bitSet(settings, Form.PARTICIPANT_RESPONSE_IS_REQUIRED_BIT)) {
 			form.put("participantResponseIsRequired", this.participantResponseIsRequired());
+		}
+		if (bitSet(settings, Form.FORM_PARTICIPANTS_BIT)) {
+			JSONArray array = new JSONArray();
+			for (User u : this.participants)
+				array.put(u.getEmail());
 		}
 		if (bitSet(settings, Form.QUESTIONS_BIT)) {
 			JSONArray array = new JSONArray("["
@@ -283,6 +288,10 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			other.participantsCanEditResponse = this.participantsCanEditResponse;
 			other.participantResponseIsRequired = this.participantResponseIsRequired;
 
+			other.participants = new ArrayList<User>(this.participants.size());
+			for (User u : participants)
+				other.participants.add(u);
+			
 			other.questions = new PriorityQueue<Question<?>>(
 					this.questions.size(), new QuestionPriority());
 			for (Question<?> q : questions) {

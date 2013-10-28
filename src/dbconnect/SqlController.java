@@ -111,7 +111,13 @@ public class SqlController implements IDBController {
 	}
 	
 	@Override
-	public User fetchUser(String username) {
+	public User fetchUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public User fetchUserByEmail(String email) {
 		// TODO Auto-generated method stub
 		return null;
 	}

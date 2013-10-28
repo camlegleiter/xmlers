@@ -11,6 +11,10 @@ public class RadioQuestion extends CheckQuestion {
 	public RadioQuestion(CheckQuestion buildCheckQuestion) {
 		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(), buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions());
 	}
+	
+	public RadioQuestion(Iterable<String> options) {
+		super(options);
+	}
 
 	@Override
 	public void accept(IQuestionVisitor visitor) {

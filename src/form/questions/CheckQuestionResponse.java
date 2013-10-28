@@ -5,6 +5,7 @@ import java.util.List;
 
 import form.User;
 import form.questions.CheckQuestion.Entry;
+import form.visitors.IResponseVisitor;
 
 public class CheckQuestionResponse extends QuestionResponse<List<CheckQuestion.Entry>> {
 	
@@ -22,5 +23,10 @@ public class CheckQuestionResponse extends QuestionResponse<List<CheckQuestion.E
 		{
 			value.add(realParent.new Entry(option));
 		}
+	}
+
+	@Override
+	public void accept(IResponseVisitor visitor) {
+		visitor.visit(this);
 	}
 }

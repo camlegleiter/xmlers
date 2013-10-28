@@ -25,7 +25,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		JSONObject object = new JSONObject();
 
 		object.put("type", "Textbox");
-		object.put("prompt:", tq.getPrompt());
+		object.put("prompt", tq.getPrompt());
 		object.put("maxLength", tq.getMaxLength());
 		
 		return object.toString();
@@ -36,7 +36,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		JSONObject object = new JSONObject();
 		
 		object.put("type", "Radio");
-		object.put("prompt:", rq.getPrompt());
+		object.put("prompt", rq.getPrompt());
 		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
 		for (String option : rq.getOptions()) {
 			options.add(new JSONObject().put("label", option));
@@ -50,7 +50,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		JSONObject object = new JSONObject();
 		
 		object.put("type", "Checkbox");
-		object.put("prompt:", chq.getPrompt());
+		object.put("prompt", chq.getPrompt());
 		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
 		for (String option : chq.getOptions()) {
 			options.add(new JSONObject().put("label", option));
@@ -65,7 +65,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		JSONObject object = new JSONObject();
 		
 		object.put("type", "Select");
-		object.put("prompt:", sq.getPrompt());
+		object.put("prompt", sq.getPrompt());
 		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
 		for (String option : sq.getOptions()) {
 			options.add(new JSONObject().put("label", option));

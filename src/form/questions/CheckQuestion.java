@@ -93,7 +93,7 @@ public class CheckQuestion extends Question<List<CheckQuestion.Entry>> {
 		 */
 		public void setText(String val)
 		{
-			if(!CheckQuestion.this.options.contains(text))
+			if(!CheckQuestion.this.options.contains(val))
 			{
 				throw new IllegalArgumentException("Text must be one of the options of the parent question.");
 			}

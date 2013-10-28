@@ -1,6 +1,7 @@
 package form.questions;
 
 import form.User;
+import form.visitors.IResponseVisitor;
 
 public class TextResponse extends QuestionResponse<String> {
 
@@ -8,5 +9,8 @@ public class TextResponse extends QuestionResponse<String> {
 		super(key, parent, author);
 	}
 	
-	
+	@Override
+	public void accept(IResponseVisitor visitor) {
+		visitor.visit(this);
+	}
 }

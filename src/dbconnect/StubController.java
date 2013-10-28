@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import form.Form;
+import form.ResponseForm;
 import form.User;
 import form.questions.CheckQuestion;
 import form.questions.RadioQuestion;
+import form.questions.RadioQuestionResponse;
 import form.questions.SelectQuestion;
 import form.questions.TextQuestion;
+import form.questions.TextResponse;
 
 public class StubController implements IDBController {
 	
@@ -84,43 +87,85 @@ public class StubController implements IDBController {
 	}
 
 	private void createStubData() {
-		User user = new User();
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setUserName("testuser");
-		user.setEmail("testuser@example.com");
-		user.setPassword("password");
-		upsertUser(user);
+		//Create the Users
+		User mainUser = new User();
+		mainUser.setFirstName("Test");
+		mainUser.setLastName("User");
+		mainUser.setUserName("testuser");
+		mainUser.setEmail("testuser@example.com");
+		mainUser.setPassword("password");
+		upsertUser(mainUser);
+		User participant1 = new User();
+		participant1.setFirstName("T");
+		participant1.setLastName("U");
+		participant1.setUserName("t");
+		participant1.setEmail("tp@example.com");
+		participant1.setPassword("p");
+		upsertUser(participant1);
+		User participant2 = new User();
+		participant2.setFirstName("T");
+		participant2.setLastName("U");
+		participant2.setUserName("tt");
+		participant2.setEmail("tp@example.com");
+		participant2.setPassword("p");
+		upsertUser(participant2);
 		
-		User user2 = new User();
-		user2.setFirstName("T");
-		user2.setLastName("U");
-		user2.setUserName("t");
-		user2.setEmail("tp@example.com");
-		user2.setPassword("p");
-		upsertUser(user2);
-		
-		Form form = new Form(-1, "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", user.getUserID());
-		form.addParticipant(user2);
-		
+		//FORM 1 CREATION (mainUser is the owner)
+		//Create questions for the form
+		TextQuestion textQ1 = new TextQuestion(12345, 1, "What's your name?", 5);
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add("Female");
 		answers.add("Male");
+		RadioQuestion radioQ1 = new RadioQuestion(23456, 2, "Sex: ", answers);
+		CheckQuestion checkQ1 = new CheckQuestion(34567, 3, "Sex: ", answers);
+		SelectQuestion selectQ1 = new SelectQuestion(45678, 4, "Sex: ", answers);
+		//Create the form using questions
+		Form form = new Form(-1, "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", mainUser.getUserID());
+		form.add(textQ1);
+		form.add(radioQ1);
+		form.add(checkQ1);
+		form.add(selectQ1);
+		//Adding participants
+		form.addParticipant(participant1);
+		form.addParticipant(participant2);
 		
-		form.add(new TextQuestion(12345, 1, "What's your name?", 5));
-		form.add(new RadioQuestion(23456, 2, "Sex: ", answers));
-		form.add(new CheckQuestion(34567, 3, "Sex: ", answers));
-		form.add(new SelectQuestion(45678, 4, "Sex: ", answers));
-		
+		//FORM 2 CREATION (mainUser is the owner)
 		Form form2 = new Form(form);
 		form2.setFormId(2);
 		form2.setTitle("Another gender questionnaire");
-		form2.addParticipant(user2);
-		
 		form2.add(new TextQuestion(56789, 5, "Type in your Sex to confirm:", 5));
+		//Adding participants
+		form2.addParticipant(participant1);
 		
+		//Adding the forms created
 		upsertForm(form);
 		upsertForm(form2);
+		
+		//RESPONSES
+		//Participant 1 Response
+		ResponseForm p1Response = new ResponseForm(1, participant1.getUserID(), form);
+		TextResponse p1TextQ1Response = new TextResponse("1", textQ1, participant1);
+		p1TextQ1Response.setValue("I am participant 1!");
+		p1Response.add(p1TextQ1Response);
+		System.out.println(answers.get(0) + "HERE");
+		RadioQuestionResponse radioQ1Response = new RadioQuestionResponse("2", radioQ1, participant1);
+		CheckQuestion.Entry radioAnswer = radioQ1.new Entry(answers.get(0), true);
+		CheckQuestion.Entry radioAnswer2 = radioQ1.new Entry(answers.get(1), false);
+		ArrayList<CheckQuestion.Entry> radioQ1responseList = new ArrayList<CheckQuestion.Entry>();
+		radioQ1responseList.add(radioAnswer);
+		radioQ1responseList.add(radioAnswer2);
+		radioQ1Response.setValue(radioQ1responseList);
+		p1Response.add(radioQ1Response);
+		
+		//Participant 2 Response
+		ResponseForm p2Response = new ResponseForm(2, participant2.getUserID(), form);
+		TextResponse p2TextQ1Response = new TextResponse("1", textQ1, participant1);
+		p2TextQ1Response.setValue("I am participant 2!");
+		p2Response.add(p2TextQ1Response);
+		
+		//Adding the responses to the form
+		form.add(p1Response);
+		form.add(p2Response);
 	}
 	
 	@Override
@@ -144,6 +189,11 @@ public class StubController implements IDBController {
 				participantForms.add(form);
 		}
 		return participantForms;
+	}
+	@Override
+	public List<ResponseForm> getResponseForms(int formId) {
+		Form form = forms.get(formId);
+		return form.getResponses();
 	}
 
 	@Override

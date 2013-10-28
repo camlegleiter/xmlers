@@ -25,6 +25,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public static final int partCanSeeAll_BIT = 0x32;
 	public static final int partCanEditResponse_BIT = 0x64;
 	public static final int partResponseIsRequired_BIT = 0x128;
+	public static final int RESPONSES_BIT = 0x256;
 
 	private String title;
 	private int id;
@@ -32,6 +33,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	private Queue<Question<?>> questions;
 	private Collection<User> participants;
 	private int ownerId;
+	private ArrayList<ResponseForm> responses;
 	
 	private boolean participantsCanSeeAll;
 	private boolean participantsCanEditResponse;
@@ -40,6 +42,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public Form() {
 		questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
 		participants = new ArrayList<User>();
+		responses = new ArrayList<ResponseForm>();
 	}
 
 	public Form(int id, String title, String description, int ownerId) {
@@ -129,6 +132,10 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 
 	public void add(Question<?> q) {
 		questions.add(q);
+	}
+	
+	public void add(ResponseForm r) {
+		responses.add(r);
 	}
 
 	@Override
@@ -236,9 +243,24 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 					+ "]");
 			form.put("formQuestions", array);
 		}
+		if (bitSet(settings, Form.RESPONSES_BIT)) {
+			JSONArray array = new JSONArray();
+			for(ResponseForm r: responses){
+				array.put(r.getJSON());
+			}
+			form.put("formQuestions", array);
+		}
 		return form;
 	}
 	
+	public ArrayList<ResponseForm> getResponses() {
+		return responses;
+	}
+
+	public void setResponses(ArrayList<ResponseForm> responses) {
+		this.responses = responses;
+	}
+
 	public String getJSONString() {
 		return getJSONString(ALL_BITS, null);
 	}

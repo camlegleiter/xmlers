@@ -3,10 +3,10 @@ package form.utils;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import dbconnect.DBManager;
 import form.Form;
+import form.ResponseForm;
 
 /**
  * Utility class for getting Form information
@@ -56,9 +56,12 @@ public class Forms {
 	 * 				the ID of the form data to retrieve.
 	 * @return
 	 */
-	public static final JSONObject getResponseRecordsForForm(int formId) {
-		JSONObject jsonObject = new JSONObject();
-
-		return jsonObject;
+	public static final JSONArray getResponseRecordsForForm(int formId) {
+		JSONArray formResponses = new JSONArray();
+		List<ResponseForm> responseList = DBManager.getInstance().getResponseForms(formId);
+		for(ResponseForm responseForm: responseList){
+			formResponses.put(responseForm.getJSON());
+		}
+		return formResponses;
 	}
 }

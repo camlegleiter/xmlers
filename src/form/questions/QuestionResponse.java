@@ -11,7 +11,7 @@ import form.User;
  * @param <T> The type of question that this is a response to.
  * @param <E>
  */
-public abstract class QuestionResponse<E> 
+public abstract class QuestionResponse<E> implements IVisitableResponse
 {	
 	/**
 	 * An object that encapsulates what the user meant.

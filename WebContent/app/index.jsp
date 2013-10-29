@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="xmlers" uri="/WEB-INF/tlds/functions.tld" %>
 <%@ page import="form.utils.Forms" %>
 <%@ page import="form.User" %>
-<% User currentUser = (User) session.getAttribute("user"); %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -43,32 +43,12 @@
         <script src="<%= request.getContextPath() %>/assets/js/index/index.content.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/index/index.js"></script>
         
-        <script type="text/javascript">
-            var form1 = {
-                formID: 123456789,
-                formName: 'Form 1',
-                formDescription: 'This is the form thing you are an owner of',
-                formOwner: 123456789,
-                formParticipants: ['test1@example.com', 'test2@example.com', 'test3@example.com'],
-                participantsCanSeeAll: false,
-                formQuestions: new TaskManager.Collections.Questions()
-            };
-            
-            var form2 = {
-                formID: 987654321,
-                formName: 'Form 2',
-                formDescription: 'This is the form thing you are a participant of',
-                formOwner: 123456789,
-                formParticipants: [],
-                participantsCanSeeAll: true,
-                formQuestions: new TaskManager.Collections.Questions()
-            };
-        
+        <script type="text/javascript">        
             $(document).ready(function() {
                 var ownerCollection = new TaskManager.Collections.Forms();
-                ownerCollection.reset(<%= Forms.getFormsUserIsOwnerOf(currentUser != null ? currentUser.getUserID() : -1) %>);
+                ownerCollection.reset(${xmlers:getFormsUserIsOwnerOf(sessionScope.user.getUserID())});
                 var participantCollection = new TaskManager.Collections.Forms();
-                participantCollection.reset(<%= Forms.getFormsUserIsParticipantOf(currentUser != null ? currentUser.getUserID() : -1) %>);
+                participantCollection.reset(${xmlers:getFormsUserIsParticipantOf(sessionScope.user.getUserID())});
                 
                 Index = TaskManager.Index;
                 Index.start({
@@ -102,7 +82,7 @@
                 <p><strong>Participants: </strong><@= getFormParticipants() @></p>
                 <form class="form-inline owner-buttons" action="/app/index" method="POST">
                     <a href="viewResponses.jsp?form=<@= formID @>" class="btn view-records" title="See all of the records for this form.">View Records</a>
-                    <a class="btn edit-form" title="Make changes to this form.">Edit Form</a>
+                    <a href="create.jsp?edit=1&form=<@= formID @>" class="btn edit-form" title="Make changes to this form.">Edit Form</a>
                     <a class="btn reemail-participants" title="Sends a reminder to participants who haven't completed this form to do so.">Re-Email Participants</a>
                 </form>
             </div>

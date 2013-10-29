@@ -1,35 +1,41 @@
 package form;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import form.visitors.*;
-import form.questions.*;
+import java.util.List;
+
+import utils.Utils;
+import form.questions.CheckQuestion;
+import form.questions.CheckQuestionResponse;
+import form.questions.ComplexQuestion;
+import form.questions.ComplexQuestionResponse;
+import form.questions.IVisitable;
+import form.questions.IVisitableResponse;
+import form.questions.RadioQuestion;
+import form.questions.RadioQuestionResponse;
+import form.questions.SelectQuestion;
+import form.questions.SelectQuestionResponse;
+import form.questions.TextQuestion;
+import form.questions.TextResponse;
+import form.visitors.IQuestionVisitor;
+import form.visitors.IResponseVisitor;
 
 public class VisitMechanism {
 	
 	
-	public static <T extends IVisitable> String visit(IQuestionVisitor v, Iterator<T> q, String delimeter)
+	public static <T extends IVisitable> String visit(IQuestionVisitor v, Iterator<T> q, String delimiter)
 	{
-		StringBuilder builder = new StringBuilder();
-		int buildSize;
-		
-		while(q.hasNext())
-		{
-			builder.append(visit(v, q.next()));
-			builder.append(delimeter);
+		List<String> values = new ArrayList<String>();
+		while (q.hasNext()) {
+			values.add(visit(v, q.next()));
 		}
 		
-		buildSize = builder.length();
-		if(buildSize > 0)
-		{
-			builder.delete(buildSize - delimeter.length(), buildSize);
-		}
-		
-		return builder.toString();
+		return Utils.join(delimiter, values);
 	}
 	
-	public static <T extends IVisitable> String visit(IQuestionVisitor v, Iterable<T> q, String delimeter)
+	public static <T extends IVisitable> String visit(IQuestionVisitor v, Iterable<T> q, String delimiter)
 	{
-		return visit(v, q.iterator(), delimeter);
+		return visit(v, q.iterator(), delimiter);
 	}
 	
 	/**
@@ -71,29 +77,19 @@ public class VisitMechanism {
 		return retval;
 	}
 	
-	public static <T extends IVisitableResponse> String visit(IResponseVisitor v, Iterator<T> r, String delimeter)
+	public static <T extends IVisitableResponse> String visit(IResponseVisitor v, Iterator<T> r, String delimiter)
 	{
-		StringBuilder builder = new StringBuilder();
-		int buildSize;
-		
-		while(r.hasNext())
-		{
-			builder.append(visit(v, r.next()));
-			builder.append(delimeter);
+		List<String> values = new ArrayList<String>();
+		while (r.hasNext()) {
+			values.add(visit(v, r.next()));
 		}
 		
-		buildSize = builder.length();
-		if(buildSize > 0)
-		{
-			builder.delete(buildSize - delimeter.length(), buildSize);
-		}
-		
-		return builder.toString();
+		return Utils.join(delimiter, values);
 	}
 	
-	public static <T extends IVisitableResponse> String visit(IResponseVisitor v, Iterable<T> q, String delimeter)
+	public static <T extends IVisitableResponse> String visit(IResponseVisitor v, Iterable<T> q, String delimiter)
 	{
-		return visit(v, q.iterator(), delimeter);
+		return visit(v, q.iterator(), delimiter);
 	}
 	
 	/**

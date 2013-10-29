@@ -156,11 +156,6 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		return new ArrayList<User>(participants);
 	}
 
-	/**
-	 * Returns a copy
-	 * 
-	 * @param u
-	 */
 	public void addParticipant(User u) {
 		participants.add(u);
 	}
@@ -253,7 +248,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			for(ResponseForm r: responses){
 				array.put(r.getJSON());
 			}
-			form.put("formQuestions", array);
+			form.put("responses", array);
 		}
 		return form;
 	}

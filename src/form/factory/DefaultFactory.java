@@ -65,10 +65,11 @@ public class DefaultFactory extends FormFactory {
 		for (int i = 0; i < questions.length(); ++i)
 			f.add(buildQuestion(questions.getJSONObject(i), i));
 		
+		if(!jsonObject.isNull("responses")){
 		JSONArray responses = jsonObject.getJSONArray("responses");
-		for (int i = 0; i < responses.length(); ++i)
-			f.add(buildResponseForm(responses.getJSONObject(i), f.getQuestions(), f.getParticipants()));
-
+			for (int i = 0; i < responses.length(); ++i)
+				f.add(buildResponseForm(responses.getJSONObject(i), f.getQuestions(), f.getParticipants()));
+		}
 		return f;
 	}
 	
@@ -196,11 +197,10 @@ public class DefaultFactory extends FormFactory {
 			Queue<Question<?>> questions, User user) throws JSONException{
 		ResponseForm rf = new ResponseForm();
 		rf.setResponseId(jsonObject.getInt("responseID"));
-		int responseOwnerId = jsonObject.getInt("responseOwner");
-		rf.setResponseOwnerId(responseOwnerId);
+		rf.setResponseOwnerId(jsonObject.getInt("responseOwner"));
 		rf.setResponseOwnerName(jsonObject.getString("responseOwnerName"));
 		
-		JSONArray responses = jsonObject.getJSONArray("responses");
+		JSONArray responses = jsonObject.getJSONArray("formQuestions");
 		for (int i = 0; i < responses.length(); ++i){
 			int questionId = responses.getJSONObject(i).getInt("questionID");
 			Question<?> parentQuestion = null;
@@ -214,6 +214,20 @@ public class DefaultFactory extends FormFactory {
 			}
 			rf.add(buildResponse(responses.getJSONObject(i), i, parentQuestion, user));
 		}
+//		JSONArray responses = jsonObject.getJSONArray("responses");
+//		for (int i = 0; i < responses.length(); ++i){
+//			int questionId = responses.getJSONObject(i).getInt("questionID");
+//			Question<?> parentQuestion = null;
+//			for(Question<?> q: questions){
+//				if(q.getId() == questionId){
+//					parentQuestion = q;
+//				}
+//			}
+//			if(parentQuestion == null){
+//				throw new IllegalArgumentException("Can't find parent question in form");
+//			}
+//			rf.add(buildResponse(responses.getJSONObject(i), i, parentQuestion, user));
+//		}
 		// TODO Auto-generated method stub
 		return rf;
 	}

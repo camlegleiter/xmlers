@@ -14,7 +14,8 @@ public class ResponseForm implements Iterable<QuestionResponse<?>> {
 	public static final int ALL_BITS = -1;
 	public static final int KEY_BIT = 0x1;
 	public static final int RESPONSE_OWNER_BIT = 0x2;
-	public static final int RESPONSES_BIT = 0x4;
+	public static final int RESPONSE_OWNERNAME_BIT = 0x4;
+	public static final int RESPONSES_BIT = 0x8;
 
 	private int id;
 	private int responseOwnerId;
@@ -78,6 +79,9 @@ public class ResponseForm implements Iterable<QuestionResponse<?>> {
 		}
 		if (bitSet(settings, RESPONSE_OWNER_BIT)) {
 			form.put("responseOwner", this.getResponseOwnerId());
+		}
+		if (bitSet(settings, RESPONSE_OWNERNAME_BIT)) {
+			form.put("responseOwnerName", this.getResponseOwnerName());
 		}
 		if (bitSet(settings, RESPONSES_BIT)) {
 			JSONArray array = new JSONArray("["

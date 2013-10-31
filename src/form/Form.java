@@ -2,8 +2,8 @@ package form;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -32,9 +32,9 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	private int id;
 	private String description;
 	private Queue<Question<?>> questions;
-	private Collection<User> participants;
+	private List<User> participants;
 	private int ownerId;
-	private ArrayList<ResponseForm> responses;
+	private List<ResponseForm> responses;
 	
 	private boolean participantsCanSeeAll;
 	private boolean participantsCanEditResponse;
@@ -156,11 +156,6 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		return new ArrayList<User>(participants);
 	}
 
-	/**
-	 * Returns a copy
-	 * 
-	 * @param u
-	 */
 	public void addParticipant(User u) {
 		participants.add(u);
 	}
@@ -253,16 +248,16 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			for(ResponseForm r: responses){
 				array.put(r.getJSON());
 			}
-			form.put("formQuestions", array);
+			form.put("responses", array);
 		}
 		return form;
 	}
 	
-	public ArrayList<ResponseForm> getResponses() {
+	public List<ResponseForm> getResponses() {
 		return responses;
 	}
 
-	public void setResponses(ArrayList<ResponseForm> responses) {
+	public void setResponses(List<ResponseForm> responses) {
 		this.responses = responses;
 	}
 
@@ -307,25 +302,15 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		return 0 != (field & mask);
 	}
 
-	/**
-	 * Does some work that really should have been done by the language. We
-	 * should port all of this to something with Linq ;)
-	 * 
-	 * @author mstrobel
-	 * 
-	 */
-	private class QuestionPriority implements Comparator<Question<?>> {
-		@Override
-		public int compare(Question<?> o1, Question<?> o2) {
-			return o1.getPosition() - o2.getPosition();
-		}
-	}
-
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
 
 	public int getOwnerId() {
 		return ownerId;
+	}
+	
+	public Queue<Question<?>> getQuestions(){
+		return questions;
 	}
 }

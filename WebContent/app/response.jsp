@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="xmlers" uri="/WEB-INF/tlds/functions.tld" %>
+<c:if test="${!empty param.form}">
+    <c:set var="form" value="${xmlers:getInstance().fetchForm(param.form)}"></c:set>
+</c:if>
+<c:set var="isInvalidFormId" value="${form == null}"></c:set>
+<c:set var="userCanSeeForm" value="${!isInvalidFormId && form.containsParticipant(sessionScope.user.getUserID())}"></c:set>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,89 +52,7 @@
         
         <script>
             $(document).ready(function() {
-                // Insert JSP tag to bootstrap model data within the Form constructor 
-                var data = {
-                  "formID":123456789,
-                  "formName":"Example Form",
-                  "formDescription":"Bacon ipsum dolor sit amet cow pork belly deserunt excepteur.",
-                  "formOwner":987654321,
-                  "formParticipants":[
-                    "email1@example.com",
-                    "email2@example.com",
-                    "email3@example.com"
-                  ],
-                  "participantsCanSeeAll":false,
-                  "formQuestions":[
-                    {
-                      "type":"Textbox",
-                      "maxLength":1000,
-                      "prompt":"Duis pork belly salami aute ea, non dolore pork ullamco ut ham hock."
-                    },
-                    {
-                      "type":"Checkbox",
-                      "prompt":"Aliquip ham laboris, bacon jerky tempor magna proident capicola id do voluptate.",
-                      "checkboxes":[
-                        {
-                          "label":"Checkbox1"
-                        },
-                        {
-                          "label":"Checkbox2"
-                        },
-                        {
-                          "label":"Checkbox3"
-                        }
-                      ]
-                    },
-                    {
-                      "type":"Radio",
-                      "prompt":"Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
-                      "radios":[
-                        {
-                          "label":"Radio1"
-                        },
-                        {
-                          "label":"Radio2"
-                        },
-                        {
-                          "label":"Radio3"
-                        }
-                      ]
-                    },
-                    {
-                      "type":"Radio",
-                      "prompt":"Labore cillum capicola short loin et, tempor non in fugiat qui swine occaecat reprehenderit doner.",
-                      "radios":[
-                        {
-                          "label":"Radio1"
-                        },
-                        {
-                          "label":"Radio2"
-                        },
-                        {
-                          "label":"Radio3"
-                        }
-                      ]
-                    },
-                    {
-                      "type":"Select",
-                      "prompt":"Aliquip beef ribs dolore shoulder ad consectetur pork belly minim.",
-                      "isMulti":true,
-                      "options":[
-                        {
-                          "value":"Option1"
-                        },
-                        {
-                          "value":"Option2"
-                        },
-                        {
-                          "value":"Option3"
-                        }
-                      ]
-                    }
-                  ]
-                };
-                
-                var formData = new TaskManager.Models.Form(data);
+                var formData = new TaskManager.Models.Form(${form.getJSON()});
                 
                 Response = TaskManager.Response;
                 Response.start(formData);

@@ -21,7 +21,7 @@ public abstract class QuestionResponse<E> implements IVisitableResponse
 	/**
 	 * A string that uniquely identifies this response.
 	 */
-	private String key;
+	private int key;
 	
 	private Question<E> parent;
 	
@@ -29,7 +29,7 @@ public abstract class QuestionResponse<E> implements IVisitableResponse
 	
 
 
-	public QuestionResponse(String key, Question<E> parent, User author)
+	public QuestionResponse(int key, Question<E> parent, User author)
 	{
 		this.key = key;
 		this.parent = parent;
@@ -59,7 +59,7 @@ public abstract class QuestionResponse<E> implements IVisitableResponse
 	 * The unique identifier string associated with this QuestionResponse.
 	 * @return A string that uniquely identifies this QuestionResponse
 	 */
-	public String getKey() {
+	public int getKey() {
 		return key;
 	}
 
@@ -67,7 +67,7 @@ public abstract class QuestionResponse<E> implements IVisitableResponse
 	 * Updates the unique identifier of this object.
 	 * @param key
 	 */
-	public void setKey(String key) {
+	public void setKey(int key) {
 		this.key = key;
 	}
 

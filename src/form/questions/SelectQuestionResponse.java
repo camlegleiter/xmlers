@@ -7,7 +7,7 @@ import form.questions.CheckQuestion.Entry;
 
 public class SelectQuestionResponse extends CheckQuestionResponse {
 
-	public SelectQuestionResponse(int key, Question<List<Entry>> parent,
+	public SelectQuestionResponse(String key, Question<List<Entry>> parent,
 			User author) {
 		super(key, parent, author);
 	}

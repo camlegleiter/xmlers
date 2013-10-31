@@ -1,10 +1,9 @@
 package form.factory;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import form.Form;
-import form.ResponseForm;
-import form.User;
 import form.questions.Question;
 
 /**
@@ -34,12 +33,4 @@ public abstract class FormFactory {
 	 * 				if the type of question is not defined correctly
 	 */
 	public abstract Question<?> buildQuestion(JSONObject src, int weight) throws JSONException;
-	/**
-	 * Given a JSONObject as source, instantiates a response form.
-	 * @param jsonObject A JSONObject that details the contents of a response form.
-	 * @param user The owner of the response form.
-	 * @return A fully instantiated response Form.
-	 * @throws JSONException
-	 */
-	public abstract ResponseForm buildResponseForm(JSONObject jsonObject, User user) throws JSONException;
 }

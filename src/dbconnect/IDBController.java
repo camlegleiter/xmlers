@@ -37,13 +37,6 @@ public interface IDBController {
 	public boolean upsertForm(Form form);
 
 	/**
-	 * Looks for the parent form for this response form and inserts the response
-	 * form into the corresponding form. 
-	 * @param responseform the response form to upsert into the parent form. 
-	 */
-	public void upsertResponseForm(ResponseForm responseform);
-
-	/**
 	 * Checks if the given user exists in the database. If it does, the user
 	 * information is updated (UPsert). Otherwise, the user is inserted (upSERT)
 	 * as a new form.
@@ -141,5 +134,5 @@ public interface IDBController {
 	 * @param formId
 	 * @return a List of all the responses to the given formId
 	 */
-	public List<ResponseForm> getResponseForms(int formId);
+	List<ResponseForm> getResponseForms(int formId);
 }

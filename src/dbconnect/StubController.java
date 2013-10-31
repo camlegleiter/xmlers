@@ -52,12 +52,6 @@ public class StubController implements IDBController {
 	}
 
 	@Override
-	public void upsertResponseForm(ResponseForm responseform) {
-		Form parentForm = forms.get(responseform.getParentFormId());
-		parentForm.add(responseform);		
-	}
-
-	@Override
 	public boolean upsertUser(User user) {
 		if (!users.containsKey(user.getUserID()))
 			user.setUserID(USER_ID++);
@@ -157,11 +151,11 @@ public class StubController implements IDBController {
 		
 		//RESPONSES
 		//Participant 1 Response
-		ResponseForm p1Response = new ResponseForm(1, participant1.getUserID(), participant1.getFullName(), form.getFormId());
-		TextResponse p1TextQ1Response = new TextResponse(1, textQ1, participant1);
+		ResponseForm p1Response = new ResponseForm(1, participant1.getUserID(), form);
+		TextResponse p1TextQ1Response = new TextResponse("1", textQ1, participant1);
 		p1TextQ1Response.setValue("I am participant 1!");
 		p1Response.add(p1TextQ1Response);
-		RadioQuestionResponse radioQ1Response = new RadioQuestionResponse(2, radioQ1, participant1);
+		RadioQuestionResponse radioQ1Response = new RadioQuestionResponse("2", radioQ1, participant1);
 		CheckQuestion.Entry radioAnswer = radioQ1.new Entry(answers.get(0), true);
 		CheckQuestion.Entry radioAnswer2 = radioQ1.new Entry(answers.get(1), false);
 		ArrayList<CheckQuestion.Entry> radioQ1responseList = new ArrayList<CheckQuestion.Entry>();
@@ -171,8 +165,8 @@ public class StubController implements IDBController {
 		p1Response.add(radioQ1Response);
 		
 		//Participant 2 Response
-		ResponseForm p2Response = new ResponseForm(2, participant2.getUserID(), participant2.getFullName(), form.getFormId());
-		TextResponse p2TextQ1Response = new TextResponse(1, textQ1, participant1);
+		ResponseForm p2Response = new ResponseForm(2, participant2.getUserID(), form);
+		TextResponse p2TextQ1Response = new TextResponse("1", textQ1, participant1);
 		p2TextQ1Response.setValue("I am participant 2!");
 		p2Response.add(p2TextQ1Response);
 		

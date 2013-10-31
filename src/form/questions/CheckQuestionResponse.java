@@ -9,7 +9,7 @@ import form.visitors.IResponseVisitor;
 
 public class CheckQuestionResponse extends QuestionResponse<List<CheckQuestion.Entry>> {
 	
-	public CheckQuestionResponse(int key, Question<List<Entry>> parent, User author) {
+	public CheckQuestionResponse(String key, Question<List<Entry>> parent, User author) {
 		super(key, parent, author);
 		CheckQuestion realParent;
 		if(!(parent instanceof CheckQuestion))

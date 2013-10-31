@@ -18,19 +18,14 @@ public class ResponseForm implements Iterable<QuestionResponse<?>> {
 
 	private int id;
 	private int responseOwnerId;
-	private String responseOwnerName;
-	private int parentFormId;
+	private Form parentForm;
 	private ArrayList<QuestionResponse<?>> responses;
 
-	public ResponseForm() {
-		responses = new ArrayList<QuestionResponse<?>>();
-	}
-	public ResponseForm(int id, int responseOwnerId, String responseOwnerName, int parentFormId) {
-		this();
+	public ResponseForm(int id, int responseOwnerId, Form parentForm) {
 		this.id = id;
-		this.responseOwnerId = responseOwnerId;
-		this.setParentFormId(parentFormId);
-		this.setResponseOwnerName(responseOwnerName);
+		this.setResponseOwnerId(responseOwnerId);
+		this.setParentForm(parentForm);
+		responses = new ArrayList<QuestionResponse<?>>();
 	}
 
 	public void add(QuestionResponse<?> r) {
@@ -51,13 +46,6 @@ public class ResponseForm implements Iterable<QuestionResponse<?>> {
 
 	public void setResponseOwnerId(int responseOwnerId) {
 		this.responseOwnerId = responseOwnerId;
-	}
-
-	public String getResponseOwnerName() {
-		return responseOwnerName;
-	}
-	public void setResponseOwnerName(String responseOwnerName) {
-		this.responseOwnerName = responseOwnerName;
 	}
 
 	public JSONObject getJSON() {
@@ -99,10 +87,13 @@ public class ResponseForm implements Iterable<QuestionResponse<?>> {
 	private static boolean bitSet(int field, int mask) {
 		return 0 != (field & mask);
 	}
-	public int getParentFormId() {
-		return parentFormId;
+
+	public Form getParentForm() {
+		return parentForm;
 	}
-	public void setParentFormId(int parentFormId) {
-		this.parentFormId = parentFormId;
+
+	public void setParentForm(Form parentForm) {
+		this.parentForm = parentForm;
 	}
+
 }

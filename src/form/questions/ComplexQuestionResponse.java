@@ -5,7 +5,7 @@ import form.visitors.IResponseVisitor;
 
 public class ComplexQuestionResponse extends QuestionResponse<String> {
 
-	public ComplexQuestionResponse(String key, Question<String> parent,
+	public ComplexQuestionResponse(int key, Question<String> parent,
 			User author) {
 		super(key, parent, author);
 	}

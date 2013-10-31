@@ -2,7 +2,6 @@ package form;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -303,25 +302,15 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		return 0 != (field & mask);
 	}
 
-	/**
-	 * Does some work that really should have been done by the language. We
-	 * should port all of this to something with Linq ;)
-	 * 
-	 * @author mstrobel
-	 * 
-	 */
-	private class QuestionPriority implements Comparator<Question<?>> {
-		@Override
-		public int compare(Question<?> o1, Question<?> o2) {
-			return o1.getPosition() - o2.getPosition();
-		}
-	}
-
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
 
 	public int getOwnerId() {
 		return ownerId;
+	}
+	
+	public Queue<Question<?>> getQuestions(){
+		return questions;
 	}
 }

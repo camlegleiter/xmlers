@@ -7,7 +7,7 @@ import form.questions.CheckQuestion.Entry;
 
 public class RadioQuestionResponse extends CheckQuestionResponse {
 
-	public RadioQuestionResponse(String key, Question<List<Entry>> parent, User author) {
+	public RadioQuestionResponse(int key, Question<List<Entry>> parent, User author) {
 		super(key, parent, author);
 	}
 	

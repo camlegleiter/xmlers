@@ -128,6 +128,7 @@ public interface IDBController {
 	 * @return a List of all Forms that the given userId is a participant of.
 	 */
 	public List<Form> getParticipantForms(int userId);
+	
 	/**
 	 * Retrieves all the responses to the given form id.
 	 * @param formId

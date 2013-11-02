@@ -146,7 +146,7 @@ public class DefaultFactory extends FormFactory {
 			SelectQuestion question = new SelectQuestion(buildOptionsArray(
 					jsonObject, "options", "value"));
 			question.setPrompt(jsonObject.getString("prompt"));
-			question.setMulti(jsonObject.getBoolean("isMulti"));
+			question.setVariadic(jsonObject.getBoolean("isMulti"));
 			question.setPosition(position);
 			return question;
 		}

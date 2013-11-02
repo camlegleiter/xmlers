@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import form.questions.AbstractVariadicQuestion.Entry;
 import form.questions.CheckQuestionResponse;
 import form.questions.ComplexQuestionResponse;
 import form.questions.RadioQuestionResponse;
 import form.questions.SelectQuestionResponse;
 import form.questions.TextResponse;
-import form.questions.CheckQuestion.Entry;
+
 
 public class JSONVisitorResponse implements IResponseVisitor {
 

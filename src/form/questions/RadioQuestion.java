@@ -1,15 +1,17 @@
 package form.questions;
 
+import java.util.List;
+
 import form.visitors.IQuestionVisitor;
 
-public class RadioQuestion extends CheckQuestion {
+public class RadioQuestion extends AbstractVariadicQuestion {
 	
 	public RadioQuestion(int id, int weight, String prompt, Iterable<String> answers) {
-		super(id, weight, prompt, answers);
+		super(id, weight, prompt, answers, false);
 	}
 
-	public RadioQuestion(CheckQuestion buildCheckQuestion) {
-		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(), buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions());
+	public RadioQuestion(AbstractVariadicQuestion buildCheckQuestion) {
+		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(), buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions(), buildCheckQuestion.getVariadic());
 	}
 	
 	public RadioQuestion(Iterable<String> options) {
@@ -19,5 +21,20 @@ public class RadioQuestion extends CheckQuestion {
 	@Override
 	public void accept(IQuestionVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	@Override
+	public Question<List<Entry>> clone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public void setVariadic(boolean value)
+	{
+		if(value == true)
+		{
+			throw new IllegalArgumentException("RadioQuestions must not be variadic.");
+		}
 	}
 }

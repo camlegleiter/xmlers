@@ -66,7 +66,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		
 		object.put("type", "Select");
 		object.put("prompt", sq.getPrompt());
-		object.put("isMulti", sq.isMulti());
+		object.put("isMulti", sq.getVariadic());
 		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
 		for (String option : sq.getOptions()) {
 			options.add(new JSONObject().put("option", option));

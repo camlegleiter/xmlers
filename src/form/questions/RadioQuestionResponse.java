@@ -1,38 +1,17 @@
 package form.questions;
 
-import java.util.List;
-
 import form.User;
-import form.questions.CheckQuestion.Entry;
+import form.visitors.IResponseVisitor;
 
-public class RadioQuestionResponse extends CheckQuestionResponse {
+public class RadioQuestionResponse extends VariadicQuestionResponse {
 
-	public RadioQuestionResponse(String key, Question<List<Entry>> parent, User author) {
+	public RadioQuestionResponse(String key, AbstractVariadicQuestion parent, User author) {
 		super(key, parent, author);
 	}
-	
-	/**
-	 * Validates that there is no more than one option selected for the radio button.
-	 */
+
 	@Override
-	public void setValue(List<CheckQuestion.Entry> answers)
-	{
-		boolean encountered;
-		
-		encountered = false;
-		
-		for(CheckQuestion.Entry entry : answers)
-		{
-			if(encountered)
-			{
-				if(entry.getChecked())
-				{
-					throw new IllegalArgumentException("Radio buttons are not allowed to have more than one response.");
-				}
-				encountered = true;
-			}
-		}
-		
-		super.setValue(answers);
+	public void accept(IResponseVisitor visitor) {
+		visitor.visit(this);
 	}
+	
 }

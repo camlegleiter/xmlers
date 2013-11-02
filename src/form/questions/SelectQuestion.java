@@ -1,5 +1,9 @@
 package form.questions;
 
+import java.util.List;
+
+import form.visitors.IQuestionVisitor;
+
 /**
  * A set of radio buttons and a select question resolve the same logically.
  * However, their appearances differ. For that reason, we have a basic extension
@@ -8,32 +12,30 @@ package form.questions;
  * @author mstrobel
  * 
  */
-public class SelectQuestion extends RadioQuestion {
-
-	private boolean isMulti;
+public class SelectQuestion extends AbstractVariadicQuestion {
 	
 	public SelectQuestion(int id, int weight, String prompt, boolean isMulti,
 			Iterable<String> answers) {
-		super(id, weight, prompt, answers);
-		this.isMulti = isMulti;
+		super(id, weight, prompt, answers, isMulti);
 	}
 
-	public SelectQuestion(CheckQuestion buildCheckQuestion) {
+	public SelectQuestion(AbstractVariadicQuestion buildCheckQuestion, boolean isMulti) {
 		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(),
-				buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions());
-		this.isMulti = false;
+				buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions(), isMulti);
 	}
 	
 	public SelectQuestion(Iterable<String> options) {
 		super(options);
-		this.isMulti = false;
+	}
+
+	@Override
+	public void accept(IQuestionVisitor visitor) {
+		visitor.visit(this);		
 	}
 	
-	public boolean isMulti() {
-		return isMulti;
-	}
-	
-	public void setMulti(boolean isMulti) {
-		this.isMulti = isMulti;
+	@Override
+	public Question<List<Entry>> clone() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

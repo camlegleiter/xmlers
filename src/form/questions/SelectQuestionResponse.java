@@ -1,36 +1,17 @@
 package form.questions;
-
-import java.util.List;
-
 import form.User;
-import form.questions.CheckQuestion.Entry;
+import form.visitors.IResponseVisitor;
 
-public class SelectQuestionResponse extends CheckQuestionResponse {
+public class SelectQuestionResponse extends VariadicQuestionResponse {
 
-	public SelectQuestionResponse(String key, Question<List<Entry>> parent,
+	public SelectQuestionResponse(String key, AbstractVariadicQuestion parent,
 			User author) {
 		super(key, parent, author);
 	}
 
-	/**
-	 * Validates that there is no more than one option selected for the select
-	 * button.
-	 */
 	@Override
-	public void setValue(List<CheckQuestion.Entry> answers) {
-		boolean encountered;
-
-		encountered = false;
-
-		for (CheckQuestion.Entry entry : answers) {
-			if (encountered) {
-				if (entry.getChecked()) {
-					throw new IllegalArgumentException(
-							"Select buttons are not allowed to have more than one response.");
-				}
-				encountered = true;
-			}
-		}
-		super.setValue(answers);
+	public void accept(IResponseVisitor visitor) {
+		visitor.visit(this);
 	}
+
 }

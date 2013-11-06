@@ -20,6 +20,12 @@ public class XmlController implements IDBController {
 	private final static String USER_DIRECTORY_STRING;
 	private final static File FORM_DIRECTORY;
 	
+	public enum UserAccessor {
+		ID,
+		EMAIL,
+		USERNAME
+	}
+	
 	/**
 	 * 
 	 */
@@ -253,6 +259,12 @@ public class XmlController implements IDBController {
 	private File getUserFile(int userId)
 	{
 		return new File(USER_DIRECTORY.getAbsolutePath(), userId + EXTENSION);
+	}
+	
+	private File getUserFile(UserAccessor method, Object data)
+	{
+		return null;
+		
 	}
 	
 	private File getFormFile(int formId)

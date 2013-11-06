@@ -11,6 +11,11 @@ public class UserConverter implements IConverter<User, dbconnect.dao.User> {
 		INSTANCE = new UserConverter();
 	}
 	
+	private UserConverter()
+	{
+		//Intentionally left blank.
+	}
+	
 	public static IConverter<User, dbconnect.dao.User> getInstance()
 	{
 		return INSTANCE;
@@ -19,8 +24,12 @@ public class UserConverter implements IConverter<User, dbconnect.dao.User> {
 	
 	@Override
 	public User convert(dbconnect.dao.User other) {
-		// TODO Auto-generated method stub
-		return null;
+		User retval;
+		
+		retval = new User();
+		
+		
+		return retval;
 	}
 
 	@Override

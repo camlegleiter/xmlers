@@ -12,6 +12,23 @@ public class VariadicQuestionConverter implements IConverter<form.questions.Abst
 	public static final String RADIO_STRING = "radio";
 	public static final String CHECK_STRING  = "check";
 	
+	private static final VariadicQuestionConverter INSTANCE;
+	
+	static
+	{
+		INSTANCE = new VariadicQuestionConverter();
+	}
+	
+	private VariadicQuestionConverter()
+	{
+		//Intentionally Left Blank.
+	}
+	
+	public static VariadicQuestionConverter getInstance()
+	{
+		return INSTANCE;
+	}
+	
 	@Override
 	public AbstractVariadicQuestion convert(VariadicBooleanQuestion other) {
 		int id;

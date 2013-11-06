@@ -132,6 +132,7 @@
 					<xs:choice maxOccurs="unbounded" minOccurs="0">
 						<xs:element name="textQuestion" type="textQuestion"/>
 						<xs:element name="VariadicBooleanQuestion" type="VariadicBooleanQuestion" />
+						<xs:element name="ComplexQuestion" type="ComplexQuestion" />
 					</xs:choice>
 				</xs:sequence>
     		</xs:complexType>

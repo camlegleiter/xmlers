@@ -9,6 +9,13 @@ public class CheckQuestion extends AbstractVariadicQuestion {
 		super(opts);
 	}
 	
+	/**
+	 * 
+	 * @param id The unique identifier associated with this question.
+	 * @param weight The poisition in the form that this question occupies.
+	 * @param prompt The string used to describe this question.
+	 * @param options The enumerated options that may answer this question.
+	 */
 	public CheckQuestion(int id, int weight, String prompt, Iterable<String> options)
 	{
 		super(id, weight, prompt, options, true);

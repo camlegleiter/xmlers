@@ -8,8 +8,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import dbconnect.dao.FormConverter;
-import dbconnect.dao.UserConverter;
+import dbconnect.converters.FormConverter;
+import dbconnect.converters.UserConverter;
 import form.Form;
 import form.ResponseForm;
 import form.User;

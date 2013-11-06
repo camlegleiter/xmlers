@@ -6,7 +6,7 @@ import form.questions.CheckQuestion;
 import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 
-public class QuestionConverter implements IConverter<form.questions.AbstractVariadicQuestion, VariadicBooleanQuestion> {
+public class VariadicQuestionConverter implements IConverter<form.questions.AbstractVariadicQuestion, VariadicBooleanQuestion> {
 	
 	public static final String SELECT_STRING = "select";
 	public static final String RADIO_STRING = "radio";

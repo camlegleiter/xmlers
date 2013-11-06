@@ -12,24 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for ComplexQuestion complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="ComplexQuestion">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{http://www.example.org/Form}question">
  *       &lt;sequence>
- *         &lt;element name="user" type="{http://www.example.org/Users}user" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="question" type="{http://www.example.org/Form}question" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -37,42 +35,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "user"
+@XmlType(name = "ComplexQuestion", propOrder = {
+    "question"
 })
-@XmlRootElement(name = "users", namespace = "http://www.example.org/Users")
-public class Users {
+public class ComplexQuestion
+    extends Question
+{
 
-    @XmlElement(namespace = "http://www.example.org/Users")
-    protected List<User> user;
+    protected List<Question> question;
 
     /**
-     * Gets the value of the user property.
+     * Gets the value of the question property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the user property.
+     * This is why there is not a <CODE>set</CODE> method for the question property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getUser().add(newItem);
+     *    getQuestion().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link User }
+     * {@link Question }
      * 
      * 
      */
-    public List<User> getUser() {
-        if (user == null) {
-            user = new ArrayList<User>();
+    public List<Question> getQuestion() {
+        if (question == null) {
+            question = new ArrayList<Question>();
         }
-        return this.user;
+        return this.question;
     }
 
 }

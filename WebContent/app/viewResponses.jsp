@@ -5,12 +5,13 @@
 <%@ page import="form.Form" %>
 <%@ page import="form.User" %>
 <%@ page import="form.utils.Forms" %>
-<%@ page import="utils.Utils" %>
 <!DOCTYPE html>
-<c:set var="DBInstance" value="${xmlers:getInstance()}"></c:set>
-<c:set var="form" value="${DBInstance.fetchForm(param.form)}"></c:set>
+<c:if test="${!empty param.form}">
+	<c:set var="DBInstance" value="${xmlers:getInstance()}"></c:set>
+    <c:set var="form" value="${DBInstance.fetchForm(param.form)}"></c:set>
+</c:if>
 <c:set var="isInvalidFormId" value="${form == null}"></c:set>
-<c:set var="userCanSeeForm" value="${form.getOwnerId() == sessionScope.user.getUserID() || form.containsParticipant(sessionScope.user.getUserID())}"></c:set>
+<c:set var="userCanSeeForm" value="${!isInvalidFormId && form.containsParticipant(sessionScope.user.getUserID())}"></c:set>
 <html>
 	<head>
         <c:import url="/app/includes/header.jsp">

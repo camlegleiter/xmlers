@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="xmlers" uri="/WEB-INF/tlds/functions.tld" %>
 <c:if test="${!empty param.form}">
-    <c:set var="form" value="${xmlers:getInstance().fetchForm(param.form)}"></c:set>
+	<c:set var="DBInstance" value="${xmlers:getInstance()}"></c:set>
+    <c:set var="form" value="${DBInstance.fetchForm(param.form)}"></c:set>
 </c:if>
 <c:set var="isInvalidFormId" value="${form == null}"></c:set>
 <c:set var="userCanSeeForm" value="${!isInvalidFormId && form.containsParticipant(sessionScope.user.getUserID())}"></c:set>

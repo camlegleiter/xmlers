@@ -1,6 +1,6 @@
-package dbconnect.converters;
+package dbconnect.xml.converters;
 
-import dbconnect.dao.VariadicBooleanQuestion;
+import dbconnect.xml.dao.VariadicBooleanQuestion;
 import form.questions.AbstractVariadicQuestion;
 import form.questions.CheckQuestion;
 import form.questions.RadioQuestion;

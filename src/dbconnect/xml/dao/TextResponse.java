@@ -6,7 +6,7 @@
 //
 
 
-package dbconnect.dao;
+package dbconnect.xml.dao;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

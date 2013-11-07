@@ -17,7 +17,7 @@ public class JAXBVisitor extends AbstractQuestionVisitor {
 	static
 	{
 		try {
-			JAXBContext formContext = JAXBContext.newInstance(dbconnect.dao.Form.class);
+			JAXBContext formContext = JAXBContext.newInstance(dbconnect.xml.dao.Form.class);
 			FORM_MARSHALLER = formContext.createMarshaller();
 		} catch (JAXBException e) {
 			e.printStackTrace();

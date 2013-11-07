@@ -6,7 +6,7 @@
 //
 
 
-package dbconnect.dao;
+package dbconnect.xml.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ComplexQuestion complex type.
+ * <p>Java class for VariadicBooleanResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ComplexQuestion">
+ * &lt;complexType name="VariadicBooleanResponse">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.example.org/Form}question">
+ *     &lt;extension base="{http://www.example.org/Form}response">
  *       &lt;sequence>
- *         &lt;element name="question" type="{http://www.example.org/Form}question" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="optionResponse" type="{http://www.example.org/Form}VariadicBooleanEntry" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -35,42 +35,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ComplexQuestion", propOrder = {
-    "question"
+@XmlType(name = "VariadicBooleanResponse", propOrder = {
+    "optionResponse"
 })
-public class ComplexQuestion
-    extends Question
+public class VariadicBooleanResponse
+    extends Response
 {
 
-    protected List<Question> question;
+    protected List<VariadicBooleanEntry> optionResponse;
 
     /**
-     * Gets the value of the question property.
+     * Gets the value of the optionResponse property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the question property.
+     * This is why there is not a <CODE>set</CODE> method for the optionResponse property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getQuestion().add(newItem);
+     *    getOptionResponse().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Question }
+     * {@link VariadicBooleanEntry }
      * 
      * 
      */
-    public List<Question> getQuestion() {
-        if (question == null) {
-            question = new ArrayList<Question>();
+    public List<VariadicBooleanEntry> getOptionResponse() {
+        if (optionResponse == null) {
+            optionResponse = new ArrayList<VariadicBooleanEntry>();
         }
-        return this.question;
+        return this.optionResponse;
     }
 
 }

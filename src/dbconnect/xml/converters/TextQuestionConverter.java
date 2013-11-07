@@ -1,9 +1,9 @@
-package dbconnect.converters;
+package dbconnect.xml.converters;
 
 import form.questions.TextQuestion;
 
 public class TextQuestionConverter implements
-		IConverter<TextQuestion, dbconnect.dao.TextQuestion> {
+		IConverter<TextQuestion, dbconnect.xml.dao.TextQuestion> {
 	
 	private final static TextQuestionConverter INSTANCE;
 	
@@ -23,7 +23,7 @@ public class TextQuestionConverter implements
 	}
 	
 	@Override
-	public TextQuestion convert(dbconnect.dao.TextQuestion other) {
+	public TextQuestion convert(dbconnect.xml.dao.TextQuestion other) {
 		
 		TextQuestion cq;
 		
@@ -39,11 +39,11 @@ public class TextQuestionConverter implements
 	}
 
 	@Override
-	public dbconnect.dao.TextQuestion unconvert(TextQuestion other) {
+	public dbconnect.xml.dao.TextQuestion unconvert(TextQuestion other) {
 		
-		dbconnect.dao.TextQuestion cq;
+		dbconnect.xml.dao.TextQuestion cq;
 		
-		cq = new dbconnect.dao.TextQuestion();
+		cq = new dbconnect.xml.dao.TextQuestion();
 		
 		cq.setPrompt(other.getPrompt());
 		cq.setId(Integer.toString(other.getId()));

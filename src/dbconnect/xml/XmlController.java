@@ -1,4 +1,4 @@
-package dbconnect;
+package dbconnect.xml;
 
 import java.io.File;
 import java.util.List;
@@ -8,8 +8,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import dbconnect.converters.FormConverter;
-import dbconnect.converters.UserConverter;
+import dbconnect.IDBController;
+import dbconnect.xml.converters.FormConverter;
+import dbconnect.xml.converters.UserConverter;
 import form.Form;
 import form.ResponseForm;
 import form.User;
@@ -102,8 +103,8 @@ public class XmlController implements IDBController {
 		
 		
 		try {
-			JAXBContext formContext = JAXBContext.newInstance(dbconnect.dao.Form.class);
-			JAXBContext userContext = JAXBContext.newInstance(dbconnect.dao.User.class);
+			JAXBContext formContext = JAXBContext.newInstance(dbconnect.xml.dao.Form.class);
+			JAXBContext userContext = JAXBContext.newInstance(dbconnect.xml.dao.User.class);
 			
 			FORM_MARSHALLER = formContext.createMarshaller();
 			FORM_UNMARSHALLER = formContext.createUnmarshaller();
@@ -137,7 +138,7 @@ public class XmlController implements IDBController {
 	@Override
 	public boolean upsertForm(Form form) {
 		boolean success;
-		dbconnect.dao.Form formDAO;
+		dbconnect.xml.dao.Form formDAO;
 			
 		formDAO = FormConverter.getInstance().unconvert(form);
 		
@@ -154,7 +155,7 @@ public class XmlController implements IDBController {
 	@Override
 	public boolean upsertUser(User user) {
 		boolean success;
-		dbconnect.dao.User userDAO;
+		dbconnect.xml.dao.User userDAO;
 		
 		userDAO = UserConverter.getInstance().unconvert(user);
 		
@@ -171,13 +172,13 @@ public class XmlController implements IDBController {
 	@Override
 	public Form fetchForm(int id) {
 		Form form;
-		dbconnect.dao.Form formDAO;
+		dbconnect.xml.dao.Form formDAO;
 		if(!formExists(id))
 		{
 			return null;
 		}
 		try {
-			formDAO = (dbconnect.dao.Form) FORM_UNMARSHALLER.unmarshal(getFormFile(id));
+			formDAO = (dbconnect.xml.dao.Form) FORM_UNMARSHALLER.unmarshal(getFormFile(id));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 			return null;
@@ -191,7 +192,7 @@ public class XmlController implements IDBController {
 	@Override
 	public User fetchUser(int id) {
 		User user;
-		dbconnect.dao.User userDAO;
+		dbconnect.xml.dao.User userDAO;
 		
 		if(!userExists(id))
 		{
@@ -199,7 +200,7 @@ public class XmlController implements IDBController {
 		}		
 		
 		try {
-			userDAO = (dbconnect.dao.User) USER_UNMARSHALLER.unmarshal(getUserFile(id));
+			userDAO = (dbconnect.xml.dao.User) USER_UNMARSHALLER.unmarshal(getUserFile(id));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 			return null;

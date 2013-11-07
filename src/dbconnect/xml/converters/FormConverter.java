@@ -1,23 +1,23 @@
-package dbconnect.converters;
+package dbconnect.xml.converters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dbconnect.dao.TextQuestion;
-import dbconnect.dao.TextResponse;
-import dbconnect.dao.VariadicBooleanEntry;
-import dbconnect.dao.VariadicBooleanQuestion;
-import dbconnect.dao.VariadicBooleanResponse;
+import dbconnect.xml.dao.TextQuestion;
+import dbconnect.xml.dao.TextResponse;
+import dbconnect.xml.dao.VariadicBooleanEntry;
+import dbconnect.xml.dao.VariadicBooleanQuestion;
+import dbconnect.xml.dao.VariadicBooleanResponse;
 import form.Form;
 import form.questions.AbstractVariadicQuestion;
 import form.questions.Question;
 import form.questions.AbstractVariadicQuestion.Entry;
 
-public class FormConverter implements IConverter<Form, dbconnect.dao.Form> {
+public class FormConverter implements IConverter<Form, dbconnect.xml.dao.Form> {
 
-	private final static IConverter<Form, dbconnect.dao.Form> INSTANCE;
+	private final static IConverter<Form, dbconnect.xml.dao.Form> INSTANCE;
 		
 	static
 	{
@@ -29,13 +29,13 @@ public class FormConverter implements IConverter<Form, dbconnect.dao.Form> {
 		//Intentionally Left Blank.
 	}
 	
-	public static IConverter<Form, dbconnect.dao.Form> getInstance()
+	public static IConverter<Form, dbconnect.xml.dao.Form> getInstance()
 	{
 		return INSTANCE;
 	}
 	
 	@Override
-	public Form convert(dbconnect.dao.Form other) {
+	public Form convert(dbconnect.xml.dao.Form other) {
 		
 		Form retval;
 		retval = new Form();
@@ -47,15 +47,15 @@ public class FormConverter implements IConverter<Form, dbconnect.dao.Form> {
 		loadedQuestions = new HashMap<Integer, form.questions.Question<?>>();
 		
 		//Convert the questions individually
-		for(dbconnect.dao.Question q : other.getQuestions().getTextQuestionOrVariadicBooleanQuestionOrComplexQuestion())
+		for(dbconnect.xml.dao.Question q : other.getQuestions().getTextQuestionOrVariadicBooleanQuestionOrComplexQuestion())
 		{
 			form.questions.Question<?> cq;
 			
-			if(q instanceof dbconnect.dao.VariadicBooleanQuestion)
+			if(q instanceof dbconnect.xml.dao.VariadicBooleanQuestion)
 			{
 				cq = VariadicQuestionConverter.getInstance().convert((VariadicBooleanQuestion) q);
 			}
-			else if(q instanceof dbconnect.dao.TextQuestion)
+			else if(q instanceof dbconnect.xml.dao.TextQuestion)
 			{
 				cq = TextQuestionConverter.getInstance().convert((TextQuestion) q);
 			}
@@ -68,22 +68,22 @@ public class FormConverter implements IConverter<Form, dbconnect.dao.Form> {
 		}
 		
 		//Load and link responses to questions.
-		for(dbconnect.dao.Response resp : other.getResponses().getTextResponseOrVariadicBooleanResponseOrComplexQuestionResponse())
+		for(dbconnect.xml.dao.Response resp : other.getResponses().getTextResponseOrVariadicBooleanResponseOrComplexQuestionResponse())
 		{
 			Integer parentID = Integer.parseInt(resp.getParent());			
 			Question<?> parentQuestion = loadedQuestions.get(parentID);
 			Integer authorID = Integer.parseInt(resp.getAuthor());
 			
-			if(resp instanceof dbconnect.dao.TextResponse)
+			if(resp instanceof dbconnect.xml.dao.TextResponse)
 			{
-				dbconnect.dao.TextResponse tr = (TextResponse) resp;
+				dbconnect.xml.dao.TextResponse tr = (TextResponse) resp;
 				((form.questions.TextQuestion) parentQuestion).setResponse(authorID, tr.getValue());
 			}
-			else if(resp instanceof dbconnect.dao.VariadicBooleanResponse)
+			else if(resp instanceof dbconnect.xml.dao.VariadicBooleanResponse)
 			{
 				List<Entry> optionList;
 				EntryConverter ec;
-				dbconnect.dao.VariadicBooleanResponse vbr = (VariadicBooleanResponse) resp;
+				dbconnect.xml.dao.VariadicBooleanResponse vbr = (VariadicBooleanResponse) resp;
 				form.questions.AbstractVariadicQuestion realParent = (form.questions.AbstractVariadicQuestion) parentQuestion;
 				
 				ec = new EntryConverter(realParent);
@@ -108,7 +108,7 @@ public class FormConverter implements IConverter<Form, dbconnect.dao.Form> {
 	}
 
 	@Override
-	public dbconnect.dao.Form unconvert(Form other) {
+	public dbconnect.xml.dao.Form unconvert(Form other) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -120,7 +120,7 @@ public class FormConverter implements IConverter<Form, dbconnect.dao.Form> {
 	 * 	fundamentally hinged with the implementation of a VariadicBooleanQuestion.
 	 *
 	 */
-	public static class EntryConverter implements IConverter<Entry, dbconnect.dao.VariadicBooleanEntry>
+	public static class EntryConverter implements IConverter<Entry, dbconnect.xml.dao.VariadicBooleanEntry>
 	{
 		/**
 		 * Links to the question with the list of options that the Entry relies on.

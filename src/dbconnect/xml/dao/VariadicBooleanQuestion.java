@@ -6,7 +6,7 @@
 //
 
 
-package dbconnect.dao;
+package dbconnect.xml.dao;
 
 import java.util.ArrayList;
 import java.util.List;

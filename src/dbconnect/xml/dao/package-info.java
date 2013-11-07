@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.example.org/Form", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package dbconnect.dao;
+package dbconnect.xml.dao;

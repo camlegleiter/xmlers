@@ -6,28 +6,30 @@
 //
 
 
-package dbconnect.dao;
+package dbconnect.xml.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for VariadicBooleanResponse complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="VariadicBooleanResponse">
+ * &lt;complexType>
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.example.org/Form}response">
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="optionResponse" type="{http://www.example.org/Form}VariadicBooleanEntry" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="user" type="{http://www.example.org/Users}user" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *     &lt;/extension>
+ *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -35,42 +37,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "VariadicBooleanResponse", propOrder = {
-    "optionResponse"
+@XmlType(name = "", propOrder = {
+    "user"
 })
-public class VariadicBooleanResponse
-    extends Response
-{
+@XmlRootElement(name = "users", namespace = "http://www.example.org/Users")
+public class Users {
 
-    protected List<VariadicBooleanEntry> optionResponse;
+    @XmlElement(namespace = "http://www.example.org/Users")
+    protected List<User> user;
 
     /**
-     * Gets the value of the optionResponse property.
+     * Gets the value of the user property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the optionResponse property.
+     * This is why there is not a <CODE>set</CODE> method for the user property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getOptionResponse().add(newItem);
+     *    getUser().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link VariadicBooleanEntry }
+     * {@link User }
      * 
      * 
      */
-    public List<VariadicBooleanEntry> getOptionResponse() {
-        if (optionResponse == null) {
-            optionResponse = new ArrayList<VariadicBooleanEntry>();
+    public List<User> getUser() {
+        if (user == null) {
+            user = new ArrayList<User>();
         }
-        return this.optionResponse;
+        return this.user;
     }
 
 }

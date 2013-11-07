@@ -6,7 +6,7 @@
 //
 
 
-package dbconnect.dao;
+package dbconnect.xml.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ComplexQuestionResponse complex type.
+ * <p>Java class for ComplexQuestion complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ComplexQuestionResponse">
+ * &lt;complexType name="ComplexQuestion">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.example.org/Form}response">
+ *     &lt;extension base="{http://www.example.org/Form}question">
  *       &lt;sequence>
- *         &lt;element name="response" type="{http://www.example.org/Form}response" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="question" type="{http://www.example.org/Form}question" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -35,42 +35,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ComplexQuestionResponse", propOrder = {
-    "response"
+@XmlType(name = "ComplexQuestion", propOrder = {
+    "question"
 })
-public class ComplexQuestionResponse
-    extends Response
+public class ComplexQuestion
+    extends Question
 {
 
-    protected List<Response> response;
+    protected List<Question> question;
 
     /**
-     * Gets the value of the response property.
+     * Gets the value of the question property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the response property.
+     * This is why there is not a <CODE>set</CODE> method for the question property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getResponse().add(newItem);
+     *    getQuestion().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Response }
+     * {@link Question }
      * 
      * 
      */
-    public List<Response> getResponse() {
-        if (response == null) {
-            response = new ArrayList<Response>();
+    public List<Question> getQuestion() {
+        if (question == null) {
+            question = new ArrayList<Question>();
         }
-        return this.response;
+        return this.question;
     }
 
 }

@@ -43,7 +43,7 @@
         <script src="<%= request.getContextPath() %>/assets/js/index/index.content.js"></script>
         <script src="<%= request.getContextPath() %>/assets/js/index/index.js"></script>
         
-        <script type="text/javascript">        
+        <script type="text/javascript">
             $(document).ready(function() {
                 var ownerCollection = new TaskManager.Collections.Forms();
                 ownerCollection.reset(${xmlers:getFormsUserIsOwnerOf(sessionScope.user.getUserID())});

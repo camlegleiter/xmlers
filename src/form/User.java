@@ -1,11 +1,8 @@
 package form;
 
-
 import java.security.SecureRandom;
 
 import org.apache.commons.codec.binary.Base64;
-
-import utils.Utils;
 
 public class User {
 	private int id;
@@ -18,11 +15,11 @@ public class User {
 	public User()
 	{
 		id = -1;
-		userName = Utils.EMPTY_STRING;
-		firstName = Utils.EMPTY_STRING;
-		lastName = Utils.EMPTY_STRING;
-		email = Utils.EMPTY_STRING;
-		password = Utils.EMPTY_STRING;
+		userName = "";
+		firstName = "";
+		lastName = "";
+		email = "";
+		password = "";
 	}
 	
 	public User(User other) {
@@ -106,7 +103,7 @@ public class User {
 	 * @return
 	 */
 	public String getFullName() {
-		return Utils.join(" ", firstName, lastName);
+		return new StringBuilder().append(firstName).append(" ").append(lastName).toString();
 	}
 	
 

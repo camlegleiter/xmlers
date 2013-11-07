@@ -1,24 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="xmlers" uri="/WEB-INF/tlds/functions.tld" %>
 <%@ page import="dbconnect.DBManager" %>
 <%@ page import="form.Form" %>
 <%@ page import="form.User" %>
 <%@ page import="form.utils.Forms" %>
 <%@ page import="utils.Utils" %>
-<c:set var="formId" value="-1"></c:set>
-<c:set var="isInvalidFormId" value="false"></c:set>
-<c:catch var="invalidFormIdException">
-    <c:set var="formId" value="${Integer.parseInt(param.form)}"></c:set>
-</c:catch>
-<c:if test="">
-    <c:set var="isInvalidFormId" value="true"></c:set>
-</c:if>
-<c:set var="form" value="${DBManager.getInstance().fetchForm(formId)}"></c:set>
-<c:set var="isInvalidFormId" value="${form == null}"></c:set>
-<c:set var="currentUser" value="${sessionScope.user})"></c:set>
-<c:set var="userCanSeeForm" value="${form.getOwnerId() == user.getUserID() || form.participantsCanSeeAll() || form.containsParticipant(user.getUserID())}"></c:set>
 <!DOCTYPE html>
+<c:set var="DBInstance" value="${xmlers:getInstance()}"></c:set>
+<c:set var="form" value="${DBInstance.fetchForm(param.form)}"></c:set>
+<c:set var="isInvalidFormId" value="${form == null}"></c:set>
+<c:set var="userCanSeeForm" value="${form.getOwnerId() == sessionScope.user.getUserID() || form.containsParticipant(sessionScope.user.getUserID())}"></c:set>
 <html>
 	<head>
         <c:import url="/app/includes/header.jsp">
@@ -55,7 +47,7 @@
                     <h2>Uh oh!</h2>
                     <p>We don't seem to have a record of this form. Return to the <a href="<%= request.getContextPath() %>/app/index.jsp">home page</a> and try a different form.</p>
     </c:when>
-    <c:when test="${userCanSeeForm}">
+    <c:when test="${!userCanSeeForm}">
                     <h2>Uh oh!</h2>
                     <p>You are not allowed to view data for this form. Check with the owner of the form to verify your access to this data.</p>
     </c:when>             
@@ -81,7 +73,7 @@
             $(document).ready(function() {
                 View = TaskManager.View;
                 View.start({
-                    model: new TaskManager.Models.View("${Forms.getResponseRecordsForForm(${formId})")
+                    model: new TaskManager.Models.View(${xmlers:getResponseRecordsForForm(param.form)})
                 }); 
             });
         </script>

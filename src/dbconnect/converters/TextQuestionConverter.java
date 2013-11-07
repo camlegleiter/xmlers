@@ -33,6 +33,7 @@ public class TextQuestionConverter implements
 		cq.setMaxLength(other.getMaxLength().intValue());
 		cq.setPrompt(other.getPrompt());
 		cq.setPosition(other.getPriority().intValue());
+		cq.setDefaultAnswer(other.getDefault());
 		
 		return cq;
 	}
@@ -47,9 +48,10 @@ public class TextQuestionConverter implements
 		cq.setPrompt(other.getPrompt());
 		cq.setId(Integer.toString(other.getId()));
 		cq.setMaxLength(new Long(other.getMaxLength()));
-		cq.setPriority(new Long(other.getPosition()));		
+		cq.setPriority(new Long(other.getPosition()));
+		cq.setDefault(other.getDefaultAnswer());
 		
-		return null;
+		return cq;
 	}
 
 }

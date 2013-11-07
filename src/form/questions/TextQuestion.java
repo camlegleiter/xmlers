@@ -4,7 +4,7 @@ import form.visitors.IQuestionVisitor;
 
 public class TextQuestion extends Question<String> {
 
-
+	private String defaultAnswer;
 	private int maxLength;
 
 	public TextQuestion()
@@ -49,6 +49,14 @@ public class TextQuestion extends Question<String> {
 			throw new IllegalArgumentException(
 					"The maximum length of a string must be greater than zero.");
 		}
+	}
+
+	public String getDefaultAnswer() {
+		return defaultAnswer;
+	}
+
+	public void setDefaultAnswer(String defaultAnswer) {
+		this.defaultAnswer = defaultAnswer;
 	}
 
 	@Override

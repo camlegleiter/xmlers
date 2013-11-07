@@ -213,8 +213,26 @@ public class XmlController implements IDBController {
 	
 	@Override
 	public User fetchUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		User user;
+		dbconnect.xml.dao.User userDAO;
+		File userFile = getUserFile(UserAccessor.USERNAME, username); 
+		
+		if(null == userFile)
+		{
+			return null;
+		}
+		
+		try {
+			userDAO = (dbconnect.xml.dao.User) USER_UNMARSHALLER.unmarshal(userFile);
+		}
+		catch (JAXBException e){
+			e.printStackTrace();
+			return null;
+		}
+		
+		user = UserConverter.getInstance().convert(userDAO);
+		
+		return user;
 	}
 	
 	@Override

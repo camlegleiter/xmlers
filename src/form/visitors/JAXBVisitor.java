@@ -26,8 +26,7 @@ public class JAXBVisitor extends AbstractQuestionVisitor {
 	}
 	
 	@Override
-	public String visit(TextQuestion tq) {
-		
+	public String visit(TextQuestion tq) {		
 		// TODO Auto-generated method stub
 		return null;
 	}

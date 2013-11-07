@@ -65,13 +65,13 @@ public class JSONVisitorResponse extends JSONVisitor {
 		object.put("type", "Select");
 		
 		List<Entry> resp = sr.getResponse(userID);
-		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		ArrayList<String> options = new ArrayList<String>();
 		if (resp == null) {
 			object.put("values", options);
 		} else {
 			for (Entry option : resp) {
 				if(option.getChecked()){
-					options.add(new JSONObject().put("label", option.getText()));
+					options.add(option.getText());
 				}
 			}
 			object.put("values", options);
@@ -90,13 +90,13 @@ public class JSONVisitorResponse extends JSONVisitor {
 		object.put("type", "Checkbox");
 
 		List<Entry> resp = chr.getResponse(userID);
-		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		ArrayList<String> options = new ArrayList<String>();
 		if (resp == null) {
 			object.put("values", options);
 		} else {
 			for (Entry option : resp) {
 				if(option.getChecked()){
-					options.add(new JSONObject().put("label", option.getText()));
+					options.add(option.getText());
 				}
 			}
 			object.put("values", options);

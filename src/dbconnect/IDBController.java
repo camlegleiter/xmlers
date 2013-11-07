@@ -6,6 +6,12 @@ import form.Form;
 import form.ResponseForm;
 import form.User;
 
+/**
+ * Details functionality that any mechanism for converting between volatile and non-volatile memory must
+ * be able to provide.
+ * @author mstrobel
+ *
+ */
 public interface IDBController {
 	/**
 	 * Returns <code>true</code> if the form with the given ID exists.

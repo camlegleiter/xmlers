@@ -36,7 +36,8 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             submit: '.submit',
             cancel: '.cancel',
             
-            loading: '.loading'
+            loading: '.loading',
+            errorMessage: '.error-message'
         },
         
         initialize: function() {
@@ -86,12 +87,15 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 
                 this.toggleButtonsDisabled(true);
                 this.ui.loading.show();
+                this.ui.errorMessage.hide();
                 
                 var self = this;
                 $.post('/xmlers/app/upsertForm', { model: JSON.stringify(this.model) })
                 .done(function(data, textStatus, jqXHR) {
                     if (data.success) {
                         window.location.href = data.success;
+                    } else if (data.error) {
+                    	self.ui.errorMessage.show().text(data.error);
                     }
                 })
                 .error(function(jqXHR, textStatus, errorThrown) {

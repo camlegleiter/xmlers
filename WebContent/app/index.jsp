@@ -25,8 +25,25 @@
 	<body>
 	
         <c:import url="/app/includes/nav.jsp" />
+        
+        <div class="container-fluid">
+        
+<c:choose>
+    <c:when test="${param.m == 'a'}">
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				Your new form has been successfully created!
+			</div>
+    </c:when>
+    <c:when test="${param.m == 'e'}">
+			<div class="alert alert-error">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				An error occurred trying to process your request. Please try again soon!
+			</div>
+    </c:when>             
+</c:choose>
 		
-		<div class="container-fluid">
+		
 			<c:import url="/app/includes/noscript.jsp" />
 			
 			<div class="row-fluid">

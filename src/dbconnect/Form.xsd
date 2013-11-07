@@ -19,9 +19,13 @@
   
   <!-- Basic components that must be present in a response. -->
 	<xs:complexType name="response">
-		<xs:attribute type="xs:ID" name="id" />
-		<xs:attribute type="xs:IDREF" name="parent"/>
-		<xs:attribute type="xs:IDREF" name="author"/>
+		<xs:attribute type="xs:string" name="id" />
+		
+		<!-- The parent tag must be an ID of a question -->
+		<xs:attribute type="xs:string" name="parent"/>
+		
+		<!-- The author attribute must be an ID of a user. -->
+		<xs:attribute type="xs:string" name="author"/>
 	</xs:complexType>
 	
   <!-- A question that is answered with one line of text. -->

@@ -9,7 +9,6 @@ import java.util.List;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import form.Form;
-import form.ResponseForm;
 import form.User;
 
 public class SqlController implements IDBController {
@@ -190,12 +189,6 @@ public class SqlController implements IDBController {
 
 	@Override
 	public List<Form> getParticipantForms(int userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ResponseForm> getResponseForms(int formId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

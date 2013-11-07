@@ -71,7 +71,7 @@ public abstract class Question<T> implements IVisitable {
 	 */
 	public T getResponse(int userID)
 	{
-		if(responses.isEmpty()){
+		if(responses.isEmpty() || !responses.containsKey(userID)){
 			return null;
 		}
 		return responses.get(userID).getValue();
@@ -84,7 +84,7 @@ public abstract class Question<T> implements IVisitable {
 	
 	/**
 	 * Updates the response from the end user. 
-	 * @param id the id for the question the response is tied to. 
+	 * @param id the id for the user the response is tied to. 
 	 * @param ans
 	 */
 	public void setResponse(int id, T ans)

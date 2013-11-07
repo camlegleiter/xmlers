@@ -9,9 +9,9 @@ import form.questions.AbstractVariadicQuestion.Entry;
 
 public abstract class VariadicQuestionResponse extends QuestionResponse<List<Entry>> {
 
-	public VariadicQuestionResponse(String key, AbstractVariadicQuestion parent,
+	public VariadicQuestionResponse(AbstractVariadicQuestion parent,
 			User author) {
-		super(key, parent, author);
+		super(parent, author);
 	}
 
 	/**
@@ -22,7 +22,7 @@ public abstract class VariadicQuestionResponse extends QuestionResponse<List<Ent
 	@Override
 	public void setValue(List<Entry> value)
 	{
-		if(((AbstractVariadicQuestion) this.getParent()).getVariadic() 
+		if(!((AbstractVariadicQuestion) this.getParent()).getVariadic() 
 		   && countPositives(value) > 1)
 		{
 			throw new IllegalArgumentException("Non-variadic questions, such as RadioQuestions and certain SelectQuestions are not able to have variadic responses");

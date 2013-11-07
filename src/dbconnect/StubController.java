@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import form.Form;
-import form.ResponseForm;
 import form.User;
+import form.questions.AbstractVariadicQuestion.Entry;
 import form.questions.CheckQuestion;
+import form.questions.CheckQuestionResponse;
 import form.questions.RadioQuestion;
 import form.questions.RadioQuestionResponse;
 import form.questions.SelectQuestion;
+import form.questions.SelectQuestionResponse;
 import form.questions.TextQuestion;
 import form.questions.TextResponse;
 
@@ -104,23 +106,23 @@ public class StubController implements IDBController {
 		mainUser.setPassword("password");
 		upsertUser(mainUser);
 		User participant1 = new User();
-		participant1.setFirstName("T");
-		participant1.setLastName("U");
+		participant1.setFirstName("T1");
+		participant1.setLastName("U1");
 		participant1.setUserName("t");
-		participant1.setEmail("tp@example.com");
+		participant1.setEmail("tp1@example.com");
 		participant1.setPassword("p");
 		upsertUser(participant1);
 		User participant2 = new User();
-		participant2.setFirstName("T");
-		participant2.setLastName("U");
+		participant2.setFirstName("T2");
+		participant2.setLastName("U2");
 		participant2.setUserName("tt");
-		participant2.setEmail("tp@example.com");
+		participant2.setEmail("tp2@example.com");
 		participant2.setPassword("p");
 		upsertUser(participant2);
 		
 		//FORM 1 CREATION (mainUser is the owner)
 		//Create questions for the form
-		TextQuestion textQ1 = new TextQuestion(12345, 1, "What's your name?", 5);
+		TextQuestion textQ1 = new TextQuestion(12345, 1, "What's your name?", 100);
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add("Female");
 		answers.add("Male");
@@ -141,7 +143,7 @@ public class StubController implements IDBController {
 		Form form2 = new Form(form);
 		form2.setFormId(2);
 		form2.setTitle("Another gender questionnaire");
-		form2.add(new TextQuestion(56789, 5, "Type in your Sex to confirm:", 5));
+		form2.add(new TextQuestion(56789, 5, "Type in your Sex to confirm:", 100));
 		//Adding participants
 		form2.addParticipant(participant1);
 		
@@ -150,29 +152,39 @@ public class StubController implements IDBController {
 		upsertForm(form2);
 		
 		//RESPONSES
-		//Participant 1 Response
-		ResponseForm p1Response = new ResponseForm(1, participant1.getUserID(), form);
-		TextResponse p1TextQ1Response = new TextResponse("1", textQ1, participant1);
-		p1TextQ1Response.setValue("I am participant 1!");
-		p1Response.add(p1TextQ1Response);
-		RadioQuestionResponse radioQ1Response = new RadioQuestionResponse("2", radioQ1, participant1);
-		CheckQuestion.Entry radioAnswer = radioQ1.new Entry(answers.get(0), true);
-		CheckQuestion.Entry radioAnswer2 = radioQ1.new Entry(answers.get(1), false);
-		ArrayList<CheckQuestion.Entry> radioQ1responseList = new ArrayList<CheckQuestion.Entry>();
-		radioQ1responseList.add(radioAnswer);
-		radioQ1responseList.add(radioAnswer2);
-		radioQ1Response.setValue(radioQ1responseList);
-		p1Response.add(radioQ1Response);
+		TextResponse textQ1R1 = new TextResponse(textQ1, participant1);
+		textQ1R1.setValue("MY name is participant 1");
+		textQ1.insertResponse(participant1.getUserID(), textQ1R1);
 		
-		//Participant 2 Response
-		ResponseForm p2Response = new ResponseForm(2, participant2.getUserID(), form);
-		TextResponse p2TextQ1Response = new TextResponse("1", textQ1, participant1);
-		p2TextQ1Response.setValue("I am participant 2!");
-		p2Response.add(p2TextQ1Response);
+		CheckQuestionResponse checkQ1R1 = new CheckQuestionResponse(checkQ1, participant1);
+		ArrayList<Entry> checkQ1R1answers = new ArrayList<Entry>();
+		Entry ans1 = null;
+		for(String answer: checkQ1.getOptions()){
+			ans1 = checkQ1.new Entry(answer, true);
+			checkQ1R1answers.add(ans1);
+		}
+		checkQ1R1.setValue(checkQ1R1answers);
+		checkQ1.insertResponse(participant1.getUserID(), checkQ1R1);
 		
-		//Adding the responses to the form
-		form.add(p1Response);
-		form.add(p2Response);
+//		CheckQuestionResponse checkQ1R2 = new CheckQuestionResponse(checkQ1, participant2);
+//		ArrayList<Entry> checkQ1R2answers = new ArrayList<Entry>();
+//		checkQ1R2answers.add(ans1);
+//		checkQ1R2.setValue(checkQ1R2answers);
+//		checkQ1.insertResponse(participant2.getUserID(), checkQ1R2);
+		
+		RadioQuestionResponse radioQ1R1 = new RadioQuestionResponse(radioQ1, participant1);
+		ArrayList<Entry> radioQ1R1answer = new ArrayList<Entry>();
+		radioQ1R1answer.add(ans1);
+		radioQ1R1.setValue(radioQ1R1answer);
+		radioQ1.insertResponse(participant1.getUserID(), radioQ1R1);
+		
+		//TODO test select questions that are multi
+		SelectQuestionResponse selectQ1R1 = new SelectQuestionResponse(selectQ1, participant1);
+		ArrayList<Entry> selectQ1R1answer = new ArrayList<Entry>();
+		selectQ1R1answer.add(ans1);
+		selectQ1R1.setValue(selectQ1R1answer);
+		selectQ1.insertResponse(participant1.getUserID(), selectQ1R1);
+
 	}
 	
 	@Override
@@ -196,11 +208,6 @@ public class StubController implements IDBController {
 				participantForms.add(form);
 		}
 		return participantForms;
-	}
-	@Override
-	public List<ResponseForm> getResponseForms(int formId) {
-		Form form = forms.get(formId);
-		return form.getResponses();
 	}
 
 	@Override

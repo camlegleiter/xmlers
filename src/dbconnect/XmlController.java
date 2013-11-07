@@ -11,7 +11,6 @@ import javax.xml.bind.Unmarshaller;
 import dbconnect.dao.FormConverter;
 import dbconnect.dao.UserConverter;
 import form.Form;
-import form.ResponseForm;
 import form.User;
 
 public class XmlController implements IDBController {
@@ -258,11 +257,5 @@ public class XmlController implements IDBController {
 	private File getFormFile(int formId)
 	{
 		return new File(FORM_DIRECTORY.getAbsolutePath(), formId + EXTENSION);
-	}
-
-	@Override
-	public List<ResponseForm> getResponseForms(int formId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import form.questions.Question;
 import form.visitors.HTMLVisitor;
 import form.visitors.JSONVisitor;
+import form.visitors.JSONVisitorResponse;
 
 public class Form implements Iterable<Question<?>>, Cloneable {
 
@@ -28,14 +29,16 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public static final int PARTICIPANT_RESPONSE_IS_REQUIRED_BIT = 0x128;
 	public static final int FORM_PARTICIPANTS_BIT = 0x256;
 	public static final int RESPONSES_BIT = 0x512;
-
+	public static final int RESPONSE_OWNER_NAME_BIT = 0x1024;
+	public static final int RESPONSE_OWNER_BIT = 0x2048;
+	public static final int RESPONSE_BIT = 0x4096;
+	
 	private String title;
 	private int id;
 	private String description;
 	private Queue<Question<?>> questions;
 	private List<User> participants;
 	private int ownerId;
-	private List<ResponseForm> responses;
 	
 	private boolean participantsCanSeeAll;
 	private boolean participantsCanEditResponse;
@@ -44,7 +47,6 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public Form() {
 		questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
 		participants = new ArrayList<User>();
-		responses = new ArrayList<ResponseForm>();
 	}
 
 	public Form(int id, String title, String description, int ownerId) {
@@ -134,10 +136,6 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public void add(Question<?> q) {
 		questions.add(q);
 	}
-	
-	public void add(ResponseForm r) {
-		responses.add(r);
-	}
 
 	@Override
 	public Iterator<Question<?>> iterator() {
@@ -208,8 +206,12 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		return getJSON(ALL_BITS, null);
 	}
 
+	public JSONObject getResponseFormJSON() {
+		return getFormJSON(ALL_BITS, null);
+	}
+
 	public JSONObject getJSON(int settings, String user) {
-		JSONVisitor generator = new JSONVisitor();
+		JSONVisitor questionGenerator = new JSONVisitor();
 		JSONObject form = new JSONObject();
 		
 		if (bitSet(settings, TITLE_BIT)) {
@@ -240,26 +242,54 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		}
 		if (bitSet(settings, Form.QUESTIONS_BIT)) {
 			JSONArray array = new JSONArray("["
+					+ VisitMechanism.visit(questionGenerator, this.iterator(), ",")
+					+ "]");
+			form.put("formQuestions", array);
+		}
+		return form;
+	}
+	public JSONObject getFormJSON(int settings, String user) {
+		JSONVisitor generator = new JSONVisitor();
+		JSONObject form = new JSONObject();
+		
+		if (bitSet(settings, TITLE_BIT)) {
+			form.put("formName", this.getTitle());
+		}
+		if (bitSet(settings, KEY_BIT)) {
+			form.put("formID", this.getFormId());
+		}
+		if (bitSet(settings, Form.DESCRIPTION_BIT)) {
+			form.put("formDescription", this.getDescription());
+		}
+		if (bitSet(settings, Form.OWNER_BIT)) {
+			form.put("formOwner", this.getOwnerId());
+		}
+		if (bitSet(settings, Form.QUESTIONS_BIT)) {
+			JSONArray array = new JSONArray("["
 					+ VisitMechanism.visit(generator, this.iterator(), ",")
 					+ "]");
 			form.put("formQuestions", array);
 		}
 		if (bitSet(settings, Form.RESPONSES_BIT)) {
-			JSONArray array = new JSONArray();
-			for(ResponseForm r: responses){
-				array.put(r.getJSON());
+			JSONArray responseList = new JSONArray();
+			for (User u : this.participants){
+				JSONObject reponse = new JSONObject();
+				if (bitSet(settings, RESPONSE_OWNER_BIT)) {
+					reponse.put("responseOwner", u.getUserID());
+				}
+				if (bitSet(settings, RESPONSE_OWNER_NAME_BIT)) {
+					reponse.put("responseOwnerName", u.getFullName());
+				}
+				JSONArray array = new JSONArray("["
+						+ VisitMechanism.visit(new JSONVisitorResponse(u.getUserID()), this.iterator(), ",")
+						+ "]");
+				reponse.put("responses", array);
+				responseList.put(reponse);
+				
 			}
-			form.put("responses", array);
+			form.put("responses", responseList);
 		}
 		return form;
-	}
-	
-	public List<ResponseForm> getResponses() {
-		return responses;
-	}
-
-	public void setResponses(List<ResponseForm> responses) {
-		this.responses = responses;
 	}
 
 	public String getJSONString() {

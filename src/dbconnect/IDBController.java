@@ -3,7 +3,6 @@ package dbconnect;
 import java.util.List;
 
 import form.Form;
-import form.ResponseForm;
 import form.User;
 
 public interface IDBController {
@@ -128,11 +127,4 @@ public interface IDBController {
 	 * @return a List of all Forms that the given userId is a participant of.
 	 */
 	public List<Form> getParticipantForms(int userId);
-	
-	/**
-	 * Retrieves all the responses to the given form id.
-	 * @param formId
-	 * @return a List of all the responses to the given formId
-	 */
-	List<ResponseForm> getResponseForms(int formId);
 }

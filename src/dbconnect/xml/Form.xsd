@@ -19,9 +19,13 @@
   
   <!-- Basic components that must be present in a response. -->
 	<xs:complexType name="response">
-		<xs:attribute type="xs:ID" name="id" />
-		<xs:attribute type="xs:IDREF" name="parent"/>
-		<xs:attribute type="xs:IDREF" name="author"/>
+		<xs:attribute type="xs:string" name="id" />
+		
+		<!-- The parent tag must be an ID of a question -->
+		<xs:attribute type="xs:string" name="parent"/>
+		
+		<!-- The author attribute must be an ID of a user. -->
+		<xs:attribute type="xs:string" name="author"/>
 	</xs:complexType>
 	
   <!-- A question that is answered with one line of text. -->
@@ -29,9 +33,9 @@
 		<xs:complexContent>
 			<xs:extension base="question">
 				<xs:sequence>
-					<xs:element name="default" type="xs:string" />
+					<xs:element name="default" type="xs:string" minOccurs="0" maxOccurs="1"/>
 				</xs:sequence>
-        <xs:attribute name="maxLength" type="xs:unsignedInt" />
+        		<xs:attribute name="maxLength" type="xs:unsignedInt" />
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -46,42 +50,62 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	
-	<!-- A question that is  -->
-	<xs:complexType name="selectQuestion">
+	<xs:complexType name="VariadicBooleanEntry">
+		<xs:attribute type="xs:string" name="option" />
+		<xs:attribute type="xs:boolean" name="response" />
+	</xs:complexType>
+	<xs:complexType name="VariadicBooleanQuestion">
 		<xs:complexContent>
 			<xs:extension base="question">
 				<xs:sequence>
-					<xs:element name="options">
-						<xs:complexType>
-							<xs:sequence>
-								<xs:element name="option" minOccurs="0" maxOccurs="unbounded">
-									<xs:complexType>
-										<xs:attribute name="value" />
-										<xs:attribute name="index" type="xs:integer" />
-									</xs:complexType>
-								</xs:element>
-							</xs:sequence>
-						</xs:complexType>
-						<xs:unique name="index_u" >
-							<xs:selector xpath="option/index" />
-							<xs:field xpath="@index" />
-						</xs:unique>
-					</xs:element>
+					<xs:element type="xs:string" name="option" minOccurs="0" maxOccurs="unbounded" />
 				</xs:sequence>
+				<xs:attribute name="type">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="check" />
+							<xs:enumeration value="radio" />
+							<xs:enumeration value="select" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="allowMultiple" type="xs:boolean" />
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="selectResponse">
+	<xs:complexType name="VariadicBooleanResponse">
 		<xs:complexContent>
-			<xs:extension base="response" >
+			<xs:extension base="response">
 				<xs:sequence>
-					<xs:element type="xs:integer" name="selection" />
+					<xs:element type="VariadicBooleanEntry" name="optionResponse" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	
+	<!-- A question that contains other questions. -->
+	<!-- 
+		An example of this may be, a question type is designed called "textbook question" made up of primitiveQuestions.
+		The textbook question is a complex question.	
+	 -->
+	<xs:complexType name="ComplexQuestion">
+		<xs:complexContent>
+			<xs:extension base="question">
+				<xs:sequence>
+					<xs:element type="question" name="question" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ComplexQuestionResponse">
+		<xs:complexContent>
+			<xs:extension base="response">
+				<xs:sequence>
+					<xs:element type="response" name="response" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
   <xs:complexType name="form">
     <xs:sequence>
     	<xs:element name="id" type="xs:string" />
@@ -111,7 +135,8 @@
 				<xs:sequence>
 					<xs:choice maxOccurs="unbounded" minOccurs="0">
 						<xs:element name="textQuestion" type="textQuestion"/>
-						<xs:element name="selectQuestion" type="selectQuestion" />
+						<xs:element name="VariadicBooleanQuestion" type="VariadicBooleanQuestion" />
+						<xs:element name="ComplexQuestion" type="ComplexQuestion" />
 					</xs:choice>
 				</xs:sequence>
     		</xs:complexType>
@@ -121,7 +146,8 @@
     			<xs:sequence>
     				<xs:choice maxOccurs="unbounded" minOccurs="0">
     					<xs:element name="textResponse" type="textResponse" />
-    					<xs:element name="selectResponse" type="selectResponse" />
+    					<xs:element name="VariadicBooleanResponse" type="VariadicBooleanResponse" />
+    					<xs:element name="ComplexQuestionResponse" type="ComplexQuestionResponse" />
     				</xs:choice>
     			</xs:sequence>
     		</xs:complexType>
@@ -129,5 +155,5 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:element name="form" type="form"></xs:element>
+  <xs:element name="form" type="form" />
 </xs:schema>

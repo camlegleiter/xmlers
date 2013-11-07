@@ -3,6 +3,13 @@ package utils;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 
+ * @author Cameron Legleiter
+ * 
+ * @deprecated Using the org.apache.commons.lang3.StringUtils is recommended
+ *             over this class now.
+ */
 public final class Utils {
 	// Ensures the class cannot be instantiated
 	private Utils() {
@@ -57,11 +64,12 @@ public final class Utils {
 	 * @throws IllegalArgumentException
 	 *             if value is null
 	 */
-	public static final String join(final String delimiter, final Object... value) {
+	public static final String join(final String delimiter,
+			final Object... value) {
 		if (value == null) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		if (value.length == 0) {
 			return EMPTY_STRING;
 		}
@@ -70,7 +78,8 @@ public final class Utils {
 
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < value.length; ++i) {
-			builder.append((value[i] == null) ? EMPTY_STRING : value[i].toString());
+			builder.append((value[i] == null) ? EMPTY_STRING : value[i]
+					.toString());
 			if (i == value.length - 1)
 				return builder.toString();
 			builder.append(del);
@@ -78,7 +87,7 @@ public final class Utils {
 
 		return builder.toString();
 	}
-	
+
 	/**
 	 * <p>
 	 * Concatenates all of the elements in value using the delimiter value.
@@ -111,7 +120,7 @@ public final class Utils {
 		if (value == null) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		Iterator<?> it = value.iterator();
 		if (!it.hasNext()) {
 			return EMPTY_STRING;
@@ -130,7 +139,7 @@ public final class Utils {
 	}
 
 	public static final String EMPTY_STRING = "";
-	
+
 	/**
 	 * <p>
 	 * Abbreviates a String using ellipses. This will turn
@@ -171,17 +180,17 @@ public final class Utils {
 	public static String abbreviate(String str, int maxWidth) {
 		return abbreviate(str, 0, maxWidth);
 	}
-	
+
 	/**
 	 * <p>
 	 * Abbreviates a String using ellipses. This will turn
 	 * "Now is the time for all good men" into "...is the time for..."
 	 * </p>
 	 * <p>
-	 * Works like <code>abbreviate(String, int)</code>, but allows you to specify a
-	 * "left edge" offset. Note that this left edge is not necessarily going to
-	 * be the leftmost character in the result, or the first character following
-	 * the ellipses, but it will appear somewhere in the result.
+	 * Works like <code>abbreviate(String, int)</code>, but allows you to
+	 * specify a "left edge" offset. Note that this left edge is not necessarily
+	 * going to be the leftmost character in the result, or the first character
+	 * following the ellipses, but it will appear somewhere in the result.
 	 * </p>
 	 * <p>
 	 * In no case will it return a String of length greater than
@@ -207,7 +216,7 @@ public final class Utils {
 	 * @param str
 	 *            the String to check, may be null
 	 * @param offset
-	 * 			  left edge of source String
+	 *            left edge of source String
 	 * @param maxWidth
 	 *            maximum length of result String, must be at least 4
 	 * @return abbreviated String, <code>null</code> if null String input
@@ -219,7 +228,8 @@ public final class Utils {
 			return null;
 		}
 		if (maxWidth < 4) {
-			throw new IllegalArgumentException("Minimum abbreviation width is 4");
+			throw new IllegalArgumentException(
+					"Minimum abbreviation width is 4");
 		}
 		if (str.length() <= maxWidth) {
 			return str;
@@ -234,7 +244,8 @@ public final class Utils {
 			return str.substring(0, maxWidth - 3) + "...";
 		}
 		if (maxWidth < 7) {
-			throw new IllegalArgumentException("Minimum abbreviation width with offset is 7");
+			throw new IllegalArgumentException(
+					"Minimum abbreviation width with offset is 7");
 		}
 		if ((offset + (maxWidth - 3)) < str.length()) {
 			return "..." + abbreviate(str.substring(offset), maxWidth - 3);

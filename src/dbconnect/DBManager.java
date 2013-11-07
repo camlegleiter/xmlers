@@ -1,5 +1,7 @@
 package dbconnect;
 
+import dbconnect.xml.XmlController;
+
 
 public class DBManager {
 	

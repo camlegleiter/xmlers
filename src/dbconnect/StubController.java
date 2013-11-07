@@ -99,25 +99,27 @@ public class StubController implements IDBController {
 	private void createStubData() {
 		//Create the Users
 		User mainUser = new User();
-		mainUser.setFirstName("Test");
+		mainUser.setFirstName("Main");
 		mainUser.setLastName("User");
-		mainUser.setUserName("testuser");
-		mainUser.setEmail("testuser@example.com");
+		mainUser.setUserName("mainuser");
+		mainUser.setEmail("mainuser@example.com");
 		mainUser.setPassword("password");
 		upsertUser(mainUser);
+		
 		User participant1 = new User();
-		participant1.setFirstName("T1");
-		participant1.setLastName("U1");
-		participant1.setUserName("t");
-		participant1.setEmail("tp1@example.com");
-		participant1.setPassword("p");
+		participant1.setFirstName("Test");
+		participant1.setLastName("User");
+		participant1.setUserName("testuser");
+		participant1.setEmail("testuser@example.com");
+		participant1.setPassword("password");
 		upsertUser(participant1);
+		
 		User participant2 = new User();
-		participant2.setFirstName("T2");
-		participant2.setLastName("U2");
-		participant2.setUserName("tt");
-		participant2.setEmail("tp2@example.com");
-		participant2.setPassword("p");
+		participant2.setFirstName("Other");
+		participant2.setLastName("User");
+		participant2.setUserName("otheruser");
+		participant2.setEmail("otheruser@example.com");
+		participant2.setPassword("password");
 		upsertUser(participant2);
 		
 		//FORM 1 CREATION (mainUser is the owner)

@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="xmlers" uri="/WEB-INF/tlds/functions.tld" %>
+<%@ page import="dbconnect.DBManager" %>
+<%@ page import="form.Form" %>
 <!DOCTYPE html>
+<c:if test="${!empty param.edit && !empty param.form}">
+	<c:set var="DBInstance" value="${xmlers:getInstance()}"></c:set>
+    <c:set var="form" value="${DBInstance.fetchForm(param.form)}"></c:set>
+</c:if>
+<c:set var="isInvalidFormId" value="${form == null}"></c:set>
+<c:set var="userCanSeeForm" value="${!isInvalidFormId && form.getOwnerId() == sessionScope.user.getUserID()}"></c:set>
 <html>
 	<head>
         <c:import url="/app/includes/header.jsp">
@@ -39,7 +48,7 @@
 				</div>
 			</div>
 		</div>
-    
+        
         <c:import url="/app/includes/footer.jsp" />
         
         <script src="<%= request.getContextPath() %>/assets/js/models/forms.js"></script>
@@ -50,9 +59,7 @@
         
 		<script>
 		    $(document).ready(function() {
-			    <% // if there is an edit queryarg, need to get form ID to edit from it and bootstrap data %>
-			    
-			    var formModel = new TaskManager.Models.Form();
+			    var formModel = new TaskManager.Models.Form(${userCanSeeForm ? form.getJSON() : ""});
 			    
 			    Create = TaskManager.Create;
 			    Create.start({ model: formModel });
@@ -125,6 +132,7 @@
                 <a class="submit btn btn-large btn-primary">Submit</a>
                 <a href="index.jsp" class="cancel btn btn-large">Cancel</a>
                 <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
+				<span class="error error-message" style="display: none"></span>
             </div>
         </script>
     
@@ -200,7 +208,7 @@
                 <div class="control-group">
                     <label class="control-label" for="prompt-<@= id @>">Prompt</label>
                     <div class="controls">
-                        <input type="text" id="prompt-<@= id @>" class="required-input" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
+                        <input type="text" id="prompt-<@= id @>" class="required-input" value="<@= _.unescape(data.prompt) @>" placeholder="Enter a prompt to the user" required>
                     </div>
                 </div>
 

@@ -5,8 +5,8 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         template: '#owner-form-template',
         templateHelpers: {
             getFormParticipants: function() {
-                return this.formParticipants.join(', ')
-                        || 'No participants for this form';
+				return this.formParticipants.length > 0 ? this.formParticipants
+						.join(', ') : 'No participants for this form';
             }
         },
 

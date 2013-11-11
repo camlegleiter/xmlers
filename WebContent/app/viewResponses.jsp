@@ -81,8 +81,8 @@
     </c:if>
 
         <script id="table-layout" type="text/template">
-            <h3><@= formName @> Records</h3>
-            <h4>Form Description: <@= formDescription @></h4>
+            <h3>"<@= formName @>" Records</h3>
+            <h4><@= formDescription @></h4>
             
             <table class="table table-bordered table-striped">
                 <thead></thead>

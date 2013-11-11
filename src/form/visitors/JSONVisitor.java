@@ -69,7 +69,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 		object.put("isMulti", sq.getVariadic());
 		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
 		for (String option : sq.getOptions()) {
-			options.add(new JSONObject().put("option", option));
+			options.add(new JSONObject().put("value", option));
 		}
 		object.put("options", options);
 		

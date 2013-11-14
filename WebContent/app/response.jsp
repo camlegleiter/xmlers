@@ -43,7 +43,7 @@
                 <div class="span2"></div>
             </div>
         </div>
-        
+                
         <c:import url="/app/includes/footer.jsp" />
         
         <script src="<%= request.getContextPath() %>/assets/js/models/questions.js"></script>
@@ -86,7 +86,7 @@
         
         <script id="checkbox-item-template" type="text/template">
             <label class="checkbox inline">
-                <input type="checkbox" class="required-input" name="optionsCheckboxes<@= id @>" value="<@= data.label @>" required>
+                <input type="checkbox" class="required-input" name="optionsCheckboxes<@= id @>" value="<@= data.label @>">
                 <@= data.label @>
             </label>
         </script>

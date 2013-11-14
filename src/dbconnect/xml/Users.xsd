@@ -3,11 +3,6 @@
 
     <xs:complexType name="user">
     	<xs:sequence>
-    		<xs:element name="id" type="xs:ID" />
-    		<xs:element name="handle" type="xs:string" />
-    		<xs:element name="password" type="xs:string" />
-    		<xs:element name="firstName" type="xs:string" />
-    		<xs:element name="lastName" type="xs:string" />
     		<xs:element name="owns" maxOccurs="unbounded" minOccurs="0">
     		  <xs:complexType>
     		    <xs:attribute name="formID" type="xs:string" />
@@ -19,6 +14,11 @@
 	          </xs:complexType>
     		</xs:element>
     	</xs:sequence>
+    	<xs:attribute name="id" type="xs:string" />
+    	<xs:attribute name="handle" type="xs:string" />
+   		<xs:attribute name="firstName" type="xs:string" />
+   		<xs:attribute name="lastName" type="xs:string" />
+   		<xs:attribute name="password" type="xs:string" />
     </xs:complexType>
     
 

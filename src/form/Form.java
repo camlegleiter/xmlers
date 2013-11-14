@@ -355,4 +355,8 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public int getOwnerId() {
 		return ownerId;
 	}
+
+	public Queue<Question<?>> getQuestions() {
+		return questions;
+	}
 }

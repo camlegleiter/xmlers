@@ -10,13 +10,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import dbconnect.DBManager;
-
 import form.Form;
+import form.User;
 import form.questions.CheckQuestion;
+import form.questions.CheckQuestionResponse;
 import form.questions.Question;
 import form.questions.RadioQuestion;
+import form.questions.RadioQuestionResponse;
 import form.questions.SelectQuestion;
+import form.questions.SelectQuestionResponse;
 import form.questions.TextQuestion;
+import form.questions.TextResponse;
+import form.questions.AbstractVariadicQuestion.Entry;
 
 public class DefaultFactory extends FormFactory {
 
@@ -150,5 +155,68 @@ public class DefaultFactory extends FormFactory {
 			question.setPosition(position);
 			return question;
 		}
+	}
+
+	/**
+	 * Takes in the response metadata (see response_metadata), fetches the form from our database
+	 * and inserts the responses in our metadata into the appropriate form. 
+	 * @param jsonObject The response metadata with all the responses
+	 * @param user The response owner 
+	 * @return The form that was updated 
+	 */
+	public Form insertResponse(JSONObject jsonObject, User user) {
+		JSONArray responses = jsonObject.getJSONArray("formQuestions");
+		Form f = DBManager.getInstance().fetchForm(jsonObject.getInt("formID"));
+		for (int i = 0; i < responses.length(); ++i){
+			JSONObject response = responses.getJSONObject(i);
+			for(Question<?> q: f.getQuestions()){
+				if(q.getId() == response.getInt("questionID")){
+					buildSetResponse(response, user, q);
+					break;
+				}
+			}
+		}
+		return f;
+	}
+
+	private void buildSetResponse(JSONObject response, User user, Question<?> q) {
+		String type = response.getString("type");
+		if(type.equalsIgnoreCase("Textbox")){
+			TextQuestion question = (TextQuestion) q;
+			TextResponse tr = new TextResponse(question, user);
+			tr.setValue(response.getString("value"));
+			question.insertResponse(user.getUserID(), tr);
+		} else if(type.equalsIgnoreCase("Checkbox")){			
+			CheckQuestion question = (CheckQuestion) q;
+			ArrayList<Entry> answers = new ArrayList<Entry>();
+			CheckQuestionResponse chr = new CheckQuestionResponse(question, user);
+			JSONArray responses = response.getJSONArray("values");
+			for (int i = 0; i < responses.length(); ++i){
+				answers.add(question.new Entry(responses.getString(i), true));
+			}
+			chr.setValue(answers);
+			question.insertResponse(user.getUserID(), chr);
+		} else if(type.equalsIgnoreCase("Radio")){			
+			RadioQuestion question = (RadioQuestion) q;
+			RadioQuestionResponse rr = new RadioQuestionResponse(question, user);
+			ArrayList<Entry> answer = new ArrayList<Entry>();
+			answer.add(question.new Entry(response.getString("value"), true));
+			rr.setValue(answer);
+			question.insertResponse(user.getUserID(), rr);
+		} else if(type.equalsIgnoreCase("Select")){			
+			SelectQuestion question = (SelectQuestion) q;
+			SelectQuestionResponse sr = new SelectQuestionResponse(question, user);
+			ArrayList<Entry> answers = new ArrayList<Entry>();
+			JSONArray responses = response.getJSONArray("values");
+			for (int i = 0; i < responses.length(); ++i){
+				answers.add(question.new Entry(responses.getString(i), true));
+			}
+			sr.setValue(answers);
+			question.insertResponse(user.getUserID(), sr);
+		} else {
+			throw new IllegalArgumentException(
+					"When inserting Response: Unrecognized question type.");
+		}
+		
 	}
 }

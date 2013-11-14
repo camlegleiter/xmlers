@@ -108,8 +108,6 @@
 	</xs:complexType>
   <xs:complexType name="form">
     <xs:sequence>
-    	<xs:element name="id" type="xs:string" />
-    	<xs:element name="title" type="xs:string" />
     	<xs:element name="description" type="xs:string" />
     	<xs:element name="permissions">
     		<xs:complexType>
@@ -153,6 +151,9 @@
     		</xs:complexType>
     	</xs:element>
     </xs:sequence>
+    
+   	<xs:attribute name="id" type="xs:string" />
+   	<xs:attribute name="title" type="xs:string" />
   </xs:complexType>
 
   <xs:element name="forms">

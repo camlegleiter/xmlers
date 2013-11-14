@@ -22,6 +22,10 @@ import form.User;
 /**
  * A concrete implementation of an interface that is meant to allow for the conversion
  * between volatile and non-volatile memory.
+ * 
+ * This particular strategy utilizes XML, and may be prone to performance problems when
+ * the application is scaled.
+ * 
  * @author mstrobel
  */
 public class XmlController implements IDBController {
@@ -46,9 +50,6 @@ public class XmlController implements IDBController {
 	 */
 	private final static File USER_REPOSITORY;
 	
-	
-	
-
 	/**
 	 * Specifies things that can be used to uniquely specify a user.
 	 * @author mstrobel
@@ -124,10 +125,18 @@ public class XmlController implements IDBController {
 			USER_UNMARSHALLER = null;
 			e.printStackTrace();
 		}
-		
-		 
 	}
 		
+	public static File getFormLocation()
+	{
+		return new File(FORM_REPOSITORY.getAbsolutePath());
+	}
+	
+	public static File getUserLocation()
+	{
+		return new File(USER_REPOSITORY.getAbsolutePath());
+	}
+	
 	@Override
 	public boolean formExists(int formId) {
 		boolean retval = false;

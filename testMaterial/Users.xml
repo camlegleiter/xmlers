@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<users xmlns="http://www.example.org/Users">
+  <user id="id1" handle="handle1" firstName="firstName1" lastName="lastName1" password="password1">
+    <owns formID="formID1" />
+    <owns formID="formID2" />
+    <owns formID="formID3" />
+    <participating formID="formID1" />
+    <participating formID="formID2" />
+    <participating formID="formID3" />
+  </user>
+  <user id="id2" handle="handle2" firstName="firstName2" lastName="lastName2" password="password2">
+    <owns formID="formID4" />
+    <owns formID="formID5" />
+    <owns formID="formID6" />
+    <participating formID="formID4" />
+    <participating formID="formID5" />
+    <participating formID="formID6" />
+  </user>
+  <user id="id3" handle="handle3" firstName="firstName3" lastName="lastName3" password="password3">
+    <owns formID="formID7" />
+    <owns formID="formID8" />
+    <owns formID="formID9" />
+    <participating formID="formID7" />
+    <participating formID="formID8" />
+    <participating formID="formID9" />
+  </user>
+</users>

@@ -2,6 +2,11 @@ package dbconnect.xml.test;
 
 import static org.junit.Assert.*;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,8 +38,8 @@ public class ControllerTests {
 		
 		assertNotNull(formVariable);
 		assertNotNull(userVariable);
-		assertNotEquals("", formVariable);
-		assertNotEquals("", userVariable);
+		assertThat(formVariable, is(not(formVariable)));
+		assertThat(userVariable, is(not(userVariable)));
 		
 		
 		assertEquals(DBManager.XML_STRATEGY, controllerStrat);

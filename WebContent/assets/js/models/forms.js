@@ -21,5 +21,7 @@ TaskManager.Models.Form = Backbone.Model.extend({
 });
 
 TaskManager.Collections.Forms = Backbone.Collection.extend({
-    model: TaskManager.Models.Form
+    model: TaskManager.Models.Form,
+    // Sort models by name
+    comparator: 'formName'
 });

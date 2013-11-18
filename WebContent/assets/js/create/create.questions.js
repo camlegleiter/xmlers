@@ -3,38 +3,39 @@
 TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
     Module.QuestionOptionView = Backbone.Marionette.ItemView.extend({
         template: '#question-option-template',
-        className: 'question-option',
+        tagName: 'a',
+        className: 'list-group-item',
         
         events: {
-            'change input[type="radio"]': 'onRadioChange'
+            'change :radio': 'onRadioChange'
         },
         
         ui: {
-            radio: 'input[type="radio"]'
+            radio: ':radio'
         },
         
         initialize: function(options) {
             this.questionOptionLabel = options.model.get('questionOptionLabel');
         },
         
-        onRadioChange: function() {
-            if ($(this.ui.radio).is(':checked')) {
-                this.model.trigger('change:radio', this.questionOptionLabel);
-            }
+        serializeData: function() {
+	        return {
+	        	id: this.model.cid,
+	        	label: this.questionOptionLabel
+	        };
         },
         
-        serializeData: function() {
-            return {
-                id: this.model.cid,
-                label: this.questionOptionLabel
-            };
+        onRadioChange: function() {
+            if (this.ui.radio.is(':checked')) {
+                this.model.trigger('change:radio', this.questionOptionLabel);
+            }
         }
     });
     
     Module.QuestionOptionsView = Backbone.Marionette.CompositeView.extend({
         template: '#question-options-template',
-        className: 'question-options clearfix',
         itemView: Module.QuestionOptionView,
+        itemViewContainer: '.list-group',
         
         events: {
             'click .add': 'onAddQuestion'
@@ -67,10 +68,6 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         onSetSelectedQuestion: function(question) {
             this.selectedQuestion = question;
             $(this.ui.addButton).removeClass('disabled');
-        },
-        
-        appendHtml: function(collectionView, itemView) {
-            collectionView.$('#questions-content').append(itemView.el);
         }
     });
     

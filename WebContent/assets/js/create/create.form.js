@@ -17,9 +17,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         events: {
-            'input input[type="text"]': 'onUpdateModel',
+            'input :text': 'onUpdateModel',
             'input textarea': 'onUpdateModel',
-            'change input[type="checkbox"]': 'onUpdateModel',
+            'change :checkbox': 'onUpdateModel',
             
             'click .submit': 'onSubmit',
             'click .cancel': 'onCancel'
@@ -149,7 +149,8 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
      * 
      */
     Module.QuestionView = Backbone.Marionette.ItemView.extend({
-        className: 'control-group',
+        tagName: 'li',
+        className: 'form-group',
         
         serializeData: function() {
             return {
@@ -198,7 +199,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         events: {
             'input input': 'onUpdateModel',
-            'click .delete': 'onDeleteField'
+            'click .close': 'onDeleteField'
         },
         
         ui: {
@@ -225,7 +226,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             'input input': 'onUpdateModel',
             
             'click .add': 'onAddItem',
-            'click .delete': 'onDeleteEntry'
+            'click .close': 'onDeleteEntry'
         },
         
         ui: {
@@ -259,7 +260,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         events: {
             'input input': 'onUpdateModel',
             
-            'click .delete': 'onDeleteField'
+            'click .close': 'onDeleteField'
         },
         
         ui: {
@@ -286,7 +287,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             'input input': 'onUpdateModel',
             
             'click .add': 'onAddItem',
-            'click .delete': 'onDeleteEntry'
+            'click .close': 'onDeleteEntry'
         },
         
         ui: {
@@ -320,7 +321,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         events: {
             'input input': 'onUpdateModel',
             
-            'click .delete': 'onDeleteEntry'
+            'click .close': 'onDeleteEntry'
         },
         
         ui: {
@@ -351,7 +352,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         events: {
             'input input': 'onUpdateModel',
             
-            'click .delete': 'onDeleteField'
+            'click .close': 'onDeleteField'
         },
         
         ui: {
@@ -375,16 +376,16 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         events: {
-            'input input[type="text"]': 'onUpdateModel',
-            'change input[type="checkbox"]': 'onUpdateModel',
+            'input :text': 'onUpdateModel',
+            'change :checkbox': 'onUpdateModel',
             
             'click .add': 'onAddItem',
-            'click .delete': 'onDeleteEntry'
+            'click .close': 'onDeleteEntry'
         },
         
         ui: {
             prompt: 'input[id^="prompt"]',
-            isMulti: 'input[type="checkbox"]'
+            isMulti: '.is-multi'
         },
         
         initialize: function() {

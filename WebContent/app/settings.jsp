@@ -8,11 +8,6 @@
         </c:import>
         
         <style type="text/css">
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-            
             ul.nav li p {
                 padding: 10px 0px 0px 10px;
             }
@@ -22,14 +17,43 @@
 			
 		<c:import url="/app/includes/nav.jsp" />
 		
-		<div class="container-fluid">
+		<div class="container">
 			<c:import url="/app/includes/noscript.jsp" />
 			
-			<form method="POST" action="<%= request.getContextPath() %>/app/settings">
-				<input type="submit" class="btn btn-primary" value="Test Email" />
-			</form>
+			<div class="row">
+				<div class="span4"></div>
+	            <div class="span4">
+	            	<div class="well">
+						<form class="form-horizontal" method="post" action="<%= request.getContextPath() %>/app/settings">
+							<fieldset>
+								<legend>Change Password:</legend>
+					            <div class="control-group">
+					                <label class="control-label" for="formName">Old Password</label>
+					                <div class="controls">
+					                    <input type="password" id="old-password" required>
+					                </div>
+					            </div>
+					            <div class="control-group">
+					                <label class="control-label" for="formName">New Password</label>
+					                <div class="controls">
+					                    <input type="password" id="new-password" required>
+					                </div>
+					            </div>
+					            <div class="control-group">
+					                <label class="control-label" for="formName">Re-enter New Password</label>
+					                <div class="controls">
+					                    <input type="password" id="new-password-check" required>
+					                </div>
+					            </div>
+							</fieldset>
+							<input type="submit" class="btn btn-primary" value="Test Email" />
+						</form>
+					</div>
+				</div>
+				<div class="span4"></div>
+			</div>
 		</div>
-		<script src="/js/vendor/jquery.min.js"></script>
-		<script src="/js/vendor/bootstrap.min.js"></script>		
+
+        <c:import url="/app/includes/footer.jsp" />	
 	</body>
 </html>

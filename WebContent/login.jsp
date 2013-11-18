@@ -8,43 +8,59 @@
         </c:import>
 
         <style type="text/css">
-            body {
-                padding-top: 40px;
-                padding-bottom: 40px;
-                background-color: #f5f5f5;
-            }
-            .form-signin {
-                max-width: 300px;
-                padding: 19px 29px 29px;
-                margin: 0 auto 20px;
-                background-color: #fff;
-                border: 1px solid #e5e5e5;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-                -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-                box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-            }
-            .form-signin .form-signin-heading, .form-signin .checkbox {
-                margin-bottom: 10px;
-            }
-            .form-signin input[type="text"], .form-signin input[type="password"] {
-                font-size: 16px;
-                height: auto;
-                margin-bottom: 15px;
-                padding: 7px 9px;
-            }
-            .center {
-                float: none;
-                margin: 0 auto;
-                text-align: center;
-                max-width: 300px;
-            }
-            .error {
-                color: red;
-            }
-        </style>
+			body {
+				padding-top: 40px;
+				padding-bottom: 40px;
+				background-color: #eee;
+			}
+			
+			.form-signin {
+				max-width: 330px;
+				padding: 15px;
+				margin: 0 auto;
+			}
+			
+			.form-signin .form-signin-heading,
+			.form-signin .checkbox {
+				margin-bottom: 10px;
+			}
+			
+			.form-signin .checkbox {
+				font-weight: normal;
+			}
+			
+			.form-signin .form-control {
+				position: relative;
+				font-size: 16px;
+				height: auto;
+				padding: 10px;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				margin-bottom: -1px;
+				border-radius: 0;
+			}
+			
+			.form-signin .form-control:focus {
+				z-index: 2;
+			}
+						
+			.form-signin .form-control:first-of-type {
+				margin-bottom: -1px;
+				border-top-left-radius: 4px;
+				border-top-right-radius: 4px;
+			}
+			
+			.form-signin .form-control:last-of-type {
+				margin-bottom: 10px;
+				border-bottom-left-radius: 4px;
+				border-bottom-right-radius: 4px;
+			}
+			
+			.error {
+				color: red;
+			}
+		</style>
     </head>
     <body>
         <div class="container-fluid">
@@ -60,18 +76,14 @@
                      
                     <div class="tab-content">
                         <div class="tab-pane active" id="login">
-                            <form class="form-signin" action="<%= request.getContextPath() %>/login" method="POST">
+                            <form class="form-signin" action="<%= request.getContextPath() %>/login" method="post">
                                 <h2 class="form-signin-heading">Please sign in</h2>
-                                <div class="control-group" id="signin-input-group">
-                                    <div class="controls">
-                                        <input type="text" class="input-block-level" placeholder="NetID" name="username">
-                                        <input type="password" class="input-block-level" placeholder="Password" name="password">
-                                    </div>
-                                </div>
+                                <input type="text" class="form-control" placeholder="NetID" name="username" required autofocus>
+                                <input type="password" class="form-control" placeholder="Password" name="password" required>
                                 <label class="checkbox">
-                                <input type="checkbox" value="remember-me" name="remember"> Remember me
+                                	<input type="checkbox" value="remember-me" name="remember"> Remember me
                                 </label>
-                                <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+                                <button class="btn btn-large btn-block btn-primary" type="submit">Sign in</button>
                                 <span class="help-inline error" id="login-error">
                                     ${loginerror}
                                 </span>
@@ -79,19 +91,15 @@
                         </div>
                         
                         <div class="tab-pane" id="register">
-                            <form class="form-signin" action="<%= request.getContextPath() %>/register" method="POST">
+                            <form class="form-signin" action="<%= request.getContextPath() %>/register" method="post">
                                 <h2 class="form-signin-heading">Register</h2>
-                                <div class="control-group" id="input-group">
-                                    <div class="controls">
-                                        <input type="text" required class="input-block-level" placeholder="First Name" name="first-name">
-                                        <input type="text" required class="input-block-level" placeholder="Last Name" name="last-name">
-                                        <input type="text" required class="input-block-level" placeholder="NetID" name="username">
-                                        <input type="text" required class="input-block-level" placeholder="Email" name="email">
-                                        <input type="password" required class="input-block-level" placeholder="Password" name="password">
-                                        <input type="password" required class="input-block-level" placeholder="Re-enter password" name="password-check">
-                                    </div>
-                                </div>
-                                <button class="btn btn-large btn-primary" type="submit">Register</button>
+                                <input type="text" class="form-control" placeholder="First Name" name="first-name" required>
+                                <input type="text" class="form-control" placeholder="Last Name" name="last-name" required>
+                                <input type="text" class="form-control" placeholder="NetID" name="username" required>
+                                <input type="text" class="form-control" placeholder="Email" name="email" required>
+                                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                <input type="password" class="form-control" placeholder="Re-enter password" name="password-check" required>
+                                <button class="btn btn-large btn-block btn-primary" type="submit">Register</button>
                                 <span class="help-inline error" id="register-error">
                                     ${registererror}
                                 </span>

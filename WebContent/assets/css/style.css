@@ -14,53 +14,56 @@ textarea {
     width: 100%;
 }
 
-.delete, .remove {
-    color: #d14;
-    cursor: pointer;
+.caret-right {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	vertical-align: middle;
+	border-top: 4px solid transparent;
+	border-right: 4px solid #000000;
+	border-bottom: 4px solid transparent;
+	border-left: 0 dotted;
 }
 
-.delete:hover, .remove:hover, .error {
-    color: #d14;
+/* --- NavBar --- */
+
+.tm-navbar .navbar-brand {
+	color: #fff;
 }
 
-.delete.disabled, .remove.disabled, .error.disabled {
-    color: inherit;
+/* --- Side Navbar Styles --- */
+
+.list-group .list-group-item {
+	padding: 0;
 }
 
-/* --- Index Page Styles --- */
-
-.sidebar-nav {
-	padding: 9px 0;
+.list-group input[type="radio"] {
+	display: none;
 }
 
-/* --- Create Page Styles --- */
-
-#question-options input[type="radio"],
-.form-item input[type="radio"] {
-    display: none;
+.list-group label {
+	display: block;
+	margin: 0;
+	padding: 10px 15px;
+	width: auto;
+	
+	font-weight: normal;
+	
+	cursor: pointer;
 }
 
-#question-options label,
-.form-item label {
-    display: block;
-    margin: 0 auto 5px;
-    padding: 8px;
-    width: auto;
-    
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    
-    text-align: center;
-    text-decoration: none;
+.list-group input[type="radio"]:checked + label {
+	color: #fff;
+	background-color: #428bca;
+	border-color: #357ebd;
 }
 
-#question-options input[type="radio"]:checked + label,
-.form-item input[type="radio"]:checked + label {
-    background-color: #08c;
-    color: #fff;
-    
-    font-weight: bold;
+.panel-title > a {
+	cursor: pointer;
 }
+
+/* --- Create/Edit Page Styles --- */
 
 .question {
     padding: 5px 0px;
@@ -75,10 +78,14 @@ textarea {
     margin-top: 0px;
 }
 
+.question input ~ a.close {
+	float: none;
+}
+
 /* --- Response Page CSS --- */
 
 .response-content {
-    margin-left: 20px;
+    margin-left: -20px;
 }
 
 /* --- View Page Table CSS --- */

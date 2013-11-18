@@ -29,7 +29,8 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
 
         emptyView: function() {
             return new App.EmptyView({
-                message: '<h4>Select a form to get started!</h4>'
+            	tagName: 'h4',
+                message: 'Select a form to get started!'
             });
         },
 

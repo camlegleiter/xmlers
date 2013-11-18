@@ -13,17 +13,7 @@
         <c:import url="/app/includes/header.jsp">
             <c:param name="title" value="Response - Task Manager" />
         </c:import>
-        
-        <style type="text/css">
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-            
-            ul.nav li p {
-                padding: 10px 0px 0px 10px;
-            }
-        </style>
+
         <link href="<%= request.getContextPath() %>/assets/css/style.css" rel="stylesheet">
     </head>
     <body>
@@ -67,16 +57,14 @@
         </script>
     
         <script id="response-template" type="text/template">
-            <h3>Form Name: <@= formName @></h3>
-            <h4>Description: <@= formDescription @></h4>
+            <h3><@= formName @></h3>
+            <h4><@= formDescription @></h4>
 
             <ol class="response-content"></ol>
 
-            <div class="form-actions">
-                <a class="submit btn btn-large btn-primary">Submit</a>
-                <a href="index.jsp" class="cancel btn btn-large">Cancel</a>
-                <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
-            </div>
+            <a class="submit btn btn-lg btn-primary">Submit</a>
+            <a href="index.jsp" class="cancel btn btn-lg btn-default">Cancel</a>
+            <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
         </script>
     
         <script id="checkbox-template" type="text/template">
@@ -106,9 +94,9 @@
         <script id="textbox-template" type="text/template">
             <strong><@= prompt @></strong>
             <div>
-                <textarea class="required-input" rows="4" maxlength="<@= maxLength @>" required></textarea>
+                <textarea class="form-control required-input" rows="4" maxlength="<@= maxLength @>" required></textarea>
             </div>
-            <p>Characters remaining: <span class="character-count"><@= maxLength @></span></p>
+            <p class="help-block">Characters remaining: <span class="character-count"><@= maxLength @></span></p>
         </script>
         
         <script id="select-template" type="text/template">

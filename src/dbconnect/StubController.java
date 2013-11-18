@@ -146,8 +146,6 @@ public class StubController implements IDBController {
 		form2.setFormId(2);
 		form2.setTitle("Another gender questionnaire");
 		form2.add(new TextQuestion(56789, 5, "Type in your Sex to confirm:", 100));
-		//Adding participants
-		form2.addParticipant(participant1);
 		
 		//Adding the forms created
 		upsertForm(form);

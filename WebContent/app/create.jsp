@@ -101,7 +101,7 @@
 
             <label class="checkbox">
                 <input type="checkbox" id="participantResponseIsRequired" <@ if (participantResponseIsRequired) { @> checked <@ } @>>
-                Participants <strong>cannot</strong> opt out of completing this form
+                Participants are required to fill out this form.
             </label>
             
             <button class="submit btn btn-lg btn-primary">Submit</button>
@@ -199,10 +199,8 @@
 
                 <ol class="content"></ol>
 
-                <div class="control-group">
-                    <div class="controls">
-                        <a class="btn btn-default add">Add Select Option</a>
-                    </div>
+                <div class="form-group">
+                    <a class="btn btn-default add">Add Select Option</a>
                 </div>
             </div>
         </script>

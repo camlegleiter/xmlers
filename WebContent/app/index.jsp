@@ -97,6 +97,7 @@
         <script id="owner-form-template" type="text/template">
             <h3>Form Name: <@= formName @></h3>
             <h4>Description: <@= formDescription @></h4>
+			<hr>
             <p><strong>Participants: </strong><@= getFormParticipants() @></p>
 			<p><strong>Number of Questions: </strong><@= formQuestions.length @></p>
             <form class="form-inline owner-buttons" action="/app/index" method="POST">

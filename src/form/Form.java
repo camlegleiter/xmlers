@@ -239,7 +239,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			JSONArray array = new JSONArray();
 			for (User u : this.participants)
 				array.put(u.getEmail());
-			form.put("participants", array);
+			form.put("formParticipants", array);
 		}
 		if (bitSet(settings, Form.QUESTIONS_BIT)) {
 			JSONArray array = new JSONArray("["

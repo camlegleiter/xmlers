@@ -50,8 +50,10 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         selectParticipantForm: function(model) {
-            this.toggleDeleteDisabled(false);
-            this.ui.deleteBtn.text('Unparticipate');
+            var responseRequired = model.get('participantResponseIsRequired');
+            this.toggleDeleteDisabled(responseRequired);
+            this.ui.deleteBtn.text(responseRequired ? '' : 'Unparticipate');
+            
             this.trigger('select:form', {
                 isOwner: false,
                 model: model

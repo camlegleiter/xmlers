@@ -72,7 +72,8 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             });
         },
         
-        onSubmit: function() {
+        onSubmit: function(e) {
+        	e.preventDefault();
             if (this.collection.length === 0) {
                 alert('A form must have at least one question for users before submitting.');
                 return;
@@ -90,27 +91,47 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 this.ui.errorMessage.hide();
                 
                 var self = this;
-                $.post('/xmlers/app/upsertForm', { model: JSON.stringify(this.model) })
+                $.post('/xmlers/app/upsertForm', {
+                	model: JSON.stringify(this.model),
+                	isEdit: isEdit
+                })
                 .done(function(data, textStatus, jqXHR) {
                     if (data.success) {
                         window.location.href = data.success;
+                        return true;
                     } else if (data.error) {
                     	self.ui.errorMessage.show().text(data.error);
+                    	return false;
                     }
                 })
                 .error(function(jqXHR, textStatus, errorThrown) {
                     console.log(textStatus);
                     console.log(errorThrown);
+                    return false;
                 })
                 .always(function() {
                     self.toggleButtonsDisabled(false);
                     self.ui.loading.hide();
                 });
             }
+            
+            return false;
         },
         
-        onCancel: function() {
-            return confirm("The current form will not be saved. Are you sure you wish to cancel?");
+        onCancel: function(e) {
+        	e.preventDefault();
+        	
+        	var message;
+        	if (isEdit)
+        		message = 'Any changes to the current form will not be saved. Are you sure you want to cancel?';
+        	else
+        		message = 'The current form will not be saved. Are you sure you want to cancel?';
+        	
+            var isCanceled = confirm(message);
+            	
+            if (isCanceled)
+            	window.location.href = "index.jsp";
+            return isCanceled;
         },
         
         appendHtml: function(collectionView, itemView) {
@@ -235,7 +256,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         initialize: function() {
             this.collection = this.model.get('checkboxes');
-            this.addItem(new App.Models.CheckboxItem());
+            if (this.collection.length == 0) {
+            	this.addItem(new App.Models.CheckboxItem());
+            }
         },
 
         // Adds a new checkbox entry to the field
@@ -296,7 +319,10 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         initialize: function() {
             this.collection = this.model.get('radios');
-            this.addItem(new App.Models.RadioItem());
+            if (this.collection.length == 0) {
+            	// Add an empty item to get the user started
+            	this.addItem(new App.Models.RadioItem());
+            }
         },
 
         // Adds a new checkbox entry to the field
@@ -390,7 +416,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         initialize: function() {
             this.collection = this.model.get('options');
-            this.addItem(new App.Models.SelectOption());
+            if (this.collection.length == 0) {
+            	this.addItem(new App.Models.SelectOption());
+            }
         },
 
         // Adds a new checkbox entry to the field

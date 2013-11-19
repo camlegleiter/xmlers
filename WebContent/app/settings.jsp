@@ -21,36 +21,28 @@
 			<c:import url="/app/includes/noscript.jsp" />
 			
 			<div class="row">
-				<div class="span4"></div>
-	            <div class="span4">
+	            <div class="col-md-6 col-md-offset-3">
 	            	<div class="well">
-						<form class="form-horizontal" method="post" action="<%= request.getContextPath() %>/app/settings">
+						<form method="post" action="<%= request.getContextPath() %>/app/settings">
 							<fieldset>
 								<legend>Change Password:</legend>
-					            <div class="control-group">
-					                <label class="control-label" for="formName">Old Password</label>
-					                <div class="controls">
-					                    <input type="password" id="old-password" required>
-					                </div>
+					            <div class="form-group">
+					                <label for="formName">Old Password</label>
+					                <input type="password" id="old-password" class="form-control" required>
 					            </div>
-					            <div class="control-group">
-					                <label class="control-label" for="formName">New Password</label>
-					                <div class="controls">
-					                    <input type="password" id="new-password" required>
-					                </div>
+					            <div class="form-group">
+					                <label for="formName">New Password</label>
+					                <input type="password" id="new-password" class="form-control" required>
 					            </div>
-					            <div class="control-group">
-					                <label class="control-label" for="formName">Re-enter New Password</label>
-					                <div class="controls">
-					                    <input type="password" id="new-password-check" required>
-					                </div>
+					            <div class="form-group">
+					                <label for="formName">Re-enter New Password</label>
+					                <input type="password" id="new-password-check" class="form-control" required>
 					            </div>
 							</fieldset>
-							<input type="submit" class="btn btn-primary" value="Test Email" />
+							<input type="submit" class="btn btn-primary" value="Update Password" />
 						</form>
 					</div>
 				</div>
-				<div class="span4"></div>
 			</div>
 		</div>
 

@@ -31,7 +31,7 @@
 				</div>
 				<div class="col-md-6">
                     <div class="well">
-                        <form id="user-form" action="<%= request.getContextPath() %>/create" method="POST"></form>
+                        <form id="user-form" action="upsertForm" method="POST"></form>
                     </div>
 				</div>
 			</div>
@@ -48,6 +48,7 @@
 		<script>
 		    $(document).ready(function() {
 			    var formModel = new TaskManager.Models.Form(${userCanSeeForm ? form.getJSON() : ""});
+			    isEdit = ${!empty param.edit};
 			    
 			    Create = TaskManager.Create;
 			    Create.start({ model: formModel });
@@ -104,8 +105,8 @@
                 Participants are required to fill out this form.
             </label>
             
-            <button class="submit btn btn-lg btn-primary">Submit</button>
-            <a href="index.jsp" class="cancel btn btn-lg btn-default">Cancel</a>
+            <button type="button" class="submit btn btn-lg btn-primary">Submit</button>
+            <button type="button" class="cancel btn btn-lg btn-default">Cancel</button>
             <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
 			<span class="error error-message" style="display: none"></span>
 		</script>
@@ -123,6 +124,7 @@
                     <input type="text" id="prompt-<@= id @>" class="form-control required-input" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                 </div>
 
+				<label>Options</label>
                 <ol class="content"></ol>
 
                 <div class="form-group">
@@ -148,6 +150,7 @@
                     <input type="text" id="prompt-<@= id @>" class="form-control required-input" value="<@= data.prompt @>" placeholder="Enter a prompt to the user" required>
                 </div>
 
+				<label>Options</label>
                 <ol class="content"></ol>
 
                 <div class="form-group">
@@ -197,6 +200,7 @@
 					Allow for multiple selections?
                 </label>
 
+				<label>Options</label>
                 <ol class="content"></ol>
 
                 <div class="form-group">

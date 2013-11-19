@@ -35,6 +35,7 @@ public class UpsertForm extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String formData = (String) request.getParameter("model");
+		boolean isEdit = Boolean.parseBoolean(request.getParameter("isEdit"));
 
 		IDBController controller = DBManager.getInstance();
 		JSONObject jsonObject = null;
@@ -49,7 +50,10 @@ public class UpsertForm extends HttpServlet {
 
 			controller.upsertForm(form);
 			
-			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?m=a");
+			if (isEdit)
+				jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?m=a");
+			else
+				jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?m=u");
 		} catch (Exception e) {
 			jsonObject = new JSONObject().put("error", e.getMessage());
 		} finally {

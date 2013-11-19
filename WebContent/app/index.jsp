@@ -25,6 +25,12 @@
 				Your new form has been successfully created!
 			</div>
     </c:when>
+    <c:when test="${param.m == 'u'}">
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				Your form was successfully updated!
+			</div>
+    </c:when>   
     <c:when test="${param.m == 'e'}">
 			<div class="alert alert-error">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>

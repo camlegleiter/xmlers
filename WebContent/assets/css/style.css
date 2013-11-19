@@ -26,6 +26,16 @@ textarea {
 	border-left: 0 dotted;
 }
 
+.panel-heading .caret {
+	margin-top: 7px;
+	float: right;
+}
+
+.panel-heading .caret-right {
+	margin-top: 5px;
+	float: right;
+}
+
 /* --- NavBar --- */
 
 .tm-navbar .navbar-brand {

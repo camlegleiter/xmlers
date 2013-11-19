@@ -27,7 +27,7 @@
                 <div class="span2"></div>
                 <div class="span8">
                     <div class="well">
-                        <form id="response-form" class="form-horizontal" action="<%= request.getContextPath() %>/create" method="POST"></form>
+                        <form id="response-form" class="form-horizontal" action="upsertResponse" method="POST"></form>
                     </div>
                 </div>
                 <div class="span2"></div>

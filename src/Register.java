@@ -54,9 +54,9 @@ public class Register extends HttpServlet {
 		
 		User user = new User();
 		user.setFirstName((String) request.getParameter("first-name"));
-		user.setFirstName((String) request.getParameter("last-name"));
-		user.setFirstName(username);
-		user.setFirstName((String) request.getParameter("email"));
+		user.setLastName((String) request.getParameter("last-name"));
+		user.setUserName(username);
+		user.setEmail((String) request.getParameter("email"));
 		user.setPassword(password);
 		
 		library.upsertUser(user);

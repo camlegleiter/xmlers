@@ -3,12 +3,13 @@
 TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
     
     /*
-     * 
+     * The main view that represents where the user inputs the form metadata
+     * and one or more fields.
      */
     Module.FormView = Backbone.Marionette.CompositeView.extend({
         template: '#form-template',
-        getItemView: function(item) {
-            return Module[item.get('type') + 'View'];
+        getItemView: function(field) {
+            return Module[field.get('type') + 'View'];
         },
         emptyView: function() {
             return new App.EmptyView({
@@ -29,6 +30,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             formName: '#formName',
             formDesc: '#formDesc',
             formParticipants: '#formParticipants',
+            
             participantsCanSeeAll: '#participantsCanSeeAll',
             participantsCanEditResponse: '#participantsCanEditResponse',
             participantResponseIsRequired: '#participantResponseIsRequired',
@@ -46,7 +48,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         onRender: function() {
             this.ui.formParticipants.select2({
-                width: '300px',
+                width: '100%',
                 placeholder: 'Type an email to add a participant',
                 
                 tags: [],
@@ -121,11 +123,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         onCancel: function(e) {
         	e.preventDefault();
         	
-        	var message;
-        	if (isEdit)
-        		message = 'Any changes to the current form will not be saved. Are you sure you want to cancel?';
-        	else
-        		message = 'The current form will not be saved. Are you sure you want to cancel?';
+
+        	var message = isEdit ? 'Any changes to the current form will not be saved. Are you sure you want to cancel?'
+        			: message = 'The current form will not be saved. Are you sure you want to cancel?';
         	
             var isCanceled = confirm(message);
             	
@@ -287,7 +287,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         ui: {
-            input: 'input[type="text"]'
+            input: ':text'
         },
         
         onUpdateModel: function() {
@@ -314,7 +314,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         ui: {
-            prompt: 'input[id^="prompt"]'
+            prompt: ':text'
         },
         
         initialize: function() {
@@ -351,8 +351,8 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         ui: {
-            prompt: 'input[id^="prompt"]',
-            maxLength: 'input[id^="max-length"]'
+            prompt: ':text',
+            maxLength: 'input[type="number"]'
         },
         
         onUpdateModel: function() {
@@ -382,7 +382,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         ui: {
-            label: 'input[type="text"]'
+            label: ':text'
         },
         
         onUpdateModel: function() {
@@ -410,7 +410,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         ui: {
-            prompt: 'input[id^="prompt"]',
+            prompt: ':text',
             isMulti: '.is-multi'
         },
         

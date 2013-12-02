@@ -10,7 +10,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         events: {
-            'click .delete': 'onDeleteForm'
+            'click .delete:not(.disabled)': 'onDeleteForm'
         },
         
         ui: {
@@ -38,6 +38,10 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
             
             this.ownerForms.show(_ownerForms);
             this.participantForms.show(_participantForms);
+        },
+        
+        onDeleteForm: function() {
+        	alert('delete clicked!');
         },
         
         selectOwnerForm: function(model) {

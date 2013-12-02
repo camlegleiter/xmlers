@@ -116,6 +116,8 @@
         <script id="participant-form-template" type="text/template">
             <h3>Form Name: <@= formName @></h3>
             <h4>Description: <@= formDescription @></h4>
+			<hr>
+			<p><strong>Participation Required: <strong><@= participantResponseIsRequired ? 'Yes' : 'No' @></p>
             <form class="form-inline participant-buttons" action="/app/index" method="POST">
                 <@ if (participantsCanSeeAll) { @>
                     <a href="viewResponses.jsp?form=<@= formID @>" class="view-records btn btn-default" title="See all of the records for this form.">View Records</a>

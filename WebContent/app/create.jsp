@@ -110,7 +110,6 @@
             <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
 			<span class="error error-message" style="display: none"></span>
 		</script>
-        
     
         <script id="checkbox-template" type="text/template">
             <div class="clearfix">

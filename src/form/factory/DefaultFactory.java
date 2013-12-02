@@ -219,7 +219,6 @@ public class DefaultFactory extends FormFactory {
 			TextResponse tr = new TextResponse(question, user);
 			tr.setValue(jsonObject.getString("value"));
 			question.insertResponse(user.getUserID(), tr);
-
 		}
 	}
 

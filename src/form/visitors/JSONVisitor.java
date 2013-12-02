@@ -1,7 +1,6 @@
 package form.visitors;
 
-import java.util.ArrayList;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import form.questions.CheckQuestion;
@@ -24,6 +23,7 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 	public String visit(TextQuestion tq) {
 		JSONObject object = new JSONObject();
 
+		object.put("questionID", tq.getId());
 		object.put("type", "Textbox");
 		object.put("prompt", tq.getPrompt());
 		object.put("maxLength", tq.getMaxLength());
@@ -35,11 +35,12 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 	public String visit(RadioQuestion rq) {
 		JSONObject object = new JSONObject();
 		
+		object.put("questionID", rq.getId());
 		object.put("type", "Radio");
 		object.put("prompt", rq.getPrompt());
-		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		JSONArray options = new JSONArray();
 		for (String option : rq.getOptions()) {
-			options.add(new JSONObject().put("label", option));
+			options.put(new JSONObject().put("label", option));
 		}
 		object.put("radios", options);
 		return object.toString();
@@ -49,11 +50,12 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 	public String visit(CheckQuestion chq) {
 		JSONObject object = new JSONObject();
 		
+		object.put("questionID", chq.getId());
 		object.put("type", "Checkbox");
 		object.put("prompt", chq.getPrompt());
-		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		JSONArray options = new JSONArray();
 		for (String option : chq.getOptions()) {
-			options.add(new JSONObject().put("label", option));
+			options.put(new JSONObject().put("label", option));
 		}
 		object.put("checkboxes", options);
 		
@@ -64,12 +66,13 @@ public class JSONVisitor extends AbstractQuestionVisitor {
 	public String visit(SelectQuestion sq) {
 		JSONObject object = new JSONObject();
 		
+		object.put("questionID", sq.getId());
 		object.put("type", "Select");
 		object.put("prompt", sq.getPrompt());
 		object.put("isMulti", sq.getVariadic());
-		ArrayList<JSONObject> options = new ArrayList<JSONObject>();
+		JSONArray options = new JSONArray();
 		for (String option : sq.getOptions()) {
-			options.add(new JSONObject().put("value", option));
+			options.put(new JSONObject().put("value", option));
 		}
 		object.put("options", options);
 		

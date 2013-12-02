@@ -6,12 +6,6 @@
         <c:import url="/app/includes/header.jsp">
             <c:param name="title" value="Settings - Task Manager" />
         </c:import>
-        
-        <style type="text/css">
-            ul.nav li p {
-                padding: 10px 0px 0px 10px;
-            }
-        </style>
 	</head>
 	<body>
 			

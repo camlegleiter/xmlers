@@ -17,8 +17,6 @@
         <c:import url="/app/includes/header.jsp">
             <c:param name="title" value="View - Task Manager" />
         </c:import>
-
-        <link href="/xmlers/assets/css/style.css" rel="stylesheet">
 	</head>
 	<body>
 		

@@ -15,8 +15,6 @@
         <c:import url="/app/includes/header.jsp">
             <c:param name="title" value="Create - Task Manager" />
         </c:import>
-        
-        <link href="<%= request.getContextPath() %>/assets/css/style.css" rel="stylesheet">
 	</head>
 	<body>
 			

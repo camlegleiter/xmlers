@@ -123,67 +123,73 @@ public class StubController implements IDBController {
 		upsertUser(participant2);
 		
 		//FORM 1 CREATION (mainUser is the owner)
-		//Create questions for the form
-		TextQuestion textQ1 = new TextQuestion(12345, 1, "What's your name?", 100);
+		//Create the form using questions
+		Form form = new Form(1, "Basic Questionnaire", "Answer a few questions to tell me about yourself", mainUser.getUserID());
+		form.add(new TextQuestion(12345, 1, "What's your name?", 100));
+		
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add("Female");
 		answers.add("Male");
-		RadioQuestion radioQ1 = new RadioQuestion(23456, 2, "Sex: ", answers);
-		CheckQuestion checkQ1 = new CheckQuestion(34567, 3, "Sex: ", answers);
-		SelectQuestion selectQ1 = new SelectQuestion(45678, 4, "Sex: ", false, answers);
-		//Create the form using questions
-		Form form = new Form(-1, "Are you sure about your gender?", "Tell us what your name is and your sex, like 3 times.", mainUser.getUserID());
-		form.add(textQ1);
-		form.add(radioQ1);
-		form.add(checkQ1);
-		form.add(selectQ1);
+		form.add(new RadioQuestion(23456, 2, "Sex", answers));
+		
+		form.add(new TextQuestion(34567, 3, "Age", 3));
+		
+		answers = new ArrayList<String>();
+		answers.add("Chocolate");
+		answers.add("Vanilla");
+		answers.add("Strawberry");
+		form.add(new SelectQuestion(45678, 4, "Favorite flavor of Ice Cream", false, answers));
 		//Adding participants
 		form.addParticipant(participant1);
 		form.addParticipant(participant2);
 
 		//FORM 2 CREATION (mainUser is the owner)
-		Form form2 = new Form(form);
-		form2.setFormId(2);
-		form2.setTitle("Another gender questionnaire");
-		form2.add(new TextQuestion(56789, 5, "Type in your Sex to confirm:", 100));
+		Form form2 = new Form(2, "Textbooks for this semester", "I need information about the textbooks to be used next semester. Please respond with the following information.", mainUser.getUserID());
+		form2.add(new TextQuestion(9876, 1, "What's the title of the book?", 100));
+		form2.add(new TextQuestion(8765, 2, "What is the ISBN?", 20));
+		
+		answers = new ArrayList<String>();
+		answers.add("Yes");
+		answers.add("No");
+		form2.add(new RadioQuestion(7654, 3, "Are the students required to purchase this book for your class?", answers));
 		
 		//Adding the forms created
 		upsertForm(form);
 		upsertForm(form2);
 		
 		//RESPONSES
-		TextResponse textQ1R1 = new TextResponse(textQ1, participant1);
-		textQ1R1.setValue("MY name is participant 1");
-		textQ1.insertResponse(participant1.getUserID(), textQ1R1);
-		
-		CheckQuestionResponse checkQ1R1 = new CheckQuestionResponse(checkQ1, participant1);
-		ArrayList<Entry> checkQ1R1answers = new ArrayList<Entry>();
-		Entry ans1 = null;
-		for(String answer: checkQ1.getOptions()){
-			ans1 = checkQ1.new Entry(answer, true);
-			checkQ1R1answers.add(ans1);
-		}
-		checkQ1R1.setValue(checkQ1R1answers);
-		checkQ1.insertResponse(participant1.getUserID(), checkQ1R1);
-		
+//		TextResponse textQ1R1 = new TextResponse(textQ1, participant1);
+//		textQ1R1.setValue("MY name is participant 1");
+//		textQ1.insertResponse(participant1.getUserID(), textQ1R1);
+//		
+//		CheckQuestionResponse checkQ1R1 = new CheckQuestionResponse(checkQ1, participant1);
+//		ArrayList<Entry> checkQ1R1answers = new ArrayList<Entry>();
+//		Entry ans1 = null;
+//		for(String answer: checkQ1.getOptions()){
+//			ans1 = checkQ1.new Entry(answer, true);
+//			checkQ1R1answers.add(ans1);
+//		}
+//		checkQ1R1.setValue(checkQ1R1answers);
+//		checkQ1.insertResponse(participant1.getUserID(), checkQ1R1);
+//		
 //		CheckQuestionResponse checkQ1R2 = new CheckQuestionResponse(checkQ1, participant2);
 //		ArrayList<Entry> checkQ1R2answers = new ArrayList<Entry>();
 //		checkQ1R2answers.add(ans1);
 //		checkQ1R2.setValue(checkQ1R2answers);
 //		checkQ1.insertResponse(participant2.getUserID(), checkQ1R2);
-		
-		RadioQuestionResponse radioQ1R1 = new RadioQuestionResponse(radioQ1, participant1);
-		ArrayList<Entry> radioQ1R1answer = new ArrayList<Entry>();
-		radioQ1R1answer.add(ans1);
-		radioQ1R1.setValue(radioQ1R1answer);
-		radioQ1.insertResponse(participant1.getUserID(), radioQ1R1);
-		
-		//TODO test select questions that are multi
-		SelectQuestionResponse selectQ1R1 = new SelectQuestionResponse(selectQ1, participant1);
-		ArrayList<Entry> selectQ1R1answer = new ArrayList<Entry>();
-		selectQ1R1answer.add(ans1);
-		selectQ1R1.setValue(selectQ1R1answer);
-		selectQ1.insertResponse(participant1.getUserID(), selectQ1R1);
+//		
+//		RadioQuestionResponse radioQ1R1 = new RadioQuestionResponse(radioQ1, participant1);
+//		ArrayList<Entry> radioQ1R1answer = new ArrayList<Entry>();
+//		radioQ1R1answer.add(ans1);
+//		radioQ1R1.setValue(radioQ1R1answer);
+//		radioQ1.insertResponse(participant1.getUserID(), radioQ1R1);
+//		
+//		//TODO test select questions that are multi
+//		SelectQuestionResponse selectQ1R1 = new SelectQuestionResponse(selectQ1, participant1);
+//		ArrayList<Entry> selectQ1R1answer = new ArrayList<Entry>();
+//		selectQ1R1answer.add(ans1);
+//		selectQ1R1.setValue(selectQ1R1answer);
+//		selectQ1.insertResponse(participant1.getUserID(), selectQ1R1);
 
 	}
 	

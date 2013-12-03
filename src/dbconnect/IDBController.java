@@ -133,4 +133,11 @@ public interface IDBController {
 	 * @return a List of all Forms that the given userId is a participant of.
 	 */
 	public List<Form> getParticipantForms(int userId);
+	
+	/**
+	 * Returns a new integer atomically to generate unique question IDs.
+	 * 
+	 * @return
+	 */
+	public int getNewQuestionId();
 }

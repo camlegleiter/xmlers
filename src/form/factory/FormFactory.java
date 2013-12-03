@@ -3,6 +3,7 @@ package form.factory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dbconnect.IDBController;
 import form.Form;
 import form.questions.Question;
 
@@ -20,7 +21,7 @@ public abstract class FormFactory {
 	 * @return A fully instantiated Form.
 	 * @throws JSONException
 	 */
-	public abstract Form buildForm(JSONObject src) throws JSONException;
+	public abstract Form buildForm(JSONObject src, IDBController controller) throws JSONException;
 	
 	/**
 	 * Determines which type of question the JSON Object represents, if any,

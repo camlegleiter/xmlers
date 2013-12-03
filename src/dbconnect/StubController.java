@@ -25,6 +25,9 @@ public class StubController implements IDBController {
 	
 	private static int FORM_ID;
 	private static int USER_ID;
+	private static int QUESTION_ID;
+	
+	private final Object mutex = new Object();
 		
 	public StubController()
 	{
@@ -33,6 +36,12 @@ public class StubController implements IDBController {
 		users = Collections.synchronizedMap(new HashMap<Integer, User>());
 		
 		createStubData();
+	}
+	
+	public int getNewQuestionId() {
+		synchronized (mutex) {
+			return QUESTION_ID++;
+		}
 	}
 
 	@Override

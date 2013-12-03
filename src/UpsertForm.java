@@ -46,7 +46,7 @@ public class UpsertForm extends HttpServlet {
 			User user = (User) request.getSession().getAttribute("user");
 			jsonObject.put("formOwner", user.getUserID());
 			
-			Form form = new DefaultFactory().buildForm(jsonObject);
+			Form form = new DefaultFactory().buildForm(jsonObject, controller);
 			controller.upsertForm(form);
 			
 			String message = isEdit ? "?m=u" : "?m=a";

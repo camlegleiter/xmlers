@@ -41,12 +41,40 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         onDeleteForm: function() {
-        	alert('delete clicked!');
+        	//alert('delete clicked!');
+        	var message = (isOwner) ? 'This form and all response data will be permanently deleted. Are you sure you wish to delete?'
+        			: 'By unparticipating, you cannot respond to this form unless re-added by the form owner. Are you sure you wish to unparticipate?';
+//        	if (confirm(message)) {
+//        		var self = this;
+//	            $.post('/xmlers/app/deleteForm', {
+//	            	formID: self.selectedFormId,
+//	            	isOwner: self.isOwner
+//	            })
+//	            .done(function(data, textStatus, jqXHR) {
+//	                if (data.success) {
+//	                    return true;
+//	                } else if (data.error) {
+//	                	self.ui.errorMessage.show().text(data.error);
+//	                	return false;
+//	                }
+//	            })
+//	            .error(function(jqXHR, textStatus, errorThrown) {
+//	                return false;
+//	            })
+//	            .always(function() {
+//	                self.toggleButtonsDisabled(false);
+//	                self.ui.loading.hide();
+//	            });
+//        	}
         },
         
         selectOwnerForm: function(model) {
             this.toggleDeleteDisabled(false);
             this.ui.deleteBtn.text('Delete form');
+            
+            this.isOwner = true;
+            this.selectedFormId = model.get('formID');
+            
             this.trigger('select:form', {
                 isOwner: true,
                 model: model
@@ -57,6 +85,9 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
             var responseRequired = model.get('participantResponseIsRequired');
             this.toggleDeleteDisabled(responseRequired);
             this.ui.deleteBtn.text(responseRequired ? '' : 'Unparticipate');
+            
+            this.isOwner = false;
+            this.selectedFormId = model.get('formID');
             
             this.trigger('select:form', {
                 isOwner: false,

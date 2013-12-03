@@ -5,30 +5,23 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import form.Form;
 import form.User;
-import form.questions.AbstractVariadicQuestion.Entry;
-import form.questions.CheckQuestion;
-import form.questions.CheckQuestionResponse;
 import form.questions.RadioQuestion;
-import form.questions.RadioQuestionResponse;
 import form.questions.SelectQuestion;
-import form.questions.SelectQuestionResponse;
 import form.questions.TextQuestion;
-import form.questions.TextResponse;
 
 public class StubController implements IDBController {
 	
-	public Map<Integer, Form> forms;
-	public Map<Integer, User> users;
+	private final Map<Integer, Form> forms;
+	private final Map<Integer, User> users;
 	
-	private static int FORM_ID;
-	private static int USER_ID;
-	private static int QUESTION_ID;
+	private static AtomicInteger formId;
+	private static AtomicInteger userId;
+	private static AtomicInteger questionId;
 	
-	private final Object mutex = new Object();
-		
 	public StubController()
 	{
 		// Ensure no concurrency issues arise when reading/writing
@@ -39,9 +32,7 @@ public class StubController implements IDBController {
 	}
 	
 	public int getNewQuestionId() {
-		synchronized (mutex) {
-			return QUESTION_ID++;
-		}
+		return questionId.getAndIncrement();
 	}
 
 	@Override
@@ -57,7 +48,7 @@ public class StubController implements IDBController {
 	@Override
 	public boolean upsertForm(Form form) {
 		if (!forms.containsKey(form.getFormId()))
-			form.setFormId(FORM_ID++);
+			form.setFormId(formId.getAndIncrement());
 		forms.put(form.getFormId(), form);
 		return true;
 	}
@@ -65,7 +56,7 @@ public class StubController implements IDBController {
 	@Override
 	public boolean upsertUser(User user) {
 		if (!users.containsKey(user.getUserID()))
-			user.setUserID(USER_ID++);
+			user.setUserID(userId.getAndIncrement());
 		users.put(user.getUserID(), user);
 		return true;
 	}
@@ -165,41 +156,6 @@ public class StubController implements IDBController {
 		//Adding the forms created
 		upsertForm(form);
 		upsertForm(form2);
-		
-		//RESPONSES
-//		TextResponse textQ1R1 = new TextResponse(textQ1, participant1);
-//		textQ1R1.setValue("MY name is participant 1");
-//		textQ1.insertResponse(participant1.getUserID(), textQ1R1);
-//		
-//		CheckQuestionResponse checkQ1R1 = new CheckQuestionResponse(checkQ1, participant1);
-//		ArrayList<Entry> checkQ1R1answers = new ArrayList<Entry>();
-//		Entry ans1 = null;
-//		for(String answer: checkQ1.getOptions()){
-//			ans1 = checkQ1.new Entry(answer, true);
-//			checkQ1R1answers.add(ans1);
-//		}
-//		checkQ1R1.setValue(checkQ1R1answers);
-//		checkQ1.insertResponse(participant1.getUserID(), checkQ1R1);
-//		
-//		CheckQuestionResponse checkQ1R2 = new CheckQuestionResponse(checkQ1, participant2);
-//		ArrayList<Entry> checkQ1R2answers = new ArrayList<Entry>();
-//		checkQ1R2answers.add(ans1);
-//		checkQ1R2.setValue(checkQ1R2answers);
-//		checkQ1.insertResponse(participant2.getUserID(), checkQ1R2);
-//		
-//		RadioQuestionResponse radioQ1R1 = new RadioQuestionResponse(radioQ1, participant1);
-//		ArrayList<Entry> radioQ1R1answer = new ArrayList<Entry>();
-//		radioQ1R1answer.add(ans1);
-//		radioQ1R1.setValue(radioQ1R1answer);
-//		radioQ1.insertResponse(participant1.getUserID(), radioQ1R1);
-//		
-//		//TODO test select questions that are multi
-//		SelectQuestionResponse selectQ1R1 = new SelectQuestionResponse(selectQ1, participant1);
-//		ArrayList<Entry> selectQ1R1answer = new ArrayList<Entry>();
-//		selectQ1R1answer.add(ans1);
-//		selectQ1R1.setValue(selectQ1R1answer);
-//		selectQ1.insertResponse(participant1.getUserID(), selectQ1R1);
-
 	}
 	
 	@Override

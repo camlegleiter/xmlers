@@ -99,4 +99,12 @@
     <servlet-name>Settings</servlet-name>
     <url-pattern>/app/settings</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteForm</servlet-name>
+    <servlet-class>DeleteForm</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteForm</servlet-name>
+    <url-pattern>/app/deleteForm</url-pattern>
+  </servlet-mapping>
 </web-app>

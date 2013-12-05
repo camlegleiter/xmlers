@@ -93,8 +93,8 @@ public class EmailParticipants {
 			for (User u : form.getParticipants()) {
 				message.addRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
 			}
-			message.addRecipients(Message.RecipientType.TO,
-					InternetAddress.parse("daliashea@gmail.com"));
+//			message.addRecipients(Message.RecipientType.TO,
+//					InternetAddress.parse("daliashea@gmail.com"));
 			message.setSubject(STANDARD_TEMPLATE_SUBJECT);
 			message.setText(STANDARD_TEMPLATE_BODY);
 			message.setSentDate(new Date());
@@ -158,8 +158,6 @@ public class EmailParticipants {
 					message.addRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
 				}
 			}
-			message.addRecipients(Message.RecipientType.TO,
-					InternetAddress.parse("daliashea@gmail.com"));
 			message.setSubject(STANDARD_TEMPLATE_SUBJECT);
 			message.setText(STANDARD_TEMPLATE_BODY);
 			message.setSentDate(new Date());

@@ -57,7 +57,7 @@ public class UpsertResponse extends HttpServlet {
 			
 			controller.upsertForm(form);
 			
-			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp");
+			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?r=a");
 		} catch (Exception e) {
 			jsonObject = new JSONObject().put("error", e.getMessage());
 		} finally {

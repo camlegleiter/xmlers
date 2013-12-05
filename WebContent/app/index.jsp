@@ -34,7 +34,13 @@
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				An error occurred trying to process your request. Please try again soon!
 			</div>
-    </c:when>             
+    </c:when>
+    <c:when test="${param.r == 'a'}">
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				Your response was successfully added to the form!
+			</div>
+    </c:when>            
 </c:choose>
 		
 			<c:import url="/app/includes/noscript.jsp" />

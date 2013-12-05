@@ -16,8 +16,8 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.user.userName}<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="<%= request.getContextPath() %>/app/settings.jsp">Settings</a></li>
-								<li class="divider"></li>
+								<!-- <li><a href="<%= request.getContextPath() %>/app/settings.jsp">Settings</a></li>
+								<li class="divider"></li> -->
 								<li><a href="<%= request.getContextPath() %>/app/logout?logout=logout">Sign Out</a></li>
 							</ul>
 						</li>

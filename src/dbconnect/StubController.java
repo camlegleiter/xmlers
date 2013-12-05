@@ -18,9 +18,9 @@ public class StubController implements IDBController {
 	private final Map<Integer, Form> forms;
 	private final Map<Integer, User> users;
 	
-	private static AtomicInteger formId;
-	private static AtomicInteger userId;
-	private static AtomicInteger questionId;
+	private final AtomicInteger formId = new AtomicInteger();
+	private final AtomicInteger userId = new AtomicInteger();
+	private final AtomicInteger questionId = new AtomicInteger();
 	
 	public StubController()
 	{

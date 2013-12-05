@@ -160,13 +160,6 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
     		}
     	},
         itemView: Module.OwnerFormView,
-//        emptyView: function() {
-//            return new App.EmptyView({
-//            	tagName: 'li',
-//            	className: 'list-group-item',
-//                message: 'No forms to manage!'
-//            });
-//        },
         
         collectionEvents: {
             'select:form': 'onSelectForm'
@@ -185,13 +178,6 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
     		}
     	},
         itemView: Module.ParticipantFormView,
-//        emptyView: function() {
-//            return new App.EmptyView({
-//            	tagName: 'li',
-//            	className: 'list-group-item',
-//                message: 'No forms to fill!'
-//            });
-//        },
         
         collectionEvents: {
             'select:form': 'onSelectForm'

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import dbconnect.DBManager;
 import dbconnect.IDBController;
+import form.Form;
 import form.User;
 import form.factory.DefaultFactory;
 
@@ -43,17 +44,18 @@ public class UpsertResponse extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String responseData = (String) request.getParameter("model");
 
+		IDBController controller = DBManager.getInstance();
 		JSONObject jsonObject = null;
 		try {
 			jsonObject = new JSONObject(responseData);
 			
 			// Add the userID from the session
 			User user = (User) request.getSession().getAttribute("user");
-			//jsonObject.put("responseID",
 			jsonObject.put("responseOwner", user.getUserID());
-			jsonObject.put("responseOwnerName", user.getFullName());
 			
-			new DefaultFactory().insertResponse(jsonObject, user);
+			Form form = new DefaultFactory().insertResponse(jsonObject, user);
+			
+			controller.upsertForm(form);
 			
 			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp");
 		} catch (Exception e) {

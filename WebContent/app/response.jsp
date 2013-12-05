@@ -13,8 +13,6 @@
         <c:import url="/app/includes/header.jsp">
             <c:param name="title" value="Response - Task Manager" />
         </c:import>
-
-        <link href="<%= request.getContextPath() %>/assets/css/style.css" rel="stylesheet">
     </head>
     <body>
             
@@ -65,6 +63,7 @@
             <a class="submit btn btn-lg btn-primary">Submit</a>
             <a href="index.jsp" class="cancel btn btn-lg btn-default">Cancel</a>
             <img class="loading" src="<%= request.getContextPath() %>/assets/img/loading.gif" style="display: none;" />
+			<span class="error error-message" style="display: none"></span>
         </script>
     
         <script id="checkbox-template" type="text/template">

@@ -10,8 +10,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import dbconnect.DBManager;
+import dbconnect.IDBController;
 import form.Form;
 import form.User;
+import form.questions.AbstractVariadicQuestion.Entry;
 import form.questions.CheckQuestion;
 import form.questions.CheckQuestionResponse;
 import form.questions.Question;
@@ -21,7 +23,6 @@ import form.questions.SelectQuestion;
 import form.questions.SelectQuestionResponse;
 import form.questions.TextQuestion;
 import form.questions.TextResponse;
-import form.questions.AbstractVariadicQuestion.Entry;
 
 public class DefaultFactory extends FormFactory {
 
@@ -41,7 +42,7 @@ public class DefaultFactory extends FormFactory {
 	}	
 
 	@Override
-	public Form buildForm(JSONObject jsonObject) throws JSONException {
+	public Form buildForm(JSONObject jsonObject, IDBController controller) throws JSONException {
 		Form f = new Form();
 		f.setFormId(jsonObject.getInt("formID"));
 		f.setDescription(jsonObject.getString("formDescription"));
@@ -68,8 +69,11 @@ public class DefaultFactory extends FormFactory {
 		}
 
 		JSONArray questions = jsonObject.getJSONArray("formQuestions");
-		for (int i = 0; i < questions.length(); ++i)
-			f.add(buildQuestion(questions.getJSONObject(i), i));
+		for (int i = 0; i < questions.length(); ++i) {
+			Question<?> question = buildQuestion(questions.getJSONObject(i), i);
+			question.setId(controller.getNewQuestionId());
+			f.add(question);
+		}
 
 		return f;
 	}
@@ -227,7 +231,6 @@ public class DefaultFactory extends FormFactory {
 			TextResponse tr = new TextResponse(question, user);
 			tr.setValue(jsonObject.getString("value"));
 			question.insertResponse(user.getUserID(), tr);
-
 		}
 	}
 

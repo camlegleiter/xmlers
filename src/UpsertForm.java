@@ -47,18 +47,16 @@ public class UpsertForm extends HttpServlet {
 			User user = (User) request.getSession().getAttribute("user");
 			jsonObject.put("formOwner", user.getUserID());
 			
-			Form form = new DefaultFactory().buildForm(jsonObject);
-
+			Form form = new DefaultFactory().buildForm(jsonObject, controller);
 			controller.upsertForm(form);
 			
 			if(!isEdit){
 				EmailParticipants.emailParticipants(form); //1, "Cameron Legleiter", "camlegleiter@gmail.com", new String[] { "cameronl@iastate.edu" }, null, null);
 			}
 			
-			if (isEdit)
-				jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?m=a");
-			else
-				jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?m=u");
+			String message = isEdit ? "?m=u" : "?m=a";
+			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp" + message);
+
 		} catch (Exception e) {
 			jsonObject = new JSONObject().put("error", e.getMessage());
 		} finally {
@@ -66,5 +64,4 @@ public class UpsertForm extends HttpServlet {
 			response.getWriter().write(jsonObject.toString());
 		}
 	}
-
 }

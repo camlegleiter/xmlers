@@ -192,4 +192,10 @@ public class SqlController implements IDBController {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int getNewQuestionId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

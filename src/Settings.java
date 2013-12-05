@@ -38,11 +38,11 @@ public class Settings extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		try {
-			EmailParticipants.emailParticipants("1", "Cameron Legleiter", "camlegleiter@gmail.com", new String[] { "cameronl@iastate.edu" }, null, null);
-		} catch (MessagingException e) {
-			
-		}
+//		try {
+//			EmailParticipants.emailParticipants(1, "Cameron Legleiter", "camlegleiter@gmail.com", new String[] { "cameronl@iastate.edu" }, null, null);
+//		} catch (MessagingException e) {
+//			
+//		}
 		
 		response.sendRedirect(request.getContextPath() + "/app/settings.jsp");
 	}

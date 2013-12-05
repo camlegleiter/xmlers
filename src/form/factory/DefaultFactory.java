@@ -55,9 +55,17 @@ public class DefaultFactory extends FormFactory {
 				.getBoolean("participantResponseIsRequired"));
 
 		JSONArray participants = jsonObject.getJSONArray("formParticipants");
-		for (int i = 0; i < participants.length(); ++i)
-			f.addParticipant(DBManager.getInstance().fetchUserByEmail(
-					participants.getString(i)));
+		for (int i = 0; i < participants.length(); ++i) {
+			User u = DBManager.getInstance().fetchUserByEmail(
+					participants.getString(i));
+			if(u == null) {
+				User newUser = new User();
+				newUser.setEmail(participants.getString(i));
+				DBManager.getInstance().upsertUser(newUser);
+				u = newUser;
+			}
+			f.addParticipant(u);
+		}
 
 		JSONArray questions = jsonObject.getJSONArray("formQuestions");
 		for (int i = 0; i < questions.length(); ++i)

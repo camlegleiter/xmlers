@@ -156,7 +156,9 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	}
 
 	public void addParticipant(User u) {
-		participants.add(u);
+		if(u != null){
+			participants.add(u);
+		}
 	}
 
 	/**

@@ -5,10 +5,14 @@ import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import form.Form;
+import form.User;
 
 public class EmailParticipants {
 	
@@ -60,33 +64,63 @@ public class EmailParticipants {
 	 * @throws IllegalArgumentException
 	 * 			if any of the given arguments are null or empty, or if the array of participant emails is length 0
 	 */
-	public static void emailParticipants(String formID, String admin, String adminEmail, String[] participantEmails, String subject, String body) throws MessagingException, IllegalArgumentException {
+	public static void emailParticipants(Form form) throws MessagingException, IllegalArgumentException {
 		// Initial check to make sure that the important arguments have been set
-		if (isNullOrEmpty(formID) || isNullOrEmpty(admin) || isNullOrEmpty(adminEmail) || 
-				(null == participantEmails || 0 == participantEmails.length)) {
+		if (form == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		Properties properties = new Properties();
-		properties.setProperty("mail.transport.protocol", "smtp");
-		properties.setProperty("mail.host", "");
-		System.setProperty("mail.smtp.host", "localhost");
-		Session session = Session.getDefaultInstance(System.getProperties());
+		String port = "19500"; //19500
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.xmlers.com");
+		props.put("mail.smtp.socketFactory.port", port);//465
+//		props.put("mail.smtp.socketFactory.class",
+//				"javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", port);//465
 		
-		Message message = new MimeMessage(session);
-		message.setFrom(new InternetAddress(adminEmail));
-		for (String participantEmail : participantEmails) {
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(participantEmail));
+		Session session = Session.getDefaultInstance(props,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication("TaskManager","thepassword");
+					}
+				});
+		
+		try {
+			 
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("TaskManager@xmlers.com"));
+			for (User u : form.getParticipants()) {
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
+			}
+			message.addRecipients(Message.RecipientType.TO,
+					InternetAddress.parse("daliashea@gmail.com"));
+			message.setSubject(STANDARD_TEMPLATE_SUBJECT);
+			message.setText(STANDARD_TEMPLATE_BODY);
+			message.setSentDate(new Date());
+ 
+			Transport.send(message);
+ 
+			System.out.println("Done");
+ 
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
 		}
 		
-		message.setSubject(isNullOrEmpty(subject) ? STANDARD_TEMPLATE_SUBJECT : subject);
-		message.setContent(isNullOrEmpty(body) ? setMessageValues(admin, adminEmail, "", "") : body, "text/html; charset=ISO-8859-1");
-		message.setSentDate(new Date());
-		
-		Transport transport = session.getTransport();
-		transport.connect();
-		transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
-		transport.close();
+//		Message message = new MimeMessage(session);
+//		message.setFrom(new InternetAddress(adminEmail));
+//		for (String participantEmail : participantEmails) {
+//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(participantEmail));
+//		}
+//		
+//		message.setSubject(isNullOrEmpty(subject) ? STANDARD_TEMPLATE_SUBJECT : subject);
+//		message.setContent(isNullOrEmpty(body) ? setMessageValues(admin, adminEmail, "", "") : body, "text/html; charset=ISO-8859-1");
+//		message.setSentDate(new Date());
+//		
+//		Transport transport = session.getTransport();
+//		transport.connect();
+//		transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
+//		transport.close();
 	}
 	
 	/**

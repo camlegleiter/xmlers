@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import dbconnect.DBManager;
 import dbconnect.IDBController;
+import email.EmailParticipants;
 import form.Form;
 import form.User;
 import form.factory.DefaultFactory;
@@ -49,6 +50,10 @@ public class UpsertForm extends HttpServlet {
 			Form form = new DefaultFactory().buildForm(jsonObject);
 
 			controller.upsertForm(form);
+			
+			if(!isEdit){
+				EmailParticipants.emailParticipants(form); //1, "Cameron Legleiter", "camlegleiter@gmail.com", new String[] { "cameronl@iastate.edu" }, null, null);
+			}
 			
 			if (isEdit)
 				jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?m=a");

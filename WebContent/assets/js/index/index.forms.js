@@ -41,31 +41,33 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         onDeleteForm: function() {
-        	//alert('delete clicked!');
-        	var message = (isOwner) ? 'This form and all response data will be permanently deleted. Are you sure you wish to delete?'
+        	this.toggleDeleteDisabled(true);
+        	
+        	var message = (this.isOwner) ? 'This form and all response data will be permanently deleted. Are you sure you wish to delete?'
         			: 'By unparticipating, you cannot respond to this form unless re-added by the form owner. Are you sure you wish to unparticipate?';
-//        	if (confirm(message)) {
-//        		var self = this;
-//	            $.post('/xmlers/app/deleteForm', {
-//	            	formID: self.selectedFormId,
-//	            	isOwner: self.isOwner
-//	            })
-//	            .done(function(data, textStatus, jqXHR) {
-//	                if (data.success) {
-//	                    return true;
-//	                } else if (data.error) {
-//	                	self.ui.errorMessage.show().text(data.error);
-//	                	return false;
-//	                }
-//	            })
-//	            .error(function(jqXHR, textStatus, errorThrown) {
-//	                return false;
-//	            })
-//	            .always(function() {
-//	                self.toggleButtonsDisabled(false);
-//	                self.ui.loading.hide();
-//	            });
-//        	}
+        	if (confirm(message)) {
+        		var self = this;
+        		var postAddr = (this.isOwner) ? 'deleteForm' : 'unparticipateForm';
+	            $.post('/xmlers/app/' + postAddr, {
+	            	formID: this.selectedModel.get('formID')
+	            })
+	            .done(function(data, textStatus, jqXHR) {
+	                if (data.success) {
+	                	self.selectedModel.destroy();
+	                    return true;
+	                } else if (data.error) {
+	                	alert(data.error);
+	                	return false;
+	                }
+	            })
+	            .error(function(jqXHR, textStatus, errorThrown) {
+	            	console.log(errorThrown);
+	                return false;
+	            })
+	            .always(function() {
+	                self.toggleDeleteDisabled(false);
+	            });
+        	}
         },
         
         selectOwnerForm: function(model) {
@@ -73,7 +75,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
             this.ui.deleteBtn.text('Delete form');
             
             this.isOwner = true;
-            this.selectedFormId = model.get('formID');
+            this.selectedModel = model;
             
             this.trigger('select:form', {
                 isOwner: true,

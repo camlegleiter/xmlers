@@ -50,8 +50,8 @@ public class UpsertForm extends HttpServlet {
 			Form form = new DefaultFactory().buildForm(jsonObject, controller);
 			controller.upsertForm(form);
 			
-			if(!isEdit){
-				EmailParticipants.emailParticipants(form); //1, "Cameron Legleiter", "camlegleiter@gmail.com", new String[] { "cameronl@iastate.edu" }, null, null);
+			if (!isEdit){
+				EmailParticipants.emailParticipants(form);
 			}
 			
 			String message = isEdit ? "?m=u" : "?m=a";

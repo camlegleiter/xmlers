@@ -122,6 +122,22 @@ public class StubController implements IDBController {
 		participant2.setPassword("password");
 		upsertUser(participant2);
 		
+		User participant3 = new User();
+		participant3.setFirstName("Other");
+		participant3.setLastName("User");
+		participant3.setUserName("dalia");
+		participant3.setEmail("daliaem66@hotmail.com");
+		participant3.setPassword("password");
+		upsertUser(participant3);
+		
+		User participant4 = new User();
+		participant4.setFirstName("Other");
+		participant4.setLastName("User");
+		participant4.setUserName("cameron");
+		participant4.setEmail("cameronl@iastate.edu");
+		participant4.setPassword("password");
+		upsertUser(participant4);
+		
 		//FORM 1 CREATION (mainUser is the owner)
 		//Create the form using questions
 		Form form = new Form(1, "Basic Questionnaire", "Answer a few questions to tell me about yourself", mainUser.getUserID());

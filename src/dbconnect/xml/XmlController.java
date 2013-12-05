@@ -1,6 +1,9 @@
 package dbconnect.xml;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
@@ -8,10 +11,21 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.XPathFactoryConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import dbconnect.IDBController;
 import dbconnect.xml.converters.FormConverter;
@@ -81,13 +95,17 @@ public class XmlController implements IDBController {
 	 */
 	private static Unmarshaller USER_UNMARSHALLER;
 	
-	private final static XPath XPATH_INSTANCE;
+	private static XPath XPATH_INSTANCE;
 	
 	static {
 		String userFileLocation;
 		String formFileLocation;
 		
-		XPATH_INSTANCE = XPathFactory.newInstance().newXPath();
+		try {
+			XPATH_INSTANCE = XPathFactory.newInstance(XPathFactory.DEFAULT_OBJECT_MODEL_URI).newXPath();
+		} catch (XPathFactoryConfigurationException e1) {
+			e1.printStackTrace();
+		}
 		
 		userFileLocation = System.getenv(XML_USER_ENVIRONMENT_VARIABLE);
 		if(null == userFileLocation || userFileLocation.equals(""))
@@ -141,8 +159,20 @@ public class XmlController implements IDBController {
 	public boolean formExists(int formId) {
 		boolean retval = false;
 		try {
-			retval = (boolean) XPATH_INSTANCE.evaluate("//form[@id=" + formId + "]", FORM_REPOSITORY, XPathConstants.BOOLEAN);
+			Object queryResult;
+			FileReader fr;
+			StringBuilder query = new StringBuilder();
+			
+			fr = new FileReader(FORM_REPOSITORY);
+			InputSource inputSource = new InputSource(fr);
+			query.append("//form[@id=\"");
+			query.append(formId);
+			query.append("\"]");
+			queryResult = XPATH_INSTANCE.evaluate(query.toString(), inputSource, XPathConstants.BOOLEAN);
+			retval = ((Boolean) queryResult).booleanValue();
 		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		return retval;
@@ -153,8 +183,10 @@ public class XmlController implements IDBController {
 		boolean retval = false;
 		
 		try {
-			retval = (boolean) XPATH_INSTANCE.evaluate("//user[@id=" + userId + "]", USER_REPOSITORY, XPathConstants.BOOLEAN);
+			retval = (boolean) XPATH_INSTANCE.evaluate("//user[@id=" + userId + "]", new InputSource(new FileReader(USER_REPOSITORY)), XPathConstants.BOOLEAN);
 		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		
@@ -180,14 +212,49 @@ public class XmlController implements IDBController {
 			return null;
 		}
 		try {
-			String source;			
-			source = (String) XPATH_INSTANCE.evaluate("//form[@id=" + id + "]", FORM_REPOSITORY, XPathConstants.STRING);			
-			formDAO = (dbconnect.xml.dao.Form) FORM_UNMARSHALLER.unmarshal(new StringReader(source));
-			form = FormConverter.getInstance().convert(formDAO);
+			Node source;
+			Object evaluated;
+			StringBuilder queryBuilder;
+			FileReader fr;
+			
+			queryBuilder = new StringBuilder();
+			queryBuilder.append("//form[@id=\"");
+			queryBuilder.append(id);
+			queryBuilder.append("\"]");
+
+			fr = new FileReader(FORM_REPOSITORY);
+			InputSource inputSource = new InputSource(fr);
+			DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilder = builderFactory.newDocumentBuilder();
+			Document doc = documentBuilder.parse(inputSource);
+			XPathExpression expression = XPATH_INSTANCE.compile(queryBuilder.toString());
+			evaluated = expression.evaluate(doc, XPathConstants.NODE);
+			//evaluated = XPATH_INSTANCE.evaluate(queryBuilder.toString(), inputSource, XPathConstants.NODE);
+			source = (Node) evaluated;
+			if(null != source)
+			{
+				formDAO = (dbconnect.xml.dao.Form) FORM_UNMARSHALLER.unmarshal(source);
+				form = FormConverter.getInstance().convert(formDAO);
+			}
+			else
+			{
+				return null;
+			}
 		} catch (JAXBException e) {
 			e.printStackTrace();
 			return null;
 		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -211,7 +278,7 @@ public class XmlController implements IDBController {
 		
 		try {
 			String source;
-			source = (String) XPATH_INSTANCE.evaluate(query, USER_REPOSITORY, XPathConstants.STRING);
+			source = (String) XPATH_INSTANCE.evaluate(query, USER_REPOSITORY.getAbsolutePath(), XPathConstants.STRING);
 			userDAO = (dbconnect.xml.dao.User) USER_UNMARSHALLER.unmarshal(new StringReader(source));
 		}
 		catch (JAXBException e){

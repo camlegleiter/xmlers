@@ -14,16 +14,20 @@ public class ControllerTests {
 
 	public IDBController controller;
 	
-	static {
-		
-	}
-	
+	/**
+	 * Just in case, setup new instances for each test.
+	 */
 	@Before
 	public void setup()
 	{
 		controller = DBManager.getInstance();
 	}
 	
+	/**
+	 * Verifies that the environment for running these tests is appropriate.
+	 * For instance, ensures that the XML controller is being used, and that
+	 * the form and user files are specified.
+	 */
 	@Test
 	public void environment()
 	{
@@ -42,16 +46,45 @@ public class ControllerTests {
 	
 	@Test
 	public void Initilization() {
+		//TODO update this so that it is not dependent on my File System.
+		assertTrue(controller instanceof XmlController);
 		assertEquals("C:\\Users\\mstrobel\\Documents\\xmlers\\testMaterial\\Forms.xml", XmlController.getFormLocation().getAbsolutePath());
 		assertEquals("C:\\Users\\mstrobel\\Documents\\xmlers\\testMaterial\\Users.xml", XmlController.getUserLocation().getAbsolutePath());
 	}
 	
+	/**
+	 * Verifies that forms that are in the file are regarded as existing.
+	 */
+	@Test
+	public void formExistsHappy()
+	{
+		assertTrue(controller instanceof XmlController);
+		assertTrue(controller.formExists(1));
+		assertTrue(controller.formExists(2));
+		assertTrue(controller.formExists(3));		
+	}
+	
+	/**
+	 * Verifies that formExists returns false when asked for a form that
+	 * it does not actually contain.
+	 */
+	@Test
+	public void formExistNonexisting()
+	{
+		assertFalse(controller.formExists(1000000000));
+	}
+	
+	/**
+	 * Verifies that Forms are initialized correctly.
+	 */
 	@Test
 	public void formFetchHappy()
 	{
 		assertTrue(controller instanceof XmlController);
 		
 		Form f = controller.fetchForm(1);
+		
+		assertNotNull(f);
 		
 		assertEquals(1, f.getFormId());
 		//TODO verify that all other field match anticipated values.

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <forms xmlns="http://www.example.org/Form">
-  <form>
-    <id>1</id>
-    <title>title1</title>
+  <form id="1" title="title1">
     <description>description1</description>
     <permissions>
       <group id="ID1" read="true" write="true" append="true" />
@@ -42,24 +40,22 @@
       </ComplexQuestion>
     </questions>
     <responses>
-      <textResponse id="id1" parent="parent1" author="author1">
+      <textResponse id="id3" parent="ID1" author="author1">
         <value>value1</value>
       </textResponse>
-      <VariadicBooleanResponse id="id1" parent="parent1" author="author1">
+      <VariadicBooleanResponse id="id1" parent="ID2" author="author1">
         <optionResponse option="option1" response="true" />
         <optionResponse option="option2" response="false" />
         <optionResponse option="option3" response="true" />
       </VariadicBooleanResponse>
-      <ComplexQuestionResponse id="id1" parent="parent1" author="author1">
+      <ComplexQuestionResponse id="id2" parent="ID3" author="author1">
         <response id="id1" parent="parent1" author="author1" />
         <response id="id2" parent="parent2" author="author2" />
         <response id="id3" parent="parent3" author="author3" />
       </ComplexQuestionResponse>
     </responses>
   </form>
-  <form>
-    <id>2</id>
-    <title>title2</title>
+  <form id="2" title="title2">
     <description>description2</description>
     <permissions>
       <group id="ID2" read="false" write="false" append="false" />
@@ -114,9 +110,7 @@
       </ComplexQuestionResponse>
     </responses>
   </form>
-  <form>
-    <id>3</id>
-    <title>title3</title>
+  <form id="3" title="title3">
     <description>description3</description>
     <permissions>
       <group id="ID2" read="true" write="true" append="true" />

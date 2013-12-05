@@ -17,32 +17,21 @@
         <c:import url="/app/includes/header.jsp">
             <c:param name="title" value="View - Task Manager" />
         </c:import>
-        
-        <style type="text/css">
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-            
-            ul.nav li p {
-                padding: 10px 0px 0px 10px;
-            }
-        </style>
-        <link href="/xmlers/assets/css/style.css" rel="stylesheet">
 	</head>
 	<body>
 		
         <c:import url="/app/includes/nav.jsp" />
 		
-		<div class="container-fluid">
+		<div class="container">
 			<c:import url="/app/includes/noscript.jsp" />	
 			
-			<div class="row-fluid">
-				<div id="viewOptions" class="span2">
-				    <h2>View Options</h2>
+			<div class="row">
+				<!-- 
+				<div id="viewOptions" class="col-md-2">
+				    <h3>Options</h3>
 					<div class="well"></div>
-				</div>
-				<div id="responseTable" class="span10">
+				</div> -->
+				<div id="responseTable" class="col-md-12">
 <c:choose>
     <c:when test="${isInvalidFormId}">
                     <h2>Uh oh!</h2>

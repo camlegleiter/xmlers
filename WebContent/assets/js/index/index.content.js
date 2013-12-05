@@ -11,7 +11,42 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
 
         ui: {
-            ownerButtons: '.owner-buttons',
+            reemailParticipants: '.reemail-participants',
+            message: '.message'
+        },
+        
+        events: {
+        	'click .reemail-participants': 'onReemailParticipants'
+        },
+        
+        onReemailParticipants: function() {
+        	this.ui.message.hide();
+        	this.toggleButtonsDisabled(true);
+        	
+            var self = this;
+            $.post('/xmlers/app/index', {
+            	formId: this.model.get('formID')
+            })
+            .done(function(data, textStatus, jqXHR) {
+                if (data.success) {
+                	self.ui.message.show().text(data.success);
+                    return true;
+                } else if (data.error) {
+                	self.ui.message.show().text(data.error);
+                	return false;
+                }
+            })
+            .error(function(jqXHR, textStatus, errorThrown) {
+                self.ui.message.show().text(errorThrown);
+                return false;
+            })
+            .always(function() {
+            	self.toggleButtonsDisabled(false);
+            });
+        },
+        
+        toggleButtonsDisabled: function(disabled) {
+        	this.ui.reemailParticipants.toggleClass('disabled', disabled);
         }
     });
 
@@ -19,6 +54,10 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         template: '#participant-form-template',
     });
 
+    /*
+     * The main content view for displaying either an administrator's form
+     * or a participant's form.
+     */
     Module.FormContentsView = Backbone.Marionette.CompositeView.extend({
         template: '#form-contents-template',
         itemView: function(options) {
@@ -29,7 +68,8 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
 
         emptyView: function() {
             return new App.EmptyView({
-                message: '<h4>Select a form to get started!</h4>'
+            	tagName: 'h4',
+                message: 'Select a form to get started!'
             });
         },
 

@@ -3,7 +3,7 @@
 TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _) {
     
     /*
-     * 
+     * Represents the entire form and form buttons
      */
     Module.FormView = Backbone.Marionette.CompositeView.extend({
         template: '#response-template',
@@ -25,7 +25,8 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
             submit: '.submit',
             cancel: '.cancel',
             
-            loading: '.loading'
+            loading: '.loading',
+            errorMessage: '.error-message'
         },
         
         initialize: function(options) {
@@ -42,7 +43,11 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
                 $.post('/xmlers/app/upsertResponse', {
                     model: JSON.stringify(this.model)
                 }).done(function(data, textStatus, jqXHR) {
-                    console.log(textStatus);
+                    if (data.success) {
+                        window.location.href = data.success;
+                    } else if (data.error) {
+                    	self.ui.errorMessage.show().text(data.error);
+                    }
                 }).error(function(jqXHR, textStatus, errorThrown) {
                     console.log(textStatus);
                     console.log(errorThrown);
@@ -81,7 +86,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
     
     
     /*
-     * 
+     * Represents an individual checkbox item
      */
     Module.CheckboxItemView = Backbone.Marionette.ItemView.extend({
         template: '#checkbox-item-template',
@@ -106,6 +111,9 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
         }
     });
     
+    /*
+     * A checkbox question view
+     */
     Module.CheckboxView = Backbone.Marionette.CompositeView.extend({
         template: '#checkbox-template',
         tagName: 'li',
@@ -141,7 +149,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
     
     
     /*
-     * 
+     * Represents an individual radio item
      */
     Module.RadioItemView = Backbone.Marionette.ItemView.extend({
         template: '#radio-item-template',
@@ -166,6 +174,9 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
         }
     });
     
+    /*
+     * A radio question view
+     */
     Module.RadioView = Backbone.Marionette.CompositeView.extend({
         template: '#radio-template',
         tagName: 'li',
@@ -195,7 +206,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
     
     
     /*
-     * 
+     * Represents a text input question
      */
     Module.TextboxView = Backbone.Marionette.CompositeView.extend({
         template: '#textbox-template',
@@ -235,13 +246,16 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
     
     
     /*
-     * 
+     * Represents an individual option in a select
      */
     Module.SelectOptionItemView = Backbone.Marionette.ItemView.extend({
         template: '#select-option-item-template',
         tagName: 'option'
     });
     
+    /*
+     * A select question
+     */
     Module.SelectView = Backbone.Marionette.CompositeView.extend({
         template: '#select-template',
         tagName: 'li',
@@ -265,7 +279,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
             
             var self = this;
             this.ui.select.on('change', function(e) {
-                self.model.set(self.isMulti ? 'values' : 'value', e.val);
+                self.model.set('values', [e.val]);
             });
         },
         

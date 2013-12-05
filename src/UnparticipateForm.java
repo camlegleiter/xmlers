@@ -1,27 +1,28 @@
 
-
 import java.io.IOException;
 
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import email.EmailParticipants;
+import dbconnect.DBManager;
+import dbconnect.IDBController;
+import form.Form;
+import form.User;
 
 /**
- * Servlet implementation class Settings
+ * Servlet implementation class UnparticipateForm
  */
-@WebServlet("/Settings")
-public class Settings extends HttpServlet {
+@WebServlet("/UnparticipateForm")
+public class UnparticipateForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Settings() {
+    public UnparticipateForm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,14 +38,14 @@ public class Settings extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		try {
-//			EmailParticipants.emailParticipants(1, "Cameron Legleiter", "camlegleiter@gmail.com", new String[] { "cameronl@iastate.edu" }, null, null);
-//		} catch (MessagingException e) {
-//			
-//		}
+		User user = (User) request.getSession().getAttribute("user");
+		int formID = Integer.parseInt(request.getParameter("formID"));
 		
-		response.sendRedirect(request.getContextPath() + "/app/settings.jsp");
+		IDBController controller = DBManager.getInstance();
+		Form form = controller.fetchForm(formID);
+		form.removeParticipant(user);
+		
+		controller.upsertForm(form);
 	}
 
 }

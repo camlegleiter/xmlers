@@ -14,53 +14,66 @@ textarea {
     width: 100%;
 }
 
-.delete, .remove {
-    color: #d14;
-    cursor: pointer;
+.caret-right {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	vertical-align: middle;
+	border-top: 4px solid transparent;
+	border-right: 4px solid #000000;
+	border-bottom: 4px solid transparent;
+	border-left: 0 dotted;
 }
 
-.delete:hover, .remove:hover, .error {
-    color: #d14;
+.panel-heading .caret {
+	margin-top: 7px;
+	float: right;
 }
 
-.delete.disabled, .remove.disabled, .error.disabled {
-    color: inherit;
+.panel-heading .caret-right {
+	margin-top: 5px;
+	float: right;
 }
 
-/* --- Index Page Styles --- */
+/* --- NavBar --- */
 
-.sidebar-nav {
-	padding: 9px 0;
+.tm-navbar .navbar-brand {
+	color: #fff;
 }
 
-/* --- Create Page Styles --- */
+/* --- Side Navbar Styles --- */
 
-#question-options input[type="radio"],
-.form-item input[type="radio"] {
-    display: none;
+.list-group .list-group-item {
+	padding: 0;
 }
 
-#question-options label,
-.form-item label {
-    display: block;
-    margin: 0 auto 5px;
-    padding: 8px;
-    width: auto;
-    
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    
-    text-align: center;
-    text-decoration: none;
+.list-group input[type="radio"] {
+	display: none;
 }
 
-#question-options input[type="radio"]:checked + label,
-.form-item input[type="radio"]:checked + label {
-    background-color: #08c;
-    color: #fff;
-    
-    font-weight: bold;
+.list-group label {
+	display: block;
+	margin: 0;
+	padding: 10px 15px;
+	width: auto;
+	
+	font-weight: normal;
+	
+	cursor: pointer;
 }
+
+.list-group input[type="radio"]:checked + label {
+	color: #fff;
+	background-color: #428bca;
+	border-color: #357ebd;
+}
+
+.panel-title > a {
+	cursor: pointer;
+}
+
+/* --- Create/Edit Page Styles --- */
 
 .question {
     padding: 5px 0px;
@@ -75,10 +88,22 @@ textarea {
     margin-top: 0px;
 }
 
+.question input ~ a.close {
+	float: none;
+}
+
+.select2-container .select2-choices {
+	border-radius: 4px;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+	padding: 6px 12px;
+}
+
 /* --- Response Page CSS --- */
 
 .response-content {
-    margin-left: 20px;
+    margin-left: -20px;
 }
 
 /* --- View Page Table CSS --- */

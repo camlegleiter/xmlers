@@ -10,13 +10,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import dbconnect.DBManager;
-
+import dbconnect.IDBController;
 import form.Form;
+import form.User;
+import form.questions.AbstractVariadicQuestion.Entry;
 import form.questions.CheckQuestion;
+import form.questions.CheckQuestionResponse;
 import form.questions.Question;
 import form.questions.RadioQuestion;
+import form.questions.RadioQuestionResponse;
 import form.questions.SelectQuestion;
+import form.questions.SelectQuestionResponse;
 import form.questions.TextQuestion;
+import form.questions.TextResponse;
 
 public class DefaultFactory extends FormFactory {
 
@@ -27,9 +33,16 @@ public class DefaultFactory extends FormFactory {
 		builderType.put("RADIO", new RadioQuestionBuilder());
 		builderType.put("SELECT", new SelectQuestionBuilder());
 	}
+	private static Map<String, IResponseInserter> responseBuilderType = new HashMap<String, IResponseInserter>();
+	static {
+		responseBuilderType.put("TEXTBOX", new TextboxResponseInserter());
+		responseBuilderType.put("CHECKBOX", new CheckboxResponseInserter());
+		responseBuilderType.put("RADIO", new RadioResponseInserter());
+		responseBuilderType.put("SELECT", new SelectResponseInserter());
+	}	
 
 	@Override
-	public Form buildForm(JSONObject jsonObject) throws JSONException {
+	public Form buildForm(JSONObject jsonObject, IDBController controller) throws JSONException {
 		Form f = new Form();
 		f.setFormId(jsonObject.getInt("formID"));
 		f.setDescription(jsonObject.getString("formDescription"));
@@ -41,14 +54,26 @@ public class DefaultFactory extends FormFactory {
 				.getBoolean("participantsCanEditResponse"));
 		f.isParticipantResponseRequired(jsonObject
 				.getBoolean("participantResponseIsRequired"));
-		
+
 		JSONArray participants = jsonObject.getJSONArray("formParticipants");
-		for (int i = 0; i < participants.length(); ++i)
-			f.addParticipant(DBManager.getInstance().fetchUserByEmail(participants.getString(i)));
+		for (int i = 0; i < participants.length(); ++i) {
+			User u = DBManager.getInstance().fetchUserByEmail(
+					participants.getString(i));
+			if(u == null) {
+				User newUser = new User();
+				newUser.setEmail(participants.getString(i));
+				DBManager.getInstance().upsertUser(newUser);
+				u = newUser;
+			}
+			f.addParticipant(u);
+		}
 
 		JSONArray questions = jsonObject.getJSONArray("formQuestions");
-		for (int i = 0; i < questions.length(); ++i)
-			f.add(buildQuestion(questions.getJSONObject(i), i));
+		for (int i = 0; i < questions.length(); ++i) {
+			Question<?> question = buildQuestion(questions.getJSONObject(i), i);
+			question.setId(controller.getNewQuestionId());
+			f.add(question);
+		}
 
 		return f;
 	}
@@ -149,6 +174,111 @@ public class DefaultFactory extends FormFactory {
 			question.setVariadic(jsonObject.getBoolean("isMulti"));
 			question.setPosition(position);
 			return question;
+		}
+	}
+
+	/**
+	 * Takes in the response metadata (see response_metadata), fetches the form
+	 * from our database and inserts the responses in our metadata into the
+	 * appropriate form.
+	 * 
+	 * @param jsonObject
+	 *            The response metadata with all the responses
+	 * @param user
+	 *            The response owner
+	 * @return The form that was updated
+	 */
+	public Form insertResponse(JSONObject jsonObject, User user) {
+		JSONArray responses = jsonObject.getJSONArray("formQuestions");
+		Form f = DBManager.getInstance().fetchForm(jsonObject.getInt("formID"));
+		f.addRespondedParticipant(user);
+		for (int i = 0; i < responses.length(); ++i) {
+			JSONObject response = responses.getJSONObject(i);
+			for (Question<?> q : f.getQuestions()) {
+				if (q.getId() == response.getInt("questionID")) {
+					String type = response.getString("type");
+					IResponseInserter inserter = responseBuilderType.get(type
+							.toUpperCase());
+					if (inserter == null)
+						throw new IllegalArgumentException(
+								"When building Response: Unrecognized question type.");
+					inserter.insertResponse(response, user, q);
+					break;
+				}
+			}
+		}
+		return f;
+	}
+	private interface IResponseInserter {
+		/**
+		 * Converts the JSONObject that includes the response and
+		 * inserts it in the owner form.
+		 * 
+		 * @param jsonObject
+		 * @param q
+		 * @param user
+		 * @return
+		 * @throws JSONException
+		 */
+		public void insertResponse(JSONObject jsonObject, User user,
+				Question<?> q) throws JSONException;
+	}
+
+	private static class TextboxResponseInserter implements IResponseInserter {
+		@Override
+		public void insertResponse(JSONObject jsonObject, User user,
+				Question<?> q) throws JSONException {
+			TextQuestion question = (TextQuestion) q;
+			TextResponse tr = new TextResponse(question, user);
+			tr.setValue(jsonObject.getString("value"));
+			question.insertResponse(user.getUserID(), tr);
+		}
+	}
+
+	private static class CheckboxResponseInserter implements IResponseInserter {
+		@Override
+		public void insertResponse(JSONObject jsonObject, User user,
+				Question<?> q) throws JSONException {
+			CheckQuestion question = (CheckQuestion) q;
+			ArrayList<Entry> answers = new ArrayList<Entry>();
+			CheckQuestionResponse chr = new CheckQuestionResponse(question,
+					user);
+			JSONArray responses = jsonObject.getJSONArray("values");
+			for (int i = 0; i < responses.length(); ++i) {
+				answers.add(question.new Entry(responses.getString(i), true));
+			}
+			chr.setValue(answers);
+			question.insertResponse(user.getUserID(), chr);
+		}
+	}
+
+	private static class RadioResponseInserter implements IResponseInserter {
+		@Override
+		public void insertResponse(JSONObject jsonObject, User user,
+				Question<?> q) throws JSONException {
+			RadioQuestion question = (RadioQuestion) q;
+			RadioQuestionResponse rr = new RadioQuestionResponse(question, user);
+			ArrayList<Entry> answer = new ArrayList<Entry>();
+			answer.add(question.new Entry(jsonObject.getString("value"), true));
+			rr.setValue(answer);
+			question.insertResponse(user.getUserID(), rr);
+		}
+	}
+
+	private static class SelectResponseInserter implements IResponseInserter {
+		@Override
+		public void insertResponse(JSONObject jsonObject, User user,
+				Question<?> q) throws JSONException {
+			SelectQuestion question = (SelectQuestion) q;
+			SelectQuestionResponse sr = new SelectQuestionResponse(question,
+					user);
+			ArrayList<Entry> answers = new ArrayList<Entry>();
+			JSONArray responses = jsonObject.getJSONArray("values");
+			for (int i = 0; i < responses.length(); ++i) {
+				answers.add(question.new Entry(responses.getString(i), true));
+			}
+			sr.setValue(answers);
+			question.insertResponse(user.getUserID(), sr);
 		}
 	}
 }

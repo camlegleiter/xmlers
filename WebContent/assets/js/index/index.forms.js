@@ -10,7 +10,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         events: {
-            'click .delete': 'onDeleteForm'
+            'click .delete:not(.disabled)': 'onDeleteForm'
         },
         
         ui: {
@@ -40,9 +40,41 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
             this.participantForms.show(_participantForms);
         },
         
+        onDeleteForm: function() {
+        	//alert('delete clicked!');
+        	var message = (isOwner) ? 'This form and all response data will be permanently deleted. Are you sure you wish to delete?'
+        			: 'By unparticipating, you cannot respond to this form unless re-added by the form owner. Are you sure you wish to unparticipate?';
+//        	if (confirm(message)) {
+//        		var self = this;
+//	            $.post('/xmlers/app/deleteForm', {
+//	            	formID: self.selectedFormId,
+//	            	isOwner: self.isOwner
+//	            })
+//	            .done(function(data, textStatus, jqXHR) {
+//	                if (data.success) {
+//	                    return true;
+//	                } else if (data.error) {
+//	                	self.ui.errorMessage.show().text(data.error);
+//	                	return false;
+//	                }
+//	            })
+//	            .error(function(jqXHR, textStatus, errorThrown) {
+//	                return false;
+//	            })
+//	            .always(function() {
+//	                self.toggleButtonsDisabled(false);
+//	                self.ui.loading.hide();
+//	            });
+//        	}
+        },
+        
         selectOwnerForm: function(model) {
             this.toggleDeleteDisabled(false);
             this.ui.deleteBtn.text('Delete form');
+            
+            this.isOwner = true;
+            this.selectedFormId = model.get('formID');
+            
             this.trigger('select:form', {
                 isOwner: true,
                 model: model
@@ -50,8 +82,13 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         selectParticipantForm: function(model) {
-            this.toggleDeleteDisabled(false);
-            this.ui.deleteBtn.text('Unparticipate');
+            var responseRequired = model.get('participantResponseIsRequired');
+            this.toggleDeleteDisabled(responseRequired);
+            this.ui.deleteBtn.text(responseRequired ? '' : 'Unparticipate');
+            
+            this.isOwner = false;
+            this.selectedFormId = model.get('formID');
+            
             this.trigger('select:form', {
                 isOwner: false,
                 model: model
@@ -68,11 +105,11 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
      */
     Module.AbstractFormView = Backbone.Marionette.ItemView.extend({
         template: '#form-item-template',
-        tagName: 'li',
-        className: 'form-item clearfix',
+        tagName: 'a',
+        className: 'list-group-item',
         
         events: {
-            'change input[type="radio"]': 'onRadioChange'
+            'change :radio': 'onRadioChange'
         },
         
         onRadioChange: function() {
@@ -87,16 +124,27 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         }
     });
     
-    Module.AbstractFormsView = Backbone.Marionette.CollectionView.extend({
-        tagName: 'ul',
-        className: 'nav nav-list',
+    Module.AbstractFormsView = Backbone.Marionette.CompositeView.extend({
+    	template: '#form-list-template',
+        className: 'panel panel-default',
+        itemViewContainer: '.list-group',
         
-        appendHtml: function(collectionView, itemView) {
-            collectionView.$el.append(itemView.el);
+        events: {
+        	'click .panel-heading': 'onPanelClick'
+        },
+        
+        ui: {
+        	listGroup: '.list-group',
+        	caretSpan: 'span'
         },
         
         onSelectForm: function(model) {
             this.trigger('select:form', model);
+        },
+        
+        onPanelClick: function() {
+        	this.ui.listGroup.toggle();
+        	this.ui.caretSpan.toggleClass('caret').toggleClass('caret-right');
         }
     });
     
@@ -106,19 +154,15 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
     Module.OwnerFormView = Module.AbstractFormView.extend({});
     
     Module.OwnerFormsView = Module.AbstractFormsView.extend({
+    	templateHelpers: {
+    		getPanelHeading: function() {
+    			return 'Forms I Own';
+    		}
+    	},
         itemView: Module.OwnerFormView,
-        emptyView: function() {
-            return new App.EmptyView({
-                message: 'No forms to manage!'
-            });
-        },
         
         collectionEvents: {
             'select:form': 'onSelectForm'
-        },
-        
-        initialize: function() {
-            this.$el.append('<li class="nav-header">Forms I Own</li>');
         }
     });
     
@@ -128,19 +172,15 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
     Module.ParticipantFormView = Module.AbstractFormView.extend({});
     
     Module.ParticipantFormsView = Module.AbstractFormsView.extend({
+    	templateHelpers: {
+    		getPanelHeading: function() {
+    			return 'Forms I Need to Complete';
+    		}
+    	},
         itemView: Module.ParticipantFormView,
-        emptyView: function() {
-            return new App.EmptyView({
-                message: 'No forms to fill!'
-            });
-        },
         
         collectionEvents: {
             'select:form': 'onSelectForm'
-        },
-        
-        initialize: function() {
-            this.$el.append('<li class="nav-header">Forms I Need to Complete</li>');
         }
     });
 });

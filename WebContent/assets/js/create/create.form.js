@@ -3,12 +3,13 @@
 TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
     
     /*
-     * 
+     * The main view that represents where the user inputs the form metadata
+     * and one or more fields.
      */
     Module.FormView = Backbone.Marionette.CompositeView.extend({
         template: '#form-template',
-        getItemView: function(item) {
-            return Module[item.get('type') + 'View'];
+        getItemView: function(field) {
+            return Module[field.get('type') + 'View'];
         },
         emptyView: function() {
             return new App.EmptyView({
@@ -17,9 +18,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         events: {
-            'input input[type="text"]': 'onUpdateModel',
+            'input :text': 'onUpdateModel',
             'input textarea': 'onUpdateModel',
-            'change input[type="checkbox"]': 'onUpdateModel',
+            'change :checkbox': 'onUpdateModel',
             
             'click .submit': 'onSubmit',
             'click .cancel': 'onCancel'
@@ -29,6 +30,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             formName: '#formName',
             formDesc: '#formDesc',
             formParticipants: '#formParticipants',
+            
             participantsCanSeeAll: '#participantsCanSeeAll',
             participantsCanEditResponse: '#participantsCanEditResponse',
             participantResponseIsRequired: '#participantResponseIsRequired',
@@ -46,7 +48,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         onRender: function() {
             this.ui.formParticipants.select2({
-                width: '300px',
+                width: '100%',
                 placeholder: 'Type an email to add a participant',
                 
                 tags: [],
@@ -72,7 +74,8 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             });
         },
         
-        onSubmit: function() {
+        onSubmit: function(e) {
+        	e.preventDefault();
             if (this.collection.length === 0) {
                 alert('A form must have at least one question for users before submitting.');
                 return;
@@ -90,27 +93,45 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 this.ui.errorMessage.hide();
                 
                 var self = this;
-                $.post('/xmlers/app/upsertForm', { model: JSON.stringify(this.model) })
+                $.post('/xmlers/app/upsertForm', {
+                	model: JSON.stringify(this.model),
+                	isEdit: isEdit
+                })
                 .done(function(data, textStatus, jqXHR) {
                     if (data.success) {
                         window.location.href = data.success;
+                        return true;
                     } else if (data.error) {
                     	self.ui.errorMessage.show().text(data.error);
+                    	return false;
                     }
                 })
                 .error(function(jqXHR, textStatus, errorThrown) {
                     console.log(textStatus);
                     console.log(errorThrown);
+                    return false;
                 })
                 .always(function() {
                     self.toggleButtonsDisabled(false);
                     self.ui.loading.hide();
                 });
             }
+            
+            return false;
         },
         
-        onCancel: function() {
-            return confirm("The current form will not be saved. Are you sure you wish to cancel?");
+        onCancel: function(e) {
+        	e.preventDefault();
+        	
+
+        	var message = isEdit ? 'Any changes to the current form will not be saved. Are you sure you want to cancel?'
+        			: message = 'The current form will not be saved. Are you sure you want to cancel?';
+        	
+            var isCanceled = confirm(message);
+            	
+            if (isCanceled)
+            	window.location.href = "index.jsp";
+            return isCanceled;
         },
         
         appendHtml: function(collectionView, itemView) {
@@ -149,7 +170,8 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
      * 
      */
     Module.QuestionView = Backbone.Marionette.ItemView.extend({
-        className: 'control-group',
+        tagName: 'li',
+        className: 'form-group',
         
         serializeData: function() {
             return {
@@ -198,7 +220,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         events: {
             'input input': 'onUpdateModel',
-            'click .delete': 'onDeleteField'
+            'click .close': 'onDeleteField'
         },
         
         ui: {
@@ -225,7 +247,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             'input input': 'onUpdateModel',
             
             'click .add': 'onAddItem',
-            'click .delete': 'onDeleteEntry'
+            'click .close': 'onDeleteEntry'
         },
         
         ui: {
@@ -234,7 +256,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         initialize: function() {
             this.collection = this.model.get('checkboxes');
-            this.addItem(new App.Models.CheckboxItem());
+            if (this.collection.length == 0) {
+            	this.addItem(new App.Models.CheckboxItem());
+            }
         },
 
         // Adds a new checkbox entry to the field
@@ -259,11 +283,11 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         events: {
             'input input': 'onUpdateModel',
             
-            'click .delete': 'onDeleteField'
+            'click .close': 'onDeleteField'
         },
         
         ui: {
-            input: 'input[type="text"]'
+            input: ':text'
         },
         
         onUpdateModel: function() {
@@ -286,16 +310,19 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             'input input': 'onUpdateModel',
             
             'click .add': 'onAddItem',
-            'click .delete': 'onDeleteEntry'
+            'click .close': 'onDeleteEntry'
         },
         
         ui: {
-            prompt: 'input[id^="prompt"]'
+            prompt: ':text'
         },
         
         initialize: function() {
             this.collection = this.model.get('radios');
-            this.addItem(new App.Models.RadioItem());
+            if (this.collection.length == 0) {
+            	// Add an empty item to get the user started
+            	this.addItem(new App.Models.RadioItem());
+            }
         },
 
         // Adds a new checkbox entry to the field
@@ -320,12 +347,12 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         events: {
             'input input': 'onUpdateModel',
             
-            'click .delete': 'onDeleteEntry'
+            'click .close': 'onDeleteEntry'
         },
         
         ui: {
-            prompt: 'input[id^="prompt"]',
-            maxLength: 'input[id^="max-length"]'
+            prompt: ':text',
+            maxLength: 'input[type="number"]'
         },
         
         onUpdateModel: function() {
@@ -351,11 +378,11 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         events: {
             'input input': 'onUpdateModel',
             
-            'click .delete': 'onDeleteField'
+            'click .close': 'onDeleteField'
         },
         
         ui: {
-            label: 'input[type="text"]'
+            label: ':text'
         },
         
         onUpdateModel: function() {
@@ -375,21 +402,23 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         events: {
-            'input input[type="text"]': 'onUpdateModel',
-            'change input[type="checkbox"]': 'onUpdateModel',
+            'input :text': 'onUpdateModel',
+            'change :checkbox': 'onUpdateModel',
             
             'click .add': 'onAddItem',
-            'click .delete': 'onDeleteEntry'
+            'click .close': 'onDeleteEntry'
         },
         
         ui: {
-            prompt: 'input[id^="prompt"]',
-            isMulti: 'input[type="checkbox"]'
+            prompt: ':text',
+            isMulti: '.is-multi'
         },
         
         initialize: function() {
             this.collection = this.model.get('options');
-            this.addItem(new App.Models.SelectOption());
+            if (this.collection.length == 0) {
+            	this.addItem(new App.Models.SelectOption());
+            }
         },
 
         // Adds a new checkbox entry to the field

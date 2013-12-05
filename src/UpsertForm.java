@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import dbconnect.DBManager;
 import dbconnect.IDBController;
+import email.EmailParticipants;
 import form.Form;
 import form.User;
 import form.factory.DefaultFactory;
@@ -35,6 +36,7 @@ public class UpsertForm extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String formData = (String) request.getParameter("model");
+		boolean isEdit = Boolean.parseBoolean(request.getParameter("isEdit"));
 
 		IDBController controller = DBManager.getInstance();
 		JSONObject jsonObject = null;
@@ -45,11 +47,16 @@ public class UpsertForm extends HttpServlet {
 			User user = (User) request.getSession().getAttribute("user");
 			jsonObject.put("formOwner", user.getUserID());
 			
-			Form form = new DefaultFactory().buildForm(jsonObject);
-
+			Form form = new DefaultFactory().buildForm(jsonObject, controller);
 			controller.upsertForm(form);
 			
-			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?m=a");
+			if (!isEdit){
+				EmailParticipants.emailParticipants(form);
+			}
+			
+			String message = isEdit ? "?m=u" : "?m=a";
+			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp" + message);
+
 		} catch (Exception e) {
 			jsonObject = new JSONObject().put("error", e.getMessage());
 		} finally {
@@ -57,5 +64,4 @@ public class UpsertForm extends HttpServlet {
 			response.getWriter().write(jsonObject.toString());
 		}
 	}
-
 }

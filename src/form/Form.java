@@ -39,6 +39,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	private Queue<Question<?>> questions;
 	private List<User> participants;
 	private int ownerId;
+	private List<User> respondedParticipants;
 	
 	private boolean participantsCanSeeAll;
 	private boolean participantsCanEditResponse;
@@ -47,6 +48,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public Form() {
 		questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
 		participants = new ArrayList<User>();
+		respondedParticipants = new ArrayList<User>();
 	}
 
 	public Form(int id, String title, String description, int ownerId) {
@@ -156,7 +158,9 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	}
 
 	public void addParticipant(User u) {
-		participants.add(u);
+		if(u != null){
+			participants.add(u);
+		}
 	}
 
 	/**
@@ -239,7 +243,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			JSONArray array = new JSONArray();
 			for (User u : this.participants)
 				array.put(u.getEmail());
-			form.put("participants", array);
+			form.put("formParticipants", array);
 		}
 		if (bitSet(settings, Form.QUESTIONS_BIT)) {
 			JSONArray array = new JSONArray("["
@@ -354,5 +358,17 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 
 	public int getOwnerId() {
 		return ownerId;
+	}
+
+	public Queue<Question<?>> getQuestions() {
+		return questions;
+	}
+
+	public List<User> getRespondedParticipants() {
+		return respondedParticipants;
+	}
+
+	public void addRespondedParticipant(User particpant) {
+		respondedParticipants.add(particpant);
 	}
 }

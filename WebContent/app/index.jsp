@@ -115,6 +115,7 @@
                 <a href="create.jsp?edit=1&form=<@= formID @>" class="edit-form btn btn-default" title="Make changes to this form.">Edit Form</a>
                 <a class="reemail-participants btn btn-default" title="Sends a reminder to participants who haven't completed this form to do so.">Re-Email Participants</a>
             </form>
+			<div class="message"></div>
         </script>
         
         <script id="participant-form-template" type="text/template">

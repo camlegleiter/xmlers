@@ -191,6 +191,7 @@ public class DefaultFactory extends FormFactory {
 	public Form insertResponse(JSONObject jsonObject, User user) {
 		JSONArray responses = jsonObject.getJSONArray("formQuestions");
 		Form f = DBManager.getInstance().fetchForm(jsonObject.getInt("formID"));
+		f.addRespondedParticipant(user);
 		for (int i = 0; i < responses.length(); ++i) {
 			JSONObject response = responses.getJSONObject(i);
 			for (Question<?> q : f.getQuestions()) {

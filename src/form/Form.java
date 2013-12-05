@@ -39,6 +39,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	private Queue<Question<?>> questions;
 	private List<User> participants;
 	private int ownerId;
+	private List<User> respondedParticipants;
 	
 	private boolean participantsCanSeeAll;
 	private boolean participantsCanEditResponse;
@@ -47,6 +48,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public Form() {
 		questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
 		participants = new ArrayList<User>();
+		respondedParticipants = new ArrayList<User>();
 	}
 
 	public Form(int id, String title, String description, int ownerId) {
@@ -360,5 +362,13 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 
 	public Queue<Question<?>> getQuestions() {
 		return questions;
+	}
+
+	public List<User> getRespondedParticipants() {
+		return respondedParticipants;
+	}
+
+	public void addRespondedParticipant(User particpant) {
+		respondedParticipants.add(particpant);
 	}
 }

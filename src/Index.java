@@ -1,11 +1,16 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dbconnect.DBManager;
+import email.EmailParticipants;
+import form.Form;
 
 /**
  * Servlet implementation class Index
@@ -36,9 +41,10 @@ public class Index extends HttpServlet {
 		String editForm = request.getParameter("editForm");
 		String reemailParticipants = request.getParameter("reemailParticipants");
 		
-		String formID = request.getParameter("formid");
-
-		if (null != formID) {
+		int formID = Integer.parseInt(request.getParameter("formid"));
+		Form form = DBManager.getInstance().fetchForm(formID);
+		
+		if (null != form) {
 			if (null != viewRecords) {
 				// Redirect the user to the view results page
 				response.sendRedirect(request.getContextPath() + "/app/view.jsp?formid=" + formID);
@@ -55,8 +61,8 @@ public class Index extends HttpServlet {
 					PrintWriter out = response.getWriter();
 					
 					try {
-						//EmailParticipants.reemailParticipants(formID, null, null, participants);
-					} catch (IllegalArgumentException e) {
+						EmailParticipants.reemailParticipants(form);
+					} catch (IllegalArgumentException | MessagingException e) {
 						if (0 == participants.length) {
 							out.write("Either all of the participants have successfully responded, or there are no participants for this form.");
 						} else {

@@ -107,4 +107,12 @@
     <servlet-name>DeleteForm</servlet-name>
     <url-pattern>/app/deleteForm</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>UnparticipateForm</servlet-name>
+    <servlet-class>UnparticipateForm</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UnparticipateForm</servlet-name>
+    <url-pattern>/app/unparticipateForm</url-pattern>
+  </servlet-mapping>
 </web-app>

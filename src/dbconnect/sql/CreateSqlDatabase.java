@@ -1,5 +1,8 @@
-package dbconnect;
+package dbconnect.sql;
 import java.sql.*;
+
+import dbconnect.DBManager;
+import dbconnect.IDBController;
 
 import form.User;
 

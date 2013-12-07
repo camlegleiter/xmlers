@@ -99,7 +99,9 @@ public class EmailParticipants {
 			message.setText(STANDARD_TEMPLATE_BODY);
 			message.setSentDate(new Date());
  
-			Transport.send(message);
+			if(message.getAllRecipients().length > 0){
+				Transport.send(message);
+			}
  
 			System.out.println("Done");
  
@@ -162,8 +164,10 @@ public class EmailParticipants {
 			message.setText(STANDARD_TEMPLATE_BODY);
 			message.setSentDate(new Date());
  
-			Transport.send(message);
- 
+			if(message.getAllRecipients().length > 0){
+				Transport.send(message);
+			}
+			
 			System.out.println("Done");
  
 		} catch (MessagingException e) {

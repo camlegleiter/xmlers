@@ -117,12 +117,13 @@
     			</xs:sequence>
     		</xs:complexType>
     	</xs:element>
+    	<xs:element name="owner" type="xs:integer" />
     	<xs:element name="participants">
     		<xs:complexType>
     			<xs:sequence>
     				<xs:element name="participant" maxOccurs="unbounded" minOccurs="0" >
     					<xs:complexType>
-    						<xs:attribute name="id" />
+    						<xs:attribute name="id" type="xs:integer" />
     					</xs:complexType>
     				</xs:element>    					
     			</xs:sequence>

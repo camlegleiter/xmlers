@@ -266,11 +266,6 @@ public class XmlController implements IDBController {
 		return fetchUserHelper("//user[@id=" + id + "]");
 	}
 	
-	@Override
-	public User fetchUserByUsername(String username) {
-		return fetchUserHelper("//user[@handle=" + username + "]");
-	}
-	
 	private User fetchUserHelper(String query)
 	{
 		User user;
@@ -296,12 +291,6 @@ public class XmlController implements IDBController {
 	@Override
 	public User fetchUserByEmail(String email) {
 		return fetchUserHelper("//user[@email=" + email + "]");
-	}
-	
-	@Override
-	public User fetchUserFromLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

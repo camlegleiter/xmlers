@@ -4,9 +4,11 @@ import form.visitors.IQuestionVisitor;
 
 public class CheckQuestion extends AbstractVariadicQuestion {
 
+	public static final String TYPE_STRING = "check";
+	
 	public CheckQuestion(Iterable<String> opts)
 	{
-		super(opts);
+		super(opts, TYPE_STRING);
 	}
 	
 	/**
@@ -18,7 +20,7 @@ public class CheckQuestion extends AbstractVariadicQuestion {
 	 */
 	public CheckQuestion(int id, int weight, String prompt, Iterable<String> options)
 	{
-		super(id, weight, prompt, options, true);
+		super(id, weight, prompt, options, true, TYPE_STRING);
 	}
 
 	

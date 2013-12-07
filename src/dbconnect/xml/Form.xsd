@@ -13,7 +13,7 @@
 		<xs:sequence>
 			<xs:element type="xs:string" name="prompt" />
 		</xs:sequence>
-		<xs:attribute type="xs:ID" name="id" />
+		<xs:attribute type="xs:integer" name="id" />
 		<xs:attribute type="xs:unsignedInt" name="priority" />
 	</xs:complexType>
   

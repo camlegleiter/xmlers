@@ -6,16 +6,18 @@ import form.visitors.IQuestionVisitor;
 
 public class RadioQuestion extends AbstractVariadicQuestion {
 	
+	public static final String TYPE_STRING = "radio";
+	
 	public RadioQuestion(int id, int weight, String prompt, Iterable<String> answers) {
-		super(id, weight, prompt, answers, false);
+		super(id, weight, prompt, answers, false, TYPE_STRING);
 	}
 
 	public RadioQuestion(AbstractVariadicQuestion buildCheckQuestion) {
-		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(), buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions(), buildCheckQuestion.getVariadic());
+		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(), buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions(), buildCheckQuestion.getVariadic(), TYPE_STRING);
 	}
 	
 	public RadioQuestion(Iterable<String> options) {
-		super(options);
+		super(options, TYPE_STRING);
 	}
 
 	@Override

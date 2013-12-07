@@ -7,23 +7,25 @@ import java.util.List;
 public abstract class AbstractVariadicQuestion extends Question<List<AbstractVariadicQuestion.Entry>> {
 	
 	private boolean isMulti;
+	
+	private String type;
 
 	/**
 	 * All of the lines of text that may either be checked or not checked.
 	 */
 	private Collection<String> options;
 	
-	public AbstractVariadicQuestion()
+	public AbstractVariadicQuestion(String type)
 	{
-		this(new ArrayList<String>());
+		this(new ArrayList<String>(), type);
 	}
 	
-	public AbstractVariadicQuestion(Iterable<String> opts)
+	public AbstractVariadicQuestion(Iterable<String> opts, String type)
 	{
-		this(-1, -1, "", opts, true);
+		this(-1, -1, "", opts, true, type);
 	}
 	
-	public AbstractVariadicQuestion(int id, int weight, String prompt, Iterable<String> options, boolean multiQuestion)
+	public AbstractVariadicQuestion(int id, int weight, String prompt, Iterable<String> options, boolean multiQuestion, String type)
 	{
 		super(id, weight, prompt);
 		isMulti = multiQuestion;
@@ -33,6 +35,8 @@ public abstract class AbstractVariadicQuestion extends Question<List<AbstractVar
 		{
 			this.options.add(opt);
 		}
+		
+		this.type = type;
 	}
 	
 	public Collection<String> getOptions() {
@@ -49,6 +53,10 @@ public abstract class AbstractVariadicQuestion extends Question<List<AbstractVar
 		options.remove(option);
 	}
 	
+	public String getType()
+	{
+		return type;
+	}
 	
 	/**
 	 * Represents one line of a response to a question where one must

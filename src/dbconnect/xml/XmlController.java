@@ -41,6 +41,9 @@ import form.User;
  * This particular strategy utilizes XML, and may be prone to performance problems when
  * the application is scaled.
  * 
+ * We are particularly worried about scaling, which this will not be able to combat, AT ALL.
+ * Our project advisor, however, felt strongly that we not attempt to combat this.
+ * 
  * @author mstrobel
  */
 public class XmlController implements IDBController {
@@ -61,7 +64,7 @@ public class XmlController implements IDBController {
 	private final static File FORM_REPOSITORY;
 	
 	/**
-	 * 
+	 * A file that stores all of the user information.
 	 */
 	private final static File USER_REPOSITORY;
 	
@@ -162,7 +165,7 @@ public class XmlController implements IDBController {
 	}
 	
 	@Override
-	public boolean formExists(int formId) {
+	public synchronized boolean formExists(int formId) {
 		boolean retval = false;
 		try {
 			Object queryResult;
@@ -185,7 +188,7 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public boolean userExists(int userId) {
+	public synchronized boolean userExists(int userId) {
 		boolean retval = false;
 		
 		try {
@@ -200,7 +203,7 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public boolean upsertForm(Form form) {
+	public synchronized boolean upsertForm(Form form) {
 
 		
 		try {
@@ -240,12 +243,12 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public boolean upsertUser(User user) {
+	public synchronized boolean upsertUser(User user) {
 		return false;
 	}
 
 	@Override
-	public Form fetchForm(int id) {
+	public synchronized Form fetchForm(int id) {
 		Form form = null;
 		dbconnect.xml.dao.Form formDAO;
 		if(!formExists(id))
@@ -303,16 +306,16 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public User fetchUser(int id) {
+	public synchronized User fetchUser(int id) {
 		return fetchUserHelper("//user[@id=" + id + "]");
 	}
 	
 	@Override
-	public User fetchUserByUsername(String username) {
+	public synchronized User fetchUserByUsername(String username) {
 		return fetchUserHelper("//user[@handle=" + username + "]");
 	}
 	
-	private User fetchUserHelper(String query)
+	private synchronized User fetchUserHelper(String query)
 	{
 		User user;
 		dbconnect.xml.dao.User userDAO = null;
@@ -335,18 +338,18 @@ public class XmlController implements IDBController {
 	}
 	
 	@Override
-	public User fetchUserByEmail(String email) {
+	public synchronized User fetchUserByEmail(String email) {
 		return fetchUserHelper("//user[@email=" + email + "]");
 	}
 	
 	@Override
-	public User fetchUserFromLogin(String username, String password) {
+	public synchronized User fetchUserFromLogin(String username, String password) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean deleteForm(int key) {
+	public synchronized boolean deleteForm(int key) {
 		Forms formCollection;
 		boolean found;
 		
@@ -382,7 +385,7 @@ public class XmlController implements IDBController {
 		return found;
 	}
 	
-	private Forms unmarshallAllForms() throws JAXBException
+	private synchronized Forms unmarshallAllForms() throws JAXBException
 	{
 		Forms retval;
 		
@@ -391,31 +394,31 @@ public class XmlController implements IDBController {
 		return retval;
 	}
 
-	private void marshallAllForms(Forms f) throws JAXBException
+	private synchronized void marshallAllForms(Forms f) throws JAXBException
 	{
 		XmlController.FORM_COLLECTION_MARSHALLER.marshal(f, FORM_REPOSITORY);
 	}
 	
 	@Override
-	public boolean deleteUser(int key) {
+	public synchronized boolean deleteUser(int key) {
 		//TODO
 		return false;
 	}
 
 	@Override
-	public List<Form> getOwnerForms(int userID) {
+	public synchronized List<Form> getOwnerForms(int userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Form> getParticipantForms(int userID) {
+	public synchronized List<Form> getParticipantForms(int userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int getNewQuestionId() {
+	public synchronized int getNewQuestionId() {
 		int retval = -1;
 		try {
 			Object queryResult;

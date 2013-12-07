@@ -1,5 +1,7 @@
 package dbconnect.xml.converters;
 
+import java.math.BigInteger;
+
 import dbconnect.xml.dao.VariadicBooleanQuestion;
 import form.questions.AbstractVariadicQuestion;
 import form.questions.CheckQuestion;
@@ -7,11 +9,7 @@ import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
 
 public class VariadicQuestionConverter implements IConverter<form.questions.AbstractVariadicQuestion, VariadicBooleanQuestion> {
-	
-	public static final String SELECT_STRING = "select";
-	public static final String RADIO_STRING = "radio";
-	public static final String CHECK_STRING  = "check";
-	
+		
 	private static final VariadicQuestionConverter INSTANCE;
 	
 	static
@@ -37,20 +35,20 @@ public class VariadicQuestionConverter implements IConverter<form.questions.Abst
 		Iterable<String> options;
 		AbstractVariadicQuestion retval;
 		
-		id = Integer.parseInt(other.getId());
+		id = other.getId().intValue();
 		priority = other.getPriority().intValue();
 		prompt = other.getPrompt();
 		options = other.getOption();
 		
 		switch(other.getType())
 		{
-		case CHECK_STRING:
+		case CheckQuestion.TYPE_STRING:
 			retval = new form.questions.CheckQuestion(id, priority, prompt, options);
 			break;
-		case RADIO_STRING:
+		case RadioQuestion.TYPE_STRING:
 			retval = new form.questions.RadioQuestion(id, priority, prompt, options);
 			break;
-		case SELECT_STRING:
+		case SelectQuestion.TYPE_STRING:
 			retval = new form.questions.SelectQuestion(id, priority, prompt, other.isAllowMultiple(), options);
 			break;
 		default:
@@ -66,22 +64,11 @@ public class VariadicQuestionConverter implements IConverter<form.questions.Abst
 		
 		retval = new VariadicBooleanQuestion();
 		
-		if(other instanceof SelectQuestion)
-		{
-			retval.setType(SELECT_STRING);
-		}
-		else if(other instanceof RadioQuestion)
-		{
-			retval.setType(RADIO_STRING);
-		}
-		else if(other instanceof CheckQuestion)
-		{
-			retval.setType(CHECK_STRING);
-		}
-		else
-		{
-			throw new IllegalArgumentException("An unsupported type of question was passed to unconvert.");
-		}
+		retval.setType(other.getType());
+		retval.setAllowMultiple(other.getVariadic());
+		retval.setType(other.getType());
+		retval.getOption().addAll(other.getOptions());
+		retval.setId(BigInteger.valueOf(other.getId()));		
 		
 		return retval;
 	}

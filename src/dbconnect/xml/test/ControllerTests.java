@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.CoreMatchers.*;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 
@@ -13,6 +14,7 @@ import org.junit.Test;
 import dbconnect.DBManager;
 import dbconnect.IDBController;
 import dbconnect.xml.XmlController;
+import dbconnect.xml.dao.Forms;
 import form.Form;
 
 public class ControllerTests {
@@ -26,6 +28,8 @@ public class ControllerTests {
 	public void setup()
 	{
 		controller = DBManager.getInstance();
+		Forms emptyForms = new Forms();
+		
 	}
 	
 	/**

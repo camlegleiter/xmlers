@@ -1,5 +1,7 @@
 package dbconnect.xml.converters;
 
+import java.math.BigInteger;
+
 import form.questions.TextQuestion;
 
 public class TextQuestionConverter implements
@@ -29,7 +31,7 @@ public class TextQuestionConverter implements
 		
 		cq = new TextQuestion();
 		
-		cq.setId(Integer.parseInt(other.getId()));
+		cq.setId(other.getId().intValue());
 		cq.setMaxLength(other.getMaxLength().intValue());
 		cq.setPrompt(other.getPrompt());
 		cq.setPosition(other.getPriority().intValue());
@@ -46,7 +48,7 @@ public class TextQuestionConverter implements
 		cq = new dbconnect.xml.dao.TextQuestion();
 		
 		cq.setPrompt(other.getPrompt());
-		cq.setId(Integer.toString(other.getId()));
+		cq.setId(BigInteger.valueOf(other.getId()));
 		cq.setMaxLength(new Long(other.getMaxLength()));
 		cq.setPriority(new Long(other.getPosition()));
 		cq.setDefault(other.getDefaultAnswer());

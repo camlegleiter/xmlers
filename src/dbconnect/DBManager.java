@@ -1,6 +1,5 @@
 package dbconnect;
 
-import dbconnect.sql.SqlController;
 import dbconnect.xml.XmlController;
 
 
@@ -26,15 +25,12 @@ public class DBManager {
 		switch(strat)
 		{
 		default:
-			System.err.println("Warning:\n\tEnvironment variable \"" + ENVIRONMENT_STRATEGY + "\" was not defined.\n\tAssuming default behavior.\n ");
+			System.err.println("Warning:\n\tEnvironment variable \"" + ENVIRONMENT_STRATEGY + "\" was not defined, or had an unsupported value.\n\tAssuming default behavior.\n ");
 		case DEBUG_STRATEGY:
 			DBManager.strategy = new StubController();
 			break;
 		case XML_STRATEGY:
 			DBManager.strategy = new XmlController();
-			break;
-		case SQL_STRATEGY:
-			DBManager.strategy = new SqlController();
 			break;
 		}
 	}

@@ -13,19 +13,21 @@ import form.visitors.IQuestionVisitor;
  * 
  */
 public class SelectQuestion extends AbstractVariadicQuestion {
+
+	public static final String TYPE_STRING = "select";
 	
 	public SelectQuestion(int id, int weight, String prompt, boolean isMulti,
 			Iterable<String> answers) {
-		super(id, weight, prompt, answers, isMulti);
+		super(id, weight, prompt, answers, isMulti, TYPE_STRING);
 	}
 
 	public SelectQuestion(AbstractVariadicQuestion buildCheckQuestion, boolean isMulti) {
 		super(buildCheckQuestion.getId(), buildCheckQuestion.getPosition(),
-				buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions(), isMulti);
+				buildCheckQuestion.getPrompt(), buildCheckQuestion.getOptions(), isMulti, TYPE_STRING);
 	}
 	
 	public SelectQuestion(Iterable<String> options) {
-		super(options);
+		super(options, TYPE_STRING);
 	}
 
 	@Override

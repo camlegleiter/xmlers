@@ -30,6 +30,7 @@ import org.xml.sax.SAXException;
 import dbconnect.IDBController;
 import dbconnect.xml.converters.FormConverter;
 import dbconnect.xml.converters.UserConverter;
+import dbconnect.xml.dao.Forms;
 import form.Form;
 import form.User;
 
@@ -65,17 +66,6 @@ public class XmlController implements IDBController {
 	private final static File USER_REPOSITORY;
 	
 	/**
-	 * Specifies things that can be used to uniquely specify a user.
-	 * @author mstrobel
-	 * @note These are chosen by requests from front-end developers.
-	 */
-	public enum UserAccessor {
-		ID,
-		EMAIL,
-		USERNAME
-	}
-	
-	/**
 	 * A JAXB utility for writing Forms to XML files.
 	 */
 	private static Marshaller FORM_MARSHALLER;
@@ -94,6 +84,16 @@ public class XmlController implements IDBController {
 	 * A JAXB Utility for reading Users from XML files.
 	 */
 	private static Unmarshaller USER_UNMARSHALLER;
+	
+	/**
+	 * A JAXB Utility to read all Forms from an XML file.
+	 */
+	private static Marshaller FORM_COLLECTION_MARSHALLER;
+	
+	/**
+	 * A JAXB Utility to read all Forms from an XML file.
+	 */
+	private static Unmarshaller FORM_COLLECTION_UNMARSHALLER;
 	
 	private static XPath XPATH_INSTANCE;
 	
@@ -127,12 +127,18 @@ public class XmlController implements IDBController {
 		try {
 			JAXBContext formContext = JAXBContext.newInstance(dbconnect.xml.dao.Form.class);
 			JAXBContext userContext = JAXBContext.newInstance(dbconnect.xml.dao.User.class);
+			JAXBContext formsContext = JAXBContext.newInstance(dbconnect.xml.dao.Forms.class);
 			
 			FORM_MARSHALLER = formContext.createMarshaller();
 			FORM_UNMARSHALLER = formContext.createUnmarshaller();
 			
 			USER_MARSHALLER = userContext.createMarshaller();
 			USER_UNMARSHALLER = userContext.createUnmarshaller();
+			
+			FORM_COLLECTION_MARSHALLER = formsContext.createMarshaller();
+			FORM_COLLECTION_UNMARSHALLER = formsContext.createUnmarshaller();
+			
+			
 		} catch (JAXBException e) {
 
 			FORM_MARSHALLER = null;
@@ -195,7 +201,42 @@ public class XmlController implements IDBController {
 
 	@Override
 	public boolean upsertForm(Form form) {
-		return false;
+
+		
+		try {
+			Forms f;
+			f = unmarshallAllForms();
+			
+			if(formExists(form.getFormId()))
+			{
+				int i;
+				
+				i = 0;
+				
+				for(dbconnect.xml.dao.Form entry : f.getForm())
+				{
+					if(entry.getId().intValue() == form.getFormId())
+					{
+						f.getForm().remove(i);
+						break;
+					}
+					i++;
+				}
+			}
+			
+			dbconnect.xml.dao.Form newForm = FormConverter.getInstance().unconvert(form);
+			
+			f.getForm().add(newForm);
+			
+			marshallAllForms(f);
+			
+			return true;
+			
+		} catch (JAXBException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 	@Override
@@ -306,10 +347,55 @@ public class XmlController implements IDBController {
 
 	@Override
 	public boolean deleteForm(int key) {
-		//TODO
-		return false;
+		Forms formCollection;
+		boolean found;
+		
+		found = false;
+		
+		try {
+			int i;
+			formCollection = unmarshallAllForms();
+			List<dbconnect.xml.dao.Form> list = formCollection.getForm();
+			
+			i = 0;
+			for(dbconnect.xml.dao.Form entry : list)
+			{
+				if(entry.getId().intValue() == key)
+				{
+					found = true;
+					list.remove(i);
+					break;
+				}
+				i++;
+			}
+			
+			if(found)
+			{
+				marshallAllForms(formCollection);
+			}
+			
+		} catch (JAXBException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return found;
+	}
+	
+	private Forms unmarshallAllForms() throws JAXBException
+	{
+		Forms retval;
+		
+		retval = (Forms) XmlController.FORM_COLLECTION_UNMARSHALLER.unmarshal(FORM_REPOSITORY);
+		
+		return retval;
 	}
 
+	private void marshallAllForms(Forms f) throws JAXBException
+	{
+		XmlController.FORM_COLLECTION_MARSHALLER.marshal(f, FORM_REPOSITORY);
+	}
+	
 	@Override
 	public boolean deleteUser(int key) {
 		//TODO

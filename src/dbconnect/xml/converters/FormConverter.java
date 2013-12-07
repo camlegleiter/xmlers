@@ -41,7 +41,7 @@ public class FormConverter implements IConverter<Form, dbconnect.xml.dao.Form> {
 		retval = new Form();
 		Map<Integer, form.questions.Question<?>> loadedQuestions;
 
-		retval.setFormId(Integer.parseInt(other.getId()));
+		retval.setFormId(other.getId().intValue());
 		retval.setDescription(other.getDescription());
 		
 		loadedQuestions = new HashMap<Integer, form.questions.Question<?>>();

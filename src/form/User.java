@@ -25,7 +25,7 @@ public class User {
 		firstName = "";
 		lastName = "";
 		this.email = email;
-		this.userName = email;
+		this.userName = email.substring(0, email.indexOf('@'));
 	}
 	
 	public User(User other) {

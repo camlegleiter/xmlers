@@ -327,5 +327,27 @@ public class XmlController implements IDBController {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int getNewQuestionId() {
+		int retval = -1;
+		try {
+			Object queryResult;
+			FileReader fr;
+			String query;
+			
+			query = "max(//form/@id)";
+			
+			fr = new FileReader(FORM_REPOSITORY);
+			InputSource inputSource = new InputSource(fr);
+			queryResult = XPATH_INSTANCE.evaluate(query, inputSource, XPathConstants.NUMBER);
+			retval = 1 + ((Double) queryResult).intValue();
+		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return retval;
+	}
 	
 }

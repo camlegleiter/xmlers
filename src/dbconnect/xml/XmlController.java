@@ -336,7 +336,7 @@ public class XmlController implements IDBController {
 			FileReader fr;
 			String query;
 			
-			query = "max(//form/@id)";
+			query = "max(//question/@id or //comlexQuestion/@id or //textQuestion/@id or //VariadicBooleanQuestion/@id or //ComplexQuestion/@id)";
 			
 			fr = new FileReader(FORM_REPOSITORY);
 			InputSource inputSource = new InputSource(fr);

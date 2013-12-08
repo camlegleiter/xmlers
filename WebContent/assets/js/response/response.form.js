@@ -125,6 +125,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
                 checkboxNameId: this.cid
             };
         },
+        itemViewContainer: '.content',
         
         initialize: function() {
             this.collection = this.model.get('checkboxes');
@@ -140,10 +141,6 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
             } else {
                 this.model.set('values', _.without(values, label));
             }
-        },
-        
-        appendHtml: function(collectionView, itemView) {
-            collectionView.$('.content').append(itemView.el);
         }
     });
     
@@ -188,6 +185,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
                 radioNameId: this.cid
             };
         },
+        itemViewContainer: '.content',
         
         initialize: function(options) {
             this.collection = this.model.get('radios');
@@ -197,10 +195,6 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
         
         onUpdateRadio: function(view, label) {
             this.model.set('value', label);
-        },
-        
-        appendHtml: function(collectionView, itemView) {
-            collectionView.$('.content').append(itemView.el);
         }
     });
     
@@ -220,6 +214,10 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
         ui: {
             textarea: 'textarea',
             charsLeft: '.character-count'
+        },
+        
+        initialize: function() {
+        	this.model.set('value', '');
         },
         
         onUpdateModel: function() {
@@ -261,6 +259,7 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
         tagName: 'li',
         className: 'question',
         itemView: Module.SelectOptionItemView,
+        itemViewContainer: '.content',
         
         ui: {
             select: 'select'
@@ -268,7 +267,9 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
 
         initialize: function(options) {
             this.collection = this.model.get('options');
-            this.isMulti = this.model.get('isMulti');            
+            this.isMulti = this.model.get('isMulti'); 
+            
+            this.model.set('values', []);
         },
         
         onRender: function() {
@@ -281,10 +282,6 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
             this.ui.select.on('change', function(e) {
                 self.model.set('values', [e.val]);
             });
-        },
-        
-        appendHtml: function(collectionView, itemView) {
-            collectionView.$('.content').append(itemView.el);
         }
     });
 });

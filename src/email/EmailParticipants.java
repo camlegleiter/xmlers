@@ -18,34 +18,31 @@ public class EmailParticipants {
 
 	/**
 	 * A standard subject header that the user will see upon receiving an email:
-	 * <i>
-	 * <p>
+	 * 
+	 * <pre>
 	 * Task Manager - Your Participation is Requested
-	 * </p>
-	 * </i>
+	 * </pre>
 	 */
 	private static final String STANDARD_TEMPLATE_SUBJECT = "Task Manager - Your Participation is Requested";
 
 	/**
 	 * A standard message header that the user will see upon receiving an email:
 	 * 
-	 * <i>
-	 * <p>
+	 * <pre>
 	 * {admin} ({adminEmail}) has created a form using Task Manager, and needs
 	 * your response! Please follow the link:
-	 * </p>
-	 * <a href="{get-url}">{url}</a>
-	 * <p>
-	 * and provide your responses as soon as possible.
-	 * </p>
-	 * <p>
-	 * Thanks,<br>
-	 * The Task Manager Team
-	 * </p>
-	 * </i>
 	 * 
-	 * The keywords within the message ({admin}, {adminEmail}, and {url}) are
-	 * replaced with their proper values before being sent to the user.
+	 * &lt;a href="{getURL}"&gt;{URL}&lt;/a&gt;
+	 * 
+	 * and provide your responses as soon as possible.
+	 * 
+	 * Thanks,
+	 * The Task Manager Team
+	 * </pre>
+	 * 
+	 * The keywords within the message ({admin}, {adminEmail}, {getURL} and
+	 * {url}) are replaced with their proper values before being sent to the
+	 * user.
 	 */
 	private static final String STANDARD_TEMPLATE_BODY;
 	static {
@@ -54,25 +51,22 @@ public class EmailParticipants {
 				.append("Please follow the link:\n\n")
 				.append("&lt;a href=\"%s\"&gt;%s&lt;/a&gt;\n\n")
 				.append("and provide your response(s) as soon as possible.\n\n")
-				.append("Thanks,\nThe Task Manager Team")
-				.toString();
+				.append("Thanks,\nThe Task Manager Team").toString();
 	}
-	
-	
+
 	private static final String STANDARD_REEMAIL_SUBJECT = "Task Manager - Your Participation is Requested Again";
-	
+
 	/**
 	 * 
 	 */
 	private static final String STANDARD_REEMAIL_BODY;
 	static {
 		STANDARD_REEMAIL_BODY = new StringBuilder()
-				.append("%s (%s) created a form using Task Manager, and still needs you to respond soon!")
+				.append("%s (%s) created a form using Task Manager, and is still waiting for your response!")
 				.append("Please follow the link:\n\n")
 				.append("&lt;a href=\"%s\"&gt;%s&lt;/a&gt;\n\n")
 				.append("and provide your response(s) as soon as possible.\n\n")
-				.append("Thanks,\nThe Task Manager Team")
-				.toString();
+				.append("Thanks,\nThe Task Manager Team").toString();
 	}
 
 	/**
@@ -136,7 +130,8 @@ public class EmailParticipants {
 			// message.addRecipients(Message.RecipientType.TO,
 			// InternetAddress.parse("daliashea@gmail.com"));
 			message.setSubject(STANDARD_TEMPLATE_SUBJECT);
-			message.setText(STANDARD_TEMPLATE_BODY);
+			message.setText(setMessageValues(STANDARD_TEMPLATE_BODY, "", "",
+					"", ""));
 			message.setSentDate(new Date());
 
 			if (message.getAllRecipients().length > 0) {
@@ -207,7 +202,9 @@ public class EmailParticipants {
 				}
 			}
 			message.setSubject(STANDARD_REEMAIL_SUBJECT);
-			message.setText(STANDARD_REEMAIL_BODY);
+			// TODO Get Owner object for administrator full name and email
+			message.setText(setMessageValues(STANDARD_REEMAIL_BODY, "", "", "",
+					""));
 			message.setSentDate(new Date());
 
 			if (message.getAllRecipients().length > 0) {
@@ -223,10 +220,8 @@ public class EmailParticipants {
 	}
 
 	/**
-	 * Sets the keywords within the given body String with their
-	 * proper values as passed into the
-	 * {@link #emailParticipants(String, String, String, String[], String, String)}
-	 * method.
+	 * Sets the keywords within the given body String with their proper values
+	 * as passed into the {@link #emailParticipants(Form)} method.
 	 * 
 	 * @param admin
 	 *            the name of the administrator of the form
@@ -241,8 +236,8 @@ public class EmailParticipants {
 	 *            a URL that the user sees in the message body
 	 * @return the modified String
 	 */
-	private static String setMessageValues(String body, String admin, String adminEmail,
-			String getUrl, String url) {
+	private static String setMessageValues(String body, String admin,
+			String adminEmail, String getUrl, String url) {
 		return String.format(body, admin, adminEmail, getUrl, url);
 	}
 }

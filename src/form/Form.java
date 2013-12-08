@@ -283,7 +283,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 					reponse.put("responseOwner", u.getUserID());
 				}
 				if (bitSet(settings, RESPONSE_OWNER_NAME_BIT)) {
-					reponse.put("responseOwnerName", u.getFullName());
+					reponse.put("responseOwnerName", u.getEmail());
 				}
 				JSONArray array = new JSONArray("["
 						+ VisitMechanism.visit(new JSONVisitorResponse(u.getUserID()), this.iterator(), ",")

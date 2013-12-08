@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import form.Form;
 import form.User;
 import form.questions.RadioQuestion;
@@ -55,7 +56,7 @@ public class StubController implements IDBController {
 
 	@Override
 	public boolean upsertUser(User user) {
-		if (!users.containsKey(user.getUserID()))
+		if (!users.containsKey(user.getUserID())) 
 			user.setUserID(userId.getAndIncrement());
 		users.put(user.getUserID(), user);
 		return true;
@@ -72,26 +73,9 @@ public class StubController implements IDBController {
 	}
 	
 	@Override
-	public User fetchUserByUsername(String username) {
-		for (User user : users.values())
-			if (user.getUserName().equals(username))
-				return user;
-		return null;
-	}
-	
-	@Override
 	public User fetchUserByEmail(String email) {
 		for (User user : users.values())
 			if (user.getEmail().equals(email))
-				return user;
-		return null;
-	}
-	
-	@Override
-	public User fetchUserFromLogin(String username, String password) {
-		for (User user : users.values())
-			if (user.getUserName().equals(username) &&
-					user.checkPassword(password))
 				return user;
 		return null;
 	}
@@ -103,7 +87,6 @@ public class StubController implements IDBController {
 		mainUser.setLastName("User");
 		mainUser.setUserName("mainuser");
 		mainUser.setEmail("mainuser@example.com");
-		mainUser.setPassword("password");
 		upsertUser(mainUser);
 		
 		User participant1 = new User();
@@ -111,7 +94,6 @@ public class StubController implements IDBController {
 		participant1.setLastName("User");
 		participant1.setUserName("testuser");
 		participant1.setEmail("testuser@example.com");
-		participant1.setPassword("password");
 		upsertUser(participant1);
 		
 		User participant2 = new User();
@@ -119,7 +101,6 @@ public class StubController implements IDBController {
 		participant2.setLastName("User");
 		participant2.setUserName("otheruser");
 		participant2.setEmail("otheruser@example.com");
-		participant2.setPassword("password");
 		upsertUser(participant2);
 		
 		User participant3 = new User();
@@ -127,7 +108,6 @@ public class StubController implements IDBController {
 		participant3.setLastName("User");
 		participant3.setUserName("dalia");
 		participant3.setEmail("daliaem66@hotmail.com");
-		participant3.setPassword("password");
 		upsertUser(participant3);
 		
 		User participant4 = new User();
@@ -135,7 +115,6 @@ public class StubController implements IDBController {
 		participant4.setLastName("User");
 		participant4.setUserName("cameron");
 		participant4.setEmail("cameronl@iastate.edu");
-		participant4.setPassword("password");
 		upsertUser(participant4);
 		
 		//FORM 1 CREATION (mainUser is the owner)

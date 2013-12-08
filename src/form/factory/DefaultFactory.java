@@ -60,8 +60,7 @@ public class DefaultFactory extends FormFactory {
 			User u = DBManager.getInstance().fetchUserByEmail(
 					participants.getString(i));
 			if(u == null) {
-				User newUser = new User();
-				newUser.setEmail(participants.getString(i));
+				User newUser = new User(participants.getString(i));
 				DBManager.getInstance().upsertUser(newUser);
 				u = newUser;
 			}

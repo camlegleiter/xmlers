@@ -310,11 +310,6 @@ public class XmlController implements IDBController {
 		return fetchUserHelper("//user[@id=" + id + "]");
 	}
 	
-	@Override
-	public synchronized User fetchUserByUsername(String username) {
-		return fetchUserHelper("//user[@handle=" + username + "]");
-	}
-	
 	private synchronized User fetchUserHelper(String query)
 	{
 		User user;
@@ -340,12 +335,6 @@ public class XmlController implements IDBController {
 	@Override
 	public synchronized User fetchUserByEmail(String email) {
 		return fetchUserHelper("//user[@email=" + email + "]");
-	}
-	
-	@Override
-	public synchronized User fetchUserFromLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

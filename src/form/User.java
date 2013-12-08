@@ -10,7 +10,6 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String password;
 	
 	public User()
 	{
@@ -19,7 +18,14 @@ public class User {
 		firstName = "";
 		lastName = "";
 		email = "";
-		password = "";
+	}
+	
+	public User(String email){
+		id = -1;
+		firstName = "";
+		lastName = "";
+		this.email = email;
+		this.userName = email.substring(0, email.indexOf('@'));
 	}
 	
 	public User(User other) {
@@ -28,7 +34,6 @@ public class User {
 		this.firstName = other.firstName;
 		this.lastName = other.lastName;
 		this.email = other.email;
-		this.password = other.password;
 	}
 	
 	public int getUserID() {
@@ -84,18 +89,6 @@ public class User {
 	
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	
-	public void setPassword(String passwd)
-	{
-		//TODO Update this to hash some stuff
-		this.password = passwd;
-	}
-	
-	public boolean checkPassword(String passwd)
-	{
-		//TODO Update this to hash some stuff
-		return passwd.equals(this.password);
 	}
 	
 	/**

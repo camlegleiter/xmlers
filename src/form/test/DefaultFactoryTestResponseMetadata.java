@@ -69,7 +69,6 @@ public class DefaultFactoryTestResponseMetadata {
 		mainUser.setLastName("User");
 		mainUser.setUserName("mainuser");
 		mainUser.setEmail("mainuser@example.com");
-		mainUser.setPassword("password");
 		controller.upsertUser(mainUser);
 
 		participant1 = new User();
@@ -77,7 +76,6 @@ public class DefaultFactoryTestResponseMetadata {
 		participant1.setLastName("User");
 		participant1.setUserName("testuser");
 		participant1.setEmail("testuser@example.com");
-		participant1.setPassword("password");
 		controller.upsertUser(participant1);
 
 		participant2 = new User();
@@ -85,7 +83,6 @@ public class DefaultFactoryTestResponseMetadata {
 		participant2.setLastName("User");
 		participant2.setUserName("otheruser");
 		participant2.setEmail("otheruser@example.com");
-		participant2.setPassword("password");
 		controller.upsertUser(participant2);
 	}
 

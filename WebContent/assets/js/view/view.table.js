@@ -77,8 +77,11 @@ TaskManager.module('View', function(Module, App, Backbone, Marionette, $, _) {
             getResponseValue: function(response) {
                 if (response.get('value'))
                     return response.get('value');
-                else if (response.get('values') && response.get('values').length !== 0)
-                    return response.get('values').join(', ');
+                else if (response.get('values'))
+                	if (response.get('values').length > 0)
+                    	return response.get('values').join(', ');
+                	else
+                		return 'No Options Selected';
                 else
                     return 'No Response Collected';
             }

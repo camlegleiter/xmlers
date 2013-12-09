@@ -1,10 +1,10 @@
 package form.visitors;
 
-import net.sf.saxon.tree.linked.NodeImpl;
-
-import com.saxonica.schema.sdoc.XSDAttribute;
-import com.saxonica.schema.sdoc.XSDComplexType;
-import com.saxonica.schema.sdoc.XSDElement;
+//import net.sf.saxon.tree.linked.NodeImpl;
+//
+//import com.saxonica.schema.sdoc.XSDAttribute;
+//import com.saxonica.schema.sdoc.XSDComplexType;
+//import com.saxonica.schema.sdoc.XSDElement;
 
 import form.questions.CheckQuestion;
 import form.questions.ComplexQuestion;
@@ -16,13 +16,14 @@ public class SchemaVisitor extends AbstractQuestionVisitor {
 			
 	@Override
 	public String visit(TextQuestion tq) {
-		XSDElement question = new XSDElement();
-		XSDComplexType questionType = new XSDComplexType();
-		XSDAttribute typeDef = new XSDAttribute();
-				
-		questionType.insertChildren(new NodeImpl[]{typeDef}, true, true);
+//		XSDElement question = new XSDElement();
+//		XSDComplexType questionType = new XSDComplexType();
+//		XSDAttribute typeDef = new XSDAttribute();
+//				
+//		questionType.insertChildren(new NodeImpl[]{typeDef}, true, true);
 
-		return question.getStringValue();
+		//return question.getStringValue();
+		return null;
 	}
 
 	@Override

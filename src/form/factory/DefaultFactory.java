@@ -39,10 +39,11 @@ public class DefaultFactory extends FormFactory {
 		responseBuilderType.put("CHECKBOX", new CheckboxResponseInserter());
 		responseBuilderType.put("RADIO", new RadioResponseInserter());
 		responseBuilderType.put("SELECT", new SelectResponseInserter());
-	}	
+	}
 
 	@Override
-	public Form buildForm(JSONObject jsonObject, IDBController controller) throws JSONException {
+	public Form buildForm(JSONObject jsonObject, IDBController controller)
+			throws JSONException {
 		Form f = new Form();
 		f.setFormId(jsonObject.getInt("formID"));
 		f.setDescription(jsonObject.getString("formDescription"));
@@ -59,7 +60,7 @@ public class DefaultFactory extends FormFactory {
 		for (int i = 0; i < participants.length(); ++i) {
 			User u = DBManager.getInstance().fetchUserByEmail(
 					participants.getString(i));
-			if(u == null) {
+			if (u == null) {
 				User newUser = new User(participants.getString(i));
 				DBManager.getInstance().upsertUser(newUser);
 				u = newUser;
@@ -208,10 +209,11 @@ public class DefaultFactory extends FormFactory {
 		}
 		return f;
 	}
+
 	private interface IResponseInserter {
 		/**
-		 * Converts the JSONObject that includes the response and
-		 * inserts it in the owner form.
+		 * Converts the JSONObject that includes the response and inserts it in
+		 * the owner form.
 		 * 
 		 * @param jsonObject
 		 * @param q
@@ -229,7 +231,9 @@ public class DefaultFactory extends FormFactory {
 				Question<?> q) throws JSONException {
 			TextQuestion question = (TextQuestion) q;
 			TextResponse tr = new TextResponse(question, user);
-			tr.setValue(jsonObject.getString("value"));
+
+			tr.setValue(jsonObject.has("value") ? jsonObject.getString("value")
+					: "");
 			question.insertResponse(user.getUserID(), tr);
 		}
 	}
@@ -239,12 +243,14 @@ public class DefaultFactory extends FormFactory {
 		public void insertResponse(JSONObject jsonObject, User user,
 				Question<?> q) throws JSONException {
 			CheckQuestion question = (CheckQuestion) q;
-			ArrayList<Entry> answers = new ArrayList<Entry>();
+			List<Entry> answers = new ArrayList<Entry>();
 			CheckQuestionResponse chr = new CheckQuestionResponse(question,
 					user);
-			JSONArray responses = jsonObject.getJSONArray("values");
-			for (int i = 0; i < responses.length(); ++i) {
-				answers.add(question.new Entry(responses.getString(i), true));
+			if (jsonObject.has("values")) {
+				JSONArray responses = jsonObject.getJSONArray("values");
+				for (int i = 0; i < responses.length(); ++i) {
+					answers.add(question.new Entry(responses.getString(i), true));
+				}
 			}
 			chr.setValue(answers);
 			question.insertResponse(user.getUserID(), chr);
@@ -257,8 +263,10 @@ public class DefaultFactory extends FormFactory {
 				Question<?> q) throws JSONException {
 			RadioQuestion question = (RadioQuestion) q;
 			RadioQuestionResponse rr = new RadioQuestionResponse(question, user);
-			ArrayList<Entry> answer = new ArrayList<Entry>();
-			answer.add(question.new Entry(jsonObject.getString("value"), true));
+			List<Entry> answer = new ArrayList<Entry>();
+			if (jsonObject.has("value"))
+				answer.add(question.new Entry(jsonObject.getString("value"),
+						true));
 			rr.setValue(answer);
 			question.insertResponse(user.getUserID(), rr);
 		}
@@ -272,9 +280,11 @@ public class DefaultFactory extends FormFactory {
 			SelectQuestionResponse sr = new SelectQuestionResponse(question,
 					user);
 			ArrayList<Entry> answers = new ArrayList<Entry>();
-			JSONArray responses = jsonObject.getJSONArray("values");
-			for (int i = 0; i < responses.length(); ++i) {
-				answers.add(question.new Entry(responses.getString(i), true));
+			if (jsonObject.has("values")) {
+				JSONArray responses = jsonObject.getJSONArray("values");
+				for (int i = 0; i < responses.length(); ++i) {
+					answers.add(question.new Entry(responses.getString(i), true));
+				}
 			}
 			sr.setValue(answers);
 			question.insertResponse(user.getUserID(), sr);

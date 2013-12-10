@@ -32,6 +32,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	public static final int RESPONSE_OWNER_NAME_BIT = 0x1024;
 	public static final int RESPONSE_OWNER_BIT = 0x2048;
 	public static final int RESPONSE_BIT = 0x4096;
+	public static final int QUERIES_BIT = 0x8192;
 	
 	private String title;
 	private int id;
@@ -44,6 +45,8 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	private boolean participantsCanSeeAll;
 	private boolean participantsCanEditResponse;
 	private boolean participantResponseIsRequired;
+	
+	private String queries;
 
 	public Form() {
 		questions = new PriorityQueue<Question<?>>(1, new QuestionPriority());
@@ -144,6 +147,10 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		return questions.iterator();
 	}
 
+	/**
+	 * @deprecated HTML generation not used; see getJSON()
+	 * @return
+	 */
 	public String getHTML() {
 		return getHTML(ALL_BITS, null);
 	}
@@ -180,7 +187,21 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		
 		return false;
 	}
+	
+	public String getQueries() {
+		return queries;
+	}
+	
+	public void setQueries(String queries) {
+		this.queries = queries;
+	}
 
+	/**
+	 * @deprecated using getJSON to retrieve form data for the front end.
+	 * @param settings
+	 * @param user
+	 * @return
+	 */
 	public String getHTML(int settings, String user) {
 		HTMLVisitor generator = new HTMLVisitor();
 		StringBuilder output = new StringBuilder();
@@ -293,6 +314,9 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 				
 			}
 			form.put("responses", responseList);
+		}
+		if (bitSet(settings, Form.QUERIES_BIT)) {
+			form.put("queries", this.queries);
 		}
 		return form;
 	}

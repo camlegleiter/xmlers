@@ -53,11 +53,25 @@ public class Forms {
 	 * data. Data is used to populate a table on the viewResponses.jsp page.
 	 * 
 	 * @param formId
-	 * 				the ID of the form data to retrieve.
+	 *            the ID of the form data to retrieve.
 	 * @return
 	 */
 	public static final JSONObject getResponseRecordsForForm(int formId) {
 		Form f = DBManager.getInstance().fetchForm(formId);
 		return f.getResponseFormJSON();
+	}
+
+	/**
+	 * Constructs a JSONObject for use in the query.jsp page when building the
+	 * administrator's created queries for the form.
+	 * 
+	 * @param formId
+	 *            the ID of the form data
+	 * @param queries
+	 *            the query string of XPath/XQuery queries defined by the owner
+	 *            of the given form
+	 */
+	public static final JSONObject constructQueryJSON(int formId, String queries) {
+		return new JSONObject().put("formId", formId).put("queries", queries);
 	}
 }

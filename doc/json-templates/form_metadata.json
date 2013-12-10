@@ -36,6 +36,10 @@
     // default: true (response is required by the participant)
     "participantResponseIsRequired": true,
     
+    // XPath/XQuery queries used when performing advanced queries on the XML data for this form.
+    // default: ''
+    "queries": '',
+    
     // A list of question objects
     // default: []
     "formQuestions": [

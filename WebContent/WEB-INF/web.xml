@@ -115,4 +115,12 @@
     <servlet-name>UnparticipateForm</servlet-name>
     <url-pattern>/app/unparticipateForm</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ExportXML</servlet-name>
+    <servlet-class>ExportXML</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExportXML</servlet-name>
+    <url-pattern>/app/exportXML</url-pattern>
+  </servlet-mapping>
 </web-app>

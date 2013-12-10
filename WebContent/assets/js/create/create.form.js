@@ -123,7 +123,6 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         onCancel: function(e) {
         	e.preventDefault();
         	
-
         	var message = isEdit ? 'Any changes to the current form will not be saved. Are you sure you want to cancel?'
         			: message = 'The current form will not be saved. Are you sure you want to cancel?';
         	

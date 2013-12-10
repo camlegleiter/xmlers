@@ -1,6 +1,6 @@
 'use strict';
 
-TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
+TaskManager.module('Create', function(Module, App, Backbone, Marionette, $, _) {
     Module.QuestionOptionView = Backbone.Marionette.ItemView.extend({
         template: '#question-option-template',
         tagName: 'a',

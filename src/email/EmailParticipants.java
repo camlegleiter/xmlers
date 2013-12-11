@@ -134,7 +134,7 @@ public class EmailParticipants {
 				String fromUser;
 
 				while ((fromServer = in.readLine()) != null) {
-					System.out.println("Server: " + fromServer);
+					//System.out.println("Server: " + fromServer);
 
 					out.println(to);
 					out.println(subject);

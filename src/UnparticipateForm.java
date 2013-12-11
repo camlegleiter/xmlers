@@ -46,12 +46,12 @@ public class UnparticipateForm extends HttpServlet {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			User user = (User) request.getSession().getAttribute("user");
-			System.out.println("The user attribute is " + user.getEmail() + " with ID " + user.getUserID());
+			//System.out.println("The user attribute is " + user.getEmail() + " with ID " + user.getUserID());
 			int formID = Integer.parseInt(request.getParameter("formID"));
 
 			IDBController controller = DBManager.getInstance();
 			Form form = controller.fetchForm(formID);
-			System.out.println("The formID " + formID +" with title " + form.getTitle());
+			//System.out.println("The formID " + formID +" with title " + form.getTitle());
 			form.removeParticipant(user);
 
 			controller.upsertForm(form);

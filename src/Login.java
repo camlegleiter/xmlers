@@ -72,6 +72,7 @@ public class Login extends HttpServlet {
 				myService.setUserCredentials(email,
 						request.getParameter("password"));
 
+				
 				User user = library.fetchUserByEmail(email);
 
 				if (user == null) {

@@ -1,5 +1,11 @@
 package email;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -102,46 +108,43 @@ public class EmailParticipants {
 			throw new IllegalArgumentException();
 		}
 
-		String port = "19500"; // 19500
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.xmlers.com");
-		props.put("mail.smtp.socketFactory.port", port);// 465
-		// props.put("mail.smtp.socketFactory.class",
-		// "javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", port);// 465
+		String hostName = "www.xmlers.com";
+		int portNumber = 19600;
 
-		Session session = Session.getDefaultInstance(props,
-				new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication("TaskManager",
-								"thepassword");
-					}
-				});
+		String to = "daliashea@gmail.com";
+		String subject = STANDARD_TEMPLATE_SUBJECT;
+		String message = setMessageValues(STANDARD_TEMPLATE_BODY, "", "", "",
+				"");
+		// User u1 = new User("daliashea@gmail.com");
+		// User u2 = new User("daliaem66@hotmail.com");
+		// ArrayList<User> users = new ArrayList<User>();
+		// users.add(u1); users.add(u2);
+		for (User u : form.getParticipants()) {
+			to = u.getEmail();
+			// Source:
+			// http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/networking/sockets/examples/KnockKnockServer.java
+			try (Socket kkSocket = new Socket(hostName, portNumber);
+					PrintWriter out = new PrintWriter(
+							kkSocket.getOutputStream(), true);
+					BufferedReader in = new BufferedReader(
+							new InputStreamReader(kkSocket.getInputStream()));) {
+				BufferedReader stdIn = new BufferedReader(
+						new InputStreamReader(System.in));
+				String fromServer;
+				String fromUser;
 
-		try {
+				while ((fromServer = in.readLine()) != null) {
+					System.out.println("Server: " + fromServer);
 
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("TaskManager@xmlers.com"));
-			for (User u : form.getParticipants()) {
-				message.addRecipient(Message.RecipientType.TO,
-						new InternetAddress(u.getEmail()));
+					out.println(to);
+					out.println(subject);
+					out.println(message);
+				}
+			} catch (IOException e) {
+				System.err.println("Couldn't get I/O for the connection to "
+						+ hostName);
+				System.exit(1);
 			}
-			// message.addRecipients(Message.RecipientType.TO,
-			// InternetAddress.parse("daliashea@gmail.com"));
-			message.setSubject(STANDARD_TEMPLATE_SUBJECT);
-			message.setText(setMessageValues(STANDARD_TEMPLATE_BODY, "", "",
-					"", ""));
-			message.setSentDate(new Date());
-
-			if (message.getAllRecipients().length > 0) {
-				Transport.send(message);
-			}
-
-			System.out.println("Done");
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
 		}
 
 	}
@@ -168,53 +171,48 @@ public class EmailParticipants {
 			throw new IllegalArgumentException();
 		}
 
-		String port = "19500"; // 19500
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.xmlers.com");
-		props.put("mail.smtp.socketFactory.port", port);// 465
-		// props.put("mail.smtp.socketFactory.class",
-		// "javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", port);// 465
+		String hostName = "www.xmlers.com";
+		int portNumber = 19600;
 
-		Session session = Session.getDefaultInstance(props,
-				new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication("TaskManager",
-								"thepassword");
-					}
-				});
-
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("TaskManager@xmlers.com"));
-			for (User u : form.getParticipants()) {
-				boolean responded = false;
-				for (User p : form.getRespondedParticipants()) {
-					if (p.getEmail().equalsIgnoreCase(u.getEmail())) {
-						responded = true;
-					}
-				}
-				if (!responded) {
-					message.addRecipient(Message.RecipientType.TO,
-							new InternetAddress(u.getEmail()));
+		String to = "daliashea@gmail.com";
+		String subject = STANDARD_TEMPLATE_SUBJECT;
+		String message = setMessageValues(STANDARD_TEMPLATE_BODY, "", "", "",
+				"");
+		for (User u : form.getParticipants()) {
+			boolean responded = false;
+			for (User p : form.getRespondedParticipants()) {
+				if (p.getEmail().equalsIgnoreCase(u.getEmail())) {
+					responded = true;
 				}
 			}
-			message.setSubject(STANDARD_REEMAIL_SUBJECT);
-			// TODO Get Owner object for administrator full name and email
-			message.setText(setMessageValues(STANDARD_REEMAIL_BODY, "", "", "",
-					""));
-			message.setSentDate(new Date());
+			if (!responded) {
+				to = u.getEmail();
+				// Source:
+				// http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/networking/sockets/examples/KnockKnockServer.java
+				try (Socket kkSocket = new Socket(hostName, portNumber);
+						PrintWriter out = new PrintWriter(
+								kkSocket.getOutputStream(), true);
+						BufferedReader in = new BufferedReader(
+								new InputStreamReader(kkSocket.getInputStream()));) {
+					BufferedReader stdIn = new BufferedReader(
+							new InputStreamReader(System.in));
+					String fromServer;
+					String fromUser;
 
-			if (message.getAllRecipients().length > 0) {
-				Transport.send(message);
+					while ((fromServer = in.readLine()) != null) {
+						System.out.println("Server: " + fromServer);
+
+						out.println(to);
+						out.println(subject);
+						out.println(message);
+					}
+				} catch (IOException e) {
+					System.err
+							.println("Couldn't get I/O for the connection to "
+									+ hostName);
+					System.exit(1);
+				}
 			}
-
-			System.out.println("Done");
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
 		}
 
 	}

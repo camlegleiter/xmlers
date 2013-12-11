@@ -140,6 +140,9 @@ public class StubController implements IDBController {
 
 		//FORM 2 CREATION (mainUser is the owner)
 		Form form2 = new Form(2, "Textbooks for this semester", "I need information about the textbooks to be used next semester. Please respond with the following information.", mainUser.getUserID());
+		form2.isParticipantResponseRequired(false);
+		form2.addParticipant(participant1);
+		form2.addParticipant(participant2);
 		form2.add(new TextQuestion(9876, 1, "What's the title of the book?", 100));
 		form2.add(new TextQuestion(8765, 2, "What is the ISBN?", 20));
 		

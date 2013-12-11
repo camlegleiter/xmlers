@@ -1,5 +1,6 @@
 package dbconnect;
 
+import dbconnect.stub.StubController;
 import dbconnect.xml.XmlController;
 
 

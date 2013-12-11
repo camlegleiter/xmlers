@@ -9,11 +9,12 @@
  * required here, so the bare minimum needed is just the form ID.
  */
 TaskManager.Models.Queries = Backbone.Model.extend({
+	/* 
+	 * The basic model entries. All values listed here are defaults in the case
+	 * that the key hasn't been set in the form itself.
+	 */
 	defaults: {
-		// The corresponding form ID
 		'formId': -1,
-		
-		// A string containing zero or more queries created by the user
 		'queries': ''
 	}
 });

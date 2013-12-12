@@ -65,7 +65,7 @@
 				</div>
             	<div class="list-group"></div>
 			</div>
-           	<a class="add disabled btn btn-default" style="width: 100%;">Add Question</a>
+           	<a class="add disabled btn btn-default" style="width: 100%;">Add Field</a>
         </script>    
     
         <script id="form-template" type="text/template">

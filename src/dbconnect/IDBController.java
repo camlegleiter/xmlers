@@ -114,9 +114,9 @@ public interface IDBController {
 	public List<Form> getParticipantForms(int userId);
 	
 	/**
-	 * Returns a new integer atomically to generate unique question IDs.
+	 * Returns a new integer atomically to generate unique IDs.
 	 * 
 	 * @return
 	 */
-	public int getNewQuestionId();
+	public int getNewId();
 }

@@ -34,7 +34,7 @@ public class StubController implements IDBController {
 		createStubData();
 	}
 	
-	public int getNewQuestionId() {
+	public int getNewId() {
 		return questionId.getAndIncrement();
 	}
 

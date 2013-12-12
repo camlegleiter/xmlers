@@ -1,4 +1,4 @@
-package dbconnect.xml.converters;
+package dbconnect;
 
 /**
  * Does the work of copying between DAO and regular objects

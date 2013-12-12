@@ -142,7 +142,7 @@ public class SqlController implements IDBController {
 	}
 
 	@Override
-	public int getNewQuestionId() {
+	public int getNewId() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

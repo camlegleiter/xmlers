@@ -42,7 +42,7 @@ public class UpsertResponse extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String responseData = (String) request.getParameter("model");
+		String responseData = request.getParameter("model");
 
 		IDBController controller = DBManager.getInstance();
 		JSONObject jsonObject = null;

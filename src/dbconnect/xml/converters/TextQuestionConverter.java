@@ -2,6 +2,8 @@ package dbconnect.xml.converters;
 
 import java.math.BigInteger;
 
+import dbconnect.IConverter;
+
 import form.questions.TextQuestion;
 
 public class TextQuestionConverter implements

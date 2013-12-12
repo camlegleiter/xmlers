@@ -407,7 +407,7 @@ public class XmlController implements IDBController {
 	}
 
 	@Override
-	public synchronized int getNewQuestionId() {
+	public synchronized int getNewId() {
 		int retval = -1;
 		try {
 			Object queryResult;

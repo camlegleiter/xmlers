@@ -58,8 +58,15 @@ public class DefaultFactory extends FormFactory {
 
 		JSONArray participants = jsonObject.getJSONArray("formParticipants");
 		for (int i = 0; i < participants.length(); ++i) {
-			User u = DBManager.getInstance().fetchUserByEmail(
-					participants.getString(i));
+			User u;
+			try {
+				// Attempt to parse user ID
+				u = DBManager.getInstance().fetchUser(participants.getInt(i));
+			} catch (JSONException e) {
+				// Attempt to parse user email instead
+				u = DBManager.getInstance().fetchUserByEmail(
+						participants.getString(i));
+			}
 			if (u == null) {
 				User newUser = new User(participants.getString(i));
 				DBManager.getInstance().upsertUser(newUser);
@@ -71,8 +78,28 @@ public class DefaultFactory extends FormFactory {
 		JSONArray questions = jsonObject.getJSONArray("formQuestions");
 		for (int i = 0; i < questions.length(); ++i) {
 			Question<?> question = buildQuestion(questions.getJSONObject(i), i);
-			question.setId(controller.getNewQuestionId());
+			if (question.getId() == -1)
+				question.setId(controller.getNewId());
 			f.add(question);
+		}
+		
+		if (jsonObject.has("responses")) {
+			JSONArray allResponses = jsonObject.getJSONArray("responses");
+			for (int i = 0; i < allResponses.length(); ++i) {
+				JSONObject userResponses = allResponses.getJSONObject(i);
+				User u = f.getParticipant(userResponses.getInt("responseOwner"));
+				
+				// In the case that the participant submitted a response, and the
+				// administrator removes them as a participant from the edit
+				// page, remove the responses
+				if (u == null) {
+					break;
+				}
+				JSONArray responses = userResponses.getJSONArray("responses");
+				for (int j = 0; j < responses.length(); ++j) {
+					insertResponse(f, responses.getJSONObject(j), u);
+				}
+			}
 		}
 
 		return f;
@@ -108,6 +135,7 @@ public class DefaultFactory extends FormFactory {
 		public Question<?> buildQuestion(JSONObject jsonObject, int position)
 				throws JSONException {
 			TextQuestion question = new TextQuestion();
+			question.setId(jsonObject.getInt("questionID"));
 			question.setPrompt(jsonObject.getString("prompt"));
 			question.setMaxLength(jsonObject.getInt("maxLength"));
 			question.setPosition(position);
@@ -121,6 +149,7 @@ public class DefaultFactory extends FormFactory {
 				throws JSONException {
 			CheckQuestion question = new CheckQuestion(buildOptionsArray(
 					jsonObject, "checkboxes", "label"));
+			question.setId(jsonObject.getInt("questionID"));
 			question.setPrompt(jsonObject.getString("prompt"));
 			question.setPosition(position);
 
@@ -158,6 +187,7 @@ public class DefaultFactory extends FormFactory {
 				throws JSONException {
 			RadioQuestion question = new RadioQuestion(buildOptionsArray(
 					jsonObject, "radios", "label"));
+			question.setId(jsonObject.getInt("questionID"));
 			question.setPrompt(jsonObject.getString("prompt"));
 			question.setPosition(position);
 			return question;
@@ -170,6 +200,7 @@ public class DefaultFactory extends FormFactory {
 				throws JSONException {
 			SelectQuestion question = new SelectQuestion(buildOptionsArray(
 					jsonObject, "options", "value"));
+			question.setId(jsonObject.getInt("questionID"));
 			question.setPrompt(jsonObject.getString("prompt"));
 			question.setVariadic(jsonObject.getBoolean("isMulti"));
 			question.setPosition(position);
@@ -194,20 +225,25 @@ public class DefaultFactory extends FormFactory {
 		f.addRespondedParticipant(user);
 		for (int i = 0; i < responses.length(); ++i) {
 			JSONObject response = responses.getJSONObject(i);
-			for (Question<?> q : f.getQuestions()) {
-				if (q.getId() == response.getInt("questionID")) {
-					String type = response.getString("type");
-					IResponseInserter inserter = responseBuilderType.get(type
-							.toUpperCase());
-					if (inserter == null)
-						throw new IllegalArgumentException(
-								"When building Response: Unrecognized question type.");
-					inserter.insertResponse(response, user, q);
-					break;
-				}
-			}
+			User u = f.getParticipant(response.getInt("responseOwner"));
+			insertResponse(f, response, u);
 		}
 		return f;
+	}
+	
+	private void insertResponse(Form f, JSONObject response, User user) {
+		for (Question<?> q : f.getQuestions()) {
+			if (q.getId() == response.getInt("questionID")) {
+				String type = response.getString("type");
+				IResponseInserter inserter = responseBuilderType.get(type
+						.toUpperCase());
+				if (inserter == null)
+					throw new IllegalArgumentException(
+							"When building Response: Unrecognized question type.");
+				inserter.insertResponse(response, user, q);
+				break;
+			}
+		}
 	}
 
 	private interface IResponseInserter {

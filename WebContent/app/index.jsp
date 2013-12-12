@@ -112,7 +112,7 @@
 			<p><strong>Number of Questions: </strong><@= formQuestions.length @></p>
             <form class="form-inline owner-buttons" action="/app/index" method="POST">
                 <a href="viewResponses.jsp?form=<@= formID @>" class="view-records btn btn-default" title="See all of the records for this form.">View Records</a>
-				<a href="query.jsp?form=<@= formID @>" class="query-records btn btn-default" title="Advanced querying of XML record data.">Query Records</a>
+				<!-- <a href="query.jsp?form=<@= formID @>" class="query-records btn btn-default" title="Advanced querying of XML record data.">Query Records</a> -->
                 <a href="create.jsp?edit=1&form=<@= formID @>" class="edit-form btn btn-default" title="Make changes to this form.">Edit Form</a>
                 <a class="reemail-participants btn btn-default" title="Sends a reminder to participants who haven't completed this form to do so.">Re-Email Participants</a>
             </form>

@@ -12,6 +12,9 @@ import form.User;
  *
  */
 public interface IDBController {
+	
+	public static final String LOCALHOST = "localhost";
+	
 	/**
 	 * Returns <code>true</code> if the form with the given ID exists.
 	 * 

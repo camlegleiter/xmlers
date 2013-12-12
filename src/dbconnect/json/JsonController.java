@@ -26,23 +26,53 @@ public class JsonController implements IDBController {
 	private MongoClient mongoClient;
 
 	/**
-	 * Creates a new JsonController, and initializes the MongoClient to
-	 * use a database within localhost. This is the default way to use MongoDB,
+	 * Creates a new JsonController, and initializes the MongoClient to use a
+	 * database within localhost. This is the default way to use MongoDB,
 	 * especially when testing and running both Tomcat and MongoDB on a local
 	 * machine.
 	 */
 	public JsonController() {
 		try {
-			mongoClient = new MongoClient("localhost");
+			mongoClient = new MongoClient(IDBController.LOCALHOST);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Gets the given collection from the Mongo database, and sets the collection
-	 * to return documents with the given Class. The given class must implement
-	 * DBObject in order to avoid any issues with casting within MongoDB.
+	 * Creates a new JsonController, and initializes the MongoClient to use a
+	 * specific host and port number. Useful for external databases.
+	 * 
+	 * @param host
+	 *            The URI to the host
+	 * @param port
+	 *            The port to access the host at
+	 */
+	public JsonController(String host, int port) {
+		try {
+			mongoClient = new MongoClient(host, port);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Creates a new JsonController, and initializes the MongoClient using the
+	 * given MongoClient. Useful when needed to initialize the JsonController to
+	 * connect to multiple databases for replication.
+	 * 
+	 * @param mongoClient
+	 *            The MongoClient to use
+	 */
+	public JsonController(MongoClient mongoClient) {
+		this.mongoClient = mongoClient;
+	}
+
+	/**
+	 * Gets the given collection from the Mongo database, and sets the
+	 * collection to return documents with the given Class. The given class must
+	 * implement DBObject in order to avoid any issues with casting within
+	 * MongoDB.
 	 * 
 	 * @param collectionName
 	 * @param c
@@ -71,16 +101,18 @@ public class JsonController implements IDBController {
 			DBCollection collection = createCollection("forms",
 					dbconnect.json.dao.Form.class);
 
-			dbconnect.json.dao.Form originalForm = (dbconnect.json.dao.Form) collection.findOne(new BasicDBObject(
-					"formID", newForm.getFormId()));
+			dbconnect.json.dao.Form originalForm = (dbconnect.json.dao.Form) collection
+					.findOne(new BasicDBObject("formID", newForm.getFormId()));
 			WriteResult result;
 			if (originalForm == null) {
-				dbconnect.json.dao.Form f = FormConverter.getInstance().unconvert(newForm);
+				dbconnect.json.dao.Form f = FormConverter.getInstance()
+						.unconvert(newForm);
 				f.setFormId(getNewId());
 				result = collection.insert(f);
 			} else {
 				ObjectId originalID = originalForm.getObjectId("_id");
-				dbconnect.json.dao.Form updatedForm = FormConverter.getInstance().unconvert(newForm);
+				dbconnect.json.dao.Form updatedForm = FormConverter
+						.getInstance().unconvert(newForm);
 				updatedForm.put("_id", originalID);
 				result = collection.save(updatedForm);
 			}
@@ -98,16 +130,18 @@ public class JsonController implements IDBController {
 			DBCollection collection = createCollection("users",
 					dbconnect.json.dao.User.class);
 
-			dbconnect.json.dao.User originalUser = (dbconnect.json.dao.User) collection.findOne(new BasicDBObject(
-					"userID", newUser.getUserID()));
+			dbconnect.json.dao.User originalUser = (dbconnect.json.dao.User) collection
+					.findOne(new BasicDBObject("userID", newUser.getUserID()));
 			WriteResult result;
 			if (originalUser == null) {
-				dbconnect.json.dao.User u = UserConverter.getInstance().unconvert(newUser);
+				dbconnect.json.dao.User u = UserConverter.getInstance()
+						.unconvert(newUser);
 				u.setUserId(getNewId());
 				result = collection.insert(u);
 			} else {
 				ObjectId originalID = originalUser.getObjectId("_id");
-				dbconnect.json.dao.User u = UserConverter.getInstance().unconvert(newUser);
+				dbconnect.json.dao.User u = UserConverter.getInstance()
+						.unconvert(newUser);
 				u.put("_id", originalID);
 				result = collection.save(u);
 			}
@@ -243,6 +277,10 @@ public class JsonController implements IDBController {
 		return forms;
 	}
 
+	/**
+	 * A mutex used for synchronizing on. Used mainly with generating unique
+	 * IDs and ensuring no duplicate access to the database.
+	 */
 	private final Object mutex = new Object();
 
 	@Override
@@ -256,8 +294,9 @@ public class JsonController implements IDBController {
 				if (cursor.hasNext()) {
 					BasicDBObject o = (BasicDBObject) cursor.next();
 					int i = o.getInt("id");
-					
-					BasicDBObject updatedId = new BasicDBObject("_id", o.getObjectId("_id"));
+
+					BasicDBObject updatedId = new BasicDBObject("_id",
+							o.getObjectId("_id"));
 					updatedId.put("id", i + 1);
 					collection.save(updatedId);
 					return i;

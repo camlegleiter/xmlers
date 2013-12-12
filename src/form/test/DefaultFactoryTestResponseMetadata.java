@@ -56,7 +56,7 @@ public class DefaultFactoryTestResponseMetadata {
 				+ form.getJSON());
 		JSONObject responseMetadata = createResponseMetadata();
 		Form defaultForm = new DefaultFactory().insertResponse(
-				responseMetadata, participant2);
+				responseMetadata, participant2, true);
 		System.out.println("The form after inserting response: \n"
 				+ defaultForm.getJSON());
 		assertTrue(form.getJSONString()

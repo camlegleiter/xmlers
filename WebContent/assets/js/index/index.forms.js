@@ -21,6 +21,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         initialize: function(options) {
             this.ownerCollection = options.ownerCollection;
             this.participantCollection = options.participantCollection;
+            this.userEmail = options.userEmail;
         },
         
         onRender: function() {
@@ -79,7 +80,8 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
             
             this.trigger('select:form', {
                 isOwner: true,
-                model: model
+                model: model,
+                userEmail: this.userEmail
             });
         },
         

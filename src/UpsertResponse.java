@@ -53,7 +53,7 @@ public class UpsertResponse extends HttpServlet {
 			User user = (User) request.getSession().getAttribute("user");
 			jsonObject.put("responseOwner", user.getUserID());
 			
-			Form form = new DefaultFactory().insertResponse(jsonObject, user);
+			Form form = new DefaultFactory().insertResponse(jsonObject, user, true);
 			
 			controller.upsertForm(form);
 			

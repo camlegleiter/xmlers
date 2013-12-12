@@ -83,15 +83,33 @@ public class DefaultFactory extends FormFactory {
 			f.add(question);
 		}
 		
+		if (jsonObject.has("respondedParticipants")) {
+			JSONArray responded = jsonObject.getJSONArray("respondedParticipants");
+			for (int i = 0; i < responded.length(); ++i) {
+				String userEmail = responded.getString(i);
+				for (User u : f.getParticipants()) {
+					if (u.getEmail().equals(userEmail)) {
+						f.addRespondedParticipant(u);
+					}
+				}
+			}
+		}
+
 		if (jsonObject.has("responses")) {
 			JSONArray allResponses = jsonObject.getJSONArray("responses");
 			for (int i = 0; i < allResponses.length(); ++i) {
 				JSONObject userResponses = allResponses.getJSONObject(i);
-				User u = f.getParticipant(userResponses.getInt("responseOwner"));
-				
-				// In the case that the participant submitted a response, and the
-				// administrator removes them as a participant from the edit
-				// page, remove the responses
+				User u = f
+						.getParticipant(userResponses.getInt("responseOwner"));
+
+				/*
+				 * In the case that the participant submitted a response, and
+				 * the administrator removes them as a participant from the edit
+				 * page, remove the responses.
+				 * 
+				 * Additionally, a participant who is unparticipating will have
+				 * his/her responses removed
+				 */
 				if (u == null) {
 					break;
 				}
@@ -219,18 +237,23 @@ public class DefaultFactory extends FormFactory {
 	 *            The response owner
 	 * @return The form that was updated
 	 */
-	public Form insertResponse(JSONObject jsonObject, User user) {
+	public Form insertResponse(JSONObject jsonObject, User user, boolean isNew) {
 		JSONArray responses = jsonObject.getJSONArray("formQuestions");
 		Form f = DBManager.getInstance().fetchForm(jsonObject.getInt("formID"));
 		f.addRespondedParticipant(user);
 		for (int i = 0; i < responses.length(); ++i) {
 			JSONObject response = responses.getJSONObject(i);
-			User u = f.getParticipant(response.getInt("responseOwner"));
-			insertResponse(f, response, u);
+			if (isNew) {
+				insertResponse(f, response, user);
+			} else {
+				
+				User u = f.getParticipant(response.getInt("responseOwner"));
+				insertResponse(f, response, u);
+			}
 		}
 		return f;
 	}
-	
+
 	private void insertResponse(Form f, JSONObject response, User user) {
 		for (Question<?> q : f.getQuestions()) {
 			if (q.getId() == response.getInt("questionID")) {

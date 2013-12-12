@@ -84,6 +84,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         showForm: function(options) {
             this.model = options.model;
             this.model.isOwner = options.isOwner;
+            this.model.set('userEmail', options.userEmail);
             this.collection.reset(this.model);
         }
     });

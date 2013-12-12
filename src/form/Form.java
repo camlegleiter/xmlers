@@ -300,6 +300,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			for (User u : respondedParticipants) {
 				responded.put(u.getEmail());
 			}
+			form.put("respondedParticipants", responded);
 		}
 		return form;
 	}

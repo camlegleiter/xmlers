@@ -70,7 +70,8 @@
                 Index = TaskManager.Index;
                 Index.start({
                     ownerCollection: ownerCollection,
-                    participantCollection: participantCollection
+                    participantCollection: participantCollection,
+                    userEmail: '${sessionScope.user.getEmail()}'
                 });
             });
         </script>
@@ -109,6 +110,7 @@
             <h4>Description: <@= formDescription @></h4>
 			<hr>
             <p><strong>Participants: </strong><@= getFormParticipants() @></p>
+			<p><strong>Number of Participants Responded: </strong><@= respondedParticipants.length @></p>
 			<p><strong>Number of Questions: </strong><@= formQuestions.length @></p>
             <form class="form-inline owner-buttons" action="/app/index" method="POST">
                 <a href="viewResponses.jsp?form=<@= formID @>" class="view-records btn btn-default" title="See all of the records for this form.">View Records</a>
@@ -123,12 +125,15 @@
             <h3>Form Name: <@= formName @></h3>
             <h4>Description: <@= formDescription @></h4>
 			<hr>
-			<p><strong>Participation Required: <strong><@= participantResponseIsRequired ? 'Yes' : 'No' @></p>
+			<p><strong>Participation Required: </strong><@= participantResponseIsRequired ? 'Yes' : 'No' @></p>
+			<p><strong>Response can be edited: </strong><@= participantsCanEditResponse ? 'Yes' : 'No' @></p>
             <form class="form-inline participant-buttons" action="/app/index" method="POST">
                 <@ if (participantsCanSeeAll) { @>
                     <a href="viewResponses.jsp?form=<@= formID @>" class="view-records btn btn-default" title="See all of the records for this form.">View Records</a>
                 <@ } @>
+				<@ if (participantsCanEditResponse || !$.inArray(userEmail, respondedParticipants)) { @>
                 <a href="response.jsp?form=<@= formID @>" class="submit-response btn btn-default" title="Submit a response to this form.">Submit Response</a>
+				<@ } @>
             </form>
         </script>
         

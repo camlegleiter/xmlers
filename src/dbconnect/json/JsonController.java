@@ -103,20 +103,19 @@ public class JsonController implements IDBController {
 
 			dbconnect.json.dao.Form originalForm = (dbconnect.json.dao.Form) collection
 					.findOne(new BasicDBObject("formID", newForm.getFormId()));
-			WriteResult result;
 			if (originalForm == null) {
 				dbconnect.json.dao.Form f = FormConverter.getInstance()
 						.unconvert(newForm);
 				f.setFormId(getNewId());
-				result = collection.insert(f);
+				collection.insert(f);
 			} else {
 				ObjectId originalID = originalForm.getObjectId("_id");
 				dbconnect.json.dao.Form updatedForm = FormConverter
 						.getInstance().unconvert(newForm);
 				updatedForm.put("_id", originalID);
-				result = collection.save(updatedForm);
+				collection.save(updatedForm);
 			}
-			return result.getN() == 1;
+			return true;
 		} catch (MongoException e) {
 			e.printStackTrace();
 		}
@@ -132,20 +131,19 @@ public class JsonController implements IDBController {
 
 			dbconnect.json.dao.User originalUser = (dbconnect.json.dao.User) collection
 					.findOne(new BasicDBObject("userID", newUser.getUserID()));
-			WriteResult result;
 			if (originalUser == null) {
 				dbconnect.json.dao.User u = UserConverter.getInstance()
 						.unconvert(newUser);
 				u.setUserId(getNewId());
-				result = collection.insert(u);
+				collection.insert(u);
 			} else {
 				ObjectId originalID = originalUser.getObjectId("_id");
 				dbconnect.json.dao.User u = UserConverter.getInstance()
 						.unconvert(newUser);
 				u.put("_id", originalID);
-				result = collection.save(u);
+				collection.save(u);
 			}
-			return result.getN() == 1;
+			return true;
 		} catch (MongoException e) {
 			e.printStackTrace();
 		}

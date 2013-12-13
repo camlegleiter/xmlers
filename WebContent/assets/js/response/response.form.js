@@ -129,7 +129,8 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
         
         initialize: function() {
             this.collection = this.model.get('checkboxes');
-            this.model.set('values', []);
+            if (!this.model.has('values'))
+            	this.model.set('values', []);
             
             this.on('itemview:checkbox:update', this.onUpdateCheckbox);
         },
@@ -217,7 +218,8 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
         },
         
         initialize: function() {
-        	this.model.set('value', '');
+        	if (!this.model.has('value'))
+        		this.model.set('value', '');
         },
         
         onUpdateModel: function() {
@@ -269,7 +271,8 @@ TaskManager.module("Response", function(Module, App, Backbone, Marionette, $, _)
             this.collection = this.model.get('options');
             this.isMulti = this.model.get('isMulti'); 
             
-            this.model.set('values', []);
+            if (!this.model.has('values'))
+            	this.model.set('values', []);
         },
         
         onRender: function() {

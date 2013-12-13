@@ -51,7 +51,7 @@ public class UpsertForm extends HttpServlet {
 			controller.upsertForm(form);
 			
 			if (!isEdit){
-				EmailParticipants.emailParticipants(form); 
+				EmailParticipants.emailParticipants(form, user); 
 			}
 			
 			String message = isEdit ? "?m=u" : "?m=a";

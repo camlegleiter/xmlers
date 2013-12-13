@@ -53,10 +53,11 @@ public class EmailParticipants {
 	private static final String STANDARD_TEMPLATE_BODY;
 	static {
 		STANDARD_TEMPLATE_BODY = new StringBuilder()
-				.append("%s (%s) has created a form using Task Manager, and needs your response!")
-				.append("Please follow the link:\n\n")
-				.append("&lt;a href=\"%s\"&gt;%s&lt;/a&gt;\n\n")
-				.append("and provide your response(s) as soon as possible.\n\n")
+				.append("%s (%s) has created a form using Task Manager, and needs your response!\n")
+				.append("Form Name: %s <br>")
+				.append("Please login to: <br>")
+				.append("&lt;a href=\"www.xmlers.com\"&gt;&lt;/a&gt;<br>")
+				.append("Under \"Forms I Own \", you will find all forms that need a response to.<br>")
 				.append("Thanks,\nThe Task Manager Team").toString();
 	}
 
@@ -68,10 +69,10 @@ public class EmailParticipants {
 	private static final String STANDARD_REEMAIL_BODY;
 	static {
 		STANDARD_REEMAIL_BODY = new StringBuilder()
-				.append("%s (%s) created a form using Task Manager, and is still waiting for your response!")
-				.append("Please follow the link:\n\n")
-				.append("&lt;a href=\"%s\"&gt;%s&lt;/a&gt;\n\n")
-				.append("and provide your response(s) as soon as possible.\n\n")
+				.append("%s (%s) created a form using Task Manager, and is still waiting for your response!\n")
+				.append("Please follow the link:\n")
+				.append("&lt;a href=\"%s\"&gt;%s&lt;/a&gt;\n")
+				.append("and provide your response(s) as soon as possible.\n")
 				.append("Thanks,\nThe Task Manager Team").toString();
 	}
 
@@ -101,7 +102,7 @@ public class EmailParticipants {
 	 *             if any of the given arguments are null or empty, or if the
 	 *             array of participant emails is length 0
 	 */
-	public static void emailParticipants(Form form) throws MessagingException,
+	public static void emailParticipants(Form form, User owner) throws MessagingException,
 			IllegalArgumentException {
 		// Initial check to make sure that the important arguments have been set
 		if (form == null) {
@@ -113,7 +114,7 @@ public class EmailParticipants {
 
 		String to = "daliashea@gmail.com";
 		String subject = STANDARD_TEMPLATE_SUBJECT;
-		String message = setMessageValues(STANDARD_TEMPLATE_BODY, "", "", "",
+		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY, owner.getUserName(), owner.getEmail(), form.getTitle(),
 				"");
 		// User u1 = new User("daliashea@gmail.com");
 		// User u2 = new User("daliaem66@hotmail.com");
@@ -135,10 +136,16 @@ public class EmailParticipants {
 
 				while ((fromServer = in.readLine()) != null) {
 					//System.out.println("Server: " + fromServer);
+					//System.out.println("Server: " + fromServer);
 
 					out.println(to);
+					out.println("SUBJECT");
 					out.println(subject);
-					out.println(message);
+					out.println("MESSAGE");
+					for (int i = 0; i < message.length; i++){
+						out.println(message[i]);
+					}
+					out.println("END");
 				}
 			} catch (IOException e) {
 				System.err.println("Couldn't get I/O for the connection to "
@@ -176,7 +183,7 @@ public class EmailParticipants {
 
 		String to = "daliashea@gmail.com";
 		String subject = STANDARD_TEMPLATE_SUBJECT;
-		String message = setMessageValues(STANDARD_TEMPLATE_BODY, "", "", "",
+		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY, "", "", "",
 				"");
 		for (User u : form.getParticipants()) {
 			boolean responded = false;
@@ -234,8 +241,11 @@ public class EmailParticipants {
 	 *            a URL that the user sees in the message body
 	 * @return the modified String
 	 */
-	private static String setMessageValues(String body, String admin,
+	private static String[] setMessageValues(String body, String admin,
 			String adminEmail, String getUrl, String url) {
-		return String.format(body, admin, adminEmail, getUrl, url);
+		String formatted = String.format(body, admin, adminEmail, getUrl, url);
+		String[] split = formatted.split("\\n");
+		
+		return split;
 	}
 }

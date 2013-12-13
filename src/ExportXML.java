@@ -55,9 +55,9 @@ public class ExportXML extends HttpServlet {
 
 			// Output the file as a byte buffer
 			InputStream in = new ByteArrayInputStream(xml.getBytes("UTF-8"));
-			byte[] output = new byte[4096];
-			while (in.read(output, 0, 4096) != -1) {
-				response.getOutputStream().write(output, 0, 4096);
+			byte[] output = new byte[1024];
+			while (in.read(output, 0, 1024) != -1) {
+				response.getOutputStream().write(output, 0, 1024);
 			}
 			in.close();
 			response.getOutputStream().flush();

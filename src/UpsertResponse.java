@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import dbconnect.DBManager;
 import dbconnect.IDBController;
+import email.EmailParticipants;
 import form.Form;
 import form.User;
 import form.factory.DefaultFactory;
@@ -56,6 +57,8 @@ public class UpsertResponse extends HttpServlet {
 			Form form = new DefaultFactory().insertResponse(jsonObject, user, true);
 			
 			controller.upsertForm(form);
+			
+			EmailParticipants.emailOwner(form, request.getContextPath(), user, controller.fetchUser(form.getOwnerId()));
 			
 			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?r=a");
 		} catch (Exception e) {

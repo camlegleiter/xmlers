@@ -21,6 +21,15 @@ public class EmailParticipants {
 	 * </pre>
 	 */
 	private static final String STANDARD_TEMPLATE_SUBJECT = "Task Manager - Your Participation is Requested";
+	
+	/**
+	 * A standard subject header that the owner will see when participants fill out form:
+	 * 
+	 * <pre>
+	 * Task Manager - Your Participation is Requested
+	 * </pre>
+	 */
+	private static final String STANDARD_RESPONSE_SUBJECT = "Task Manager - A User Has Submitted a Response";
 
 	/**
 	 * A standard message header that the user will see upon receiving an email:
@@ -65,6 +74,15 @@ public class EmailParticipants {
 				.append("and provide your response(s) as soon as possible.\n\n")
 				.append("Thanks,\nThe Task Manager Team").toString();
 	}
+	private static final String STANDARD_RESPONSE_BODY;
+	static {
+		STANDARD_RESPONSE_BODY = new StringBuilder()
+				.append("%s has submitted a response to the form \"%s\".\n\n")
+				.append("Please follow the link:\n\n")
+				.append("%s\n\n")
+				.append("to view your form records.\n\n")
+				.append("Thanks,\nThe Task Manager Team").toString();
+	}
 
 	/**
 	 * Emails all of the participants of a form and asks that they complete the
@@ -83,54 +101,22 @@ public class EmailParticipants {
 	 *             if any of the given arguments are null or empty, or if the
 	 *             array of participant emails is length 0
 	 */
-	public static void emailParticipants(Form form, String appUrl, User owner) 
+	public static void emailParticipants(Form form, String appUrl, User owner)
 			throws MessagingException, IllegalArgumentException {
 		// Initial check to make sure that the important arguments have been set
 		if (form == null) {
 			throw new IllegalArgumentException();
 		}
-
-		String hostName = "www.xmlers.com";
-		int portNumber = 19600;
-
-		String to = "daliashea@gmail.com";
+		String to = "";
 		String subject = STANDARD_TEMPLATE_SUBJECT;
 
-		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY, owner.getEmail(), form.getTitle(), appUrl);
-		
-		// User u1 = new User("daliashea@gmail.com");
-		// User u2 = new User("daliaem66@hotmail.com");
-		// ArrayList<User> users = new ArrayList<User>();
-		// users.add(u1); users.add(u2);
+		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY,
+				owner.getEmail(), form.getTitle(), appUrl);
+
 		for (User u : form.getParticipants()) {
 			to = u.getEmail();
-			// Source:
-			// http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/networking/sockets/examples/KnockKnockServer.java
-			try (Socket kkSocket = new Socket(hostName, portNumber);
-					PrintWriter out = new PrintWriter(
-							kkSocket.getOutputStream(), true);
-					BufferedReader in = new BufferedReader(
-							new InputStreamReader(kkSocket.getInputStream()));) {
-				BufferedReader stdIn = new BufferedReader(
-						new InputStreamReader(System.in));
-				String fromServer;
-				String fromUser;
-
-				while ((fromServer = in.readLine()) != null) {
-					out.println(to);
-					out.println("SUBJECT");
-					out.println(subject);
-					out.println("MESSAGE");
-					for (int i = 0; i < message.length; i++){
-						out.println(message[i]);
-					}
-					out.println("END");
-				}
-			} catch (IOException e) {
-				System.err.println("Couldn't get I/O for the connection to "
-						+ hostName);
-				System.exit(1);
-			}
+			System.out.println(to);
+			connectAndSend(to, subject, message);
 		}
 
 	}
@@ -157,13 +143,10 @@ public class EmailParticipants {
 			throw new IllegalArgumentException();
 		}
 
-		String hostName = "www.xmlers.com";
-		int portNumber = 19600;
-
-		String to = "daliashea@gmail.com";
-		String subject = STANDARD_TEMPLATE_SUBJECT;
-		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY, owner.getEmail(), form.getTitle(), appUrl
-						+ "/login.jsp");
+		String to = "";
+		String subject = STANDARD_REEMAIL_SUBJECT;
+		String[] message = setMessageValues(STANDARD_REEMAIL_BODY,
+				owner.getEmail(), form.getTitle(), appUrl + "/login.jsp");
 		for (User u : form.getParticipants()) {
 			boolean responded = false;
 			for (User p : form.getRespondedParticipants()) {
@@ -173,31 +156,7 @@ public class EmailParticipants {
 			}
 			if (!responded) {
 				to = u.getEmail();
-				// Source:
-				// http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/networking/sockets/examples/KnockKnockServer.java
-				try (Socket kkSocket = new Socket(hostName, portNumber);
-						PrintWriter out = new PrintWriter(
-								kkSocket.getOutputStream(), true);
-						BufferedReader in = new BufferedReader(
-								new InputStreamReader(kkSocket.getInputStream()));) {
-					BufferedReader stdIn = new BufferedReader(
-							new InputStreamReader(System.in));
-					String fromServer;
-					String fromUser;
-
-					while ((fromServer = in.readLine()) != null) {
-						// System.out.println("Server: " + fromServer);
-
-						out.println(to);
-						out.println(subject);
-						out.println(message);
-					}
-				} catch (IOException e) {
-					System.err
-							.println("Couldn't get I/O for the connection to "
-									+ hostName);
-					System.exit(1);
-				}
+				connectAndSend(to, subject, message);
 			}
 		}
 
@@ -217,9 +176,59 @@ public class EmailParticipants {
 	 *            a URL that the user sees in the message body
 	 * @return the modified String
 	 */
-	private static String[] setMessageValues(String body,
-			String adminEmail, String formName, String url) {
-	String formatted = String.format(body, adminEmail, formName, url);	
-	return formatted.split("\\n");
+	private static String[] setMessageValues(String body, String adminEmail,
+			String formName, String url) {
+		String formatted = String.format(body, adminEmail, formName, url);
+		return formatted.split("\\n");
+	}
+
+	public static void emailOwner(Form form, String appUrl, User participant, User owner) {
+		// Initial check to make sure that the important arguments have been set
+		if (form == null) {
+			throw new IllegalArgumentException();
+		}
+
+		String to = "";
+		String subject = STANDARD_RESPONSE_SUBJECT;
+
+		String[] message = setMessageValues(STANDARD_RESPONSE_BODY,
+				participant.getEmail(), form.getTitle(), appUrl);
+
+		to = owner.getEmail();
+		connectAndSend(to, subject, message);
+	}
+
+	private static void connectAndSend(String to, String subject,
+			String[] message) {
+		String hostName = "www.xmlers.com";
+		int portNumber = 19600;
+		// Source:
+		// http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/networking/sockets/examples/KnockKnockServer.java
+		try (Socket kkSocket = new Socket(hostName, portNumber);
+				PrintWriter out = new PrintWriter(kkSocket.getOutputStream(),
+						true);
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						kkSocket.getInputStream()));) {
+			BufferedReader stdIn = new BufferedReader(new InputStreamReader(
+					System.in));
+			String fromServer;
+			String fromUser;
+
+			while ((fromServer = in.readLine()) != null) {
+				// System.out.println("Server: " + fromServer);
+				out.println(to);
+				out.println("SUBJECT");
+				out.println(subject);
+				out.println("MESSAGE");
+				for (int i = 0; i < message.length; i++){
+					out.println(message[i]);
+				}
+				out.println("END");
+			}
+		} catch (IOException e) {
+			System.err.println("Couldn't get I/O for the connection to "
+					+ hostName);
+			System.exit(1);
+		}
 	}
 }

@@ -17,6 +17,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import dbconnect.DBManager;
+
 import form.Form;
 import form.User;
 
@@ -53,9 +55,9 @@ public class EmailParticipants {
 	private static final String STANDARD_TEMPLATE_BODY;
 	static {
 		STANDARD_TEMPLATE_BODY = new StringBuilder()
-				.append("%s (%s) has created a form using Task Manager, and needs your response!")
+				.append("%s (%s) has created the form \"%s\" using Task Manager, and needs your response!")
 				.append("Please follow the link:\n\n")
-				.append("&lt;a href=\"%s\"&gt;%s&lt;/a&gt;\n\n")
+				.append("&lt;a href=\"%s\"&gt;TaskManager Login&lt;/a&gt;\n\n")
 				.append("and provide your response(s) as soon as possible.\n\n")
 				.append("Thanks,\nThe Task Manager Team").toString();
 	}
@@ -68,9 +70,9 @@ public class EmailParticipants {
 	private static final String STANDARD_REEMAIL_BODY;
 	static {
 		STANDARD_REEMAIL_BODY = new StringBuilder()
-				.append("%s (%s) created a form using Task Manager, and is still waiting for your response!")
+				.append("%s (%s) created the form \"%s\" using Task Manager, and is still waiting for your response!")
 				.append("Please follow the link:\n\n")
-				.append("&lt;a href=\"%s\"&gt;%s&lt;/a&gt;\n\n")
+				.append("&lt;a href=\"%s\"&gt;TaskManager Login&lt;/a&gt;\n\n")
 				.append("and provide your response(s) as soon as possible.\n\n")
 				.append("Thanks,\nThe Task Manager Team").toString();
 	}
@@ -81,18 +83,9 @@ public class EmailParticipants {
 	 * 
 	 * @param formID
 	 *            the ID of the corresponding form
-	 * @param admin
-	 *            the name of the administrator of the form
-	 * @param adminEmail
-	 *            the email of the administrator who created the form
-	 * @param participantEmails
-	 *            a list of all participants' emails
-	 * @param subject
-	 *            the administrator-defined subject of the email message. If
-	 *            null or empty, uses a standard email subject.
-	 * @param body
-	 *            the administrator-defined body of the email message. If null
-	 *            or empty, uses a standard email body.
+	 * @param appUrl
+	 *            the base URL for the website, retrieved from
+	 *            HttpServletRequest.getContextPath()
 	 * 
 	 * @throws MessagingException
 	 *             if there is an issue in the JavaMail API when sending an
@@ -101,8 +94,8 @@ public class EmailParticipants {
 	 *             if any of the given arguments are null or empty, or if the
 	 *             array of participant emails is length 0
 	 */
-	public static void emailParticipants(Form form) throws MessagingException,
-			IllegalArgumentException {
+	public static void emailParticipants(Form form, String appUrl)
+			throws MessagingException, IllegalArgumentException {
 		// Initial check to make sure that the important arguments have been set
 		if (form == null) {
 			throw new IllegalArgumentException();
@@ -113,8 +106,10 @@ public class EmailParticipants {
 
 		String to = "daliashea@gmail.com";
 		String subject = STANDARD_TEMPLATE_SUBJECT;
-		String message = setMessageValues(STANDARD_TEMPLATE_BODY, "", "", "",
-				"");
+
+		User owner = DBManager.getInstance().fetchUser(form.getOwnerId());
+		String message = setMessageValues(STANDARD_TEMPLATE_BODY,
+				owner.getFullName(), owner.getEmail(), form.getTitle(), appUrl);
 		// User u1 = new User("daliashea@gmail.com");
 		// User u2 = new User("daliaem66@hotmail.com");
 		// ArrayList<User> users = new ArrayList<User>();
@@ -134,7 +129,7 @@ public class EmailParticipants {
 				String fromUser;
 
 				while ((fromServer = in.readLine()) != null) {
-					//System.out.println("Server: " + fromServer);
+					// System.out.println("Server: " + fromServer);
 
 					out.println(to);
 					out.println(subject);
@@ -165,7 +160,7 @@ public class EmailParticipants {
 	 *             if any of the given arguments are null or empty, or if the
 	 *             array of participant emails is length 0
 	 */
-	public static void reemailParticipants(Form form)
+	public static void reemailParticipants(Form form, String appUrl)
 			throws MessagingException, IllegalArgumentException {
 		if (form == null) {
 			throw new IllegalArgumentException();
@@ -176,8 +171,11 @@ public class EmailParticipants {
 
 		String to = "daliashea@gmail.com";
 		String subject = STANDARD_TEMPLATE_SUBJECT;
-		String message = setMessageValues(STANDARD_TEMPLATE_BODY, "", "", "",
-				"");
+
+		User owner = DBManager.getInstance().fetchUser(form.getOwnerId());
+		String message = setMessageValues(STANDARD_TEMPLATE_BODY,
+				owner.getFullName(), owner.getEmail(), form.getTitle(), appUrl
+						+ "/login.jsp");
 		for (User u : form.getParticipants()) {
 			boolean responded = false;
 			for (User p : form.getRespondedParticipants()) {
@@ -200,7 +198,7 @@ public class EmailParticipants {
 					String fromUser;
 
 					while ((fromServer = in.readLine()) != null) {
-						//System.out.println("Server: " + fromServer);
+						// System.out.println("Server: " + fromServer);
 
 						out.println(to);
 						out.println(subject);
@@ -221,21 +219,18 @@ public class EmailParticipants {
 	 * Sets the keywords within the given body String with their proper values
 	 * as passed into the {@link #emailParticipants(Form)} method.
 	 * 
+	 * @param body
+	 *            the message body to be updated with the other parameters
 	 * @param admin
 	 *            the name of the administrator of the form
 	 * @param adminEmail
 	 *            the email of the administrator who created the form
-	 * @param getUrl
-	 *            a URL that contains a key-value GET request, where the value
-	 *            is a urlencode of the "view" page with associated form ID.
-	 *            This way, the user can log in and the site redirects them to
-	 *            the corect page.
 	 * @param url
 	 *            a URL that the user sees in the message body
 	 * @return the modified String
 	 */
 	private static String setMessageValues(String body, String admin,
-			String adminEmail, String getUrl, String url) {
-		return String.format(body, admin, adminEmail, getUrl, url);
+			String adminEmail, String formName, String url) {
+		return String.format(body, admin, adminEmail, formName, url);
 	}
 }

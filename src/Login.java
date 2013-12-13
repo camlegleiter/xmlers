@@ -103,7 +103,7 @@ public class Login extends HttpServlet {
 			} catch (AuthenticationException e) {
 				// Bad credentials, try again
 				request.setAttribute("loginerror",
-						"Invalid username or password. Please, use your IASTATE credentials.");
+						"Invalid username or password.");
 				request.getRequestDispatcher("login.jsp").forward(request,
 						response);
 			}

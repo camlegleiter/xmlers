@@ -86,6 +86,15 @@ public abstract class AbstractVariadicQuestion extends Question<List<AbstractVar
 		 */
 		public void setText(String val)
 		{
+			/*
+			 * When building a form and adding responses to it, if a participant
+			 * hasn't responded to a question then val will be an empty String.
+			 * This causes the IllegalArgumentException to be thrown every time
+			 * and prevents the program from functioning. To avoid this issue,
+			 * this should be commented out until a better solution can be
+			 * determined for checking that the user's submitted value is
+			 * acceptable compared to the options available.
+			 */
 //			if(!AbstractVariadicQuestion.this.options.contains(val))
 //			{
 //				throw new IllegalArgumentException("Text must be one of the options of the parent question.");

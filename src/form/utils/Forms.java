@@ -58,7 +58,12 @@ public class Forms {
 	 */
 	public static final JSONObject getResponseRecordsForForm(int formId) {
 		Form f = DBManager.getInstance().fetchForm(formId);
-		return f.getResponseFormJSON();
+		return f.getJSON(Form.TITLE_BIT
+				| Form.KEY_BIT
+				| Form.DESCRIPTION_BIT
+				| Form.OWNER_BIT
+				| Form.QUESTIONS_BIT
+				| (Form.RESPONSES_BIT | Form.RESPONSE_OWNER_BIT | Form.RESPONSE_OWNER_NAME_BIT | Form.RESPONSE_BIT));
 	}
 
 	/**

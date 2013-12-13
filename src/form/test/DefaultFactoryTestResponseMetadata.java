@@ -53,14 +53,14 @@ public class DefaultFactoryTestResponseMetadata {
 	@Test
 	public void test() {
 		System.out.println("The form before inserting response: \n"
-				+ form.getResponseFormJSON());
+				+ form.getJSON());
 		JSONObject responseMetadata = createResponseMetadata();
 		Form defaultForm = new DefaultFactory().insertResponse(
-				responseMetadata, participant2);
+				responseMetadata, participant2, true);
 		System.out.println("The form after inserting response: \n"
-				+ defaultForm.getResponseFormJSON());
-		assertTrue(form.getResponseFormJSON().toString()
-				.equals(defaultForm.getResponseFormJSON().toString()));
+				+ defaultForm.getJSON());
+		assertTrue(form.getJSONString()
+				.equals(defaultForm.getJSONString()));
 	}
 
 	private void initUsers() {

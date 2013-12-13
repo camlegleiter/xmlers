@@ -49,7 +49,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         onRender: function() {
             this.ui.formParticipants.select2({
                 width: '100%',
-                placeholder: 'Type an email to add a participant',
+                placeholder: 'Type an email address',
                 
                 tags: [],
                 tokenSeparators: [',', ' '],                
@@ -386,7 +386,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         
         onUpdateModel: function() {
             this.model.set({
-                label: this.ui.label.val()
+                value: this.ui.label.val()
             });
         }
     });
@@ -420,7 +420,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             }
         },
 
-        // Adds a new checkbox entry to the field
+        // Adds a new select entry to the field
         onAddItem: function() {
             this.addItem(new App.Models.SelectOption());
         },

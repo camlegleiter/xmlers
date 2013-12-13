@@ -58,7 +58,7 @@ public class Index extends HttpServlet {
 
 				// if (difference in time now - time last sent > 24 hours
 				// (etc...)) {
-				EmailParticipants.reemailParticipants(form);
+				EmailParticipants.reemailParticipants(form, request.getContextPath(),  DBManager.getInstance().fetchUser(form.getOwnerId()));
 				// else write an error to the user that they cannot reemail so soon
 			}
 

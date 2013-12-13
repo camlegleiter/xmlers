@@ -1,5 +1,7 @@
 package dbconnect;
 
+import dbconnect.json.JsonController;
+import dbconnect.stub.StubController;
 import dbconnect.xml.XmlController;
 
 
@@ -8,6 +10,7 @@ public class DBManager {
 	public static final String ENVIRONMENT_STRATEGY = "XMLERS_STRATEGY";
 	public static final String XML_STRATEGY = "XML";
 	public static final String SQL_STRATEGY = "SQL";
+	public static final String JSON_STRATEGY = "JSON";
 	public static final String DEBUG_STRATEGY = "DEBUG";
 	
 	/**
@@ -31,6 +34,9 @@ public class DBManager {
 			break;
 		case XML_STRATEGY:
 			DBManager.strategy = new XmlController();
+			break;
+		case JSON_STRATEGY:
+			DBManager.strategy = new JsonController();
 			break;
 		}
 	}

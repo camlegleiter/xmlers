@@ -21,6 +21,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         initialize: function(options) {
             this.ownerCollection = options.ownerCollection;
             this.participantCollection = options.participantCollection;
+            this.userEmail = options.userEmail;
         },
         
         onRender: function() {
@@ -72,14 +73,15 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         
         selectOwnerForm: function(model) {
             this.toggleDeleteDisabled(false);
-            this.ui.deleteBtn.text('Delete form');
+            this.ui.deleteBtn.text('Delete Form');
             
             this.isOwner = true;
             this.selectedModel = model;
             
             this.trigger('select:form', {
                 isOwner: true,
-                model: model
+                model: model,
+                userEmail: this.userEmail
             });
         },
         

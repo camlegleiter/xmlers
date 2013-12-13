@@ -17,22 +17,22 @@ import form.visitors.JSONVisitor;
 import form.visitors.JSONVisitorResponse;
 
 public class Form implements Iterable<Question<?>>, Cloneable {
-
 	public static final int ALL_BITS = -1;
-	public static final int KEY_BIT = 0x1;
-	public static final int DESCRIPTION_BIT = 0x2;
-	public static final int TITLE_BIT = 0x4;
-	public static final int QUESTIONS_BIT = 0x8;
-	public static final int OWNER_BIT = 0x16;
-	public static final int PARTICIPANTS_CAN_SEE_ALL_BIT = 0x32;
-	public static final int PARTICIPANTS_CAN_EDIT_RESPONSE_BIT = 0x64;
-	public static final int PARTICIPANT_RESPONSE_IS_REQUIRED_BIT = 0x128;
-	public static final int FORM_PARTICIPANTS_BIT = 0x256;
-	public static final int RESPONSES_BIT = 0x512;
-	public static final int RESPONSE_OWNER_NAME_BIT = 0x1024;
-	public static final int RESPONSE_OWNER_BIT = 0x2048;
-	public static final int RESPONSE_BIT = 0x4096;
-	public static final int QUERIES_BIT = 0x8192;
+	public static final int KEY_BIT = 1 << 1;
+	public static final int DESCRIPTION_BIT = 1 << 2;
+	public static final int TITLE_BIT = 1 << 3;
+	public static final int QUESTIONS_BIT = 1 << 4;
+	public static final int OWNER_BIT = 1 << 5;
+	public static final int PARTICIPANTS_CAN_SEE_ALL_BIT = 1 << 6;
+	public static final int PARTICIPANTS_CAN_EDIT_RESPONSE_BIT = 1 << 7;
+	public static final int PARTICIPANT_RESPONSE_IS_REQUIRED_BIT = 1 << 8;
+	public static final int FORM_PARTICIPANTS_BIT = 1 << 9;
+	public static final int RESPONSES_BIT = 1 << 10;
+	public static final int RESPONSE_OWNER_NAME_BIT = 1 << 11;
+	public static final int RESPONSE_OWNER_BIT = 1 << 12;
+	public static final int RESPONSE_BIT = 1 << 13;
+	public static final int QUERIES_BIT = 1 << 14;
+	public static final int RESPONDED_PARTICIPANTS = 1 << 15;
 	
 	private String title;
 	private int id;
@@ -181,11 +181,14 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	}
 	
 	public boolean containsParticipant(int userId) {
+		return getParticipant(userId) != null;
+	}
+	
+	public User getParticipant(int userId) {
 		for (User u : participants)
 			if (u.getUserID() == userId)
-				return true;
-		
-		return false;
+				return u;
+		return null;
 	}
 	
 	public String getQueries() {
@@ -228,14 +231,10 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 	}
 
 	public JSONObject getJSON() {
-		return getJSON(ALL_BITS, null);
+		return getJSON(ALL_BITS);
 	}
 
-	public JSONObject getResponseFormJSON() {
-		return getFormJSON(ALL_BITS, null);
-	}
-
-	public JSONObject getJSON(int settings, String user) {
+	public JSONObject getJSON(int settings) {
 		JSONVisitor questionGenerator = new JSONVisitor();
 		JSONObject form = new JSONObject();
 		
@@ -245,58 +244,34 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 		if (bitSet(settings, KEY_BIT)) {
 			form.put("formID", this.getFormId());
 		}
-		if (bitSet(settings, Form.DESCRIPTION_BIT)) {
+		if (bitSet(settings, DESCRIPTION_BIT)) {
 			form.put("formDescription", this.getDescription());
 		}
-		if (bitSet(settings, Form.OWNER_BIT)) {
+		if (bitSet(settings, OWNER_BIT)) {
 			form.put("formOwner", this.getOwnerId());
 		}
-		if (bitSet(settings, Form.PARTICIPANTS_CAN_SEE_ALL_BIT)) {
+		if (bitSet(settings, PARTICIPANTS_CAN_SEE_ALL_BIT)) {
 			form.put("participantsCanSeeAll", this.participantsCanSeeAll());
 		}
-		if (bitSet(settings, Form.PARTICIPANTS_CAN_EDIT_RESPONSE_BIT)) {
+		if (bitSet(settings, PARTICIPANTS_CAN_EDIT_RESPONSE_BIT)) {
 			form.put("participantsCanEditResponse", this.participantsCanEditResponse());
 		}
-		if (bitSet(settings, Form.PARTICIPANT_RESPONSE_IS_REQUIRED_BIT)) {
+		if (bitSet(settings, PARTICIPANT_RESPONSE_IS_REQUIRED_BIT)) {
 			form.put("participantResponseIsRequired", this.participantResponseIsRequired());
 		}
-		if (bitSet(settings, Form.FORM_PARTICIPANTS_BIT)) {
+		if (bitSet(settings, FORM_PARTICIPANTS_BIT)) {
 			JSONArray array = new JSONArray();
 			for (User u : this.participants)
 				array.put(u.getEmail());
 			form.put("formParticipants", array);
 		}
-		if (bitSet(settings, Form.QUESTIONS_BIT)) {
+		if (bitSet(settings, QUESTIONS_BIT)) {
 			JSONArray array = new JSONArray("["
 					+ VisitMechanism.visit(questionGenerator, this.iterator(), ",")
 					+ "]");
 			form.put("formQuestions", array);
 		}
-		return form;
-	}
-	public JSONObject getFormJSON(int settings, String user) {
-		JSONVisitor generator = new JSONVisitor();
-		JSONObject form = new JSONObject();
-		
-		if (bitSet(settings, TITLE_BIT)) {
-			form.put("formName", this.getTitle());
-		}
-		if (bitSet(settings, KEY_BIT)) {
-			form.put("formID", this.getFormId());
-		}
-		if (bitSet(settings, Form.DESCRIPTION_BIT)) {
-			form.put("formDescription", this.getDescription());
-		}
-		if (bitSet(settings, Form.OWNER_BIT)) {
-			form.put("formOwner", this.getOwnerId());
-		}
-		if (bitSet(settings, Form.QUESTIONS_BIT)) {
-			JSONArray array = new JSONArray("["
-					+ VisitMechanism.visit(generator, this.iterator(), ",")
-					+ "]");
-			form.put("formQuestions", array);
-		}
-		if (bitSet(settings, Form.RESPONSES_BIT)) {
+		if (bitSet(settings, RESPONSES_BIT)) {
 			JSONArray responseList = new JSONArray();
 			for (User u : this.participants){
 				JSONObject reponse = new JSONObject();
@@ -306,27 +281,36 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 				if (bitSet(settings, RESPONSE_OWNER_NAME_BIT)) {
 					reponse.put("responseOwnerName", u.getEmail());
 				}
-				JSONArray array = new JSONArray("["
-						+ VisitMechanism.visit(new JSONVisitorResponse(u.getUserID()), this.iterator(), ",")
-						+ "]");
-				reponse.put("responses", array);
-				responseList.put(reponse);
-				
+				if (bitSet(settings, RESPONSE_BIT)) {
+					JSONArray array = new JSONArray("["
+							+ VisitMechanism.visit(
+									new JSONVisitorResponse(u.getUserID()),
+									this.iterator(), ",") + "]");
+					reponse.put("responses", array);
+					responseList.put(reponse);
+				}
 			}
 			form.put("responses", responseList);
 		}
-		if (bitSet(settings, Form.QUERIES_BIT)) {
+		if (bitSet(settings, QUERIES_BIT)) {
 			form.put("queries", this.queries);
+		}
+		if (bitSet(settings, RESPONDED_PARTICIPANTS)) {
+			JSONArray responded = new JSONArray();
+			for (User u : respondedParticipants) {
+				responded.put(u.getEmail());
+			}
+			form.put("respondedParticipants", responded);
 		}
 		return form;
 	}
 
 	public String getJSONString() {
-		return getJSONString(ALL_BITS, null);
+		return getJSONString(ALL_BITS);
 	}
 	
-	public String getJSONString(int settings, String user) {
-		return getJSON(settings, user).toString();
+	public String getJSONString(int settings) {
+		return getJSON(settings).toString();
 	}
 
 	@Override
@@ -343,15 +327,15 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 			other.participantsCanEditResponse = this.participantsCanEditResponse;
 			other.participantResponseIsRequired = this.participantResponseIsRequired;
 
-			other.participants = new ArrayList<User>(this.participants.size());
-			for (User u : participants)
-				other.participants.add(u);
+			other.participants = new ArrayList<User>(this.participants);
 			
 			other.questions = new PriorityQueue<Question<?>>(
 					this.questions.size(), new QuestionPriority());
 			for (Question<?> q : questions) {
 				other.questions.add(q.clone());
 			}
+			other.respondedParticipants = new ArrayList<User>(this.respondedParticipants);
+			other.queries = new String(queries);
 		} catch (CloneNotSupportedException e) {
 		}
 

@@ -1,5 +1,6 @@
 package dbconnect.xml.converters;
 
+import dbconnect.IConverter;
 import form.questions.ComplexQuestion;
 
 public class ComplexQuestionConverter implements

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dbconnect.IConverter;
 import dbconnect.xml.dao.ComplexQuestion;
 import dbconnect.xml.dao.Form.Participants.Participant;
 import dbconnect.xml.dao.TextQuestion;

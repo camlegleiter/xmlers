@@ -2,6 +2,7 @@ package dbconnect.xml.converters;
 
 import java.math.BigInteger;
 
+import dbconnect.IConverter;
 import dbconnect.xml.dao.VariadicBooleanQuestion;
 import form.questions.AbstractVariadicQuestion;
 import form.questions.CheckQuestion;

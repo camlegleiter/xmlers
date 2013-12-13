@@ -1,5 +1,6 @@
 package dbconnect.xml.converters;
 
+import dbconnect.IConverter;
 import form.User;
 
 public class UserConverter implements IConverter<User, dbconnect.xml.dao.User> {

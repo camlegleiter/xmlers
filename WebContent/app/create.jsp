@@ -65,7 +65,7 @@
 				</div>
             	<div class="list-group"></div>
 			</div>
-           	<a class="add disabled btn btn-default" style="width: 100%;">Add Question</a>
+           	<a class="add disabled btn btn-default" style="width: 100%;">Add Field</a>
         </script>    
     
         <script id="form-template" type="text/template">
@@ -82,7 +82,7 @@
             <div class="form-group">
                 <label for="formParticipants">Participants</label>
 				<br>
-                <input type="hidden" id="formParticipants" style="width: 300px;">
+                <input type="hidden" id="formParticipants" style="width: auto">
             </div>
 
             <div id="form-content"></div>

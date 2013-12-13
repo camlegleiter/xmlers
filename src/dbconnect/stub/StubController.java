@@ -1,4 +1,4 @@
-package dbconnect;
+package dbconnect.stub;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import dbconnect.IDBController;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import form.Form;
@@ -32,7 +34,7 @@ public class StubController implements IDBController {
 		createStubData();
 	}
 	
-	public int getNewQuestionId() {
+	public int getNewId() {
 		return questionId.getAndIncrement();
 	}
 

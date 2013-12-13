@@ -26,12 +26,16 @@
 			<c:import url="/app/includes/noscript.jsp" />	
 			
 			<div class="row">
-				<!-- 
 				<div id="viewOptions" class="col-md-2">
 				    <h3>Options</h3>
-					<div class="well"></div>
-				</div> -->
-				<div id="responseTable" class="col-md-12">
+					<div class="well">
+						<form action="exportXML" method="POST">
+							<input type="hidden" name="formId" value="${param.form}">
+							<button type="submit" class="btn btn-default">Export XML</button>
+						</form>
+					</div>
+				</div>
+				<div id="responseTable" class="col-md-10">
 <c:choose>
     <c:when test="${isInvalidFormId}">
                     <h2>Uh oh!</h2>

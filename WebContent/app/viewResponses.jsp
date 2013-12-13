@@ -31,7 +31,7 @@
 					<div class="well">
 						<form action="exportXML" method="POST">
 							<input type="hidden" name="formId" value="${param.form}">
-							<button type="submit" class="btn btn-default">Export XML</button>
+							<button type="submit" class="btn btn-default" style="width: 100%;">Export XML</button>
 						</form>
 					</div>
 				</div>

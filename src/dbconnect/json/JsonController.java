@@ -107,12 +107,20 @@ public class JsonController implements IDBController {
 				dbconnect.json.dao.Form f = FormConverter.getInstance()
 						.unconvert(newForm);
 				f.setFormId(getNewId());
+				newForm.setFormId(f.getFormId());
 				collection.insert(f);
 			} else {
-				ObjectId originalID = originalForm.getObjectId("_id");
+				// The MongoDB _id, formID and formOwner should never change
+				ObjectId _id = originalForm.getObjectId("_id");
+				int formId = originalForm.getFormId();
+				int formOwner = originalForm.getFormOwner();
+				
 				dbconnect.json.dao.Form updatedForm = FormConverter
 						.getInstance().unconvert(newForm);
-				updatedForm.put("_id", originalID);
+				updatedForm.put("_id", _id);
+				updatedForm.put("formID", formId);
+				updatedForm.put("formOwner", formOwner);
+				
 				collection.save(updatedForm);
 			}
 			return true;
@@ -135,12 +143,15 @@ public class JsonController implements IDBController {
 				dbconnect.json.dao.User u = UserConverter.getInstance()
 						.unconvert(newUser);
 				u.setUserId(getNewId());
+				newUser.setUserID(u.getUserId());
 				collection.insert(u);
 			} else {
-				ObjectId originalID = originalUser.getObjectId("_id");
+				ObjectId _id = originalUser.getObjectId("_id");
+				int userId = originalUser.getUserId();
 				dbconnect.json.dao.User u = UserConverter.getInstance()
 						.unconvert(newUser);
-				u.put("_id", originalID);
+				u.put("_id", _id);
+				u.put("userID", userId);
 				collection.save(u);
 			}
 			return true;

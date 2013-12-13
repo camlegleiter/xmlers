@@ -49,7 +49,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         onRender: function() {
             this.ui.formParticipants.select2({
                 width: '100%',
-                placeholder: 'Type an email to add a participant',
+                placeholder: 'Type an email address',
                 
                 tags: [],
                 tokenSeparators: [',', ' '],                

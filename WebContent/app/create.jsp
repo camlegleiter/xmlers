@@ -82,7 +82,7 @@
             <div class="form-group">
                 <label for="formParticipants">Participants</label>
 				<br>
-                <input type="hidden" id="formParticipants" style="width: 300px;">
+                <input type="hidden" id="formParticipants" style="width: auto">
             </div>
 
             <div id="form-content"></div>

@@ -73,7 +73,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         
         selectOwnerForm: function(model) {
             this.toggleDeleteDisabled(false);
-            this.ui.deleteBtn.text('Delete form');
+            this.ui.deleteBtn.text('Delete Form');
             
             this.isOwner = true;
             this.selectedModel = model;

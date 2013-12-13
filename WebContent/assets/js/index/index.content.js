@@ -51,7 +51,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
     });
 
     Module.ParticipantFormView = Backbone.Marionette.ItemView.extend({
-        template: '#participant-form-template',
+        template: '#participant-form-template'
     });
 
     /*

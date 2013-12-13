@@ -131,9 +131,7 @@
                 <@ if (participantsCanSeeAll) { @>
                     <a href="viewResponses.jsp?form=<@= formID @>" class="view-records btn btn-default" title="See all of the records for this form.">View Records</a>
                 <@ } @>
-				<@ if (participantsCanEditResponse || !$.inArray(userEmail, respondedParticipants)) { @>
                 <a href="response.jsp?form=<@= formID @>" class="submit-response btn btn-default" title="Submit a response to this form.">Submit Response</a>
-				<@ } @>
             </form>
         </script>
         

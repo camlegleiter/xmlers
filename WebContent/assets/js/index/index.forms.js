@@ -21,7 +21,21 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         initialize: function(options) {
             this.ownerCollection = options.ownerCollection;
             this.participantCollection = options.participantCollection;
+            
             this.userEmail = options.userEmail;
+            
+            var self = this;
+            this.participantCollection.each(function(model) {
+            	model.set('userEmail', self.userEmail);
+            });
+
+            // Remove forms that the user has completed and cannot edit their response to
+            this.participantCollection.reset(this.participantCollection.filter(function(model) {
+            	if ($.inArray(model.get('userEmail'), model.get('respondedParticipants')) > -1
+            			&& !model.get('participantsCanEditResponse'))
+            		return false;
+            	return true;
+            }));
         },
         
         onRender: function() {

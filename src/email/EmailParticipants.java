@@ -111,7 +111,7 @@ public class EmailParticipants {
 		String subject = STANDARD_TEMPLATE_SUBJECT;
 
 		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY,
-				owner.getEmail(), form.getTitle(), appUrl);
+				owner.getEmail(), form.getTitle(), appUrl + "login.jsp");
 
 		for (User u : form.getParticipants()) {
 			to = u.getEmail();
@@ -146,7 +146,7 @@ public class EmailParticipants {
 		String to = "";
 		String subject = STANDARD_REEMAIL_SUBJECT;
 		String[] message = setMessageValues(STANDARD_REEMAIL_BODY,
-				owner.getEmail(), form.getTitle(), appUrl + "/login.jsp");
+				owner.getEmail(), form.getTitle(), appUrl + "login.jsp");
 		for (User u : form.getParticipants()) {
 			boolean responded = false;
 			for (User p : form.getRespondedParticipants()) {
@@ -192,7 +192,7 @@ public class EmailParticipants {
 		String subject = STANDARD_RESPONSE_SUBJECT;
 
 		String[] message = setMessageValues(STANDARD_RESPONSE_BODY,
-				participant.getEmail(), form.getTitle(), appUrl);
+				participant.getEmail(), form.getTitle(), appUrl + "login.jsp");
 
 		to = owner.getEmail();
 		connectAndSend(to, subject, message);

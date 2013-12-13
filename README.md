@@ -1,7 +1,7 @@
 xmlers
 ======
 
-Senior Design 491 - Task Manager Project  
+Iowa State University, Senior Design 491/492 - Task Manager Project  
 Senior Design page: http://seniord.ece.iastate.edu/dec1315/index.html
 
 ## TaskManager
@@ -52,3 +52,16 @@ To add your own strategy option, you must:
 2. Create a respective STRATEGY value within `DBManager`
 
 See the dbconnect.xml.* and dbconnect.json.* packages for examples on converting `Form` and `User` Java Objects to DAOs for your added implementation.
+
+## Login
+The login page uses Google Verification for logging in, meaning any Google login should be able to work. The backend only saves your email address as a way to associate forms with your account. No other information is saved, although there are fields for a first and last name.
+
+## Metadata
+The `docs/json-templates` folder contains several JSON metadata templates use in the front end (as part of Backbone.js/Marionette.js models). These templates give the general information required for specific pages.
+* `form_metadata.json`: The JSON generated from the create.jsp page
+* `generateResponseForm_metadata.json`: The JSON sent from the server side -> client side on the response.jsp page
+* `response_metadata.json`: A modified version of the `generateResponseForm_metadata.json` template, which includes the participant values for each entry in the form
+* `view_metadata.json`: The JSON sent sent to the client side on the view.jsp page, used for rendering the viewable table
+
+## Exporting
+Currently, the view.jsp page allows users to export the entire form document as XML only. Later features may include exports to other formats, including CSV or XLSX. In the mean time, simply copy-pasting the table into an Excel spreadsheet can easily create CSV files.

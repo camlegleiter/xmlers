@@ -67,7 +67,7 @@
             <c:import url="/app/includes/noscript.jsp" />
             <form class="form-signin" action="<%= request.getContextPath() %>/login" method="post">
                 <h2 class="form-signin-heading">Please sign in</h2>
-                <h5>Login with you GMail or Iowa State account!</h5>
+                <h5>Login with your ISU NetID or GMail account!</h5>
                 <input type="text" class="form-control" placeholder="Email/NetID" name="username" required autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                 <input type="password" class="form-control" placeholder="Password" name="password" required>
                 <!-- <label class="checkbox">

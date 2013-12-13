@@ -13,7 +13,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         emptyView: function() {
             return new App.EmptyView({
-                message: 'Select an entry type to get started!'
+                message: 'Select a field to get started!'
             });
         },
         

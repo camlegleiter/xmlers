@@ -86,10 +86,10 @@ public abstract class AbstractVariadicQuestion extends Question<List<AbstractVar
 		 */
 		public void setText(String val)
 		{
-			if(!AbstractVariadicQuestion.this.options.contains(val))
-			{
-				throw new IllegalArgumentException("Text must be one of the options of the parent question.");
-			}
+//			if(!AbstractVariadicQuestion.this.options.contains(val))
+//			{
+//				throw new IllegalArgumentException("Text must be one of the options of the parent question.");
+//			}
 			text = val;			
 		}
 		

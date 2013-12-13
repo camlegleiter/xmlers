@@ -175,7 +175,7 @@
 
                 <div class="form-group">
                     <label for="max-length-<@= id @>">Maximum Length</label>
-                    <input type="number" id="max-length-<@= id @>" class="form-control required-input" value="<@= data.maxLength @>" placeholder="Maximum number of characters" required>
+                    <input type="number" id="max-length-<@= id @>" class="form-control required-input" value="<@= data.maxLength @>" min="1" max="65535" placeholder="Maximum number of characters" required>
                 </div>
             </div>
         </script>

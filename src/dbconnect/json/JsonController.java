@@ -278,8 +278,8 @@ public class JsonController implements IDBController {
 	}
 
 	/**
-	 * A mutex used for synchronizing on. Used mainly with generating unique
-	 * IDs and ensuring no duplicate access to the database.
+	 * A mutex used for synchronizing on. Used mainly with generating unique IDs
+	 * and ensuring no duplicate access to the database.
 	 */
 	private final Object mutex = new Object();
 
@@ -307,7 +307,8 @@ public class JsonController implements IDBController {
 				e.printStackTrace();
 			}
 
-			return ObjectId.get().hashCode();
+			// Default: generate a positive ID using MongoDB's ObjectID class
+			return Math.abs(ObjectId.get().hashCode());
 		}
 	}
 }

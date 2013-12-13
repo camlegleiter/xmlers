@@ -153,7 +153,8 @@ public class DefaultFactory extends FormFactory {
 		public Question<?> buildQuestion(JSONObject jsonObject, int position)
 				throws JSONException {
 			TextQuestion question = new TextQuestion();
-			question.setId(jsonObject.getInt("questionID"));
+			if (jsonObject.has("questionID"))
+				question.setId(jsonObject.getInt("questionID"));
 			question.setPrompt(jsonObject.getString("prompt"));
 			question.setMaxLength(jsonObject.getInt("maxLength"));
 			question.setPosition(position);
@@ -167,7 +168,8 @@ public class DefaultFactory extends FormFactory {
 				throws JSONException {
 			CheckQuestion question = new CheckQuestion(buildOptionsArray(
 					jsonObject, "checkboxes", "label"));
-			question.setId(jsonObject.getInt("questionID"));
+			if (jsonObject.has("questionID"))
+				question.setId(jsonObject.getInt("questionID"));
 			question.setPrompt(jsonObject.getString("prompt"));
 			question.setPosition(position);
 
@@ -205,7 +207,8 @@ public class DefaultFactory extends FormFactory {
 				throws JSONException {
 			RadioQuestion question = new RadioQuestion(buildOptionsArray(
 					jsonObject, "radios", "label"));
-			question.setId(jsonObject.getInt("questionID"));
+			if (jsonObject.has("questionID"))
+				question.setId(jsonObject.getInt("questionID"));
 			question.setPrompt(jsonObject.getString("prompt"));
 			question.setPosition(position);
 			return question;
@@ -218,7 +221,8 @@ public class DefaultFactory extends FormFactory {
 				throws JSONException {
 			SelectQuestion question = new SelectQuestion(buildOptionsArray(
 					jsonObject, "options", "value"));
-			question.setId(jsonObject.getInt("questionID"));
+			if (jsonObject.has("questionID"))
+				question.setId(jsonObject.getInt("questionID"));
 			question.setPrompt(jsonObject.getString("prompt"));
 			question.setVariadic(jsonObject.getBoolean("isMulti"));
 			question.setPosition(position);
@@ -246,7 +250,6 @@ public class DefaultFactory extends FormFactory {
 			if (isNew) {
 				insertResponse(f, response, user);
 			} else {
-				
 				User u = f.getParticipant(response.getInt("responseOwner"));
 				insertResponse(f, response, u);
 			}

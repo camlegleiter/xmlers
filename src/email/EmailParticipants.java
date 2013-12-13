@@ -44,9 +44,9 @@ public class EmailParticipants {
 	private static final String STANDARD_TEMPLATE_BODY;
 	static {
 		STANDARD_TEMPLATE_BODY = new StringBuilder()
-				.append("%s (%s) has created the form \"%s\" using Task Manager, and needs your response!")
+				.append("%s has created the form \"%s\" using Task Manager, and needs your response!\n\n")
 				.append("Please follow the link:\n\n")
-				.append("&lt;a href=\"%s\"&gt;TaskManager Login&lt;/a&gt;\n\n")
+				.append("%s\n\n")
 				.append("and provide your response(s) as soon as possible.\n\n")
 				.append("Thanks,\nThe Task Manager Team").toString();
 	}
@@ -59,9 +59,9 @@ public class EmailParticipants {
 	private static final String STANDARD_REEMAIL_BODY;
 	static {
 		STANDARD_REEMAIL_BODY = new StringBuilder()
-				.append("%s (%s) created the form \"%s\" using Task Manager, and is still waiting for your response!")
+				.append("%s created the form \"%s\" using Task Manager, and is still waiting for your response!\n\n")
 				.append("Please follow the link:\n\n")
-				.append("&lt;a href=\"%s\"&gt;TaskManager Login&lt;/a&gt;\n\n")
+				.append("%s\n\n")
 				.append("and provide your response(s) as soon as possible.\n\n")
 				.append("Thanks,\nThe Task Manager Team").toString();
 	}
@@ -96,8 +96,7 @@ public class EmailParticipants {
 		String to = "daliashea@gmail.com";
 		String subject = STANDARD_TEMPLATE_SUBJECT;
 
-		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY,
-				owner.getFullName(), owner.getEmail(), form.getTitle(), appUrl);
+		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY, owner.getEmail(), form.getTitle(), appUrl);
 		
 		// User u1 = new User("daliashea@gmail.com");
 		// User u2 = new User("daliaem66@hotmail.com");
@@ -163,8 +162,7 @@ public class EmailParticipants {
 
 		String to = "daliashea@gmail.com";
 		String subject = STANDARD_TEMPLATE_SUBJECT;
-		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY,
-				owner.getFullName(), owner.getEmail(), form.getTitle(), appUrl
+		String[] message = setMessageValues(STANDARD_TEMPLATE_BODY, owner.getEmail(), form.getTitle(), appUrl
 						+ "/login.jsp");
 		for (User u : form.getParticipants()) {
 			boolean responded = false;
@@ -219,9 +217,9 @@ public class EmailParticipants {
 	 *            a URL that the user sees in the message body
 	 * @return the modified String
 	 */
-	private static String[] setMessageValues(String body, String admin,
+	private static String[] setMessageValues(String body,
 			String adminEmail, String formName, String url) {
-	String formatted = String.format(body, admin, adminEmail, formName, url);	
+	String formatted = String.format(body, adminEmail, formName, url);	
 	return formatted.split("\\n");
 	}
 }

@@ -68,7 +68,7 @@
             <form class="form-signin" action="<%= request.getContextPath() %>/login" method="post">
                 <h2 class="form-signin-heading">Please sign in</h2>
                 <h5>Login with your ISU NetID or GMail account!</h5>
-                <input type="text" class="form-control" placeholder="Email/NetID" name="username" required autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                <input type="text" class="form-control" placeholder="NetID/Email" name="username" required autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                 <input type="password" class="form-control" placeholder="Password" name="password" required>
                 <!-- <label class="checkbox">
                 	<input type="checkbox" value="remember-me" name="remember"> Remember me

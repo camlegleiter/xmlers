@@ -29,10 +29,14 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
             	model.set('userEmail', self.userEmail);
             });
 
-            // Remove forms that the user has completed and cannot edit their response to
+            // Remove forms that:
+            // 1) the user has completed,
+            // 2) they cannot edit their response, and
+            // 3) they cannot view other responses
             this.participantCollection.reset(this.participantCollection.filter(function(model) {
             	if ($.inArray(model.get('userEmail'), model.get('respondedParticipants')) > -1
-            			&& !model.get('participantsCanEditResponse'))
+            			&& !model.get('participantsCanEditResponse')
+            			&& !model.get('participantsCanSeeAll'))
             		return false;
             	return true;
             }));

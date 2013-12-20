@@ -1,9 +1,16 @@
 'use strict';
 
 TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
+	
+	/**
+	 * A view for displaying/storing model information for one form that the
+	 * current user is an owner of.
+	 */
     Module.OwnerFormView = Backbone.Marionette.ItemView.extend({
         template: '#owner-form-template',
         templateHelpers: {
+        	// Easier way of pulling JavaScript out of the HTML template
+        	// for displaying all participants of a form
             getFormParticipants: function() {
 				return this.formParticipants.length > 0 ? this.formParticipants
 						.join(', ') : 'No participants for this form';
@@ -19,6 +26,8 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         	'click .reemail-participants': 'onReemailParticipants'
         },
         
+        // Send an AJAX request to re-email all participants who haven't responded
+        // to this form
         onReemailParticipants: function() {
         	this.ui.message.hide();
         	this.toggleButtonsDisabled(true);
@@ -50,13 +59,19 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         }
     });
 
+    /**
+	 * A view for displaying/storing model information for one form that the
+	 * current user is an owner of. Most of the displaying logic can be found
+	 * in the associated template.
+     */
     Module.ParticipantFormView = Backbone.Marionette.ItemView.extend({
         template: '#participant-form-template'
     });
 
-    /*
+    /**
      * The main content view for displaying either an administrator's form
-     * or a participant's form.
+     * or a participant's form. While being a collection, it only stores at
+     * most one form at a time. Initially the collection is empty
      */
     Module.FormContentsView = Backbone.Marionette.CompositeView.extend({
         template: '#form-contents-template',
@@ -82,6 +97,7 @@ TaskManager.module("Index", function(Module, App, Backbone, Marionette, $, _) {
         },
 
         showForm: function(options) {
+        	// Pass some information along with the model about the form
             this.model = options.model;
             this.model.isOwner = options.isOwner;
             this.model.set('userEmail', options.userEmail);

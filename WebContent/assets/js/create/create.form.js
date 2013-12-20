@@ -2,13 +2,17 @@
 
 TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
     
-    /*
+    /**
      * The main view that represents where the user inputs the form metadata
-     * and one or more fields.
+     * and one or more fields. The ItemView is determined by the type of entry
+     * they want to add to the form, which is the "type" field in the model
+     * they select.
      */
     Module.FormView = Backbone.Marionette.CompositeView.extend({
         template: '#form-template',
+        itemViewContainer: '#form-content',
         getItemView: function(field) {
+        	// Use the item view as determined by the "field" model
             return Module[field.get('type') + 'View'];
         },
         emptyView: function() {
@@ -43,15 +47,19 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         initialize: function() {
+        	// Specify this view to store the collection of questions
             this.collection = this.model.get('formQuestions');
         },
         
         onRender: function() {
+        	// Initialize the participants UI element with Select2
             this.ui.formParticipants.select2({
                 width: '100%',
                 placeholder: 'Type an email address',
                 
+                // Ensures the user can manually add participants
                 tags: [],
+                // Allows copy-paste of multiple addresses
                 tokenSeparators: [',', ' '],                
             });
             
@@ -64,6 +72,7 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             });
         },
         
+        // Update this model with the current information in the form
         onUpdateModel: function() {
             this.model.set({
                 formName: this.ui.formName.val(),
@@ -75,19 +84,25 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
         },
         
         onSubmit: function(e) {
+        	// Prevent the form from submitting prematurely
         	e.preventDefault();
+        	
+        	// The user did not add any entries to the form
             if (this.collection.length === 0) {
-                alert('A form must have at least one question for users before submitting.');
+                alert('A form must have at least one entry for users before submitting.');
                 return;
             }
             
+            // Verify the inputs are correct
             if (this.inputsAreValid()) {
+            	// Inform the user that they did not add any participants initially
                 if (this.model.get('formParticipants').length === 0) {
                     if (!confirm('No participants have been added. Are you sure you wish to continue?')) {
                         return;
                     }
                 }
                 
+                // Prevent the user from submitting multiple times
                 this.toggleButtonsDisabled(true);
                 this.ui.loading.show();
                 this.ui.errorMessage.hide();
@@ -99,9 +114,11 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
                 })
                 .done(function(data, textStatus, jqXHR) {
                     if (data.success) {
+                    	// If returned success, forward to URI in success property
                         window.location.href = data.success;
                         return true;
                     } else if (data.error) {
+                    	// If returned error, display error to user
                     	self.ui.errorMessage.show().text(data.error);
                     	return false;
                     }
@@ -120,7 +137,9 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             return false;
         },
         
+        // When the user presses the cancel button
         onCancel: function(e) {
+        	// Prevent the form from submitting on accident
         	e.preventDefault();
         	
         	var message = isEdit ? 'Any changes to the current form will not be saved. Are you sure you want to cancel?'
@@ -133,19 +152,19 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             return isCanceled;
         },
         
-        appendHtml: function(collectionView, itemView) {
-            collectionView.$('#form-content').append(itemView.el);
-        },
-        
+        // Adds the given question to the collection in this view
         addQuestion: function(question) {
+        	// Only add it to the collection if it exists as a model
             if (App.Models[question]) {
                 this.collection.add(new App.Models[question]());
             }
         },
         
+        // Verifies all inputs are correct
         inputsAreValid: function() {
             var $inputs = this.$('.required-input');
             for (var i = 0; i < $inputs.length; ++i) {
+            	// Use the :invalid CSS pseudo-class to check
                 if ($($inputs[i]).is(':invalid')) {
                     $($inputs[i]).focus();
                     return false;
@@ -155,6 +174,8 @@ TaskManager.module("Create", function(Module, App, Backbone, Marionette, $, _) {
             return true;
         },
         
+        // Disables the form buttons using the Bootstrap "disabled" class
+        // and toggling it off/on based on the isDisabled option
         toggleButtonsDisabled: function(isDisabled) {
             this.ui.submit.toggleClass('disabled', isDisabled);
             this.ui.cancel.toggleClass('disabled', isDisabled);

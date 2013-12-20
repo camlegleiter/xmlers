@@ -58,7 +58,7 @@ public class UpsertResponse extends HttpServlet {
 			
 			controller.upsertForm(form);
 			
-			EmailParticipants.emailOwner(form, request.getContextPath(), user, controller.fetchUser(form.getOwnerId()));
+			//EmailParticipants.emailOwner(form, request.getContextPath(), user, controller.fetchUser(form.getOwnerId()));
 			
 			jsonObject = new JSONObject().put("success", request.getContextPath() + "/app/index.jsp?r=a");
 		} catch (Exception e) {

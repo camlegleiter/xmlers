@@ -290,7 +290,7 @@ public class Form implements Iterable<Question<?>>, Cloneable {
 					responseList.put(reponse);
 				}
 			}
-			form.put("responses", responseList);
+			form.put("formResponses", responseList);
 		}
 		if (bitSet(settings, QUERIES_BIT)) {
 			form.put("queries", this.queries);

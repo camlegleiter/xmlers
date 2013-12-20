@@ -81,7 +81,7 @@
     
     // A list of participant responses
     // default: []
-    "responses": [
+    "formResponses": [
         
         // Each object represents one participant's responses to a form
         {

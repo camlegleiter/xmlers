@@ -10,8 +10,8 @@ TaskManager.Models.View = Backbone.Model.extend({
 		 */
 		this.set('formQuestions', new TaskManager.Collections.Questions(this
 				.get('formQuestions')));
-		this.set('responses', new TaskManager.Collections.Responses(this
-				.get('responses')));
+		this.set('formResponses', new TaskManager.Collections.Responses(this
+				.get('formResponses')));
 	},
 
 	/*
@@ -26,7 +26,7 @@ TaskManager.Models.View = Backbone.Model.extend({
 			formDescription: '',
 			formOwner: -1,
 			formQuestions: [],
-			responses: []
+			formResponses: []
 		};
 	}
 });

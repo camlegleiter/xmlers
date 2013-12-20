@@ -34,7 +34,7 @@ TaskManager.module('View', function(Module, App, Backbone, Marionette, $, _) {
                 collection: this.model.get('formQuestions')
             });
             this.tableBody = new Module.TableBody({
-                collection: this.model.get('responses')
+                collection: this.model.get('formResponses')
             });
         },
         

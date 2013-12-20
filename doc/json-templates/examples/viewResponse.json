@@ -25,7 +25,7 @@
       "prompt":"Did you survive the Bridge of Death?"
     }
   ],
-  "responses":[
+  "formResponses":[
     {
       "responseID":999999999,
       "responseOwner":888888888,

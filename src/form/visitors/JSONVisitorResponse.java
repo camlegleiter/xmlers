@@ -6,13 +6,10 @@ import java.util.List;
 import org.json.JSONObject;
 
 import form.questions.AbstractVariadicQuestion.Entry;
-import form.questions.AbstractVariadicQuestion;
 import form.questions.CheckQuestion;
-import form.questions.CheckQuestionResponse;
 import form.questions.ComplexQuestionResponse;
 import form.questions.RadioQuestion;
 import form.questions.SelectQuestion;
-import form.questions.SelectQuestionResponse;
 import form.questions.TextQuestion;
 
 public class JSONVisitorResponse extends JSONVisitor {
@@ -66,16 +63,14 @@ public class JSONVisitorResponse extends JSONVisitor {
 		
 		List<Entry> resp = sr.getResponse(userID);
 		ArrayList<String> options = new ArrayList<String>();
-		if (resp == null) {
-			object.put("values", options);
-		} else {
+		if (resp != null) {
 			for (Entry option : resp) {
 				if(option.getChecked()){
 					options.add(option.getText());
 				}
 			}
-			object.put("values", options);
 		}
+		object.put("values", options);
 		return object.toString();
 	}
 
@@ -91,16 +86,14 @@ public class JSONVisitorResponse extends JSONVisitor {
 
 		List<Entry> resp = chr.getResponse(userID);
 		ArrayList<String> options = new ArrayList<String>();
-		if (resp == null) {
-			object.put("values", options);
-		} else {
+		if (resp != null) {
 			for (Entry option : resp) {
 				if(option.getChecked()){
 					options.add(option.getText());
 				}
 			}
-			object.put("values", options);
 		}
+		object.put("values", options);
 		
 		return object.toString();
 	}

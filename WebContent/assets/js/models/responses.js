@@ -1,8 +1,8 @@
 'use strict';
 
 /**
- * A Backbone model that uses a modified version of the Form model for storing
- * user responses. The defaults used represent the base items needed for storing
+ * A Backbone model that uses a modified version of the Form model for storing a
+ * user's responses. The defaults used represent the base items needed for storing
  * response information from a particular participant.
  */
 TaskManager.Models.Response = Backbone.Model.extend({

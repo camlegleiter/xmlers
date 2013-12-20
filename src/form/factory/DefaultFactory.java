@@ -95,8 +95,8 @@ public class DefaultFactory extends FormFactory {
 			}
 		}
 
-		if (jsonObject.has("responses")) {
-			JSONArray allResponses = jsonObject.getJSONArray("responses");
+		if (jsonObject.has("formResponses")) {
+			JSONArray allResponses = jsonObject.getJSONArray("formResponses");
 			for (int i = 0; i < allResponses.length(); ++i) {
 				JSONObject userResponses = allResponses.getJSONObject(i);
 				User u = f
